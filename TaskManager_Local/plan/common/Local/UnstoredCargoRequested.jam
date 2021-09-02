@@ -1,0 +1,46 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN CONCLUDE PostUnstoredCargoRequestedTo($worker,$goalID, $goal) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostUnstoredCargoRequestedTo"
+	PRECONDITION:
+	BODY:
+		RETRACT PostUnstoredCargoRequestedTo($worker,$goalID, $goal);
+		POST ACHIEVE UnstoredCargoRequestedTo($worker,$goalID, $goal);
+}
+
+PLAN ACHIEVE UnstoredCargoRequestedTo($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//UnstoredCargoRequestedTo"
+	PRECONDITION:
+		FACT PersonCall($callID, $location, $call);
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:ReasonerAddress($reasoner);
+		
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "UnstoredCargoRequestedTo");
+		
+		$goalID = $helper.getGoalID("Local");
+		$goal = "(StoredCargo " + $location +")";
+		$worker = "Local";
+		ASSERT UnstoredCargoRequestedFrom($worker, $goalID, $goal);
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (UnstoredCargoRequestedTo " + $worker + " " + $goalID + " " + $goal + "))");
+		PERFORM isro:endLog("ACHIEVE", "UnstoredCargoRequestedTo");
+	UTILITY: 10000; 
+}
+
+
+PLAN CONCLUDE UnstoredCargoRequestedFrom($manager, $goalID, $goal){
+	ID: "http://www.arbi.com//UnstoredCargoRequestedFrom"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "UnstoredCargoRequestedFrom");
+		
+		System.out.println("Requested Goal : " + $goal);
+				
+		$communicationInstance.inform($reasoner, "(goalComplete (UnstoredCargoRequestedFrom " + $manager + " " + $goalID +  " " + $goal + "))");
+		PERFORM isro:endLog("CONCLUDE", "UnstoredCargoRequestedFrom");
+}

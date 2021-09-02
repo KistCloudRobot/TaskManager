@@ -1,0 +1,22 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE DoorOpenedRequestedFrom($requester, $goalID){
+	ID: "http://www.arbi.com//DoorOpenRequestedFrom"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "DoorOpenRequestedFrom");
+		
+		System.out.println("Reported Goal : " + $goal);
+		
+		ACHIEVE DoorOpened();
+		RETRIEVE DoorStatus($status);
+		$receiver = "agent://www.arbi.com/" + $requester + "/TaskManager";
+		$data = "(GoalReport \"Local\" " + $goalID + "(DoorStatus \"" + $status+"\"))";
+		$communicationInstance.inform($receiver, $data);
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (DoorOpenRequestedFrom " + $requester + " " + $goalID + "))");
+		PERFORM isro:endLog("CONCLUDE", "DoorOpenRequestedFrom");
+}

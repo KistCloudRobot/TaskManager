@@ -1,0 +1,42 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN CONCLUDE PostCargoUnstoringPreparedReportedTo($worker,$goalID ,$goal) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostCargoUnstoringPreparedReportedTo"
+	PRECONDITION:
+	BODY:
+		RETRACT PostCargoUnstoringPreparedReportedTo($worker,$goalID , $goal);
+		POST ACHIEVE CargoUnstoringPreparedReportedTo($worker,$goalID , $goal);
+}
+
+PLAN ACHIEVE CargoUnstoringPreparedReportedTo($manager, $goalID, $goal){
+	ID: "http://www.arbi.com//CargoUnstoringPreparedReportedTo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:ReasonerAddress($reasoner);
+		
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "CargoUnstoringPreparedReportedTo");
+		
+		ASSERT CargoUnstoringPreparedReportedFrom($manager, $goalID, $goal);
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (CargoUnstoringPreparedReportedTo " + $manager + " " + $goalID + " " + $goal + "))");
+		PERFORM isro:endLog("ACHIEVE", "CargoUnstoringPreparedReportedTo");
+	UTILITY: 10000; 
+}
+
+
+PLAN CONCLUDE CargoUnstoringPreparedReportedFrom($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//CargoUnstoringPreparedReportedFrom"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "CargoUnstoringPreparedReportedFrom");
+		
+		System.out.println("Reported Goal : " + $goal);
+				
+		$communicationInstance.inform($reasoner, "(goalComplete (CargoUnstoringPreparedReportedFrom " + $worker +" " + $goalID + " " + $goal + "))");
+		PERFORM isro:endLog("CONCLUDE", "CargoUnstoringPreparedReportedFrom");
+}

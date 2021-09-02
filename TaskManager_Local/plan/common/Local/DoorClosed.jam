@@ -1,0 +1,41 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN perform DoorClosed(){
+	ID: "http://www.arbi.com//BuiltInPlan#DoorClosed"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT DoorStatus($status);
+		$status == "Opened";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "DoorClosed");
+		//PERFORM  UpdateAgentTaskStatus("DoorClosed", "start");
+		
+		PERFORM RequestDoorOpen();
+		$oldData = "(context (DoorStatus $status))";
+		$newData = "(context (DoorStatus \"Closed\"))";
+		$communicationInstance.updateFact($oldData, $newData);
+		
+		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
+		PERFORM isro:endLog("PERFORM", "DoorClosed");
+}
+
+PLAN perform DoorClosed(){
+	ID: "http://www.arbi.com//BuiltInPlan#DoorClosedWhenClosed"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT DoorStatus($status);
+		$status == "Closed";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "DoorClosed");
+		//PERFORM  UpdateAgentTaskStatus("DoorClosed", "start");
+		
+		
+		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
+		PERFORM isro:endLog("PERFORM", "DoorClosed");
+}
+

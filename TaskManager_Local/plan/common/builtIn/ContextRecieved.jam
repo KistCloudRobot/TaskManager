@@ -1,0 +1,114 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedDefault"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
+		
+		$glUtility.assertGL($context);
+		RETRACT ContextRecieved($context);
+		
+		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
+	UTILITY : 1;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotAt"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "RobotAt";
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT RobotAt($robot, $v1, $v2);
+		
+		$glUtility.assertGL($context);
+		
+		RETRACT ContextRecieved($contextName, $context);
+		
+		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
+	UTILITY : 10;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedBatteryRemain"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "BatteryRemain";
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT BatteryRemain($robot, $v1);
+		
+		$glUtility.assertGL($context);
+		
+		RETRACT ContextRecieved($contextName, $context);
+		
+		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
+	UTILITY : 10;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotVelocity"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "RobotVelocity";
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT RobotVelocity($robot, $oldVelocity);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
+	UTILITY : 10;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedOnRobotTaskStatus"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "OnRobotTaskStatus";
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
+		
+		$robot =  $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT OnRobotTaskStatus($robot, $oldStatus);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
+	UTILITY : 10;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedOnAgentTaskStatus"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "OnAgentTaskStatus";
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
+		
+		$agent = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT OnAgentTaskStats($agent, $oldTask, $oldStatus);
+		$glUtility.assertGL($context);
+				
+				
+		RETRACT ContextRecieved($context);
+		
+		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
+	UTILITY : 10;
+}
