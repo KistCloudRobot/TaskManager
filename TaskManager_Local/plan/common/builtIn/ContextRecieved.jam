@@ -8,11 +8,12 @@ PLAN CONCLUDE ContextRecieved($context){
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
+		System.out.println("no update : " + $context);
 		$glUtility.assertGL($context);
 		RETRACT ContextRecieved($context);
 		
 		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
-	UTILITY : 1;
+	UTILITY : 10;
 }
 
 PLAN CONCLUDE ContextRecieved($context){
@@ -24,7 +25,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
-		
 		RETRACT RobotAt($robot, $v1, $v2);
 		
 		$glUtility.assertGL($context);
@@ -32,7 +32,7 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT ContextRecieved($contextName, $context);
 		
 		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
-	UTILITY : 10;
+	UTILITY : 100;
 }
 
 PLAN CONCLUDE ContextRecieved($context){
@@ -52,7 +52,7 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT ContextRecieved($contextName, $context);
 		
 		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
-	UTILITY : 10;
+	UTILITY : 100;
 }
 
 PLAN CONCLUDE ContextRecieved($context){
@@ -71,7 +71,7 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT ContextRecieved($context);
 		
 		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
-	UTILITY : 10;
+	UTILITY : 100;
 }
 
 PLAN CONCLUDE ContextRecieved($context){
@@ -90,7 +90,7 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT ContextRecieved($context);
 		
 		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
-	UTILITY : 10;
+	UTILITY : 100;
 }
 
 PLAN CONCLUDE ContextRecieved($context){
@@ -103,12 +103,11 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 		$agent = $glUtility.retrieveGLExpression($context, 0);
 		
-		RETRACT OnAgentTaskStats($agent, $oldTask, $oldStatus);
+		RETRACT OnAgentTaskStatus($agent, $oldTask, $oldStatus);
 		$glUtility.assertGL($context);
-				
 				
 		RETRACT ContextRecieved($context);
 		
 		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
-	UTILITY : 10;
+	UTILITY : 100;
 }

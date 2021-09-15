@@ -77,7 +77,7 @@ PLAN PERFORM TaskCreated($goaID, $goal){
 		PERFORM QueryOnStation($startStation, $rack);
 		$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
 		
-		$goal = "(goal (metadata \"" +$goalID +"\" \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
+		$goal = "(goal (metadata \"" +$goalID +"\") \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
 	UTILITY: 1; 
 }
 

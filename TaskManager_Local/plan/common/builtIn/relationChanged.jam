@@ -8,6 +8,7 @@ PLAN CONCLUDE relationChanged($context) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "RobotAt";
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "relationChanged");
 
@@ -18,6 +19,7 @@ PLAN CONCLUDE relationChanged($context) {
 		$oldData = "(RobotAt \"" + $robot + "\" $oldVertex1 $oldVertex2)";
 		$newData = "(RobotAt \"" + $robot + "\" " + $vertex1 + " " + $vertex2 + ")";
 		
+		$helper.sleepAwhile(50);
 		$communicationInstance.updateFact("(update (context " + $oldData + ") (context "+ $newData + "))");
 		
 		RETRACT relationChanged($context);
@@ -32,6 +34,7 @@ PLAN CONCLUDE relationChanged($context) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "BatteryRemain";
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "relationChanged");
 
@@ -41,6 +44,7 @@ PLAN CONCLUDE relationChanged($context) {
 		$oldData = "(BatteryRemain \"" + $robot + "\" $oldBattery)";
 		$newData = "(BatteryRemain \"" + $robot + "\" " + $battery + ")";
 		
+		$helper.sleepAwhile(50);
 		$communicationInstance.updateFact("(update (context " + $oldData + ") (context "+ $newData + "))");
 		
 		RETRACT relationChanged($context);
@@ -54,6 +58,7 @@ PLAN CONCLUDE relationChanged($context) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "RobotVelocity";
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "relationChanged");
 
@@ -63,6 +68,7 @@ PLAN CONCLUDE relationChanged($context) {
 		$oldData = "(RobotVelocity \"" + $robot + "\" $oldVelocity)";
 		$newData = "(RobotVelocity \"" + $robot + "\" " + $velocity + ")";
 		
+		$helper.sleepAwhile(50);
 		$communicationInstance.updateFact("(update (context " + $oldData + ") (context "+ $newData + "))");
 		
 		RETRACT relationChanged($context);
@@ -76,6 +82,7 @@ PLAN CONCLUDE relationChanged($context) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "OnRobotTaskStatus";
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "OnRobotTaskStatus");
 
@@ -86,6 +93,7 @@ PLAN CONCLUDE relationChanged($context) {
 		$newData = "(OnRobotTaskStatus \"" + $robot + "\" \"" + $status + "\")";
 		
 		
+		$helper.sleepAwhile(50);
 		$communicationInstance.updateFact("(update (context " + $oldData + ") (context "+ $newData + "))");
 		
 		RETRACT relationChanged($context);
@@ -99,16 +107,21 @@ PLAN CONCLUDE relationChanged($context) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "OnAgentTaskStatus";
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "OnAgentTaskStatus");
 
 		$agent = $glUtility.retrieveGLExpression($context, 0);
+		
 		$task  = $glUtility.retrieveGLExpression($context, 1);
+		
 		$status = $glUtility.retrieveGLExpression($context, 2);
 		
-		$oldData = "(OnAgentTaskStatus \"" + $robot + "\" $oldTask $oldStatus)";
-		$newData = "(OnAgentTaskStatus \"" + $robot + "\" \"" + $task + "\" \"" + $status + "\")";
 		
+		$oldData = "(OnAgentTaskStatus \"" + $agent + "\" $oldTask $oldStatus)";
+		$newData = "(OnAgentTaskStatus \"" + $agent + "\" \"" + $task + "\" \"" + $status + "\")";
+		
+		$helper.sleepAwhile(50);
 		$communicationInstance.updateFact("(update (context " + $oldData + ") (context "+ $newData + "))");
 		
 		RETRACT relationChanged($context);

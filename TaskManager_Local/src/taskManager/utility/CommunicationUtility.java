@@ -20,12 +20,23 @@ public class CommunicationUtility {
 	}
 
 	public void assertToLTM(String data) {
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ds.assertFact(data);
 	}
 	
 	public void inform(String receiver, String content) {
 		System.out.println("inform : " + receiver + " " + content);
-
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		taskManager.send(receiver, content);
 
 	}	
@@ -66,7 +77,12 @@ public class CommunicationUtility {
 	public String sendQuery(String receiver, String content) {
 		System.out.println("query : " + receiver + " " + content);
 		String result = "";
-
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		result = taskManager.query(receiver, content);
 
 		System.out.println("query result :" + result);
@@ -77,7 +93,12 @@ public class CommunicationUtility {
 	public String request(String receiver, String content) {
 		System.out.println("Request : " + receiver + " " + content);
 		String result = "";
-
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		result = taskManager.request(receiver, content);
 		System.out.println("result : " + result);
 
@@ -98,7 +119,13 @@ public class CommunicationUtility {
 	}
 	
 	public void updateFact(String content) {
-		System.out.println("====updateFact : " + content + " ====");
+		System.out.println("==== updateFact To LTM : " + content + " ====");
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ds.updateFact(content);
 	}
 	

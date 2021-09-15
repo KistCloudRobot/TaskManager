@@ -1,0 +1,42 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM FindWorker($allocation, $worker){
+	ID: "http://www.arbi.com//FindWorkerLift2"
+	PRECONDITION :
+		$allocation == "AMR_LIFT2";
+	BODY:
+		System.out.println("Find worker");
+		$worker = "Lift2";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindWorker($allocation, $worker){
+	ID: "http://www.arbi.com//FindWorkerLift1"
+	PRECONDITION :
+		$allocation == "AMR_LIFT1";
+	BODY:
+		System.out.println("Find worker");
+		$worker = "Lift1";
+	UTILITY: 10;
+}
+PLAN PERFORM FindWorker($allocation, $worker){
+	ID: "http://www.arbi.com//FindWorkerTow1"
+	PRECONDITION :
+		$allocation == "AMR_TOW1";
+	BODY:
+		System.out.println("Find worker");
+		$worker = "Tow1";
+	UTILITY: 10;
+}
+PLAN PERFORM FindWorker($allocation, $worker){
+	ID: "http://www.arbi.com//FindWorkerTow2"
+	PRECONDITION :
+		$allocation == "AMR_TOW2";
+	BODY:
+		System.out.println("Find worker");
+		$worker = "Tow2";
+	UTILITY: 10;
+}

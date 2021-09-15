@@ -5,7 +5,7 @@ PREFIXES:
 FACTS:	
 	FACT  isro:TaskLogAddress("agent://www.arbi.com/Local/TaskLog");
 	FACT  isro:ActionAddress("agent://www.arbi.com/Local/action");
-	FACT  isro:BehaviorAddress("agent://www.arbi.com/Local/BehaviourInterface");
+	FACT  isro:BehaviorAddress("agent://www.arbi.com/Local/BehaviorInterface");
 	FACT  isro:ReasonerAddress("agent://www.arbi.com/Local/TaskReasoner");
 	FACT  isro:ContextManagerAddress("agent://www.arbi.com/Local/ContextManager");
 	FACT  isro:MapManagerAddress("agent://www.arbi.com/Local/MapManager");

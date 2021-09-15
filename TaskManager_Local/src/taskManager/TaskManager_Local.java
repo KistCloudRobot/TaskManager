@@ -28,7 +28,7 @@ public class TaskManager_Local extends ArbiAgent {
 	private TaskManagerLogger logger;
 	private boolean isTriggered = false;
 	private APLViewer aplViewer;
-	public static final String JMS_BROKER_URL = "tcp://172.16.165.204:61316";
+	public static final String JMS_BROKER_URL = "tcp://172.16.165.204:8000";
 	//public static final String JMS_BROKER_URL = "tcp://localhost:61616";
 	public static final String TASKMANAGER_ADRESS = "www.arbi.com/Local/TaskManager";
 	public static final String CONTEXTMANAGER_ADRESS = "agent://www.arbi.com/Local/ContextManager";
@@ -165,7 +165,7 @@ public class TaskManager_Local extends ArbiAgent {
 				} else if(gl.getName().equals("relationChanged")) {
 					String relationChanged = "(relationChanged " + gl.getExpression(0).toString() + ")";
 					msgManager.assertGL(relationChanged);
-				} else if(gl.getExpression(0).asGeneralizedList().getName().equals("actionID")) { 
+				} else if(gl.getName().equals("actionResult")) { 
 					String actionResult = "(actionCompleted "+ gl.getExpression(0).asGeneralizedList().getExpression(0) + ")";
 					msgManager.assertGL(actionResult);
 				} else if (gl.getName().equals("RobotPath")) {
@@ -177,6 +177,7 @@ public class TaskManager_Local extends ArbiAgent {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "ReportedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
 				} else {
+					System.out.println("assert context : " + data);
 					msgManager.assertGL(data);
 				}
 

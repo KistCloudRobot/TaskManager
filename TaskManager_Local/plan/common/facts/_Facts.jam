@@ -6,6 +6,12 @@ FACTS:
 	
 	fact ActionID(1);
 	fact isro:agent("Local");
+	fact OnAgentTaskStatus("agent://www.arbi.com/Local/TaskManager", "wait", "wait");
+	fact OnAgentTaskStatus("Lift2", "wait", "wait");
+	fact RobotAt("AMR_LIFT2", 102,102);
+	fact RobotVelocity("AMR_LIFT2", 0);
+	fact BatteryRemain("AMR_LIFT2", 50);
+	fact OnRobotTaskStatus("AMR_LIFT2", "Ready");
 	/*
 	fact RobotAt("AMR_LIFT1", 1,1);
 	fact RobotVelocity("AMR_LIFT1", 0);

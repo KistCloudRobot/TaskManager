@@ -187,9 +187,10 @@ public class GLMessageManager {
 			for (int i = 0; i < gl.getExpressionsSize(); i++) {
 				String expressionValue = gl.getExpression(i).toString();
 				expressionValue = this.removeQuotationMarks(expressionValue);
-				// if(expressionValue.startsWith("$")) {
-				expressionValue = "null";
-				// }
+				System.out.println("=======expression Value : " + expressionValue);
+				if(expressionValue.startsWith("$")) {
+					expressionValue = "null";
+				}
 				expList.add(new Value(expressionValue));
 			}
 
@@ -353,16 +354,25 @@ public class GLMessageManager {
 
 	public String retrieveGLExpression(String input, int i) {
 		String result = "";
+		
+		//System.out.println("why? : " + input);
 		try {
 			GeneralizedList gl = GLFactory.newGLFromGLString(input);
-			result = gl.getExpression(i).toString();
+
+			if(gl.getExpression(i).isValue()) {
+
+				result = gl.getExpression(i).asValue().stringValue();
+			} else if (gl.getExpression(i).isGeneralizedList()) {
+				result = gl.getExpression(i).asGeneralizedList().toString();
+			}
+				
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		result = this.removeQuotationMarks(result);
+		//result = this.removeQuotationMarks(result);
 		return result;
 	}
 
@@ -471,9 +481,11 @@ public class GLMessageManager {
 			String[] expressionList = new String[gl.getExpressionsSize()];
 
 			for (int i = 0; i < gl.getExpressionsSize(); i++) {
-				expressionList[i] = gl.getExpression(i).toString();
-				expressionList[i] = GLFactory.unescape(expressionList[i]);
-				expressionList[i] = this.removeQuotationMarks(expressionList[i]);
+
+				//System.out.println("=======expression Value : " + gl.getExpression(i).toString());
+				expressionList[i] = removeQuotationMarks(gl.getExpression(i).toString());
+				//expressionList[i] = GLFactory.unescape(expressionList[i]);
+				//expressionList[i] = this.removeQuotationMarks(expressionList[i]);
 			}
 
 			assertFact(name, expressionList);
@@ -509,5 +521,15 @@ public class GLMessageManager {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public String escapeGL(String gl) {
+		System.out.println("start escape : " + gl);
+		String result = GLFactory.escape(gl);
+		System.out.println(result);
+		return result;
+	}
+	public String unescapeGL(String gl) {
+		return GLFactory.unescape(gl);
 	}
 }

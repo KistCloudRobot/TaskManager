@@ -3,10 +3,10 @@ PREFIXES:
 		
 PLAN CONCLUDE PostCargoStoringPreparedRequestedTo($worker,$goalID, $goal) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostCargoStoringPreparedRequestedTo"
-	PRECONDITION:
 	BODY:
-		RETRACT PostCargoStoringPreparedRequestedTo($worker,$goalID, $goal);
 		POST ACHIEVE CargoStoringPreparedRequestedTo($worker,$goalID, $goal);
+		RETRACT PostCargoStoringPreparedRequestedTo($worker,$goalID, $goal);
+	UTILITY : 10000;
 }
 
 PLAN ACHIEVE CargoStoringPreparedRequestedTo($worker, $goalID, $goal){
@@ -16,12 +16,14 @@ PLAN ACHIEVE CargoStoringPreparedRequestedTo($worker, $goalID, $goal){
 		FACT Communication($communicationInstance);
 		FACT ExtraUtility($helper);
 		FACT isro:ReasonerAddress($reasoner);
-		
+		FACT GLUtility($glUtility);
 	BODY:
+	
 		PERFORM isro:startLog("ACHIEVE", "CargoStoringPreparedRequestedTo");
 		
 		$goalID = $helper.getGoalID("Local");
 		$goal = "(CargoStoringPrepared \"" + $location +"\")";
+		$goal = $glUtility.escapeGL($goal);
 		$worker = "Local";
 		ASSERT CargoStoringPreparedRequestedFrom($worker, $goalID, $goal);
 		
@@ -44,5 +46,5 @@ PLAN CONCLUDE CargoStoringPreparedRequestedFrom($manager, $goalID, $goal){
 		
 		$communicationInstance.inform($reasoner, "(goalComplete (CargoStoringPreparedRequestedFrom \"" + $manager + "\" \"" + $goalID +  "\" \"" + $goal + "\"))");
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedRequestedFrom");
-	UTILITY: 1; 
+	UTILITY: 10; 
 }
