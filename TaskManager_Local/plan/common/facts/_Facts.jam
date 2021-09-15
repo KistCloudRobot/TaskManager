@@ -6,29 +6,34 @@ FACTS:
 	
 	fact ActionID(1);
 	fact isro:agent("Local");
-	fact OnAgentTaskStatus("agent://www.arbi.com/Local/TaskManager", "wait", "wait");
+	fact OnAgentTaskStatus("Local", "wait", "wait");
+	
+	
 	fact OnAgentTaskStatus("Lift2", "wait", "wait");
 	fact RobotAt("AMR_LIFT2", 102,102);
 	fact RobotVelocity("AMR_LIFT2", 0);
 	fact BatteryRemain("AMR_LIFT2", 50);
-	fact OnRobotTaskStatus("AMR_LIFT2", "Ready");
-	/*
-	fact RobotAt("AMR_LIFT1", 1,1);
+	fact OnRobotTaskStatus("AMR_LIFT2", "wait");
+	
+	fact OnAgentTaskStatus("Lift1", "wait", "wait");
+	fact RobotAt("AMR_LIFT1", 102,102);
 	fact RobotVelocity("AMR_LIFT1", 0);
 	fact BatteryRemain("AMR_LIFT1", 50);
-	fact OnRobotTaskStatus("AMR_LIFT1", "Ready");
+	fact OnRobotTaskStatus("AMR_LIFT1", "wait");
 	
-	
-	fact RobotAt("AMR_TOW1", 3,3);
+	fact OnAgentTaskStatus("Tow1", "wait", "wait");
+	fact RobotAt("AMR_TOW1", 102,102);
 	fact RobotVelocity("AMR_TOW1", 0);
 	fact BatteryRemain("AMR_TOW1", 50);
-	fact OnRobotTaskStatus("AMR_TOW1", "Ready");
+	fact OnRobotTaskStatus("AMR_TOW1", "wait");
 	
-	fact RobotAt("AMR_TOW2", 4,4);
-	fact RobotVelocity("AMR_TOW2", 0);
-	fact BatteryRemain("AMR_TOW2", 50);
-	fact OnRobotTaskStatus("AMR_TOW2", "Ready");
+	fact OnAgentTaskStatus("Tow2", "wait", "wait");
+	fact RobotAt("AMR_TOW2", 102,102);
+	fact RobotVelocity("AMR_TOW1", 0);
+	fact BatteryRemain("AMR_TOW1", 50);
+	fact OnRobotTaskStatus("AMR_TOW1", "wait");
 	
+	/*	
 	fact isro:robot("http://robot-arbi.kr/ontologies/isro_cap.owl#Jackal001");
 	fact Position("http://www.robot-arbi.kr/ontologies/EduService.owl#Person001", 0.2 ,0.2, 0);
 	fact isro:hasCapability("http://robot-arbi.kr/ontologies/isro_cap.owl#Jackal001","PerceptionModuleCapability");

@@ -28,15 +28,20 @@ public class TaskManager_Local extends ArbiAgent {
 	private TaskManagerLogger logger;
 	private boolean isTriggered = false;
 	private APLViewer aplViewer;
+	public static String ENV_JMS_BROKER;
+	public static String ENV_AGENT_NAME;
+	public static String ENV_ROBOT_NAME;
 	public static final String JMS_BROKER_URL = "tcp://172.16.165.204:8000";
 	//public static final String JMS_BROKER_URL = "tcp://localhost:61616";
+	public static final String ARBI_PREFIX = "www.arbi.com/";
+	public static final String BASE_AGENT_NAME = "/TaskManager";
 	public static final String TASKMANAGER_ADRESS = "www.arbi.com/Local/TaskManager";
-	public static final String CONTEXTMANAGER_ADRESS = "agent://www.arbi.com/Local/ContextManager";
+	public static  String CONTEXTMANAGER_ADRESS;
 	public static final String KNOWLEDGEMANAGER_ADRESS = "agent://www.arbi.com/Local/KnowledgeManager";
-	public static final String BEHAVIOUR_INTERFACE_ADDRESS = "agent://www.arbi.com/Local/BehaviourInterface";
+	public static  String BEHAVIOUR_INTERFACE_ADDRESS;
 	public static final String PERCEPTION_ADRESS = "agent://www.arbi.com/perception";
 	public static final String ACTION_ADRESS = "agent://www.arbi.com/Local/action";
-	public static final String REASONER_ADRESS = "agent://www.arbi.com/Local/TaskReasoner";
+	public static  String REASONER_ADRESS;
 	public static final String PREFIX = "http://www.arbi.com//ontologies#";
 	
 
@@ -46,7 +51,11 @@ public class TaskManager_Local extends ArbiAgent {
 
 	
 	public TaskManager_Local() {
-		ArbiAgentExecutor.execute(JMS_BROKER_URL, AGENT_PREFIX + TASKMANAGER_ADRESS, this,2);
+		
+		initAddress();
+		
+		
+		ArbiAgentExecutor.execute("tcp://" + ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
 		interpreter = JAM.parse(new String[] { "plan/boot.jam" });
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
@@ -57,6 +66,16 @@ public class TaskManager_Local extends ArbiAgent {
 		init();
 	}
 	
+	
+	public void initAddress() {
+		ENV_JMS_BROKER = System.getenv("JMS_BROKER");
+		ENV_AGENT_NAME = System.getenv("AGENT");
+		//ENV_ROBOT_NAME = System.getenv("ROBOT");
+		
+		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
+		REASONER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/TaskReasoner"; 
+		BEHAVIOUR_INTERFACE_ADDRESS = AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/BehaviorInterface"; 
+	}
 	public void test(){
 		
 		if(isTriggered == false){
