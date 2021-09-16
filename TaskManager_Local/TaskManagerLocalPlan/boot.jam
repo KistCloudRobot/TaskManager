@@ -36,7 +36,7 @@ PLAN PERFORM boot() {
 		
 		//PERFORM isro:STTRequest();
 		
-		PERFORM UpdateAgentTaskStatus("mcARBI_LIFT1", "BOOT", "complete");
+		//PERFORM UpdateAgentTaskStatus("mcARBI_LIFT1", "BOOT", "complete");
 		
 		
 		POST ACHIEVE CargoStoringPreparedRequestedTo($worker,$goalID, $goal);
