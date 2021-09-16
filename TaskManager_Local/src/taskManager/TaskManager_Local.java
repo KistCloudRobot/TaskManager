@@ -126,7 +126,7 @@ public class TaskManager_Local extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 
-		dc.connect(JMS_BROKER_URL, DATASOURCE_PREFIX + TASKMANAGER_ADRESS,2);
+		dc.connect("tcp://" + ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME,2);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
