@@ -110,13 +110,6 @@ public class TaskManager_Local extends ArbiAgent {
 		};
 		
 		t.start();
-		
-		
-		while(true) {
-			Scanner sc = new Scanner(System.in);
-			String input = sc.nextLine();
-			dc.assertFact(input);
-		}
 	}
 	
 	public String getConversationID() {
