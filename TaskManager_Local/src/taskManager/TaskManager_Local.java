@@ -57,7 +57,7 @@ public class TaskManager_Local extends ArbiAgent {
 		initAddress();
 		
 		
-		ArbiAgentExecutor.execute("tcp://" + ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
+		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
@@ -70,9 +70,14 @@ public class TaskManager_Local extends ArbiAgent {
 	
 	
 	public void initAddress() {
-		ENV_JMS_BROKER = System.getenv("JMS_BROKER");
-		ENV_AGENT_NAME = System.getenv("AGENT");
-		ENV_ROBOT_NAME = System.getenv("ROBOT");
+		//ENV_JMS_BROKER = "tcp://" + System.getenv("JMS_BROKER");
+		//ENV_AGENT_NAME = System.getenv("AGENT");
+		//ENV_ROBOT_NAME = System.getenv("ROBOT");
+		
+		System.out.println(System.getenv());
+		
+		ENV_JMS_BROKER = "tcp://" + System.getenv("JMS_BROKER") + ":61316";
+		ENV_AGENT_NAME = "Local";
 		
 		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
 		REASONER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/TaskReasoner"; 
@@ -112,7 +117,7 @@ public class TaskManager_Local extends ArbiAgent {
 
 	@Override
 	public void onNotify(String sender, String notification) {
-		System.out.println("recieved Notify from " + sender + " : " + notification);
+		//System.out.println("recieved Notify from " + sender + " : " + notification);
 		//aplViewer.msgReceived(notification, sender);
 		RecievedMessage msg = new RecievedMessage(sender, notification);
 		messageQueue.add(msg);	
@@ -121,8 +126,8 @@ public class TaskManager_Local extends ArbiAgent {
 	@Override
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
-
-		dc.connect("tcp://" + ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME,2);
+		
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME,2);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
@@ -160,7 +165,7 @@ public class TaskManager_Local extends ArbiAgent {
 
 				gl = GLFactory.newGLFromGLString(data);
 
-				System.out.println("message dequeued : " + gl.toString());
+				//System.out.println("message dequeued : " + gl.toString());
 
 				if (gl.getName().equals("PostGoal")) {
 					//System.out.println("test");

@@ -19,7 +19,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
 		FACT GLUtility($glUtility);
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
-		
+
 		PERFORM PalletTransportatedCreated($goalID, $goal);
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
@@ -63,7 +63,13 @@ PLAN PERFORM RequestTaskAllocation($goal, $worker){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestTaskAllocation");
 		
-		$result = $communicationInstance.request($allocator, "(TaskAllocation \"StoringCarrier\" "+$goal+")");
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$startStation = $glUtility.retrieveGLExpression($goal,2);
+		$startStation = $glUtility.retrieveGLExpression($goal,1);
+		$message = "(" +  $glUtility.retrieveGLExpression($goal,1) + " " + $goalID + " " + $startStation + ")";
+		
+		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $message+")");
 		
 		//System.out.println("Start Wait");
 		$allocation = $glUtility.retrieveGLExpression($result, 0);

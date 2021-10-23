@@ -481,13 +481,18 @@ public class GLMessageManager {
 			String[] expressionList = new String[gl.getExpressionsSize()];
 
 			for (int i = 0; i < gl.getExpressionsSize(); i++) {
-
+				
 				//System.out.println("=======expression Value : " + gl.getExpression(i).toString());
 				expressionList[i] = removeQuotationMarks(gl.getExpression(i).toString());
+				if(expressionList[i].startsWith("$")) {
+					expressionList[i] = "a";
+					
+				}
 				//expressionList[i] = GLFactory.unescape(expressionList[i]);
 				//expressionList[i] = this.removeQuotationMarks(expressionList[i]);
 			}
-
+			
+			System.out.println("?????" + expressionList[0]);
 			assertFact(name, expressionList);
 
 		} catch (ParseException e) {
