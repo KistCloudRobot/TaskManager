@@ -36,7 +36,8 @@ PLAN CONCLUDE UnstoredCargoReportedFrom($worker, $goalID, $goal){
 		PERFORM isro:startLog("CONCLUDE", "UnstoredCargoReportedFrom");
 		
 		System.out.println("Reported Goal : " + $goal);
-				
+		
+
 		$communicationInstance.inform($reasoner, "(goalComplete (UnstoredCargoReportedFrom " + $worker +" " + $goalID + " " + $goal + "))");
 		PERFORM isro:endLog("CONCLUDE", "UnstoredCargoReportedFrom");
 }

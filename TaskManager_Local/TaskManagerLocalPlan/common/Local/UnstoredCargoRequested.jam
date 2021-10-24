@@ -40,6 +40,7 @@ PLAN CONCLUDE UnstoredCargoRequestedFrom($manager, $goalID, $goal){
 		PERFORM isro:startLog("CONCLUDE", "UnstoredCargoRequestedFrom");
 		
 		System.out.println("Requested Goal : " + $goal);
+		ASSERT GoalRequested($manager, "UnstoredCargo", $goal);
 				
 		$communicationInstance.inform($reasoner, "(goalComplete (UnstoredCargoRequestedFrom " + $manager + " " + $goalID +  " " + $goal + "))");
 		PERFORM isro:endLog("CONCLUDE", "UnstoredCargoRequestedFrom");

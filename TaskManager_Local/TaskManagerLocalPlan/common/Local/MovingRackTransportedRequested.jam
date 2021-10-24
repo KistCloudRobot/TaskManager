@@ -20,8 +20,15 @@ PLAN ACHIEVE MovingRackTransportedRequestedTo($worker, $goalID, $goal){
 		
 		PERFORM TaskCreated($goalID, $goal);
 		PERFORM RequestTaskAllocation($goal, $allocation);
-		PERFORM FindWorker($allocation, $worker);
-		PERFORM GoalAssign($goal, $worker);
+		System.out.println("allocation? " + $allocation);
+		
+		//PERFORM FindWorker($allocation, $worker);
+		
+		System.out.println("worker? " + $allocation);
+		
+		PERFORM GoalAssign($goal, $allocation);
+		
+		System.out.println("goal assigned");
 		
 		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedRequestedTo " + $worker + " " + $goalID + " " + $goal + "))");
 		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
@@ -74,20 +81,44 @@ PLAN PERFORM TaskCreated($goaID, $goal){
 		FACT Communication($communicationInstance);
 		FACT ExtraUtility($helper);
 		FACT isro:ReasonerAddress($reasoner);
-		FACT GoalRequested($requestedGoalID, "CargoStoringPrepared",$requestedGoal);
+		FACT GoalRequested($requestedGoalID, "CargoUnstoringPrepared",$requestedGoal);
 		FACT GLUtility($glUtility);
 		
 	BODY:
 		$goalID = $helper.getGoalID("Local");
 		
-		PERFORM QueryIdleMovingRack($rack);
-		PERFORM QueryOnStation($startStation, $rack);
+		//PERFORM QueryIdleMovingRack($rack);
+		$startStation = "station20";
+		PERFORM QueryRack($startStation, $rack);
+		System.out.println("rack? " + $rack); 
+		System.out.println("requestedGoal" + $requestedGoal);
+		
 		$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
+		System.out.println("endStation " + $endStation);
+		assert MovingRackInfo($rack,$startStation);
 		
 		$goal = "(goal (metadata \"" +$goalID +"\") \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
 	UTILITY: 1; 
 }
 
+PLAN PERFORM TaskCreated($goaID, $goal){
+	ID: "http://www.arbi.com//GenerateMovingRackTransportedUnstored"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:ReasonerAddress($reasoner);
+		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
+		FACT GLUtility($glUtility);
+		fact MovingRackInfo($rackID,$endStation);
+	BODY:
+		$goalID = $helper.getGoalID("Local");
+		
+		
+		$startStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
+		
+		$goal = "(goal (metadata \"" +$goalID +"\") \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
+	UTILITY: 1; 
+}
 
 
 PLAN PERFORM QueryIdleMovingRack($rack){

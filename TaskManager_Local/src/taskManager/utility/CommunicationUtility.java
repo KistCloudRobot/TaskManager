@@ -119,7 +119,7 @@ public class CommunicationUtility {
 	}
 	
 	public void updateFact(String content) {
-		System.out.println("==== updateFact To LTM : " + content + " ====");
+		//System.out.println("==== updateFact To LTM : " + content + " ====");
 		try {
 			Thread.sleep(50);
 		} catch (InterruptedException e) {

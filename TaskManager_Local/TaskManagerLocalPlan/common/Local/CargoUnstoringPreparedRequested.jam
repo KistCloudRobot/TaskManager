@@ -21,11 +21,11 @@ PLAN ACHIEVE CargoUnstoringPreparedRequestedTo($worker, $goalID, $goal){
 		PERFORM isro:startLog("ACHIEVE", "CargoUnstoringPreparedRequestedTo");
 		
 		$goalID = $helper.getGoalID("Local");
-		$goal = "(CargoUnstoringPrepared " + $location +")";
+		$goal = "(CargoUnstoringPrepared \"" + $location +"\")";
 		$worker = "Local";
 		ASSERT CargoUnstoringPreparedRequestedFrom($worker, $goalID, $goal);
 		
-		$communicationInstance.inform($reasoner, "(goalComplete (CargoUnstoringPreparedRequestedTo " + $worker + " " + $goalID + " " + $goal + "))");
+		$communicationInstance.inform($reasoner, "(goalComplete (CargoUnstoringPreparedRequestedTo \"" + $worker + "\" \"" + $goalID + "\" " + $goal + "))");
 		PERFORM isro:endLog("ACHIEVE", "CargoUnstoringPreparedRequestedTo");
 	UTILITY: 10000; 
 }
@@ -40,7 +40,8 @@ PLAN CONCLUDE CargoUnstoringPreparedRequestedFrom($manager, $goalID, $goal){
 		PERFORM isro:startLog("CONCLUDE", "CargoUnstoringPreparedRequestedFrom");
 		
 		System.out.println("Requested Goal : " + $goal);
-				
-		$communicationInstance.inform($reasoner, "(goalComplete (CargoUnstoringPreparedRequestedFrom " + $manager + " " + $goalID +  " " + $goal + "))");
+		ASSERT GoalRequested($manager, "CargoUnstoringPrepared", $goal);
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (CargoUnstoringPreparedRequestedFrom \"" + $manager + "\" \"" + $goalID +  "\" " + $goal + "))");
 		PERFORM isro:endLog("CONCLUDE", "CargoUnstoringPreparedRequestedFrom");
 }

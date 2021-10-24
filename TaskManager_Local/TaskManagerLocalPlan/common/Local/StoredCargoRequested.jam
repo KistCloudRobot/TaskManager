@@ -46,3 +46,4 @@ PLAN CONCLUDE StoredCargoRequestedFrom($manager, $goalID, $goal){
 		PERFORM isro:endLog("CONCLUDE", "StoredCargoRequestedFrom");
 	utility : 10;
 }
+
