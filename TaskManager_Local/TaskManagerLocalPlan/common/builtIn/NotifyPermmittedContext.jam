@@ -6,6 +6,7 @@ PLAN PERFORM NotifyPermmittedContext($agent, $data){
 	ID: "http://www.arbi.com//BuiltInPlan#NotifyPermmittedContext"
 	PRECONDITION :
 		FACT Communication($communicationInstance);
+		
 	BODY :
 		$communicationInstance.inform($agent, "(relationChanged " + $data + ")");
 }

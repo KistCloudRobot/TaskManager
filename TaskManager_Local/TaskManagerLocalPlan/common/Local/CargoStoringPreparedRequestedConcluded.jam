@@ -4,7 +4,7 @@ PREFIXES:
 PLAN CONCLUDE PostCargoStoringPreparedRequestedTo($workers,$goalIDs, $goala) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostCargoStoringPreparedRequestedTo"
 	BODY:
-		POST ACHIEVE CargoStoringPreparedRequestedToaa($workers,$goalIDs, $goala);
+		POST ACHIEVE CargoStoringPreparedRequestedToaa($worker,$goalID, $goal);
 		System.out.println($workers + " " + $goalIDs + " " + $goala);
 		
 		

@@ -3,7 +3,7 @@ PREFIXES:
 		
 
 
-/*
+
 PLAN CONCLUDE CargoStoringPreparedRequestedFrom($manager, $goalID, $goal){
 	ID: "http://www.arbi.com//CargoStoringPreparedRequestedFrom"
 	PRECONDITION:
@@ -19,4 +19,3 @@ PLAN CONCLUDE CargoStoringPreparedRequestedFrom($manager, $goalID, $goal){
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedRequestedFrom");
 	UTILITY: 10; 
 }
-*/

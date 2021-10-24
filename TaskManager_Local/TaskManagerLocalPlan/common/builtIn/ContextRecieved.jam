@@ -6,13 +6,11 @@ PLAN CONCLUDE ContextRecieved($context){
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		System.out.println("no update : " + $context);
 		$glUtility.assertGL($context);
 		RETRACT ContextRecieved($context);
 		
-		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
 	UTILITY : 10;
 }
 
@@ -22,7 +20,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "RobotAt";
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT RobotAt($robot, $v1, $v2);
@@ -31,7 +28,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 		RETRACT ContextRecieved($contextName, $context);
 		
-		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
 	UTILITY : 100;
 }
 
@@ -41,7 +37,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "BatteryRemain";
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		
@@ -51,7 +46,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 		RETRACT ContextRecieved($contextName, $context);
 		
-		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
 	UTILITY : 100;
 }
 
@@ -61,7 +55,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "RobotVelocity";
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		
@@ -70,7 +63,6 @@ PLAN CONCLUDE ContextRecieved($context){
 				
 		RETRACT ContextRecieved($context);
 		
-		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
 	UTILITY : 100;
 }
 
@@ -80,7 +72,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "OnRobotTaskStatus";
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		$robot =  $glUtility.retrieveGLExpression($context, 0);
 		
@@ -89,7 +80,6 @@ PLAN CONCLUDE ContextRecieved($context){
 				
 		RETRACT ContextRecieved($context);
 		
-		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
 	UTILITY : 100;
 }
 
@@ -99,7 +89,6 @@ PLAN CONCLUDE ContextRecieved($context){
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "OnAgentTaskStatus";
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "ContextRecieved");
 		
 		$agent = $glUtility.retrieveGLExpression($context, 0);
 		
@@ -108,6 +97,5 @@ PLAN CONCLUDE ContextRecieved($context){
 				
 		RETRACT ContextRecieved($context);
 		
-		PERFORM  isro:endLog("CONCLUDE", "ContextRecieved");
 	UTILITY : 100;
 }

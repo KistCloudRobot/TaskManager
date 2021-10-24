@@ -76,7 +76,7 @@ public class TaskManager_Local extends ArbiAgent {
 		
 		System.out.println(System.getenv());
 		
-		ENV_JMS_BROKER = "tcp://" + System.getenv("JMS_BROKER") + ":61316";
+		ENV_JMS_BROKER = "tcp://172.16.165.204" + ":61313";
 		ENV_AGENT_NAME = "Local";
 		
 		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 

@@ -55,10 +55,10 @@ PLAN PERFORM RequestTaskAllocation($goal, $allocation){
 		PERFORM isro:startLog("PERFORM", "RequestTaskAllocation");
 		
 		$goalID = $glUtility.retrieveGLExpression($goal,0);
-		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$goalID = $glUtility.retrieveGLExpression($goalID,0);
 		$startStation = $glUtility.retrieveGLExpression($goal,2);
-		$startStation = $glUtility.retrieveGLExpression($goal,1);
-		$message = "(" +  $glUtility.retrieveGLExpression($goal,1) + " " + $goalID + " " + $startStation + ")";
+		$startStation = $glUtility.retrieveGLExpression($startStation,1);
+		$message = "(" +  $glUtility.retrieveGLExpression($goal,1) + " \"" + $goalID + "\" \"" + $startStation + "\")";
 		
 		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $message+")");
 		

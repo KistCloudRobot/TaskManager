@@ -485,7 +485,7 @@ public class GLMessageManager {
 				//System.out.println("=======expression Value : " + gl.getExpression(i).toString());
 				expressionList[i] = removeQuotationMarks(gl.getExpression(i).toString());
 				if(expressionList[i].startsWith("$")) {
-					expressionList[i] = "a";
+					expressionList[i] = "";
 					
 				}
 				//expressionList[i] = GLFactory.unescape(expressionList[i]);
