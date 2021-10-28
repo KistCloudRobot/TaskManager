@@ -13,9 +13,9 @@ PLAN PERFORM isro:RequestDoorOpen(){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestDoorOpen");
 		
-		$actionID = $helper.getActionID();
+		$actionID = "Local" + $helper.getActionID();
 			
-		$communicationInstance.request($address, "(doorOpen (actionID " + $actionID + "))");
+		$communicationInstance.request($address, "(doorOpen (actionID \"" + $actionID + "\") \"Door1\")");
 				
 		System.out.println("wait id" + $actionID);
 		WAIT actionCompleted($actionID);

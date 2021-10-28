@@ -7,7 +7,7 @@ FACTS:
 	fact ActionID(1);
 	fact isro:agent("Local");
 	fact OnAgentTaskStatus("Local", "wait", "wait");
-	
+	FACT DoorStatus("Closed");
 	
 	fact OnAgentTaskStatus("Lift2", "wait", "wait");
 	fact RobotAt("AMR_LIFT2", 102,102);

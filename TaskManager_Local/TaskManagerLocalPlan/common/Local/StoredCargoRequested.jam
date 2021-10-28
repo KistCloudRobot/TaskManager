@@ -7,6 +7,7 @@ PLAN CONCLUDE PostStoredCargoRequestedTo($worker,$goalID, $goal) {
 	BODY:
 		RETRACT PostStoredCargoRequestedTo($worker,$goalID, $goal);
 		POST ACHIEVE StoredCargoRequestedTo($worker,$goalID, $goal);
+	UTILITY: 1000; 
 }
 
 PLAN ACHIEVE StoredCargoRequestedTo($worker, $goalID, $goal){
@@ -27,7 +28,7 @@ PLAN ACHIEVE StoredCargoRequestedTo($worker, $goalID, $goal){
 		
 		$communicationInstance.inform($reasoner, "(goalComplete (StoredCargoRequestedTo \"" + $worker + "\" \"" + $goalID + "\" " + $goal + "))");
 		PERFORM isro:endLog("ACHIEVE", "StoredCargoRequestedTo");
-	UTILITY: 10000; 
+	UTILITY: 1000; 
 }
 
 

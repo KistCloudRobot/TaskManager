@@ -46,7 +46,7 @@ PLAN CONCLUDE MovingRackTransportedReportedFrom($worker, $goalID, $goal){
 		
 		System.out.println("Reported Goal : " + $goal);
 				
-		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedReportedFrom " + $worker + " " + $goalID + " " + $goal + "))");
+		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedReportedFrom \"" + $worker + "\" " + $goalID + " " + $goal + "))");
 		PERFORM isro:endLog("CONCLUDE", "MovingRackTransportedRequestedTo");
 	UTILITY: 1; 
 }
@@ -88,12 +88,13 @@ PLAN PERFORM TaskCreated($goaID, $goal){
 		$goalID = $helper.getGoalID("Local");
 		
 		//PERFORM QueryIdleMovingRack($rack);
-		$startStation = "station20";
+		$startStation = "station21";
 		PERFORM QueryRack($startStation, $rack);
 		System.out.println("rack? " + $rack); 
 		System.out.println("requestedGoal" + $requestedGoal);
 		
-		$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
+		//$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
+		$endStation = "station23";
 		System.out.println("endStation " + $endStation);
 		assert MovingRackInfo($rack,$startStation);
 		
@@ -109,13 +110,12 @@ PLAN PERFORM TaskCreated($goaID, $goal){
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
 		FACT GLUtility($glUtility);
-		fact MovingRackInfo($rackID,$endStation);
 	BODY:
 		$goalID = $helper.getGoalID("Local");
 		
-		
-		$startStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
-		
+		$rack ="RACK_TOW1";
+		$startStation = "station23";
+		$endStation = "station21";
 		$goal = "(goal (metadata \"" +$goalID +"\") \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
 	UTILITY: 1; 
 }

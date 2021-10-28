@@ -55,12 +55,12 @@ public class TaskManager_Local extends ArbiAgent {
 	public TaskManager_Local() {
 		
 		initAddress();
+		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
 		
 		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
-		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
-		
+
 		msgManager = new GLMessageManager(interpreter);
 		
 //		aplViewer = new APLViewer(interpreter);
@@ -74,9 +74,8 @@ public class TaskManager_Local extends ArbiAgent {
 		//ENV_AGENT_NAME = System.getenv("AGENT");
 		//ENV_ROBOT_NAME = System.getenv("ROBOT");
 		
-		System.out.println(System.getenv());
-		
-		ENV_JMS_BROKER = "tcp://172.16.165.204" + ":61313";
+	
+		ENV_JMS_BROKER = "tcp://127.0.0.1" + ":61313";
 		ENV_AGENT_NAME = "Local";
 		
 		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
@@ -93,6 +92,13 @@ public class TaskManager_Local extends ArbiAgent {
 			isTriggered = true;
 		}
 		
+	}
+	
+	public String justRemove(Object input) {
+		
+		System.out.println("??????" + input.getClass().getSimpleName());
+		String data = input.toString();
+		return data.substring(1, data.length()-1);
 	}
 	
 	private void init() {
@@ -192,10 +198,19 @@ public class TaskManager_Local extends ArbiAgent {
 					msgManager.updateFact("(RobotPath $robot $start $end $path)",gl.toString());
 					msgManager.assertGL("(RobotPathUpdated)");
 				} else if (gl.getName().equals("GoalRequest")) {
-					msgManager.assertGoal(gl.toString());
+					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
+					msgManager.assertFact(goalGL.getName() + "RequestedFrom", goalGL.getExpression(0), goalGL.getExpression(1));
 				} else if (gl.getName().equals("GoalReport")) {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "ReportedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
+				}  else if(gl.getExpression(0).isGeneralizedList()) { 
+					System.out.println("action parsing");
+					if (gl.getExpression(0).asGeneralizedList().getName().equals("actionID") &&
+							gl.getExpression(1).asValue().stringValue().equals("success")) {
+						String actionResult = "(actionCompleted "+ gl.getExpression(0).asGeneralizedList().getExpression(0) + ")";
+						System.out.println(actionResult);
+						msgManager.assertGL(actionResult);	
+					}
 				} else {
 					System.out.println("assert context : " + data);
 					msgManager.assertGL(data);
@@ -244,14 +259,14 @@ public class TaskManager_Local extends ArbiAgent {
 
 	@Override
 	public void onData(String sender, String data) {
-		System.out.println("recieved data from " + sender + " : " + data);
+		//System.out.println("recieved data from " + sender + " : " + data);
 		RecievedMessage msg = new RecievedMessage(sender, data);
 		messageQueue.add(msg);
 	}
 
 	@Override
 	public String onRequest(String sender, String request) {
-		System.out.println("received data from " + sender + " : " + request);
+		//System.out.println("received data from " + sender + " : " + request);
 		RecievedMessage msg = new RecievedMessage(sender, request);
 		messageQueue.add(msg);
 

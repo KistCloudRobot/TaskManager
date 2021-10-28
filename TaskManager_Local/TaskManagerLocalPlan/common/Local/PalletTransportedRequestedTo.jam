@@ -195,12 +195,15 @@ PLAN PERFORM PalletTransportatedCreated($goalID, $goal){
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
 		FACT GLUtility($glUtility);
-		fact  previousStation($endStation,$rack);
 	BODY:
-
+		System.out.println("pallet creating started");
+		
+		perform QueryEmpty($endStation);
+		
 		$goalID = $helper.getGoalID("Local");
 
 		System.out.println("here");
+		
 		
 		System.out.println($requestedGoal);
 		$stringGoal = $glUtility.unescapeGL($requestedGoal);
@@ -208,8 +211,9 @@ PLAN PERFORM PalletTransportatedCreated($goalID, $goal){
 		System.out.println($stringGoal);
 		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
 		System.out.println("here");
+		perform QueryRack($startStation,$rack);
 		
-
+		
 		System.out.println("here");
 		System.out.println($goalID);
 		
@@ -297,7 +301,7 @@ PLAN PERFORM QueryRack($station, $rack){
 		
 		$queryResult = $communicationInstance.sendQuery($address, "(context (OnStation $rack \"" +  $station + "\" ))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		$rack = $glUtility.retrieveGLExpression($context, 1);
+		$rack = $glUtility.retrieveGLExpression($context, 0);
 	UTILITY: 10; 
 }
 

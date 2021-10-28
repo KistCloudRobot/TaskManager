@@ -13,14 +13,14 @@ PLAN perform DoorOpened(){
 		PERFORM  isro:startLog("PERFORM", "DoorOpened");
 		//PERFORM  UpdateAgentTaskStatus("DoorOpened", "start");
 		
-		PERFORM RequestDoorOpen();
-		$oldData = "(context (DoorStatus $status))";
-		$newData = "(context (DoorStatus \"Opened\"))";
-		$communicationInstance.updateFact($oldData, $newData);
+		PERFORM isro:RequestDoorOpen();
+		RETRACT DoorStatus($status);
+		ASSERT DoorStatus("Opened");
 		
 		//PERFORM UpdateAgentTaskStatus("DoorOpened", "complete");
 		
 		PERFORM isro:endLog("PERFORM", "DoorOpened");
+	UTILITY : 10;
 }
 
 PREFIXES:
@@ -40,5 +40,6 @@ PLAN perform DoorOpened(){
 		
 		//PERFORM UpdateAgentTaskStatus("DoorOpened", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorOpened");
+	UTILITY : 10;
 }
 

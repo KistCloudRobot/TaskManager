@@ -13,13 +13,12 @@ PLAN perform DoorClosed(){
 		PERFORM  isro:startLog("PERFORM", "DoorClosed");
 		//PERFORM  UpdateAgentTaskStatus("DoorClosed", "start");
 		
-		PERFORM RequestDoorOpen();
-		$oldData = "(context (DoorStatus $status))";
-		$newData = "(context (DoorStatus \"Closed\"))";
-		$communicationInstance.updateFact($oldData, $newData);
-		
+		PERFORM isro:RequestDoorClose();
+		RETRACT DoorStatus($status);
+		ASSERT DoorStatus("Closed");
 		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorClosed");
+	UTILITY : 10;
 }
 
 PLAN perform DoorClosed(){
@@ -37,5 +36,6 @@ PLAN perform DoorClosed(){
 		
 		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorClosed");
+	UTILITY : 10;
 }
 

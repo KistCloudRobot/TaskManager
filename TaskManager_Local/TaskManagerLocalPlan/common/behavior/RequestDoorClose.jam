@@ -13,9 +13,9 @@ PLAN PERFORM isro:RequestDoorClose(){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestDoorClose");
 		
-		$actionID = $helper.getActionID();
+		$actionID =  "Local" + $helper.getActionID();
 			
-		$communicationInstance.request($address, "(doorClose (actionID " + $actionID + "))");
+		$communicationInstance.request($address, "(doorClose (actionID \"" + $actionID + "\") \"Door1\")");
 				
 		System.out.println("wait id" + $actionID);
 		WAIT actionCompleted($actionID);

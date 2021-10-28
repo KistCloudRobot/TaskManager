@@ -29,6 +29,7 @@ public class GLMessageManager {
 		
 		new GLMessageManager();
 		
+		
 	}
 
 	public int toInteger(String input) {
@@ -86,9 +87,7 @@ public class GLMessageManager {
 	}
 
 	public GLMessageManager() {
-		String result = this.retrieveGLExpression("(arguments \"화자\" \"후식\" \"물\")", 2);
-		//int result = retireveExpressionSize("(result)");
-		System.out.println(result);
+		System.out.println(this.removeQuotationMarks("Tow21"));
 	}
 
 	public String changeName(String input, String newName) {
@@ -121,8 +120,11 @@ public class GLMessageManager {
 
 		return result;
 	}
-
+	
+	
 	public String removeQuotationMarks(String input) {
+		System.out.println("?????");
+		
 		if (input.startsWith("\"")) {
 			input = input.substring(1, input.length() - 1);
 		}
