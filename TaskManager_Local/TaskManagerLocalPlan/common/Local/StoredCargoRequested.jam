@@ -25,8 +25,8 @@ PLAN ACHIEVE StoredCargoRequestedTo($worker, $goalID, $goal){
 		$goal = "(StoredCargo \"" + $location +"\")";
 		$worker = "Local";
 		ASSERT StoredCargoRequestedFrom($worker, $goalID, $goal);
-		
-		$communicationInstance.inform($reasoner, "(goalComplete (StoredCargoRequestedTo \"" + $worker + "\" \"" + $goalID + "\" " + $goal + "))");
+		perform isro:SendGoalComplete("StoredCargoRequestedTo",$worker,$goalID,$goal);
+
 		PERFORM isro:endLog("ACHIEVE", "StoredCargoRequestedTo");
 	UTILITY: 1000; 
 }
@@ -42,8 +42,8 @@ PLAN CONCLUDE StoredCargoRequestedFrom($manager, $goalID, $goal){
 		
 		ASSERT GoalRequested($goalID, "StoredCargo", $goal);
 		System.out.println("Requested Goal : " + $goal);
+		perform isro:SendGoalComplete("StoredCargoRequestedFrom",$manager,$goalID,$goal);
 				
-		$communicationInstance.inform($reasoner, "(goalComplete (StoredCargoRequestedFrom \"" + $manager + "\" \"" + $goalID +  "\" " + $goal + "))");
 		PERFORM isro:endLog("CONCLUDE", "StoredCargoRequestedFrom");
 	utility : 10;
 }

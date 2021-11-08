@@ -20,8 +20,8 @@ PLAN ACHIEVE CargoStoringPreparedReportedTo($manager, $goalID, $goal){
 		PERFORM isro:startLog("ACHIEVE", "CargoStoringPreparedReportedTo");
 		
 		ASSERT CargoStoringPreparedReportedFrom($manager, $goalID, $goal);
+		perform isro:SendGoalComplete("CargoStoringPreparedReportedTo",$manager,$goalID,$goal);
 		
-		$communicationInstance.inform($reasoner, "(goalComplete (CargoStoringPreparedReportedTo " + $manager + " " + $goalID + " " + $goal + "))");
 		PERFORM isro:endLog("ACHIEVE", "CargoStoringPreparedReportedTo");
 	UTILITY: 10000; 
 }
@@ -36,7 +36,7 @@ PLAN CONCLUDE CargoStoringPreparedReportedFrom($worker, $goalID, $goal){
 		PERFORM isro:startLog("CONCLUDE", "CargoStoringPreparedReportedFrom");
 		
 		System.out.println("Reported Goal : " + $goal);
-				
-		$communicationInstance.inform($reasoner, "(goalComplete (CargoStoringPreparedReportedFrom \"" + $worker +"\" \"" + $goalID + "\" " + $goal + "))");
+		perform isro:SendGoalComplete("CargoStoringPreparedReportedFrom",$worker,$goalID,$goal);
+
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedReportedFrom");
 }

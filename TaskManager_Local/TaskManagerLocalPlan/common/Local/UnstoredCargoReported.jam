@@ -20,8 +20,8 @@ PLAN ACHIEVE UnstoredCargoReportedTo($manager, $goalID, $goal){
 		PERFORM isro:startLog("ACHIEVE", "UnstoredCargoReportedTo");
 		
 		ASSERT UnstoredCargoReportedFrom($manager, $goalID, $goal);
-		
-		$communicationInstance.inform($reasoner, "(goalComplete (UnstoredCargoReportedTo " + $manager + " " + $goalID + " " + $goal + "))");
+		perform isro:SendGoalComplete("UnstoredCargoReportedTo",$manager,$goalID,$goal);
+				
 		PERFORM isro:endLog("ACHIEVE", "UnstoredCargoReportedTo");
 	UTILITY: 10000; 
 }
@@ -37,7 +37,7 @@ PLAN CONCLUDE UnstoredCargoReportedFrom($worker, $goalID, $goal){
 		
 		System.out.println("Reported Goal : " + $goal);
 		
-
-		$communicationInstance.inform($reasoner, "(goalComplete (UnstoredCargoReportedFrom " + $worker +" " + $goalID + " " + $goal + "))");
+		perform isro:SendGoalComplete("UnstoredCargoReportedFrom",$worker,$goalID,$goal);
+				
 		PERFORM isro:endLog("CONCLUDE", "UnstoredCargoReportedFrom");
 }

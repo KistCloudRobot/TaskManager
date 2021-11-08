@@ -1,0 +1,21 @@
+
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN perform isro:SendGoalComplete($goalName, $caller, $goalID, $argument) {
+	ID: "http://www.arbi.com//BuiltInPlan#SendGoalComplete"
+	PRECONDITION :
+		FACT isro:ReasonerAddress($address);
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM  isro:startLog("PERFORM", "isro:SendGoalComplete");
+		
+		$communicationInstance.inform($address, "(context (GoalFinished \"" + $goalName +"\" \"" + $caller + "\" \"" + $goalID + "\" " + $argument + "))");
+		
+
+		PERFORM  isro:endLog("PERFORM", "isro:QueryStationVertex");
+	UTILITY : 10;
+	
+}

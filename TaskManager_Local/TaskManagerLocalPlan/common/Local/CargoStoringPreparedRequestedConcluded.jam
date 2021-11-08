@@ -32,7 +32,7 @@ PLAN ACHIEVE CargoStoringPreparedRequestedToaa($worker, $goalID, $goal){
 		$goal= $glUtility.escapeGL($goal);
 		$worker = "Local";
 		ASSERT CargoStoringPreparedRequestedFrom($worker, $goalID, $goal);
-		
+		perform isro:SendGoalComplete("CargoStoringPreparedRequestedTo",$worker,$goalID,$goal);
 		$communicationInstance.inform($reasoner, "(goalComplete (CargoStoringPreparedRequestedTo \"" + $worker + "\" \"" + $goalID + "\" \"" + $goal + "\"))");
 		PERFORM isro:endLog("ACHIEVE", "CargoStoringPreparedRequestedTo");
 	UTILITY: 10; 

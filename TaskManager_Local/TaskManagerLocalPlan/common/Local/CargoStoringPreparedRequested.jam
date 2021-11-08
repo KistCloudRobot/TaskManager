@@ -14,8 +14,7 @@ PLAN CONCLUDE CargoStoringPreparedRequestedFrom($manager, $goalID, $goal){
 		
 		System.out.println("Requested Goal : " + $goal);
 		ASSERT GoalRequested($goalID, "CargoStoringPrepared",$goal);
-		
-		$communicationInstance.inform($reasoner, "(goalComplete (CargoStoringPreparedRequestedFrom \"" + $manager + "\" \"" + $goalID +  "\" \"" + $goal + "\"))");
+		perform isro:SendGoalComplete("CargoStoringPreparedRequestedFrom",$manager,$goalID,$goal);
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedRequestedFrom");
 	UTILITY: 10; 
 }
