@@ -113,8 +113,11 @@ PLAN CONCLUDE MovingRackTransportedReportedFrom($worker, $goalID, $goal){
 		PERFORM isro:startLog("CONCLUDE", "MovingRackTransportedRequestedTo");
 		
 		System.out.println("Reported Goal : " + $goal);
-				
+		
 		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedReportedFrom \"" + $worker + "\" " + $goalID + " " + $goal + "))");
+		
+		
+		
 		PERFORM isro:endLog("CONCLUDE", "MovingRackTransportedRequestedTo");
 	UTILITY: 1; 
 }

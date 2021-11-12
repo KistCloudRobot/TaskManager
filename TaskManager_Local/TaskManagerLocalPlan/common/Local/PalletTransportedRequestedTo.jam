@@ -60,17 +60,8 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedToBoth");
 
-		perform QueryEmpty($endStation);
-		$goalID = $helper.getGoalID("Local");
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		perform QueryRack($startStation,$rack);
-		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$unstoredCargoGoal);
-		
-	
-	
-	
-	
+
+
 		$goalID2 = $helper.getGoalID("Local");
 		/*
 		PERFORM QueryOnRack($cargo2,$rack2);
@@ -85,6 +76,13 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
 
 		perform BuildPalletGoal($goalID2,$rack2,$startStation2,$endStation2,$storedCargoGoal);
 		
+		
+		perform QueryEmpty($endStation);
+		$goalID = $helper.getGoalID("Local");
+		$stringGoal = $glUtility.unescapeGL($requestedGoal);
+		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
+		perform QueryRack($startStation,$rack);
+		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$unstoredCargoGoal);
 		
 		System.out.println("pallet Transported created complete");
 		
