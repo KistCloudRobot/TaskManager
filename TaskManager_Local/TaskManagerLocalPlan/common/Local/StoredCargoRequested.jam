@@ -7,13 +7,13 @@ PLAN CONCLUDE PostStoredCargoRequestedTo($worker,$goalID, $goal) {
 	BODY:
 		RETRACT PostStoredCargoRequestedTo($worker,$goalID, $goal);
 		POST ACHIEVE StoredCargoRequestedTo($worker,$goalID, $goal);
-	UTILITY: 1000; 
+	UTILITY: 10000; 
 }
 
 PLAN ACHIEVE StoredCargoRequestedTo($worker, $goalID, $goal){
 	ID: "http://www.arbi.com//StoredCargoRequestedTo"
 	PRECONDITION:
-		FACT PersonCall($callID, $location, $call);
+		FACT PersonCall($callID, $location, "Storing");
 		FACT Communication($communicationInstance);
 		FACT ExtraUtility($helper);
 		FACT isro:ReasonerAddress($reasoner);
@@ -28,7 +28,7 @@ PLAN ACHIEVE StoredCargoRequestedTo($worker, $goalID, $goal){
 		perform isro:SendGoalComplete("StoredCargoRequestedTo",$worker,$goalID,$goal);
 
 		PERFORM isro:endLog("ACHIEVE", "StoredCargoRequestedTo");
-	UTILITY: 1000; 
+	UTILITY: 10000; 
 }
 
 
@@ -45,6 +45,6 @@ PLAN CONCLUDE StoredCargoRequestedFrom($manager, $goalID, $goal){
 		perform isro:SendGoalComplete("StoredCargoRequestedFrom",$manager,$goalID,$goal);
 				
 		PERFORM isro:endLog("CONCLUDE", "StoredCargoRequestedFrom");
-	utility : 10;
+	utility : 10000;
 }
 

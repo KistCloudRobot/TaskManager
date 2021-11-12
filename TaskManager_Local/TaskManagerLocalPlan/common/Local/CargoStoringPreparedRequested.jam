@@ -16,5 +16,5 @@ PLAN CONCLUDE CargoStoringPreparedRequestedFrom($manager, $goalID, $goal){
 		ASSERT GoalRequested($goalID, "CargoStoringPrepared",$goal);
 		perform isro:SendGoalComplete("CargoStoringPreparedRequestedFrom",$manager,$goalID,$goal);
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedRequestedFrom");
-	UTILITY: 10; 
+	UTILITY: 10000; 
 }

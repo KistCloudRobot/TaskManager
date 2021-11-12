@@ -20,7 +20,7 @@ PLAN perform DoorOpened(){
 		//PERFORM UpdateAgentTaskStatus("DoorOpened", "complete");
 		
 		PERFORM isro:endLog("PERFORM", "DoorOpened");
-	UTILITY : 10;
+	UTILITY : 1000000;
 }
 
 PREFIXES:
@@ -40,6 +40,6 @@ PLAN perform DoorOpened(){
 		
 		//PERFORM UpdateAgentTaskStatus("DoorOpened", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorOpened");
-	UTILITY : 10;
+	UTILITY : 1000000;
 }
 

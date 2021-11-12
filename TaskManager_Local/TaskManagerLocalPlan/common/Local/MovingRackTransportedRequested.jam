@@ -5,24 +5,48 @@ PLAN CONCLUDE PostMovingRackTransportedRequestedTo($worker,$goalID ,$goal) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostMovingRackTransportedRequestedTo"
 	PRECONDITION:
 	BODY:
+		PERFORM isro:startLog("CONCLUDE", "PostMovingRackTransportedRequestedTo");
+		
 		RETRACT PostMovingRackTransportedRequestedTo($worker,$goalID , $goal);
-		POST ACHIEVE MovingRackTransportedRequestedTo($worker,$goalID , $goal);
+		POST PERFORM MovingRackTransportedRequestedTo($worker,$goalID , $goal);
+		PERFORM isro:endLog("CONCLUDE", "PostMovingRackTransportedRequestedTo");
+	utility : 1000000;
+		
 }
 
-PLAN ACHIEVE MovingRackTransportedRequestedTo($worker, $goalID, $goal){
+PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goal){
 	ID: "http://www.arbi.com//MovingRackTransportedRequestedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
-		
+		FACT ExtraUtility($helper);
+		FACT GLUtility($glUtility);
+		FACT GoalRequested($requestedGoalID, "CargoUnstoringPrepared",$requestedGoal);
 	BODY:
-		PERFORM isro:startLog("ACHIEVE", "MovingRackTransportedRequestedTo");
+		PERFORM isro:startLog("ACHIEVE", "MovingRackTransportedRequestedTo2");
 		
-		PERFORM TaskCreated($goalID, $goal);
-		PERFORM RequestTaskAllocation($goal, $allocation);
-		System.out.println("allocation? " + $allocation);
+		$startStation = "station20";
+		$goalID = $helper.getGoalID("Local");
+		PERFORM QueryRack($startStation, $rack);
+		System.out.println("rack? " + $rack); 
+		System.out.println("goalID? " + $goalID); 
+		System.out.println("requestedGoal" + $requestedGoal);
+		
+		//$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
+		$endStation = "station23";
+		System.out.println("endStation " + $endStation);
+
+		perform BuildMovingRackGoal($goalID,$rack,$startStation,$endStation,$goal);
+		
+		
+		//PERFORM RequestTaskAllocation($goal, $allocation);
+		//System.out.println("allocation? " + $allocation);
 		
 		//PERFORM FindWorker($allocation, $worker);
+		
+		$allocation = "Tow1";
+		
+		$escapedGoal = $glUtility.escapeGL($goal);
 		
 		System.out.println("worker? " + $allocation);
 		
@@ -30,9 +54,53 @@ PLAN ACHIEVE MovingRackTransportedRequestedTo($worker, $goalID, $goal){
 		
 		System.out.println("goal assigned");
 		
-		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedRequestedTo " + $worker + " " + $goalID + " " + $goal + "))");
+		perform isro:SendGoalComplete("MovingRackTransportedRequestedTo", $allocation, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
-	UTILITY: 1; 
+	UTILITY: 150; 
+}
+
+PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//MovingRackTransportedRequestedToUnstoringCargo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+		FACT ExtraUtility($helper);
+		FACT GLUtility($glUtility);
+		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "MovingRackTransportedRequestedTo1");
+		$goalID = $helper.getGoalID("Local");
+		$rack ="RACK_TOW1";
+		$startStation = "station23";
+		$endStation = "station21";
+		perform BuildMovingRackGoal($goalID,$rack,$startStation,$endStation,$goal);
+		
+		
+		PERFORM RequestTaskAllocation($goal, $allocation);
+		System.out.println("allocation? " + $allocation);
+		
+		//PERFORM FindWorker($allocation, $worker);
+		
+		System.out.println("worker? " + $allocation);
+		
+		$escapedGoal = $glUtility.escapeGL($goal);
+		
+		
+		PERFORM GoalAssign($goal, $allocation);
+		
+		System.out.println("goal assigned");
+		
+		perform isro:SendGoalComplete("MovingRackTransportedRequestedTo", $allocation, $goalID, $escapedGoal);
+		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
+	UTILITY: 120; 
+}
+
+plan perform BuildMovingRackGoal($goalID,$rack,$startStation,$endStation,$goal){
+	ID: "http://www.arbi.com//BuildPalletGoal"
+	BODY:
+		PERFORM isro:startLog("PERFORM", "BuildPalletGoal");
+		$goal = "(goal (metadata \"" +$goalID +"\") \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
+		PERFORM isro:endLog("PERFORM","BuildPalletGoal");
 }
 
 PLAN CONCLUDE MovingRackTransportedReportedFrom($worker, $goalID, $goal){

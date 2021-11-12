@@ -11,6 +11,14 @@ PLAN perform isro:SendGoalComplete($goalName, $caller, $goalID, $argument) {
 		FACT GLUtility($glUtility);
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "isro:SendGoalComplete");
+		System.out.println("goalName : " + $goalName);
+		System.out.println("caller : " + $caller);
+		System.out.println("goalID : " + $goalID);
+		$goalID = $glUtility.removeQuotationMarks($goalID);
+		
+		System.out.println("argument : " + $argument);
+		
+		$argument = $glUtility.unescapeGL($argument);
 		
 		$communicationInstance.inform($address, "(context (GoalFinished \"" + $goalName +"\" \"" + $caller + "\" \"" + $goalID + "\" " + $argument + "))");
 		

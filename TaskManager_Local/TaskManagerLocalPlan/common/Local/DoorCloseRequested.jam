@@ -33,6 +33,6 @@ PLAN CONCLUDE DoorClosedRequestedFrom($requester, $goalID){
 		//$communicationInstance.inform($reasoner, "(goalComplete (DoorCloseRequestedFrom " + $worker +" " + $goalID + "))");
 		PERFORM isro:endLog("CONCLUDE", "DoorCloseRequestedFrom");
 		
-	UTILITY : 10000;
+	UTILITY : 1000000;
 }
 

@@ -7,6 +7,7 @@ PLAN CONCLUDE PostCargoStoringPreparedReportedTo($worker,$goalID ,$goal) {
 	BODY:
 		RETRACT PostCargoStoringPreparedReportedTo($worker,$goalID , $goal);
 		POST ACHIEVE CargoStoringPreparedReportedTo($worker,$goalID , $goal);
+	UTILITY: 10000; 
 }
 
 PLAN ACHIEVE CargoStoringPreparedReportedTo($manager, $goalID, $goal){
@@ -39,4 +40,5 @@ PLAN CONCLUDE CargoStoringPreparedReportedFrom($worker, $goalID, $goal){
 		perform isro:SendGoalComplete("CargoStoringPreparedReportedFrom",$worker,$goalID,$goal);
 
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedReportedFrom");
+	utility : 10000;
 }

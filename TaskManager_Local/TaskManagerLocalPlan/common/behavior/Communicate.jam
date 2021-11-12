@@ -22,7 +22,6 @@ PLAN perform CommunicateSend($data, $address, $communicationID) {
 		FACT TaskManager($tm);
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "Communicate");
-		
 		$communicationInstance.send($address, $data);
 		$communicationID = $tm.getConversationID();
 		

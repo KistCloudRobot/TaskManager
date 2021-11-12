@@ -7,6 +7,7 @@ PLAN CONCLUDE PostStoredCargoReportedTo($worker,$goalID ,$goal) {
 	BODY:
 		RETRACT PostStoredCargoReportedTo($worker,$goalID , $goal);
 		POST ACHIEVE StoredCargoReportedTo($worker,$goalID , $goal);
+	UTILITY: 10000; 
 }
 
 PLAN ACHIEVE StoredCargoReportedTo($manager, $goalID, $goal){
@@ -37,4 +38,5 @@ PLAN CONCLUDE StoredCargoReportedFrom($worker, $goalID, $goal){
 		System.out.println("Reported Goal : " + $goal);
 		perform isro:SendGoalComplete("StoredCargoReportedFrom",$manager,$goalID,$goal);
 		PERFORM isro:endLog("CONCLUDE", "StoredCargoReportedFrom");
+	UTILITY: 10000; 
 }

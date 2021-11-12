@@ -18,7 +18,7 @@ PLAN perform DoorClosed(){
 		ASSERT DoorStatus("Closed");
 		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorClosed");
-	UTILITY : 10;
+	UTILITY : 100000;
 }
 
 PLAN perform DoorClosed(){
@@ -36,6 +36,6 @@ PLAN perform DoorClosed(){
 		
 		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorClosed");
-	UTILITY : 10;
+	UTILITY : 100000;
 }
 
