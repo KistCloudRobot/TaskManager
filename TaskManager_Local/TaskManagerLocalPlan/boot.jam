@@ -23,7 +23,7 @@ OBSERVER: {
 PLAN PERFORM boot() {
 	ID: "boot"
 	BODY:
-		
+
 		System.out.println("---Start Jam---");
 		RETRIEVE ExtraUtility($helper);
 		System.out.println("---Load plans---");

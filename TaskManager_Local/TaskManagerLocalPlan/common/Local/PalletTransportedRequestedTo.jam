@@ -11,15 +11,15 @@ PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID ,$goal) {
 	UTILITY : 10000;
 }
 
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
+		$goals == "CargoUnstoringPrepared";
 		FACT GoalRequested($requestedGoalID, "CargoUnstoringPrepared",$requestedGoal);
-
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 
@@ -48,15 +48,85 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
 	UTILITY: 10; 
 }
 
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
+	ID: "http://www.arbi.com//PalletTransportedRequestedToStoredCargo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		$goals == "StoredCargo";
+		FACT GoalRequested($requestedGoalID, "StoredCargo",$requestedGoal2);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
+
+		Perform QueryEmpty($endStation2);
+		System.out.println("????requested goal?  " + $requestedGoal2 );
+		//Perform QueryOnStation($startStation2,$rack2);
+		$rack2 = "RACK_LIFT5";
+		$stringGoal2 = $glUtility.unescapeGL($requestedGoal2);
+		$startStation2 = $glUtility.retrieveGLExpression($stringGoal2, 0);
+
+		perform BuildPalletGoal($goalID2,$rack2,$startStation2,$endStation2,$goal);
+		
+		
+		System.out.println("pallet Transported created complete");
+		
+		
+		PERFORM RequestTaskAllocation($goal, $worker);
+		
+		System.out.println($worker);
+		$escapedGoal = $glUtility.escapeGL($goal);
+		System.out.println($escapedGoal);
+		
+		PERFORM GoalAssign($goal, $worker);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
+	UTILITY: 10; 
+}
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
+	ID: "http://www.arbi.com//PalletTransportedRequestedToUnstoredCargo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		$goals == "UnstoredCargo";
+		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
+
+		perform QueryEmpty($endStation);
+		$goalID = $helper.getGoalID("Local");
+		$stringGoal = $glUtility.unescapeGL($requestedGoal);
+		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
+		perform QueryRack($startStation,$rack);
+		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal);
+		
+		System.out.println("pallet Transported created complete");
+		
+		
+		PERFORM RequestTaskAllocation($goal, $worker);
+		
+		System.out.println($worker);
+		$escapedGoal = $glUtility.escapeGL($goal);
+		System.out.println($escapedGoal);
+		
+		PERFORM GoalAssign($goal, $worker);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
+	UTILITY: 10; 
+}
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToBoth"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
+		$goals == "UnstoredCargoAndStoredCargo";
 		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
-		FACT GoalRequested($requestedGoalID2, "StoredCargo",$requestedGoal2);
+		FACT GoalRequested($requestedGoalID, "StoredCargo",$requestedGoal2);
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedToBoth");
 
