@@ -75,7 +75,7 @@ public class TaskManager_Local extends ArbiAgent {
 		//ENV_ROBOT_NAME = System.getenv("ROBOT");
 		
 	
-		ENV_JMS_BROKER = "tcp://172.16.165.171" + ":61313";
+		ENV_JMS_BROKER = "tcp://192.168.0.14" + ":61313";
 		ENV_AGENT_NAME = "Local";
 		
 		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
@@ -205,6 +205,7 @@ public class TaskManager_Local extends ArbiAgent {
 					msgManager.assertFact(goalGL.getName() + "ReportedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
 				}  else if(gl.getExpression(0).isGeneralizedList()) { 
 					System.out.println("action parsing");
+					System.out.println(gl.toString());
 					if (gl.getExpression(0).asGeneralizedList().getName().equals("actionID") &&
 							gl.getExpression(1).asValue().stringValue().equals("success")) {
 						String actionResult = "(actionCompleted "+ gl.getExpression(0).asGeneralizedList().getExpression(0) + ")";
