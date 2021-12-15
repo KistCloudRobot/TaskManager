@@ -43,6 +43,8 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 		System.out.println($escapedGoal);
 		
 		PERFORM GoalAssign($goal, $worker);
+		//System.out.println("worker is here! " + $worker);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
@@ -81,6 +83,8 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 		System.out.println($escapedGoal);
 		
 		PERFORM GoalAssign($goal, $worker);
+		//System.out.println("worker is here! " + $worker);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
@@ -118,6 +122,9 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 		System.out.println($escapedGoal);
 		
 		PERFORM GoalAssign($goal, $worker);
+		
+		//System.out.println("worker is here! " + $worker);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
@@ -151,6 +158,8 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 		System.out.println($escapedGoal);
 		
 		PERFORM GoalAssign($goal, $worker);
+		//System.out.println("worker is here! " + $worker);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
@@ -203,11 +212,16 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
 		System.out.println("start assign");
 		System.out.println("worker " + $worker1 + " " + $escapedGoal);
 		PERFORM GoalAssign($unstoredCargoGoal, $worker1);
+		//System.out.println("worker is here! " + $worker1);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker1);
 		
-		$helper.sleepAwhile(2000);
+		$helper.sleepAwhile(3000); //???
 		System.out.println("worker " + $worker2 + " " + $escapedGoal2);
 		
 		PERFORM GoalAssign($cargoStoringPreparedGoal, $worker2);
+		
+		//System.out.println("worker is here! " + $worker2);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker2);
 		System.out.println("?????");
 		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker1, $goalID, $escapedGoal);

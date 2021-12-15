@@ -54,7 +54,8 @@ PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goals){
 		PERFORM GoalAssign($goal, $allocation);
 		
 		System.out.println("goal assigned");
-		
+		//System.out.println("worker is here ! : " + $allocation);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $allocation);
 		perform isro:SendGoalComplete("MovingRackTransportedRequestedTo", $allocation, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
 	UTILITY: 150; 
@@ -92,6 +93,8 @@ PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goals){
 		
 		System.out.println("goal assigned");
 		
+		//System.out.println("worker is here ! : " + $allocation);
+		PERFORM isro:SendGoalAssignedToSMM($goalID, $allocation);
 		perform isro:SendGoalComplete("MovingRackTransportedRequestedTo", $allocation, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
 	UTILITY: 120; 

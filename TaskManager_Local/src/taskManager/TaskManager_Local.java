@@ -33,7 +33,7 @@ public class TaskManager_Local extends ArbiAgent {
 	public static String ENV_JMS_BROKER;
 	public static String ENV_AGENT_NAME;
 	public static String ENV_ROBOT_NAME;
-	public static final String JMS_BROKER_URL = "tcp://172.16.165.204:8000";
+	public static final String JMS_BROKER_URL = "tcp://172.16.165.171:61313";
 	//public static final String JMS_BROKER_URL = "tcp://localhost:61616";
 	public static final String ARBI_PREFIX = "www.arbi.com/";
 	public static final String BASE_AGENT_NAME = "/TaskManager";
@@ -75,7 +75,7 @@ public class TaskManager_Local extends ArbiAgent {
 		//ENV_ROBOT_NAME = System.getenv("ROBOT");
 		
 	
-		ENV_JMS_BROKER = "tcp://192.168.0.14" + ":61313";
+		ENV_JMS_BROKER = "tcp://172.16.165.171:61313";
 		ENV_AGENT_NAME = "Local";
 		
 		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
