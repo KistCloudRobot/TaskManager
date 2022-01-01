@@ -122,15 +122,31 @@ public class GLMessageManager {
 	}
 	
 	
+	public String removeQuotationMarks(Object input) {
+		
+		System.out.println("removeQuotationMarks ??????" + input.getClass().getSimpleName());
+		String data = input.toString();
+		System.out.println(data);
+		
+		if (data.startsWith("\"")) {
+			System.out.println("data start with \\\"?");
+			System.out.println(data);
+			data = data.substring(1, data.length() - 1);
+		}
+		return data;
+	}
+
 	public String removeQuotationMarks(String input) {
-		System.out.println("?????");
 		
 		if (input.startsWith("\"")) {
+			System.out.println("input start with \\\"?");
+			System.out.println(input);
 			input = input.substring(1, input.length() - 1);
 		}
 		return input;
 	}
-
+	
+	
 	public String retrieveTime(String input) {
 
 		String[] resultList = input.split("T");
@@ -143,6 +159,7 @@ public class GLMessageManager {
 		return result;
 
 	}
+	
 	public String retrieveGLName(String glString) {
 		String result = "";
 		try {
@@ -495,6 +512,8 @@ public class GLMessageManager {
 			}
 			
 			System.out.println("?????" + expressionList[0]);
+
+			System.out.println("gl message assert goal");
 			assertFact(name, expressionList);
 
 		} catch (ParseException e) {
@@ -536,7 +555,11 @@ public class GLMessageManager {
 		System.out.println(result);
 		return result;
 	}
-	public String unescapeGL(String gl) {
+	public String unescapeGL(Object input) {
+
+		System.out.println("unescape GL ?????? " + input.getClass().getSimpleName());
+		String gl = input.toString();
+		
 		return GLFactory.unescape(gl);
 	}
 }

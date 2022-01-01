@@ -36,7 +36,7 @@ PLAN CONCLUDE StoredCargoReportedFrom($worker, $goalID, $goal){
 		PERFORM isro:startLog("CONCLUDE", "StoredCargoReportedFrom");
 		
 		System.out.println("Reported Goal : " + $goal);
-		perform isro:SendGoalComplete("StoredCargoReportedFrom",$manager,$goalID,$goal);
+		perform isro:SendGoalComplete("StoredCargoReportedFrom",$worker,$goalID,$goal);
 		PERFORM isro:endLog("CONCLUDE", "StoredCargoReportedFrom");
 	UTILITY: 10000; 
 }

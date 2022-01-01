@@ -32,6 +32,9 @@ PLAN ACHIEVE CargoStoringPreparedRequestedToaa($worker, $goalID, $goal){
 		$goal= $glUtility.escapeGL($goal);
 		$worker = "Local";
 		ASSERT CargoStoringPreparedRequestedFrom($worker, $goalID, $goal);
+		
+		RETRACT PersonCall($callID, $location, "PrepareStoring");
+		
 		perform isro:SendGoalComplete("CargoStoringPreparedRequestedTo",$worker,$goalID,$goal);
 		
 		PERFORM isro:endLog("ACHIEVE", "CargoStoringPreparedRequestedTo");

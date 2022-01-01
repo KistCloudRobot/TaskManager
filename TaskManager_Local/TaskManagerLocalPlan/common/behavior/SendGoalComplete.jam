@@ -9,21 +9,28 @@ PLAN perform isro:SendGoalComplete($goalName, $caller, $goalID, $argument) {
 		FACT isro:ReasonerAddress($address);
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
+		FACT TaskManager($tm);
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "isro:SendGoalComplete");
 		System.out.println("goalName : " + $goalName);
 		System.out.println("caller : " + $caller);
 		System.out.println("goalID : " + $goalID);
+
 		$goalID = $glUtility.removeQuotationMarks($goalID);
 		
+		System.out.println("goalID : " + $goalID);
 		System.out.println("argument : " + $argument);
 		
+		
+		$argument = $glUtility.removeQuotationMarks($argument);
 		$argument = $glUtility.unescapeGL($argument);
+		
+		System.out.println("argument : " + $argument);
 		
 		$communicationInstance.inform($address, "(context (GoalFinished \"" + $goalName +"\" \"" + $caller + "\" \"" + $goalID + "\" " + $argument + "))");
 		
 
-		PERFORM  isro:endLog("PERFORM", "isro:QueryStationVertex");
+		PERFORM  isro:endLog("PERFORM", "isro:SendGoalComplete");
 	UTILITY : 10;
 	
 }

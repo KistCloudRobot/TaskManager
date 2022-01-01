@@ -10,7 +10,7 @@ PLAN CONCLUDE PostCargoStoringPreparedReportedTo($worker,$goalID ,$goal) {
 	UTILITY: 10000; 
 }
 
-PLAN ACHIEVE CargoStoringPreparedReportedTo($manager, $goalID, $goal){
+PLAN PERFORM CargoStoringPreparedReportedTo($manager, $goalID, $goal){
 	ID: "http://www.arbi.com//CargoStoringPreparedReportedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -39,6 +39,7 @@ PLAN CONCLUDE CargoStoringPreparedReportedFrom($worker, $goalID, $goal){
 		System.out.println("Reported Goal : " + $goal);
 		perform isro:SendGoalComplete("CargoStoringPreparedReportedFrom",$worker,$goalID,$goal);
 
+		RETRACT CargoStoringPreparedReportedFrom($worker, $goalID, $goal);
 		PERFORM isro:endLog("CONCLUDE", "CargoStoringPreparedReportedFrom");
 	utility : 10000;
 }
