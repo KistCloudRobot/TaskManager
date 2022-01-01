@@ -5,8 +5,11 @@ PLAN CONCLUDE PostCargoStoringPreparedReportedTo($worker,$goalID ,$goal) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostCargoStoringPreparedReportedTo"
 	PRECONDITION:
 	BODY:
+		System.out.println("Post CargoStoringPreparedReportedTo");
 		RETRACT PostCargoStoringPreparedReportedTo($worker,$goalID , $goal);
-		POST ACHIEVE CargoStoringPreparedReportedTo($worker,$goalID , $goal);
+		System.out.println("RETRACT  CargoStoringPreparedReportedTo");
+		
+		POST PERFORM CargoStoringPreparedReportedTo($worker,$goalID , $goal);
 	UTILITY: 10000; 
 }
 
@@ -14,9 +17,7 @@ PLAN PERFORM CargoStoringPreparedReportedTo($manager, $goalID, $goal){
 	ID: "http://www.arbi.com//CargoStoringPreparedReportedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
 		FACT isro:ReasonerAddress($reasoner);
-		
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "CargoStoringPreparedReportedTo");
 		

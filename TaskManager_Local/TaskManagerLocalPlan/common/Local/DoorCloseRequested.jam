@@ -16,21 +16,19 @@ PLAN CONCLUDE DoorClosedRequestedFrom($requester, $goalID){
 				
 		RETRIEVE DoorStatus($status);
 		
-		System.out.println("????" + $status + " " + $goalID);
+		//System.out.println("????" + $status + " " + $goalID);
 		
 		//$goalID = $glUtility.removeQuotationMarks($goalID);
 		
-		System.out.println("?????" + $goalID + " " + $requester);
+		//System.out.println("?????" + $goalID + " " + $requester);
 		
 		$receiver = $tm.justRemove($requester);
-		System.out.println("?????" + $receiver);
+		//System.out.println("?????" + $receiver);
 		
 		$receiver = "agent://www.arbi.com/" + $receiver + "/TaskManager";
 		$data = "(GoalReport \"Local\" " + $goalID + " (DoorStatus \"" + $status+"\"))";
 		
-		
 		$communicationInstance.inform($receiver, $data);
-		//$communicationInstance.inform($reasoner, "(goalComplete (DoorCloseRequestedFrom " + $worker +" " + $goalID + "))");
 		PERFORM isro:endLog("CONCLUDE", "DoorCloseRequestedFrom");
 		
 	UTILITY : 1000000;

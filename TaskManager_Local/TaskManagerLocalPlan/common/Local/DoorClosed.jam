@@ -31,10 +31,6 @@ PLAN perform DoorClosed(){
 		$status == "Closed";
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "DoorClosed");
-		//PERFORM  UpdateAgentTaskStatus("DoorClosed", "start");
-		
-		
-		//PERFORM UpdateAgentTaskStatus("DoorClosed", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorClosed");
 	UTILITY : 100000;
 }

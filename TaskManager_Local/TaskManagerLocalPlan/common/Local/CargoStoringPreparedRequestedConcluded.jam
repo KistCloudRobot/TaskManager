@@ -4,18 +4,22 @@ PREFIXES:
 PLAN CONCLUDE PostCargoStoringPreparedRequestedTo($workers,$goalIDs, $goala) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostCargoStoringPreparedRequestedTo"
 	BODY:
-		POST ACHIEVE CargoStoringPreparedRequestedToaa($worker,$goalID, $goal);
+		
+		PERFORM isro:startLog("CONCLUDE", "PostCargoStoringPreparedRequestedTo");
+		
+		System.out.println("POST CargoStoringPreparedRequestedTo");
+		POST PERFORM CargoStoringPreparedRequestedToaa($worker,$goalID, $goal);
 		System.out.println($workers + " " + $goalIDs + " " + $goala);
+				
+		RETRACT PostCargoStoringPreparedRequestedTo($workers,$goalIDs, $goala);
 		
-		
-		
-		RETRACT PostCargoStoringPreparedRequestedToaa($workers,$goalIDs, $goala);
-	UTILITY : 10000;
+		PERFORM isro:endLog("CONCLUDE", "PostCargoStoringPreparedRequestedTo");
+	UTILITY : 100000;
 }
 
 
 
-PLAN ACHIEVE CargoStoringPreparedRequestedToaa($worker, $goalID, $goal){
+PLAN PERFORM CargoStoringPreparedRequestedToaa($worker, $goalID, $goal){
 	ID: "http://www.arbi.com//CargoStoringPreparedRequestedToasdfasf"
 	PRECONDITION:
 		FACT PersonCall($callID, $location, "PrepareStoring");
@@ -25,7 +29,7 @@ PLAN ACHIEVE CargoStoringPreparedRequestedToaa($worker, $goalID, $goal){
 		FACT GLUtility($glUtility);
 	BODY:
 	
-		PERFORM isro:startLog("ACHIEVE", "CargoStoringPreparedRequestedTo");
+		PERFORM isro:startLog("PERFORM", "CargoStoringPreparedRequestedTo");
 		
 		$goalID = $helper.getGoalID("Local");
 		$goal = "(CargoStoringPrepared \"" + $location +"\")";
@@ -37,6 +41,6 @@ PLAN ACHIEVE CargoStoringPreparedRequestedToaa($worker, $goalID, $goal){
 		
 		perform isro:SendGoalComplete("CargoStoringPreparedRequestedTo",$worker,$goalID,$goal);
 		
-		PERFORM isro:endLog("ACHIEVE", "CargoStoringPreparedRequestedTo");
+		PERFORM isro:endLog("PERFORM", "CargoStoringPreparedRequestedTo");
 	UTILITY: 10000; 
 }

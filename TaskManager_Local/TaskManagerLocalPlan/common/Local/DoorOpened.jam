@@ -36,9 +36,6 @@ PLAN perform DoorOpened(){
 		$status == "Opened";
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "DoorOpened");
-		//PERFORM  UpdateAgentTaskStatus("DoorOpened", "start");
-		
-		//PERFORM UpdateAgentTaskStatus("DoorOpened", "complete");
 		PERFORM isro:endLog("PERFORM", "DoorOpened");
 	UTILITY : 1000000;
 }

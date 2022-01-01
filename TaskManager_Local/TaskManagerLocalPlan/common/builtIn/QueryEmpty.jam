@@ -13,8 +13,8 @@ PLAN PERFORM QueryEmpty($empty){
 	
 		$queryResult = $communicationInstance.sendQuery($agent, "(context (EmptyStation $station))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		System.out.println($context);
+//		System.out.println($context);
 		$empty = $glUtility.retrieveGLExpression($context, 0);
-		System.out.println($empty);
+//		System.out.println($empty);
 	utility : 10;
 }

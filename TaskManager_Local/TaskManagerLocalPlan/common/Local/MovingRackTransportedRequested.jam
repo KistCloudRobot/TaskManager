@@ -29,31 +29,27 @@ PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goals){
 		$startStation = "station20";
 		$goalID = $helper.getGoalID("Local");
 		PERFORM QueryRack($startStation, $rack);
-		System.out.println("rack? " + $rack); 
-		System.out.println("goalID? " + $goalID); 
-		System.out.println("requestedGoal" + $requestedGoal);
+		//System.out.println("rack? " + $rack); 
+		//System.out.println("goalID? " + $goalID); 
+		//System.out.println("requestedGoal" + $requestedGoal);
 		
 		//$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
 		$endStation = "station23";
-		System.out.println("endStation " + $endStation);
+		//System.out.println("endStation " + $endStation);
 
 		perform BuildMovingRackGoal($goalID,$rack,$startStation,$endStation,$goal);
-		
-		
+			
 		PERFORM RequestTaskAllocation($goal, $allocation);
-		//System.out.println("allocation? " + $allocation);
-		
-		PERFORM FindWorker($allocation, $worker);
 		
 		$escapedGoal = $glUtility.escapeGL($goal);
-		
-		System.out.println("worker? " + $allocation);
-		
+				
 		PERFORM GoalAssign($goal, $allocation);
 		
-		System.out.println("goal assigned");
-		//System.out.println("worker is here ! : " + $allocation);
-		PERFORM isro:SendGoalAssignedToSMM($goalID, $allocation);
+		//System.out.println("goal assigned");
+		
+		//PERFORM isro:SendGoalAssignedToSMM($goalID, $allocation);
+		
+		RETRACT GoalRequested($requestedGoalID, "CargoUnstoringPrepared",$requestedGoal);
 		perform isro:SendGoalComplete("MovingRackTransportedRequestedTo", $allocation, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
 	UTILITY: 150; 
@@ -78,21 +74,18 @@ PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goals){
 		perform BuildMovingRackGoal($goalID,$rack,$startStation,$endStation,$goal);
 				
 		PERFORM RequestTaskAllocation($goal, $allocation);
-		System.out.println("allocation? " + $allocation);
-		
-		//PERFORM FindWorker($allocation, $worker);
-		
-		System.out.println("worker? " + $allocation);
+		//System.out.println("allocation? " + $allocation);
 		
 		$escapedGoal = $glUtility.escapeGL($goal);
 		
-		
 		PERFORM GoalAssign($goal, $allocation);
 		
-		System.out.println("goal assigned");
+		//System.out.println("goal assigned");
 		
 		//System.out.println("worker is here ! : " + $allocation);
-		PERFORM isro:SendGoalAssignedToSMM($goalID, $allocation);
+		//PERFORM isro:SendGoalAssignedToSMM($goalID, $allocation);
+		
+		RETRACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
 		perform isro:SendGoalComplete("MovingRackTransportedRequestedTo", $allocation, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "MovingRackTransportedRequestedTo");
 	UTILITY: 120; 
@@ -145,12 +138,12 @@ PLAN PERFORM TaskCreated($goaID, $goal){
 		//PERFORM QueryIdleMovingRack($rack);
 		$startStation = "station21";
 		PERFORM QueryRack($startStation, $rack);
-		System.out.println("rack? " + $rack); 
-		System.out.println("requestedGoal" + $requestedGoal);
+		//System.out.println("rack? " + $rack); 
+		//System.out.println("requestedGoal" + $requestedGoal);
 		
 		//$endStation = $glUtility.retrieveGLExpression($requestedGoal, 0);
 		$endStation = "station23";
-		System.out.println("endStation " + $endStation);
+		//System.out.println("endStation " + $endStation);
 		assert MovingRackInfo($rack,$startStation);
 		
 		$goal = "(goal (metadata \"" +$goalID +"\") \"MovingRackTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
@@ -187,7 +180,7 @@ PLAN PERFORM QueryIdleMovingRack($rack){
 	BODY:
 		$queryResult = $communicationInstance.sendQuery($address, "(context (IdleMovingRack $rack))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		System.out.println($context);
+		//System.out.println($context);
 		$rack = $glUtility.retrieveGLExpression($context, 0);
 	UTILITY: 1; 
 }

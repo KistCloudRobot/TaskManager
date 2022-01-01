@@ -11,31 +11,29 @@ PLAN CONCLUDE DoorOpenedRequestedFrom($requester, $goalID){
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "DoorOpenRequestedFrom");
 		
-		System.out.println("Requested Goal : " + $goalID);
+		//System.out.println("Requested Goal : " + $goalID);
 		
 		PERFORM DoorOpened();
 		
-		System.out.println("mol?lu");
+		//System.out.println("mol?lu");
 		
 		RETRIEVE DoorStatus($status);
 		
-		System.out.println("????" + $status + " " + $goalID);
+		//System.out.println("????" + $status + " " + $goalID);
 		
 		//$goalID = $glUtility.removeQuotationMarks($goalID);
 		
-		System.out.println("?????" + $goalID + " " + $requester);
+		//System.out.println("?????" + $goalID + " " + $requester);
 		
 		$receiver = $tm.justRemove($requester);
-		System.out.println("?????" + $receiver);
+		//System.out.println("?????" + $receiver);
 		
 		$receiver = "agent://www.arbi.com/" + $receiver + "/TaskManager";
 		$data = "(GoalReport \"Local\" " + $goalID + " (DoorStatus \"" + $status+"\"))";
 		
-		
-		System.out.println("?????" + $receiver);
-		System.out.println("before informed???? " + $data);
+		//System.out.println("?????" + $receiver);
+		//System.out.println("before informed???? " + $data);
 		$communicationInstance.inform($receiver, $data);
-		//$communicationInstance.inform($reasoner, "(goalComplete (DoorOpenRequestedFrom " + $requester + " " + $goalID + "))");
 		PERFORM isro:endLog("CONCLUDE", "DoorOpenRequestedFrom");
 		
 	UTILITY : 10000000;

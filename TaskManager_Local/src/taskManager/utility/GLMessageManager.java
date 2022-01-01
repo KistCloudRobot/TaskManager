@@ -124,13 +124,13 @@ public class GLMessageManager {
 	
 	public String removeQuotationMarks(Object input) {
 		
-		System.out.println("removeQuotationMarks ??????" + input.getClass().getSimpleName());
+		//System.out.println("removeQuotationMarks ??????" + input.getClass().getSimpleName());
 		String data = input.toString();
-		System.out.println(data);
+		//System.out.println(data);
 		
 		if (data.startsWith("\"")) {
-			System.out.println("data start with \\\"?");
-			System.out.println(data);
+			//System.out.println("data start with \\\"?");
+			//System.out.println(data);
 			data = data.substring(1, data.length() - 1);
 		}
 		return data;

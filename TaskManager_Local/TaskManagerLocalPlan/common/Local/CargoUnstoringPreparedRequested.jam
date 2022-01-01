@@ -6,11 +6,11 @@ PLAN CONCLUDE PostCargoUnstoringPreparedRequestedTo($worker,$goalID, $goal) {
 	PRECONDITION:
 	BODY:
 		RETRACT PostCargoUnstoringPreparedRequestedTo($worker,$goalID, $goal);
-		POST ACHIEVE CargoUnstoringPreparedRequestedTo($worker,$goalID, $goal);
+		POST PERFORM CargoUnstoringPreparedRequestedTo($worker,$goalID, $goal);
 	UTILITY: 10000; 
 }
 
-PLAN ACHIEVE CargoUnstoringPreparedRequestedTo($worker, $goalID, $goal){
+PLAN PERFORM CargoUnstoringPreparedRequestedTo($worker, $goalID, $goal){
 	ID: "http://www.arbi.com//CargoUnstoringPreparedRequestedTo"
 	PRECONDITION:
 		FACT PersonCall($callID, $location, "PrepareUnstoring");
@@ -43,7 +43,7 @@ PLAN CONCLUDE CargoUnstoringPreparedRequestedFrom($manager, $goalID, $goal){
 		System.out.println("Requested Goal : " + $goal);
 		ASSERT GoalRequested($manager, "CargoUnstoringPrepared", $goal);
 		perform isro:SendGoalComplete("CargoUnstoringPreparedRequestedFrom",$manager,$goalID,$goal);
-		
+		RETRACT CargoUnstoringPreparedRequestedFrom($manager, $goalID, $goal);
 		PERFORM isro:endLog("CONCLUDE", "CargoUnstoringPreparedRequestedFrom");
 	utility : 10000;
 }

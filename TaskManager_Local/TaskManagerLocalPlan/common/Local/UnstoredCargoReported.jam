@@ -6,11 +6,11 @@ PLAN CONCLUDE PostUnstoredCargoReportedTo($worker,$goalID ,$goal) {
 	PRECONDITION:
 	BODY:
 		RETRACT PostUnstoredCargoReportedTo($worker,$goalID , $goal);
-		POST ACHIEVE UnstoredCargoReportedTo($worker,$goalID , $goal);
+		POST PERFORM UnstoredCargoReportedTo($worker,$goalID , $goal);
 	UTILITY: 10000; 
 }
 
-PLAN ACHIEVE UnstoredCargoReportedTo($manager, $goalID, $goal){
+PLAN PERFORM UnstoredCargoReportedTo($manager, $goalID, $goal){
 	ID: "http://www.arbi.com//UnstoredCargoReportedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -39,7 +39,7 @@ PLAN CONCLUDE UnstoredCargoReportedFrom($worker, $goalID, $goal){
 		System.out.println("Reported Goal : " + $goal);
 		
 		perform isro:SendGoalComplete("UnstoredCargoReportedFrom",$worker,$goalID,$goal);
-				
+		RETRACT UnstoredCargoReportedFrom($worker, $goalID, $goal);
 		PERFORM isro:endLog("CONCLUDE", "UnstoredCargoReportedFrom");
 	UTILITY: 10000; 
 }
