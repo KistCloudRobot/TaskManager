@@ -26,9 +26,11 @@ PLAN PERFORM MovingRackTransportedRequestedTo($worker, $goalID, $goals){
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "MovingRackTransportedRequestedTo2");
 		
-		$startStation = "station20";
+		PERFORM QueryIdleMovingRack($rack);
+		PERFORM QueryOnStation($startStation, $rack);
+		//$startStation = "station20";
 		$goalID = $helper.getGoalID("Local");
-		PERFORM QueryRack($startStation, $rack);
+		//PERFORM QueryRack($startStation, $rack);
 		//System.out.println("rack? " + $rack); 
 		//System.out.println("goalID? " + $goalID); 
 		//System.out.println("requestedGoal" + $requestedGoal);
@@ -135,8 +137,8 @@ PLAN PERFORM TaskCreated($goaID, $goal){
 	BODY:
 		$goalID = $helper.getGoalID("Local");
 		
-		//PERFORM QueryIdleMovingRack($rack);
-		$startStation = "station21";
+		PERFORM QueryIdleMovingRack($rack);
+		//$startStation = "station21";
 		PERFORM QueryRack($startStation, $rack);
 		//System.out.println("rack? " + $rack); 
 		//System.out.println("requestedGoal" + $requestedGoal);
