@@ -1,0 +1,27 @@
+
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN perform isro:SendGoalCompletedToSMM($goalID, $agent) {
+	ID: "http://www.arbi.com//BuiltInPlan#SendGoalCompletedToSMM"
+	PRECONDITION :
+		FACT isro:MapManagerAddress($address);
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM  isro:startLog("PERFORM", "isro:SendGoalCompletedToSMM");
+		System.out.println("goalID : " + $goalID);
+		System.out.println("agent : " + $agent);
+		
+		PERFORM FindRobot($agent, $robot);
+		System.out.println("robot : " + $robot);
+		$goalID = $glUtility.removeQuotationMarks($goalID);
+		
+		$communicationInstance.inform($address, "(GoalCompleted \"" + $robot +"\" \"" + $goalID + "\")");
+		
+
+		PERFORM  isro:endLog("PERFORM", "isro:SendGoalCompletedToSMM");
+	UTILITY : 10;
+	
+}

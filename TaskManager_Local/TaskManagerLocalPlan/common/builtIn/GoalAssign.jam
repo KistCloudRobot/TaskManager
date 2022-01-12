@@ -1,0 +1,52 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN PERFORM GoalAssign($goal, $worker) {
+	ID: "http://www.arbi.com//GoalAssign"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY:
+		System.out.println("========Goal Assign to " + $worker + "=======");
+		$receiver = "agent://www.arbi.com/" + $worker + "/TaskManager";
+//		System.out.println($receiver);
+		$goalName = $glUtility.retrieveGLExpression($goal,1);
+//		System.out.println($goalName);
+		$goalMetadata = $glUtility.retrieveGLExpression($goal,0);
+//		System.out.println($goalMetadata);
+		$goalID = $glUtility.retrieveGLExpression($goalMetadata,0);
+//		System.out.println($goalID);
+		$escapedGoal = $glUtility.escapeGL($goal);
+		
+		$communicationInstance.inform($receiver, "(GoalRequest ("+$goalName + " \"Local\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))");
+		
+		ASSERT GoalAssigned($goalID, $worker);
+	UTILITY: 10; 
+}
+
+PLAN PERFORM GoalAssign($goal, $worker) {
+	ID: "http://www.arbi.com//GoalAssignToAnotherWorker"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT GoalAssigned($assignedGoalID, $worker);
+	BODY:
+		System.out.println("========" + $worker + "is working find another worker=======");
+		
+		PERFORM FindAnotherWorker($worker, $another);
+		
+		$receiver = "agent://www.arbi.com/" + $another + "/TaskManager";
+//		System.out.println($receiver);
+		$goalName = $glUtility.retrieveGLExpression($goal,1);
+//		System.out.println($goalName);
+		$goalMetadata = $glUtility.retrieveGLExpression($goal,0);
+//		System.out.println($goalMetadata);
+		$goalID = $glUtility.retrieveGLExpression($goalMetadata,0);
+//		System.out.println($goalID);
+		$escapedGoal = $glUtility.escapeGL($goal);
+		
+		$communicationInstance.inform($receiver, "(GoalRequest ("+$goalName + " \"Local\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))");
+		
+		ASSERT GoalAssigned($goalID, $another);
+	UTILITY: 20; 
+}

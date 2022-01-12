@@ -1,0 +1,48 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerLift1"
+	PRECONDITION :
+		$worker == "Lift1";
+	BODY:
+		//System.out.println("Find another worker of Lift1");
+		$another = "Lift2";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerLift2"
+	PRECONDITION :
+		$worker == "Lift2";
+	BODY:
+		//System.out.println("Find another worker of Lift2");
+		$another = "Lift1";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerTow1"
+	PRECONDITION :
+		$worker == "Tow1";
+	BODY:
+		//System.out.println("Find another worker of Tow1");
+		$another = "Tow2";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerTow2"
+	PRECONDITION :
+		$worker == "Tow2";
+	BODY:
+		//System.out.println("Find another worker of Tow2");
+		$another = "Tow1";
+	UTILITY: 10;
+}
+
+
