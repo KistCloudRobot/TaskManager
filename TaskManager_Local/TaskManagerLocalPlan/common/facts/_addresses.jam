@@ -3,15 +3,15 @@ PREFIXES:
 
 
 FACTS:	
-	FACT  isro:TaskLogAddress("agent://www.arbi.com/Local/TaskLog");
-	FACT  isro:ActionAddress("agent://www.arbi.com/Local/action");
-	FACT  isro:BehaviorAddress("agent://www.arbi.com/Local/BehaviorInterface");
-	FACT  isro:ReasonerAddress("agent://www.arbi.com/Local/TaskReasoner");
-	FACT  isro:ContextManagerAddress("agent://www.arbi.com/Local/ContextManager");
-	FACT  isro:MapManagerAddress("agent://www.arbi.com/Local/MapManager");
-	FACT  isro:TaskAllocatorAddress("agent://www.arbi.com/Local/TaskAllocator");
-	FACT  isro:MultiRobotPathFinderAddress("agent://www.arbi.com/Local/MultiRobotPathFinder");
-	FACT  isro:NavigationControllerAddress("agent://www.arbi.com/Local/NavigationController");
+	FACT  isro:TaskLogAddress("agent://www.arbi.com/TaskLog");
+	FACT  isro:ActionAddress("agent://www.arbi.com/action");
+	FACT  isro:BehaviorAddress("agent://www.arbi.com/BehaviorInterface");
+	FACT  isro:ReasonerAddress("agent://www.arbi.com/TaskReasoner");
+	FACT  isro:ContextManagerAddress("agent://www.arbi.com/ContextManager");
+	FACT  isro:MapManagerAddress("agent://www.mcarbi.com/MapManager");
+	FACT  isro:TaskAllocatorAddress("agent://www.arbi.com/TaskAllocator");
+	FACT  isro:MultiRobotPathFinderAddress("agent://www.arbi.com/MultiRobotPathFinder");
+	FACT  isro:NavigationControllerAddress("agent://www.arbi.com/NavigationController");
 	/*
 	FACT  isro:KnowledgeManagerAddress("agent://www.arbi.com/LIFT1/knowledgeManager");
 	FACT  isro:PerceptionAddress("agent://www.arbi.com/perception");
