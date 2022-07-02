@@ -2,8 +2,8 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN PERFORM QueryEmpty($empty){
-	ID: "http://www.arbi.com//BuiltInPlan#queryEmpty"
+PLAN PERFORM QueryEmptyStation($empty){
+	ID: "http://www.arbi.com//BuiltInPlan#queryEmptyStation"
 	PRECONDITION :
 		FACT Communication($communicationInstance);
 		FACT isro:ContextManagerAddress($agent);

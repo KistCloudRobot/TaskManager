@@ -34,12 +34,9 @@ PLAN PERFORM boot() {
 		PERFORM loadPlanPackage();
 		System.out.println("---Load Complete---");
 		
-		//PERFORM isro:STTRequest();
-		
-		//PERFORM UpdateAgentTaskStatus("mcARBI_LIFT1", "BOOT", "complete");
 		
 		
-		POST ACHIEVE CargoStoringPreparedRequestedTo($worker,$goalID, $goal);
+		POST PERFORM  ChannelInit();
 
 		//$order = "(PhilipsHueOn \"true\")";
 		//perform isro:requestToIoT("agent://www.arbi.com/cloudAgent#PhilipsHueOn",$order);

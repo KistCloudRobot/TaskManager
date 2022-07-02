@@ -13,6 +13,10 @@ import kr.ac.uos.ai.arbi.model.GLFactory;
 import kr.ac.uos.ai.arbi.model.GeneralizedList;
 import kr.ac.uos.ai.arbi.model.Value;
 import kr.ac.uos.ai.arbi.model.parser.ParseException;
+import kr.ac.uos.ai.mcarbi.agent.ChannelFactory;
+import kr.ac.uos.ai.mcarbi.agent.McArbiAgent;
+import kr.ac.uos.ai.mcarbi.agent.communication.Channel;
+import kr.ac.uos.ai.mcarbi.server.ChannelType;
 import taskManager.aplview.APLViewer;
 import taskManager.logger.TaskManagerLogger;
 import taskManager.utility.CommunicationUtility;
@@ -28,23 +32,24 @@ public class TaskManager_Local extends ArbiAgent {
 	private GLMessageManager msgManager;
 	private BlockingQueue<RecievedMessage> messageQueue;
 	private TaskManagerLogger logger;
+	private McARBIAgentCommunicator mcARBIAgentCommunicator;
+	
 	private boolean isTriggered = false;
 	//private APLViewer aplViewer;
 	public static String ENV_JMS_BROKER;
-	public static String ENV_AGENT_NAME;
 	public static String ENV_ROBOT_NAME;
+	public static String mcARBI_AGENT_ADRRESS;
 	public static final String JMS_BROKER_URL = "tcp://172.16.165.222:61313";
 	//public static final String JMS_BROKER_URL = "tcp://localhost:61616";
-	public static final String ARBI_PREFIX = "www.arbi.com/";
-	public static final String BASE_AGENT_NAME = "/TaskManager";
-	public static final String TASKMANAGER_ADRESS = "www.arbi.com/Local/TaskManager";
-	public static  String CONTEXTMANAGER_ADRESS;
-	public static final String KNOWLEDGEMANAGER_ADRESS = "agent://www.arbi.com/Local/KnowledgeManager";
-	public static  String BEHAVIOUR_INTERFACE_ADDRESS;
+	public static final String TASKMANAGER_ADRESS = "www.arbi.com/TaskManager";
+	public static  String CONTEXTMANAGER_ADRESS = "agent://www.arbi.com/ContextManager";
+	public static final String KNOWLEDGEMANAGER_ADRESS = "agent://www.arbi.com/KnowledgeManager";
+	public static  String BEHAVIOUR_INTERFACE_ADDRESS = "agent://www.arbi.com/BehaviorInterface";
 	public static final String PERCEPTION_ADRESS = "agent://www.arbi.com/perception";
-	public static final String ACTION_ADRESS = "agent://www.arbi.com/Local/action";
-	public static  String REASONER_ADRESS;
-	public static final String PREFIX = "http://www.arbi.com//ontologies#";
+	public static final String ACTION_ADRESS = "agent://www.arbi.com/action";
+	public static  String REASONER_ADRESS = "agent://www.arbi.com/TaskReasoner";
+	public static final String PREFIX = "http://www.arbi.com/ontologies#";
+	
 	
 
 	public static final String AGENT_PREFIX = "agent://";
@@ -58,7 +63,7 @@ public class TaskManager_Local extends ArbiAgent {
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
 		
-		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
+		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,2);
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
 
 		msgManager = new GLMessageManager(interpreter);
@@ -71,16 +76,11 @@ public class TaskManager_Local extends ArbiAgent {
 	
 	public void initAddress() {
 		//ENV_JMS_BROKER = "tcp://" + System.getenv("JMS_BROKER");
-		//ENV_AGENT_NAME = System.getenv("AGENT");
 		//ENV_ROBOT_NAME = System.getenv("ROBOT");
 		
 	
-		ENV_JMS_BROKER = "tcp://172.16.165.106:61313";
-		ENV_AGENT_NAME = "Local";
-		
-		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
-		REASONER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/TaskReasoner"; 
-		BEHAVIOUR_INTERFACE_ADDRESS = AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/BehaviorInterface"; 
+		ENV_JMS_BROKER = "tcp://172.16.165.106:61313";		
+		mcARBI_AGENT_ADRRESS = "https://www.mcarbi.com/Local";
 		
 	}
 	public void test(){
@@ -106,7 +106,16 @@ public class TaskManager_Local extends ArbiAgent {
 		msgManager.assertFact("Communication", new CommunicationUtility(this, dc));
 		msgManager.assertFact("ExtraUtility", new JAMUtilityManager(interpreter));
 		msgManager.assertFact("TaskManager", this);
+		
+		mcARBIAgentCommunicator = new McARBIAgentCommunicator(messageQueue);
+		McArbiAgent.execute(mcARBI_AGENT_ADRRESS, mcARBIAgentCommunicator);
+		msgManager.assertFact("McARBIAgentCommunicator", mcARBIAgentCommunicator);
+		
+		Channel logisticChannel = ChannelFactory.createChannel("Logistic", mcARBIAgentCommunicator, ChannelType.ZeroMQ);
+		msgManager.assertFact("Channel", "logistic", logisticChannel);
+		
 		//aplViewer.init();
+ 
 		
 		Thread t = new Thread() {
 			public void run() {
@@ -133,7 +142,7 @@ public class TaskManager_Local extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 		
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME,2);
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,2);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");

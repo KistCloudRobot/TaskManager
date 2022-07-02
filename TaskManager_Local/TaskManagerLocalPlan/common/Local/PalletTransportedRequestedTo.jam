@@ -11,504 +11,99 @@ PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID ,$goal) {
 	UTILITY : 10000;
 }
 
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToCargoStoringPrepared"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
-		FACT ExtraUtility($helper);
-		$goals == "CargoStoringPrepared";
-		FACT GoalRequested($requestedGoalID, "CargoStoringPrepared",$requestedGoal);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "PrepareStoring";
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
-		$goalID = $helper.getGoalID("Local");
-
-		PERFORM QueryIdleLiftRack($rack);
-		PERFORM QueryOnStation($startStation, $rack);
-
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-
-		$endStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-
-		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal);
 		
-		System.out.println("pallet Transported created complete");
+		PERFORM TaskCreated("PrepareStoring", $goalID, $goal);
 		
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
-		//System.out.println($worker);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		//System.out.println($escapedGoal);
 		
-		PERFORM GoalAssign($goal, $worker);
-		//System.out.println("worker is here! " + $worker);
+		PERFORM GoalAssign("logistic", $goal, $worker);
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
-		
-		RETRACT GoalRequested($requestedGoalID, "CargoStoringPrepared",$requestedGoal);
 		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
 
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
-		FACT ExtraUtility($helper);
-		$goals == "CargoUnstoringPrepared";
-		FACT GoalRequested($requestedGoalID, "CargoUnstoringPrepared",$requestedGoal);
+		
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "PrepareUnstoring";
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 		
-		$goalID = $helper.getGoalID("Local");
-		PERFORM QueryCargoOnStoringStation($cargo);
-		PERFORM QueryOnRack($cargo,$rack);
-		Perform QueryOnStation($startStation,$rack);
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		$endStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-
-		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal);
-		
-		System.out.println("pallet Transported created complete");
+		PERFORM TaskCreated("Storing", $goalID, $goal);
 		
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
-		//System.out.println($worker);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		//System.out.println($escapedGoal);
+		PERFORM GoalAssign("logistic", $goal, $worker);
+		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		
-		PERFORM GoalAssign($goal, $worker);
-		//System.out.println("worker is here! " + $worker);
-		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
 
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToStoredCargo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
-		FACT ExtraUtility($helper);
-		$goals == "StoredCargo";
-		FACT GoalRequested($requestedGoalID, "StoredCargo",$requestedGoal2);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "Storing";
+		
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 
-		$goalID2 = $helper.getGoalID("Local");
-		
-		//System.out.println("????requested goal?  " + $requestedGoal2);
-		
-		$startStation2 = $glUtility.retrieveGLExpression($requestedGoal2, 0);
-		//System.out.println("start station : " + $startStation2);
-		
-		Perform QueryRack($startStation2,$rack2);
-
-		$stringGoal2 = $glUtility.unescapeGL($requestedGoal2);
-		
-		Perform QueryEmpty($endStation2);
-		
-		//System.out.println("goalID : " + $goalID2);
-		//System.out.println("rackID : " + $rack2);
-		//System.out.println("start station : " + $startStation2);
-		//System.out.println("end station : " + $endStation2);
-		
-		perform BuildPalletGoal($goalID2,$rack2,$startStation2,$endStation2,$goal);
-		
-		System.out.println("pallet Transported created complete");
+		PERFORM TaskCreated("PrepareUnstoring", $goalID, $goal);
 		
 		PERFORM RequestTaskAllocation($goal, $worker);
+				
+		PERFORM GoalAssign("logistic", $goal, $worker);
 		
-		//System.out.println($worker);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		//System.out.println($escapedGoal);
-		
-		PERFORM GoalAssign($goal, $worker);
-		
-		//System.out.println("worker is here! " + $worker);
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
-		
-		RETRACT GoalRequested($requestedGoalID, "StoredCargo",$requestedGoal2);
 		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
+
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToUnstoredCargo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
-		FACT ExtraUtility($helper);
-		$goals == "UnstoredCargo";
-		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "Unstoring";
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
-
-		perform QueryEmpty($endStation);
-		$goalID = $helper.getGoalID("Local");
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		perform QueryRack($startStation,$rack);
-		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal);
 		
-		System.out.println("pallet Transported created complete");
-		
+		PERFORM TaskCreated("Unstoring", $goalID, $goal);
 		
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
-		//System.out.println($worker);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		//System.out.println($escapedGoal);
+		PERFORM GoalAssign("logistic", $goal, $worker);
+		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		
-		PERFORM GoalAssign($goal, $worker);
-		//System.out.println("worker is here! " + $worker);
-		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goals){
-	ID: "http://www.arbi.com//PalletTransportedRequestedToBoth"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:ReasonerAddress($reasoner);
-		FACT GLUtility($glUtility);
-		FACT ExtraUtility($helper);
-		$goals == "UnstoredCargoAndCargoStoringPrepared";
-		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
-		FACT GoalRequested($requestedGoalID2, "CargoStoringPrepared",$requestedGoal2);
-	BODY:
-		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedToBoth");
 
-
-
-		$goalID2 = $helper.getGoalID("Local");
-
-		PERFORM QueryIdleLiftRack($rack2);
-		PERFORM QueryOnStation($startStation2, $rack2);
-
-		$stringGoal2 = $glUtility.unescapeGL($requestedGoal2);
-
-		$endStation2 = $glUtility.retrieveGLExpression($stringGoal2, 0);
-
-
-		perform BuildPalletGoal($goalID2,$rack2,$startStation2,$endStation2,$cargoStoringPreparedGoal);
-		
-		
-		perform QueryEmpty($endStation);
-		$goalID = $helper.getGoalID("Local");
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		perform QueryRack($startStation,$rack);
-		perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$unstoredCargoGoal);
-		
-		System.out.println("pallet Transported created complete");
-		
-		PERFORM BuildTaskAllocationText($unstoredCargoGoal, $alocText1);
-		PERFORM BuildTaskAllocationText($cargoStoringPreparedGoal, $alocText2);
-		
-		perform RequestMultiAllocation($alocText1,$alocText2,$worker1,$worker2);
-		
-		$escapedGoal = $glUtility.escapeGL($unstoredCargoGoal);
-		$escapedGoal2 = $glUtility.escapeGL($cargoStoringPreparedGoal);
-		
-		//System.out.println("start assign");
-		//System.out.println("worker " + $worker1 + " " + $escapedGoal);
-		PERFORM GoalAssign($unstoredCargoGoal, $worker1);
-		//System.out.println("worker is here! " + $worker1);
-		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker1);
-		
-		//$helper.sleepAwhile(3000); //???
-		System.out.println("worker " + $worker2 + " " + $escapedGoal2);
-		
-		PERFORM GoalAssign($cargoStoringPreparedGoal, $worker2);
-		
-		//System.out.println("worker is here! " + $worker2);
-		PERFORM isro:SendGoalAssignedToSMM($goalID, $worker2);
-		//System.out.println("?????");
-		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker1, $goalID, $escapedGoal);
-
-
-		ASSERT DoNotThisAgain();
-		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedToBoth");
-	UTILITY: 100; 
-}
-
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
-	ID : "http://www.arbi.com//DummyPlan"
-	PRECONDITION :
-		FACT DoNotThisAgain();
-	BODY :
-		System.out.println("Second PalletTransportedRequestedTo Called!");
-		retract DoNotThisAgain();
-	UTILITY : 100000;
-}
-
-plan perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal){
-	ID: "http://www.arbi.com//BuildPalletGoalsBUild"
-	BODY:
-		PERFORM isro:startLog("PERFORM", "BuildPalletGoal");
-		$goal = "(goal (metadata \"" +$goalID +"\") \"PalletTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
-		System.out.println("goal build result : " + $goal);
-		PERFORM isro:endLog("PERFORM","BuildPalletGoal");
-	utility : 100000;
-}	
-
-
-plan perform BuildTaskAllocationText($goal,$text){
-	ID: "http://www.arbi.com//buildAlocText"
-	precondition:
-		FACT GLUtility($glUtility);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "BuildTaskAllocationText");
-		$goalID = $glUtility.retrieveGLExpression($goal,0);
-		$goalID = $glUtility.retrieveGLExpression($goalID,0);
-		$startStation = $glUtility.retrieveGLExpression($goal,2);
-		$startStation = $glUtility.retrieveGLExpression($startStation,1);
-		$text = "(" +  $glUtility.retrieveGLExpression($goal,1) + " \"" + $goalID + "\" \"" + $startStation + "\")";
-		PERFORM isro:endLog("PERFORM","BuildTaskAllocationText");
-	utility : 100000;
-}
-/*
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID, $goal){
-	ID: "http://www.arbi.com//PalletTransportedRequestedToBotha"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:ReasonerAddress($reasoner);
-		FACT GLUtility($glUtility);
-
-	BODY:
-		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedToBoth");
-
-		PERFORM PalletTransportatedCreated($goalID, $goal);
-		PERFORM PalletTransportatedCreated($goalID, $goal);
-		
-		System.out.println("pallet Transported created complete");
-		
-		PERFORM BuildTaskAllocationText($goal, $alocText1);
-		PERFORM BuildTaskAllocationText($goal2, $alocText2);
-		
-		perform RequestMultiAllocation($alocText1,$alocText2,$worker1,$worker2);
-		
-		System.out.println($worker);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		System.out.println($escapedGoal);
-		
-		PERFORM GoalAssign($goal, $worker);
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
-		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedToBoth");
-	UTILITY: 10; 
-}
-
-
-
-*/
-PLAN PERFORM WaitAllocation($allocation){
-	ID: "http://www.arbi.com//WaitAllocations"
-	PRECONDITION:
-		FACT AgentRecommanded($robot, $goalID);
-	BODY:
-		System.put.println("Allocation Recieved");
-		$allocation = $robot;
-		RETRACT AgentRecommanded($robot, $goalID);
-	UTILITY: 100; 
-}
-
-
-/*
-PLAN PERFORM PalletTransportatedCreated($goalID, $goal){
-	ID: "http://www.arbi.com//GeneratePalletTransported"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ReasonerAddress($reasoner);
-		FACT GoalRequested($requestedGoalID, "StoredCargo",$requestedGoal);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-		PERFORM isro:startLog("PERFORM", "PalletTransportedCreated");
-		
-		
-		
-		
-		System.out.println("es? " + $endStation);
-		perform QueryEmpty($endStation);
-		$goalID = $helper.getGoalID("Local");
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		PERFORM QueryRack($startStation, $rack);
-		$goal = "(goal (metadata \"" +$goalID +"\") \"PalletTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
-		System.out.println("goal ID : " + $goalID);
-		System.out.println("here");
-		
-		System.out.println($requestedGoal);
-		
-		
-		System.out.println($stringGoal);
-		
-		System.out.println("here");
-		
-		
-		
-		System.out.println("outOnStation");
-		
-		
-		System.out.println("ended");
-	UTILITY: 10; 
-}
-
-
-PLAN PERFORM PalletTransportatedCreated($goalID, $goal){
-	ID: "http://www.arbi.com//GeneratePalletTransportedEmpty"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ReasonerAddress($reasoner);
-		FACT GoalRequested($requestedGoalID, "CargoStoringPrepared",$requestedGoal);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-
-		$goalID = $helper.getGoalID("Local");
-
-		PERFORM QueryIdleLiftRack($rack);
-		PERFORM QueryOnStation($startStation, $rack);
-		System.out.println("here");
-		
-		System.out.println($requestedGoal);
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		
-		System.out.println($stringGoal);
-		$endStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		System.out.println("here");
-		
-
-		System.out.println("here");
-		
-		$goal = "(goal (metadata \"" +$goalID +"\") \"PalletTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
-	UTILITY: 10; 
-}
-
-
-
-
-PLAN PERFORM PalletTransportatedCreated($goalID, $goal){
-	ID: "http://www.arbi.com//GeneratePalletTransportedUnstoreCargo"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ReasonerAddress($reasoner);
-		FACT GoalRequested($requestedGoalID, "UnstoredCargo",$requestedGoal);
-		FACT GLUtility($glUtility);
-	BODY:
-		System.out.println("pallet creating started");
-		perform QueryEmpty($endStation);
-		
-		$goalID = $helper.getGoalID("Local");
-
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		
-		$startStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		perform QueryRack($startStation,$rack);
-
-		$goal = "(goal (metadata \"" +$goalID +"\") \"PalletTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
-	UTILITY: 10; 
-}
-
-PLAN PERFORM PalletTransportatedCreated($goalID, $goal){
-	ID: "http://www.arbi.com//GeneratePalletTransportedUnstoringPrepare"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ReasonerAddress($reasoner);
-		FACT GoalRequested($requestedGoalID, "CargoUnstoringPrepared",$requestedGoal);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-
-		$goalID = $helper.getGoalID("Local");
-		PERFORM QueryOnRack($cargo,$rack);
-		Perform QueryOnStation($startStation,$rack);
-		$stringGoal = $glUtility.unescapeGL($requestedGoal);
-		$endStation = $glUtility.retrieveGLExpression($stringGoal, 0);
-		$goal = "(goal (metadata \"" +$goalID +"\") \"PalletTransported\" (argument \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\"))";
-		
-		System.out.println($goal);
-	UTILITY: 10; 
-}
-*/
-
-
-
-Plan Perform QueryOnRack($cargo,$rack){
-	ID: "http://www.arbi.com//queryOnRack"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ContextManagerAddress($address);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-		$queryResult = $communicationInstance.sendQuery($address, "(context (OnRack \"" + $cargo+ "\" $rack))");
-		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		//System.out.println($context);
-		$rack = $glUtility.retrieveGLExpression($context,1);
-	UTILITY: 10; 
-}
-
-PLAN PERFORM QueryIdleLiftRack($rack){
-	ID: "http://www.arbi.com//queryContextIdleLiftRack"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ContextManagerAddress($address);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-		$queryResult = $communicationInstance.sendQuery($address, "(context (IdleLiftRack $rack))");
-		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		//System.out.println($context);
-		$rack = $glUtility.retrieveGLExpression($context, 0);
-	UTILITY: 10; 
-}
-
-PLAN PERFORM QueryRack($station, $rack){
-	ID: "http://www.arbi.com//QueryRack"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ContextManagerAddress($address);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-		
-		$queryResult = $communicationInstance.sendQuery($address, "(context (OnStation $rack \"" +  $station + "\" ))");
-		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		$rack = $glUtility.retrieveGLExpression($context, 0);
-	UTILITY: 10; 
-}
-
-PLAN PERFORM QueryOnStation($station, $rack){
-	ID: "http://www.arbi.com//QueryOnStation"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:ContextManagerAddress($address);
-		FACT GLUtility($glUtility);
-		
-	BODY:
-		
-		$queryResult = $communicationInstance.sendQuery($address, "(context (OnStation \"" +$rack + "\" $station))");
-		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		$station = $glUtility.retrieveGLExpression($context, 1);
-	UTILITY: 10; 
-}
