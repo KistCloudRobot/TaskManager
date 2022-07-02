@@ -1,13 +1,13 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 		
-PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID ,$goal) {
+PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostPalletTransportedRequestedTo"
 	PRECONDITION:
 	BODY:
-		POST PERFORM PalletTransportedRequestedTo($worker,$goalID , $goal);
+		POST PERFORM PalletTransportedRequestedTo($worker,$goalID);
 		
-		RETRACT PostPalletTransportedRequestedTo($worker,$goalID , $goal);
+		RETRACT PostPalletTransportedRequestedTo($worker,$goalID);
 	UTILITY : 10000;
 }
 
@@ -30,7 +30,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM GoalAssign("logistic", $goal, $worker);
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
@@ -54,7 +54,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM GoalAssign("logistic", $goal, $worker);
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
@@ -79,7 +79,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
@@ -102,7 +102,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM GoalAssign("logistic", $goal, $worker);
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
 		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
 }
