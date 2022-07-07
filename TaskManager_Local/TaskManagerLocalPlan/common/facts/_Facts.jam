@@ -5,33 +5,9 @@ PREFIXES:
 FACTS:	
 	
 	fact ActionID(1);
-	fact isro:agent("Local");
 	fact OnAgentTaskStatus("Local", "wait", "wait");
 	FACT DoorStatus("Closed");
 	
-	fact OnAgentTaskStatus("Lift2", "wait", "wait");
-	fact RobotAt("AMR_LIFT2", 102,102);
-	fact RobotVelocity("AMR_LIFT2", 0);
-	fact BatteryRemain("AMR_LIFT2", 50);
-	fact OnRobotTaskStatus("AMR_LIFT2", "wait");
-	
-	fact OnAgentTaskStatus("Lift1", "wait", "wait");
-	fact RobotAt("AMR_LIFT1", 102,102);
-	fact RobotVelocity("AMR_LIFT1", 0);
-	fact BatteryRemain("AMR_LIFT1", 50);
-	fact OnRobotTaskStatus("AMR_LIFT1", "wait");
-	
-	fact OnAgentTaskStatus("Tow1", "wait", "wait");
-	fact RobotAt("AMR_TOW1", 102,102);
-	fact RobotVelocity("AMR_TOW1", 0);
-	fact BatteryRemain("AMR_TOW1", 50);
-	fact OnRobotTaskStatus("AMR_TOW1", "wait");
-	
-	fact OnAgentTaskStatus("Tow2", "wait", "wait");
-	fact RobotAt("AMR_TOW2", 102,102);
-	fact RobotVelocity("AMR_TOW1", 0);
-	fact BatteryRemain("AMR_TOW1", 50);
-	fact OnRobotTaskStatus("AMR_TOW1", "wait");
 	
 	/*	
 	fact isro:robot("http://robot-arbi.kr/ontologies/isro_cap.owl#Jackal001");

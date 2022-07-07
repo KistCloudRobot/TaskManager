@@ -6,18 +6,28 @@ PLAN PERFORM GoalAssign($channelName, $goal, $worker) {
 	PRECONDITION :
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
+		FACT isro:agent($agent);
 	BODY:
 		System.out.println("========Goal Assign to " + $worker + "=======");
 		
+		//System.out.println("channel Name : " + $channelName);
 		$goalName = $glUtility.retrieveGLExpression($goal,1);
-//		System.out.println($goalName);
+		//System.out.println("goal Name : " + $goalName);
 		$goalMetadata = $glUtility.retrieveGLExpression($goal,0);
-//		System.out.println($goalMetadata);
+		//System.out.println("goal metadata : " + $goalMetadata);
 		$goalID = $glUtility.retrieveGLExpression($goalMetadata,0);
-//		System.out.println($goalID);
+		//System.out.println("goal id : " + $goalID);
 		$escapedGoal = $glUtility.escapeGL($goal);
 		
-		PERFORM inform($channelName, $worker, "(GoalRequest ("+$goalName + " \"Local\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))");
+		//System.out.println("escapedGoal : " + $escapedGoal);
+		//System.out.println("$agent = " + $agent);
+		$data = "(GoalRequest (" + $goalName + " \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))";
+		
+		System.out.println("channelName : " + $channelName);
+		System.out.println("worker : " + $worker);
+		System.out.println("data : " + $data);
+		
+		PERFORM send($channelName, $worker, $data);
 		
 		ASSERT GoalAssigned($goalID, $worker);
 	UTILITY: 10; 
@@ -29,6 +39,7 @@ PLAN PERFORM GoalAssign($goal, $worker) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT GoalAssigned($assignedGoalID, $worker);
+		FACT isro:agent($agent);
 	BODY:
 		System.out.println("========" + $worker + "is working find another worker=======");
 		
@@ -43,7 +54,7 @@ PLAN PERFORM GoalAssign($goal, $worker) {
 //		System.out.println($goalID);
 		$escapedGoal = $glUtility.escapeGL($goal);
 		
-		$communicationInstance.inform($another, "(GoalRequest ("+$goalName + " \"Local\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))");
+		$communicationInstance.inform($another, "(GoalRequest ("+$goalName + " \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))");
 		
 		ASSERT GoalAssigned($goalID, $another);
 	UTILITY: 20; 

@@ -10,8 +10,10 @@ FACTS:
 	FACT  isro:ContextManagerAddress("agent://www.arbi.com/ContextManager");
 	FACT  isro:MapManagerAddress("agent://www.mcarbi.com/MapManager");
 	FACT  isro:TaskAllocatorAddress("agent://www.arbi.com/TaskAllocator");
-	FACT  isro:MultiRobotPathFinderAddress("agent://www.arbi.com/MultiRobotPathFinder");
+	FACT  isro:MultiAgentPathFinderAddress("agent://www.arbi.com/MultiAgentPathFinder");
 	FACT  isro:NavigationControllerAddress("agent://www.arbi.com/NavigationController");
+	FACT  isro:agent("agent://www.mcarbi.com/Local");
+	
 	/*
 	FACT  isro:KnowledgeManagerAddress("agent://www.arbi.com/LIFT1/knowledgeManager");
 	FACT  isro:PerceptionAddress("agent://www.arbi.com/perception");

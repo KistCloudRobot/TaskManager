@@ -38,7 +38,7 @@ public class TaskManager_Local extends ArbiAgent {
 	//private APLViewer aplViewer;
 	public static String ENV_JMS_BROKER;
 	public static String ENV_ROBOT_NAME;
-	public static String mcARBI_AGENT_ADRRESS;
+	public static String MY_mcARBI_AGENT_ADRRESS = "agent://www.mcarbi.com/Local";
 	public static final String JMS_BROKER_URL = "tcp://172.16.165.222:61313";
 	//public static final String JMS_BROKER_URL = "tcp://localhost:61616";
 	public static final String TASKMANAGER_ADRESS = "www.arbi.com/TaskManager";
@@ -79,8 +79,7 @@ public class TaskManager_Local extends ArbiAgent {
 		//ENV_ROBOT_NAME = System.getenv("ROBOT");
 		
 	
-		ENV_JMS_BROKER = "tcp://172.16.165.106:61313";		
-		mcARBI_AGENT_ADRRESS = "https://www.mcarbi.com/Local";
+		ENV_JMS_BROKER = "tcp://172.16.165.141:61313";		
 		
 	}
 	public void test(){
@@ -108,11 +107,8 @@ public class TaskManager_Local extends ArbiAgent {
 		msgManager.assertFact("TaskManager", this);
 		
 		mcARBIAgentCommunicator = new McARBIAgentCommunicator(messageQueue);
-		McArbiAgent.execute(mcARBI_AGENT_ADRRESS, mcARBIAgentCommunicator);
+		McArbiAgent.execute(MY_mcARBI_AGENT_ADRRESS, mcARBIAgentCommunicator);
 		msgManager.assertFact("McARBIAgentCommunicator", mcARBIAgentCommunicator);
-		
-		Channel logisticChannel = ChannelFactory.createChannel("Logistic", mcARBIAgentCommunicator, ChannelType.ZeroMQ);
-		msgManager.assertFact("Channel", "logistic", logisticChannel);
 		
 		//aplViewer.init();
  
