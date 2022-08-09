@@ -1,22 +1,15 @@
 package taskManager;
 
-import java.io.BufferedWriter;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
-import kr.ac.uos.ai.arbi.ltm.DataSource;
 import kr.ac.uos.ai.arbi.model.GLFactory;
 import kr.ac.uos.ai.arbi.model.GeneralizedList;
-import kr.ac.uos.ai.arbi.model.Value;
 import kr.ac.uos.ai.arbi.model.parser.ParseException;
-import kr.ac.uos.ai.mcarbi.agent.ChannelFactory;
-import kr.ac.uos.ai.mcarbi.agent.McArbiAgent;
-import kr.ac.uos.ai.mcarbi.agent.communication.Channel;
-import kr.ac.uos.ai.mcarbi.server.ChannelType;
+import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import taskManager.aplview.APLViewer;
 import taskManager.logger.TaskManagerLogger;
 import taskManager.utility.CommunicationUtility;
@@ -40,7 +33,6 @@ public class TaskManager_Local extends ArbiAgent {
 	public static String ENV_ROBOT_NAME;
 	public static String MY_mcARBI_AGENT_ADRRESS = "agent://www.mcarbi.com/Local";
 	public static final String JMS_BROKER_URL = "tcp://172.16.165.222:61313";
-	//public static final String JMS_BROKER_URL = "tcp://localhost:61616";
 	public static final String TASKMANAGER_ADRESS = "www.arbi.com/TaskManager";
 	public static  String CONTEXTMANAGER_ADRESS = "agent://www.arbi.com/ContextManager";
 	public static final String KNOWLEDGEMANAGER_ADRESS = "agent://www.arbi.com/KnowledgeManager";
@@ -73,6 +65,17 @@ public class TaskManager_Local extends ArbiAgent {
 		init();
 	}
 	
+	public TaskManager_Local(String robotID, String brokerAddress) {
+		ENV_JMS_BROKER = brokerAddress;
+		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,2);
+		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
+
+		msgManager = new GLMessageManager(interpreter);
+		
+		init();
+	}
+	
 	
 	public void initAddress() {
 		//ENV_JMS_BROKER = "tcp://" + System.getenv("JMS_BROKER");
@@ -95,7 +98,7 @@ public class TaskManager_Local extends ArbiAgent {
 	
 	public String justRemove(Object input) {
 		
-		System.out.println("??????" + input.getClass().getSimpleName());
+		//System.out.println("??????" + input.getClass().getSimpleName());
 		String data = input.toString();
 		return data.substring(1, data.length()-1);
 	}
@@ -107,7 +110,8 @@ public class TaskManager_Local extends ArbiAgent {
 		msgManager.assertFact("TaskManager", this);
 		
 		mcARBIAgentCommunicator = new McARBIAgentCommunicator(messageQueue);
-		McArbiAgent.execute(MY_mcARBI_AGENT_ADRRESS, mcARBIAgentCommunicator);
+		
+		AgentExecutor.execute(MY_mcARBI_AGENT_ADRRESS, mcARBIAgentCommunicator, ChannelType.ZeroMQ);
 		msgManager.assertFact("McARBIAgentCommunicator", mcARBIAgentCommunicator);
 		
 		//aplViewer.init();
@@ -142,22 +146,14 @@ public class TaskManager_Local extends ArbiAgent {
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
-		// subscribe
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//String subscribeStatement = "(rule (fact (VoicePerceived $user $input)) --> (notify (VoicePerceived $user $input)))";
-		//dc.subscribe(subscribeStatement);
-		//System.out.println("??");
 		String subscribeStatement = "(rule (fact (context $context)) --> (notify (context $context)))";
 		System.out.println("??");
 		dc.subscribe(subscribeStatement);
-		//subscribeStatement = "(rule (fact (UserIntention $person $intention)) --> (notify (UserIntention $person $intention)))";
-		//dc.subscribe(subscribeStatement);
-		
 	}
 
 	
@@ -196,34 +192,18 @@ public class TaskManager_Local extends ArbiAgent {
 				} else if(gl.getName().equals("relationChanged")) {
 					String relationChanged = "(relationChanged " + gl.getExpression(0).toString() + ")";
 					msgManager.assertGL(relationChanged);
-				} else if(gl.getName().equals("actionResult")) { 
-					String actionResult = "(actionCompleted "+ gl.getExpression(0).asGeneralizedList().getExpression(0) + ")";
-					msgManager.assertGL(actionResult);
-				} else if (gl.getName().equals("RobotPath")) {
-					msgManager.updateFact("(RobotPath $robot $start $end $path)",gl.toString());
-					msgManager.assertGL("(RobotPathUpdated)");
 				} else if (gl.getName().equals("GoalRequest")) {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "RequestedFrom", goalGL.getExpression(0), goalGL.getExpression(1));
 				} else if (gl.getName().equals("GoalReport")) {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "ReportedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
-				}  else if(gl.getExpression(0).isGeneralizedList()) { 
-					System.out.println("action parsing");
-					System.out.println(gl.toString());
-					if (gl.getExpression(0).asGeneralizedList().getName().equals("actionID") &&
-							gl.getExpression(1).asValue().stringValue().equals("success")) {
-						String actionResult = "(actionCompleted "+ gl.getExpression(0).asGeneralizedList().getExpression(0) + ")";
-						System.out.println(actionResult);
-						msgManager.assertGL(actionResult);	
-					}
 				} else {
-					System.out.println("assert context : " + data);
+					//System.out.println("assert context : " + data);
 					msgManager.assertGL(data);
 				}
 
 			} catch (InterruptedException | ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -383,7 +363,16 @@ public class TaskManager_Local extends ArbiAgent {
 	}
 
 	public static void main(String[] args) {
-
-		new TaskManager_Local();
+		String brokerAddress;
+		String robotID;
+		if(args.length == 0) {
+			brokerAddress = "tcp://172.16.165.141:61313";
+			robotID = "Local";	
+		} else {
+			robotID = args[0];
+			brokerAddress = args[1];
+		}
+		
+		new TaskManager_Local(robotID, brokerAddress);
 	}
 }

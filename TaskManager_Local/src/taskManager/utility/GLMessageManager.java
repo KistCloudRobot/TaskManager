@@ -87,11 +87,10 @@ public class GLMessageManager {
 	}
 
 	public GLMessageManager() {
-		System.out.println(this.removeQuotationMarks("Tow21"));
 	}
 
 	public String changeName(String input, String newName) {
-		System.out.println("name Changed : " + input);
+		//System.out.println("name Changed : " + input);
 
 		String[] splitResult = input.split(" ");
 		String result = splitResult[0].substring(1, splitResult[0].length());
@@ -511,9 +510,9 @@ public class GLMessageManager {
 				//expressionList[i] = this.removeQuotationMarks(expressionList[i]);
 			}
 			
-			System.out.println("?????" + expressionList[0]);
+		//	System.out.println("?????" + expressionList[0]);
 
-			System.out.println("gl message assert goal");
+			//System.out.println("gl message assert goal");
 			assertFact(name, expressionList);
 
 		} catch (ParseException e) {

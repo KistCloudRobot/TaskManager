@@ -19,14 +19,14 @@ PLAN PERFORM RequestMultiAllocation($alocText1,$alocText2, $worker1,$worker2){
 
 		$allocation = $glUtility.retrieveGLExpression($allocation,1);
 		System.out.println("allocation : " + $allocation);
-		PERFORM FindWorker($allocation, $worker1);
+		PERFORM FindRobotAgent($allocation, $worker1);
 		System.out.println("worker " + $worker1);
 		
 		$allocation = $glUtility.retrieveGLExpression($result, 1);
 
 		$allocation = $glUtility.retrieveGLExpression($allocation,1);
 		System.out.println("allcation2 : " + $allocation);
-		PERFORM FindWorker($allocation, $worker2);
+		PERFORM FindRobotAgent($allocation, $worker2);
 		System.out.println("worker " + $worker2);
 		PERFORM isro:endLog("PERFORM", "RequestTaskAllocation");
 	UTILITY: 10; 

@@ -4,6 +4,7 @@ PREFIXES:
 
 FACTS:	
 	FACT  isro:TaskLogAddress("agent://www.arbi.com/TaskLog");
+	FACT  isro:ServicePackageDispatcherAddress("agent://www.arbi.com/ServiceDispatcher");
 	FACT  isro:ActionAddress("agent://www.arbi.com/action");
 	FACT  isro:BehaviorAddress("agent://www.arbi.com/BehaviorInterface");
 	FACT  isro:ReasonerAddress("agent://www.arbi.com/TaskReasoner");
@@ -13,6 +14,7 @@ FACTS:
 	FACT  isro:MultiAgentPathFinderAddress("agent://www.arbi.com/MultiAgentPathFinder");
 	FACT  isro:NavigationControllerAddress("agent://www.arbi.com/NavigationController");
 	FACT  isro:agent("agent://www.mcarbi.com/Local");
+	FACT  isro:SemanticMapManager("agent://www.mcarbi.com/SemanticMapManager");
 	
 	/*
 	FACT  isro:KnowledgeManagerAddress("agent://www.arbi.com/LIFT1/knowledgeManager");

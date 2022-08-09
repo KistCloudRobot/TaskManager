@@ -27,12 +27,42 @@ PLAN PERFORM GoalAssign($channelName, $goal, $worker) {
 		System.out.println("worker : " + $worker);
 		System.out.println("data : " + $data);
 		
-		PERFORM send($channelName, $worker, $data);
+		PERFORM inform($channelName, $worker, $data);
 		
 		ASSERT GoalAssigned($goalID, $worker);
 	UTILITY: 10; 
 }
 
+
+PLAN PERFORM GoalAssign($channelName,$goal, $worker) {
+	ID: "http://www.arbi.com//GoalAssignToAnotherWorker"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT GoalAssigned($assignedGoalID, $worker);
+		FACT isro:agent($agent);
+	BODY:
+		System.out.println("========" + $worker + "is working find another worker=======");
+		
+		PERFORM FindAnotherWorker($worker, $another);
+		
+		System.out.println($another);
+		$goalName = $glUtility.retrieveGLExpression($goal,1);
+//		System.out.println($goalName);
+		$goalMetadata = $glUtility.retrieveGLExpression($goal,0);
+//		System.out.println($goalMetadata);
+		$goalID = $glUtility.retrieveGLExpression($goalMetadata,0);
+//		System.out.println($goalID);
+		$escapedGoal = $glUtility.escapeGL($goal);
+		
+		$data = "(GoalRequest (" + $goalName + " \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))";
+		
+		PERFORM inform($channelName, $worker, $data);
+		
+		ASSERT GoalAssigned($goalID, $another);
+	UTILITY: 20; 
+}
+/*
 PLAN PERFORM GoalAssign($goal, $worker) {
 	ID: "http://www.arbi.com//GoalAssignToAnotherWorker"
 	PRECONDITION :
@@ -59,3 +89,4 @@ PLAN PERFORM GoalAssign($goal, $worker) {
 		ASSERT GoalAssigned($goalID, $another);
 	UTILITY: 20; 
 }
+*/

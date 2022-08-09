@@ -2,7 +2,7 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN perform isro:RequestPath($startVertex, $endVertex, $path) {
+PLAN perform isro:RequestPath($robot, $startVertex, $endVertex, $path) {
 	ID: "http://www.arbi.com//BuiltInPlan#RequestRobotPath"
 	PRECONDITION :
 		FACT isro:MultiAgentPathFinderAddress($address);
@@ -11,7 +11,7 @@ PLAN perform isro:RequestPath($startVertex, $endVertex, $path) {
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "RequestRobotPath");
 		
-		$data = "(RobotPath $robotID " + $startVertex +" "+ $endVertex +" $path)";
+		$data = "(RobotPath \""+$robot + "\" " + $startVertex +" "+ $endVertex +" $path)";
 		
 		$path = $communicationInstance.request($address, $data);
 		System.out.println($path);

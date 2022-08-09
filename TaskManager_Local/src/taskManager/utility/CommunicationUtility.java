@@ -91,7 +91,7 @@ public class CommunicationUtility {
 	}
 
 	public String request(String receiver, String content) {
-		System.out.println("Request : " + receiver + " " + content);
+		//System.out.println("Request : " + receiver + " " + content);
 		String result = "";
 		try {
 			Thread.sleep(50);
@@ -100,7 +100,7 @@ public class CommunicationUtility {
 			e.printStackTrace();
 		}
 		result = taskManager.request(receiver, content);
-		System.out.println("result : " + result);
+		//System.out.println("result : " + result);
 
 		return result;
 	}
