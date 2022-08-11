@@ -20,12 +20,6 @@ public class CommunicationUtility {
 	}
 
 	public void assertToLTM(String data) {
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		ds.assertFact(data);
 	}
 	
@@ -118,14 +112,8 @@ public class CommunicationUtility {
 		taskManager.subscribe(receiver, content);
 	}
 	
-	public void updateFact(String content) {
+	public void updateToLTM(String content) {
 		//System.out.println("==== updateFact To LTM : " + content + " ====");
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		ds.updateFact(content);
 	}
 	

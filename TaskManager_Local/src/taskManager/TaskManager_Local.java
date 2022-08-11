@@ -3,13 +3,13 @@ package taskManager;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
 import kr.ac.uos.ai.arbi.model.GLFactory;
 import kr.ac.uos.ai.arbi.model.GeneralizedList;
 import kr.ac.uos.ai.arbi.model.parser.ParseException;
-import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import taskManager.aplview.APLViewer;
 import taskManager.logger.TaskManagerLogger;
 import taskManager.utility.CommunicationUtility;
@@ -146,11 +146,6 @@ public class TaskManager_Local extends ArbiAgent {
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		String subscribeStatement = "(rule (fact (context $context)) --> (notify (context $context)))";
 		System.out.println("??");
 		dc.subscribe(subscribeStatement);
@@ -366,7 +361,7 @@ public class TaskManager_Local extends ArbiAgent {
 		String brokerAddress;
 		String robotID;
 		if(args.length == 0) {
-			brokerAddress = "tcp://172.16.165.141:61313";
+			brokerAddress = "tcp://172.16.165.141:61316";
 			robotID = "Local";	
 		} else {
 			robotID = args[0];

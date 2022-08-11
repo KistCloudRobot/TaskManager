@@ -17,6 +17,7 @@ PLAN CONCLUDE ContextRecieved($context){
 PLAN CONCLUDE ContextRecieved($context){
 	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotAt"
 	PRECONDITION:
+		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "RobotAt";
 	BODY:
@@ -26,6 +27,36 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 		$glUtility.assertGL($context);
 		
+		RETRACT ContextRecieved($contextName, $context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRackAt"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "RackAt";
+	BODY:
+		
+		$rack = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT RackAt($rack, $v1, $v2);
+		$glUtility.assertGL($context);
+		RETRACT ContextRecieved($contextName, $context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedCargoAt"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "CargoAt";
+	BODY:
+		
+		$CargoAt = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT CargoAt($CargoAt, $v1, $v2);
+		$glUtility.assertGL($context);
 		RETRACT ContextRecieved($contextName, $context);
 		
 	UTILITY : 100;
