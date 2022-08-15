@@ -1,0 +1,21 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM QueryCargoOnStation($cargoID){
+	ID: "http://www.arbi.com//BuiltInPlan#QueryCargoOnStation"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT isro:ContextManagerAddress($agent);
+		FACT GLUtility($glUtility);
+	BODY :
+		System.out.println("plan perform QueryCargoOnStation");
+	
+		$queryResult = $communicationInstance.sendQuery($agent, "(context (cargoOnStation $CargoID))");
+		$context = $glUtility.retrieveGLExpression($queryResult, 0);
+		System.out.println($context);
+		$cargoID = $glUtility.retrieveGLExpression($context, 0);
+		System.out.println("cargoID : " + $cargoID);
+		
+	utility : 10;
+}

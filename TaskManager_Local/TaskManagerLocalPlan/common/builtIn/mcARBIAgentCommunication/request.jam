@@ -1,0 +1,28 @@
+
+plan perform request($address, $data, $result){
+	ID : "requestByBase"
+	precondition:
+		fact McARBIAgentCommunicator($communication);
+	body:
+		$result = $communication.request($address,$data);
+}
+
+
+plan perform request($channelName, $address, $data, $result){
+	ID : "requestByChannel"
+	precondition:
+		fact Channel($channelName, $channel);
+	body:
+		$result = $channel.request($address,$data);
+	UTILITY : 1000;
+}
+
+plan perform request($channelName, $address, $data, $resutl){
+	ID : "reqeustByChannelFailed"
+	precondition:
+		fact McARBIAgentCommunicator($communication);
+	body:
+		System.out.println("there is no channel : " + $channelName);
+	utility:-1;
+}
+

@@ -1,0 +1,27 @@
+
+plan perform inform($address, $data){
+	ID : "InformByBase"
+	precondition:
+		fact McARBIAgentCommunicator($communication);
+	body:
+		$communication.send($address,$data);
+}
+
+
+plan perform inform($channelName, $address, $data){
+	ID : "InformByChannel"
+	precondition:
+		fact Channel($channelName, $channel);
+	body:
+		$channel.send($address,$data);
+	utility : 1000;
+}
+
+plan perform inform($channelName, $address, $data){
+	ID : "InformByChannelFailed"
+	precondition:
+		fact McARBIAgentCommunicator($communication);
+	body:
+		System.out.println("there is no channel : " + $channelName);
+	utility:-1;
+}

@@ -1,0 +1,40 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitRequestedActionSuccess"
+	PRECONDITION:
+		FACT RequestedAction($address, $actionID);
+		FACT ActionResult($actionID, $result);
+		$result == "success";
+	BODY:
+		PERFORM ReportActionResult($address, $actionID);
+		RETRACT ActionResult($actionID);
+	UTILITY: 15; 
+}
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitActionSuccess"
+	PRECONDITION:
+		FACT ActionResult($actionID, $result);
+		$result == "success";
+	BODY:
+		RETRACT ActionResult($actionID);
+	UTILITY: 10; 
+}
+
+
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitActionFailed"
+	PRECONDITION:
+		FACT RequestedAction($address, $actionID);
+		FACT ActionResult($actionID, $result);
+		$result == "fail";
+	BODY:
+		FAIL;
+	UTILITY: 10; 
+}

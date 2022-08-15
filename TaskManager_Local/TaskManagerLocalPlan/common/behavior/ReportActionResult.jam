@@ -1,0 +1,32 @@
+
+PLAN PERFORM ReportActionResult($reciever, $actionID) {
+	ID: "http://www.arbi.com//ReportActionResultToNC"
+	PRECONDITION : 
+		FACT Communication($communicationInstance);
+		FACT isro:NavigationControllerAddress($reciever);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReportActionResult");
+		
+		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
+		$communicationInstance.inform($reciever, $data);
+		
+		PERFORM isro:endLog("PERFORM", "ReportActionResult");
+	UTILITY : 110;
+}
+
+
+
+PLAN PERFORM ReportActionResult($robotID, $actionID) {
+	ID: "http://www.arbi.com//ReportActionResultToRobot"
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReportActionResult");
+		
+		PERFORM FindRobotAgent($robotID, $reciever);
+		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
+		PERFORM inform("logistic", $reciever, $data);
+				
+		PERFORM isro:endLog("PERFORM", "ReportActionResult");
+	UTILITY : 100;
+}
+
+

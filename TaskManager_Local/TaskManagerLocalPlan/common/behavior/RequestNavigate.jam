@@ -1,0 +1,35 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE RequestNavigate($actionID, $robotID,$start,$end){
+	ID: "http://www.arbi.com//ConcludeRequestNavigate"
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestNavigate");
+		
+		POST PERFORM Navigate($actionID, $robotID,$start,$end);
+		RETRACT RequestNavigate($actionID, $robotID,$start,$end);
+		
+		PERFORM isro:endLog("CONCLUDE", "RequestNavigate");
+	UTILITY: 10000; 
+}
+
+
+PLAN PERFORM Navigate($actionID, $robotID,$start,$end){
+	ID: "http://www.arbi.com//Navigate"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT  isro:NavigationControllerAddress($nc);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Navigate");
+		
+		$data = "(RequestNavigate \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
+		$communicationInstance.request($nc,$data);
+		
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction($robotID, $actionID);
+		POST PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "Navigate");
+	UTILITY: 10; 
+}

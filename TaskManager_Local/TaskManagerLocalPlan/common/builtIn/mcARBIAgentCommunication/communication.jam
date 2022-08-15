@@ -1,0 +1,25 @@
+PLAN PERFORM createAgentChannel($channelName,$type, $channel) {
+	ID: "createChannel"
+	precondition:
+		fact McARBIAgentCommunicator($communication);
+	BODY:
+		System.out.println("---creating channel---");
+		
+		$channel = $communication.createAgentChannel($channelName,$type);
+		
+		System.out.println("---create Complete---");
+}
+
+PLAN PERFORM connectAgentChannel($channelName, $channel) {
+	ID: "connectChannel"
+	precondition:
+		fact McARBIAgentCommunicator($communication);
+	BODY:
+		System.out.println("---connecting channel---");
+		
+		$channel = $communication.connectAgentChannel($channelName);
+		
+		
+		System.out.println("---connecting Complete---");
+}
+
