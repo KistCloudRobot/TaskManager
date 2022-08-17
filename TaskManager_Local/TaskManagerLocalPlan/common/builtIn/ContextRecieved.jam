@@ -15,15 +15,15 @@ PLAN CONCLUDE ContextRecieved($context){
 }
 
 PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotAt"
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrobotAt"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "RobotAt";
+		$glUtility.retrieveGLName($context) == "robotAt";
 	BODY:
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
-		RETRACT RobotAt($robot, $v1, $v2);
+		RETRACT robotAt($robot, $v1, $v2);
 		
 		$glUtility.assertGL($context);
 		
@@ -33,14 +33,14 @@ PLAN CONCLUDE ContextRecieved($context){
 }
 
 PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRackAt"
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrackAt"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "RackAt";
+		$glUtility.retrieveGLName($context) == "rackAt";
 	BODY:
 		
 		$rack = $glUtility.retrieveGLExpression($context, 0);
-		RETRACT RackAt($rack, $v1, $v2);
+		RETRACT rackAt($rack, $v1, $v2);
 		$glUtility.assertGL($context);
 		RETRACT ContextRecieved($contextName, $context);
 		
@@ -48,14 +48,14 @@ PLAN CONCLUDE ContextRecieved($context){
 }
 
 PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedCargoAt"
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedcargoAt"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "CargoAt";
+		$glUtility.retrieveGLName($context) == "cargoAt";
 	BODY:
 		
-		$CargoAt = $glUtility.retrieveGLExpression($context, 0);
-		RETRACT CargoAt($CargoAt, $v1, $v2);
+		$cargoAt = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT cargoAt($cargoAt, $v1, $v2);
 		$glUtility.assertGL($context);
 		RETRACT ContextRecieved($contextName, $context);
 		
@@ -66,12 +66,12 @@ PLAN CONCLUDE ContextRecieved($context){
 	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedBatteryRemain"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "BatteryRemain";
+		$glUtility.retrieveGLName($context) == "batteryRemain";
 	BODY:
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		
-		RETRACT BatteryRemain($robot, $v1);
+		RETRACT batteryRemain($robot, $v1);
 		
 		$glUtility.assertGL($context);
 		

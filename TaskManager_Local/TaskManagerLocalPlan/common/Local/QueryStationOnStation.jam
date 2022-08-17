@@ -10,7 +10,7 @@ PLAN PERFORM QueryStationOnStation($station, $rack){
 		
 	BODY:
 		
-		$queryResult = $communicationInstance.sendQuery($address, "(context (onStation \"" +$rack + "\" $station))");
+		$queryResult = $communicationInstance.sendQuery($address, "(context (onStation \"" +$rack + "\" $Station))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
 		$station = $glUtility.retrieveGLExpression($context, 1);
 	UTILITY: 10; 

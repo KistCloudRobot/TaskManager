@@ -11,7 +11,7 @@ PLAN PERFORM QueryEmptyStation($empty){
 	BODY :
 		System.out.println("plan perform queryEmpty");
 	
-		$queryResult = $communicationInstance.sendQuery($agent, "(context (EmptyStation $station))");
+		$queryResult = $communicationInstance.sendQuery($agent, "(context (emptyStation $Station))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
 //		System.out.println($context);
 		$empty = $glUtility.retrieveGLExpression($context, 0);
