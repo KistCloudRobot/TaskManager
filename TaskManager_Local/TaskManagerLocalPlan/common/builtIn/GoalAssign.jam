@@ -10,13 +10,9 @@ PLAN PERFORM GoalAssign($channelName, $goal, $worker) {
 	BODY:
 		System.out.println("========Goal Assign to " + $worker + "=======");
 		
-		//System.out.println("channel Name : " + $channelName);
 		$goalName = $glUtility.retrieveGLExpression($goal,1);
-		//System.out.println("goal Name : " + $goalName);
 		$goalMetadata = $glUtility.retrieveGLExpression($goal,0);
-		//System.out.println("goal metadata : " + $goalMetadata);
 		$goalID = $glUtility.retrieveGLExpression($goalMetadata,0);
-		//System.out.println("goal id : " + $goalID);
 		$escapedGoal = $glUtility.escapeGL($goal);
 		
 		//System.out.println("escapedGoal : " + $escapedGoal);
@@ -26,10 +22,10 @@ PLAN PERFORM GoalAssign($channelName, $goal, $worker) {
 		System.out.println("channelName : " + $channelName);
 		System.out.println("worker : " + $worker);
 		System.out.println("data : " + $data);
+		PERFORM FindRobotAgent($worker, $agent);
+		PERFORM inform($channelName, $agent, $data);
 		
-		PERFORM inform($channelName, $worker, $data);
-		
-		ASSERT GoalAssigned($goalID, $worker);
+		PERFORM UpdateGoalAssigned($goalID, $agent);
 	UTILITY: 10; 
 }
 
@@ -48,18 +44,16 @@ PLAN PERFORM GoalAssign($channelName,$goal, $worker) {
 		
 		System.out.println($another);
 		$goalName = $glUtility.retrieveGLExpression($goal,1);
-//		System.out.println($goalName);
 		$goalMetadata = $glUtility.retrieveGLExpression($goal,0);
-//		System.out.println($goalMetadata);
 		$goalID = $glUtility.retrieveGLExpression($goalMetadata,0);
-//		System.out.println($goalID);
 		$escapedGoal = $glUtility.escapeGL($goal);
 		
 		$data = "(GoalRequest (" + $goalName + " \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))";
 		
-		PERFORM inform($channelName, $worker, $data);
+		PERFORM FindRobotAgent($another, $agent);
+		PERFORM inform($channelName, $agent, $data);
 		
-		ASSERT GoalAssigned($goalID, $another);
+		PERFORM UpdateGoalAssigned($goalID, $agent);
 	UTILITY: 20; 
 }
 /*

@@ -41,8 +41,6 @@ PLAN PERFORM FindRobotAgent($robot, $agent){
 
 PLAN PERFORM FindRobotAgent($robot, $agent){
 	ID: "http://www.arbi.com//FindRobot"
-	PRECONDITION :
-		
 	BODY:
 		System.out.println("Find robot???");
 		System.out.println($robot);

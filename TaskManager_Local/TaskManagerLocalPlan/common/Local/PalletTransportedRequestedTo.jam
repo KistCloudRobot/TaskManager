@@ -30,7 +30,6 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		
 		PERFORM GoalAssign("logistic", $goal, $worker);
 		//PERFORM isro:SendGoalAssignedToSMM($goalID, $worker);
-		
 		$escapedGoal = $glUtility.escapeGL($goal);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");

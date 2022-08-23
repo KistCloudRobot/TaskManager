@@ -23,6 +23,9 @@ public class CommunicationUtility {
 		ds.assertFact(data);
 	}
 	
+	public void retractFromLTM(String data) {
+		ds.retractFact(data);
+	}
 	public void inform(String receiver, String content) {
 		//System.out.println("inform : " + receiver + " " + content);
 		try {

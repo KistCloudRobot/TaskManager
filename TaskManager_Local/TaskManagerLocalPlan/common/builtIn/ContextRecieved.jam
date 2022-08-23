@@ -31,6 +31,22 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 	UTILITY : 100;
 }
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotLoading"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "robotLoading";
+	BODY:
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT robotLoading($robot, $oldVelocity);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 100;
+}
 
 PLAN CONCLUDE ContextRecieved($context){
 	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrackAt"

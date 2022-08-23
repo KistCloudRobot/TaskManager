@@ -1,0 +1,22 @@
+PLAN PERFORM UpdateGoalAssigned($goalID, $worker) {
+	ID: "http://www.arbi.com//assertGoalAssigned"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+	BODY :
+		ASSERT goalAssigned($goalID, $worker);
+		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
+		$communicationInstance.assertToLTM($data);
+	UTILITY : 10;
+}
+
+PLAN PERFORM UpdateGoalAssigned($goalID, $worker) {
+	ID: "http://www.arbi.com//retractGoalAssigned"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT goalAssigned($goalID, $worker);
+	BODY :
+		RETRACT goalAssigned($goalID, $worker);
+		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
+		$communicationInstance.retractToLTM($data);
+	UTILITY : 20;
+}
