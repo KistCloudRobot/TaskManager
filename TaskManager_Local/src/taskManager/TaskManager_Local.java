@@ -146,7 +146,7 @@ public class TaskManager_Local extends ArbiAgent {
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
-		String subscribeStatement = "(rule (fact (context $context)) --> (notify (context $context)))";
+		String subscribeStatement = "(rule (fact (context (PersonCall $a $b $c))) --> (notify (context (PersonCall $a $b $c))))";
 		System.out.println("??");
 		dc.subscribe(subscribeStatement);
 	}
