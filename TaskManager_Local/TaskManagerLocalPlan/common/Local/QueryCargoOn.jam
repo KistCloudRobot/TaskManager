@@ -1,4 +1,4 @@
-PLAN PERFORM QueryOnRack($cargo, $rack){
+PLAN PERFORM QueryCargoOn($cargo, $rack){
 	ID: "http://www.arbi.com//QueryOnRack"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -8,7 +8,7 @@ PLAN PERFORM QueryOnRack($cargo, $rack){
 		
 	BODY:
 		
-		$queryResult = $communicationInstance.sendQuery($address, "(context (onRack \"" +  $cargo + "\" $Rack))");
+		$queryResult = $communicationInstance.sendQuery($address, "(context (cargoOn \"" +  $cargo + "\" $Rack))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
 		$rack = $glUtility.retrieveGLExpression($context, 1);
 	UTILITY: 10; 
