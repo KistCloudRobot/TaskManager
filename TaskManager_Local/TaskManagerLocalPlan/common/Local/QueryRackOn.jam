@@ -1,5 +1,5 @@
 
-PLAN PERFORM QueryRackOnRack($rack,$station){
+PLAN PERFORM QueryRackOnStation($rack,$station){
 	ID: "http://www.arbi.com//QueryStationOnStation"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -15,7 +15,7 @@ PLAN PERFORM QueryRackOnRack($rack,$station){
 	UTILITY: 10; 
 }
 
-PLAN PERFORM QueryRackOnStation($rack,$station){
+PLAN PERFORM QueryRackOnRack($rack,$station){
 	ID: "http://www.arbi.com//QueryRackOnStation"
 	PRECONDITION:
 		FACT Communication($communicationInstance);

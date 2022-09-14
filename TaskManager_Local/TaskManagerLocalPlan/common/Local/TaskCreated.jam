@@ -11,7 +11,7 @@ PLAN PERFORM TaskCreated($taskType, $location,$goalID, $goal) {
 		$goalID = $helper.getGoalID("Local");
 		
 		PERFORM QueryIdleLiftRack($rack);
-		PERFORM QueryOnRackStation($rack, $startStation);
+		PERFORM QueryRackOnStation($rack, $startStation);
 		PERFORM BuildPalletGoal($goalID,$rack,$startStation,$location,$goal);
 		
 		PERFORM isro:endLog("PERFORM", "TaskCreatedForPrepareStoring");
@@ -53,7 +53,7 @@ PLAN PERFORM TaskCreated($taskType,$location, $goalID, $goal) {
 		System.out.println("hi");
 		$goalID = $helper.getGoalID("Local");
 		
-		PERFORM QueryOnRackStation($rack, $location);
+		PERFORM QueryRackOnRack($rack, $location);
 		PERFORM QueryEmptyStoringStation($endStation);
 		PERFORM BuildPalletGoal($goalID,$rack,$location,$endStation,$goal);
 		
@@ -75,7 +75,7 @@ PLAN PERFORM TaskCreated($taskType,$location, $goalID, $goal) {
 		
 		$goalID = $helper.getGoalID("Local");
 		
-		PERFORM QueryOnRackStation($rack, $location);
+		PERFORM QueryRackOnRack($rack, $location);
 		PERFORM QueryEmptyStoringStation($endStation);
 		PERFORM BuildPalletGoal($goalID,$rack,$location,$endStation,$goal);
 		
