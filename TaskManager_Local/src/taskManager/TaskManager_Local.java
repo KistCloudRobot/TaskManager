@@ -5,6 +5,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
+import kr.ac.uos.ai.arbi.BrokerType;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
 import kr.ac.uos.ai.arbi.model.GLFactory;
@@ -55,7 +56,7 @@ public class TaskManager_Local extends ArbiAgent {
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
 		
-		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,2);
+		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,BrokerType.ZEROMQ);
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
 
 		msgManager = new GLMessageManager(interpreter);
@@ -68,7 +69,7 @@ public class TaskManager_Local extends ArbiAgent {
 	public TaskManager_Local(String robotID, String brokerAddress) {
 		ENV_JMS_BROKER = brokerAddress;
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,2);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,BrokerType.ZEROMQ);
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
 
 		msgManager = new GLMessageManager(interpreter);
@@ -142,7 +143,7 @@ public class TaskManager_Local extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 		
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,2);
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,BrokerType.ZEROMQ);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
