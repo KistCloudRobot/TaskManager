@@ -17,6 +17,10 @@ public class McARBIAgentCommunicator extends Agent{
 
 	private TaskManagerDataSource dc;
 	
+	public static void main(String[] args) {
+		
+	}
+	
 	public McARBIAgentCommunicator(BlockingQueue<RecievedMessage> queue) {
 		
 		messageQueue = queue;
