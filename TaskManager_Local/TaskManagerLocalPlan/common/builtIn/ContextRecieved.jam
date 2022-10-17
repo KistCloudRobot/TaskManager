@@ -16,6 +16,19 @@ PLAN CONCLUDE ContextRecieved($context){
 PLAN CONCLUDE ContextRecieved($context){
 	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotDegree"
 	PRECONDITION:
+		FACT Communication($communication);
+		$glUtility.retrieveGLName($context) == "PersonCall";
+	BODY:
+		System.out.println("PersonCall Recieved!!!!");
+		System.out.println($context);
+		$communication.assertToLTM($context);
+				
+		RETRACT ContextRecieved($context);
+	UTILITY : 100;
+}
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotDegree"
+	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotDegree";
 	BODY:
