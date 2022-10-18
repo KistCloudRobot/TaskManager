@@ -20,11 +20,15 @@ public class CommunicationUtility {
 	}
 
 	public void assertToLTM(String data) {
+		System.out.println("before assert");
 		ds.assertFact(data);
+		System.out.println("after assert");
 	}
 	
 	public void retractFromLTM(String data) {
-		ds.retractFact(data);
+		System.out.println("retract : " + data);
+		String result = ds.retractFact(data);
+		System.out.println("result : " + result);
 	}
 	public void inform(String receiver, String content) {
 		//System.out.println("inform : " + receiver + " " + content);

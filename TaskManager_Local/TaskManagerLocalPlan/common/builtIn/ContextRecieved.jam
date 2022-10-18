@@ -13,19 +13,26 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 	UTILITY : 10;
 }
+
 PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotDegree"
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedPersonCall"
 	PRECONDITION:
 		FACT Communication($communication);
-		$glUtility.retrieveGLName($context) == "PersonCall";
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "personCall";
 	BODY:
 		System.out.println("PersonCall Recieved!!!!");
 		System.out.println($context);
-		$communication.assertToLTM($context);
-				
+		$callID = $glUtility.retrieveGLExpression($context, 0);
+		$location = $glUtility.retrieveGLExpression($context, 1);
+		$taskType = $glUtility.retrieveGLExpression($context, 2);
+		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"" + $taskType + "\"))";
+		
+		$communication.assertToLTM($data);
 		RETRACT ContextRecieved($context);
 	UTILITY : 100;
 }
+
 PLAN CONCLUDE ContextRecieved($context){
 	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotDegree"
 	PRECONDITION:

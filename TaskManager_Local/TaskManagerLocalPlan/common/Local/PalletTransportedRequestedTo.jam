@@ -5,6 +5,8 @@ PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostPalletTransportedRequestedTo"
 	PRECONDITION:
 	BODY:
+		
+		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedRequestedTo");
 		POST PERFORM PalletTransportedRequestedTo($worker,$goalID);
 		
 		RETRACT PostPalletTransportedRequestedTo($worker,$goalID);

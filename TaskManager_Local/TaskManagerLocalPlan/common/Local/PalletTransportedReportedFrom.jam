@@ -34,9 +34,8 @@ PLAN CONCLUDE PalletTransportedReportedFrom($worker, $goalID, $goal){
 		System.out.println("goalID : " + $goalID);
 		System.out.println("goal : " + $goal);
 		
-		$goalID2 = $glUtility.removeQuotationMarks($goalID);
-		
-		//System.out.println("goalID2 : " + $goalID2);
+		$goalID = $glUtility.removeQuotationMarks($goalID);
+		System.out.println("goalID2 : " + $goalID);
 		PERFORM UpdateGoalAssigned($goalID, $worker);
 		//RETRIEVE PalletTransportedRequestedTo($worker, $goalID, $g);
 		
