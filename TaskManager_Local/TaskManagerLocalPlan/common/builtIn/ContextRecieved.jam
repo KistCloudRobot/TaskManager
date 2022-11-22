@@ -27,7 +27,7 @@ PLAN CONCLUDE ContextRecieved($context){
 		$location = $glUtility.retrieveGLExpression($context, 1);
 		$taskType = $glUtility.retrieveGLExpression($context, 2);
 		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"" + $taskType + "\"))";
-		
+		System.out.println($data);
 		$communication.assertToLTM($data);
 		RETRACT ContextRecieved($context);
 	UTILITY : 100;
