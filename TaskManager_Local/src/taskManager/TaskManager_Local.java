@@ -50,26 +50,30 @@ public class TaskManager_Local extends ArbiAgent {
 	private TaskManagerDataSource dc;
 
 	
-	public TaskManager_Local() {
-		
-		initAddress();
-		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
-		
-		
-		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,BrokerType.ZEROMQ);
-		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
-
-		msgManager = new GLMessageManager(interpreter);
-		
+//	public TaskManager_Local() {
+//		
+//		initAddress();
+//		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
+//		
+//		
+//		ArbiAgentExecutor.execute( ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,BrokerType.ZEROMQ);
+//		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
+//
+//		msgManager = new GLMessageManager(interpreter);
+//		
 //		aplViewer = new APLViewer(interpreter);
-		//logger = new TaskManagerLogger(this,interpreter);
-		init();
-	}
-	
-	public TaskManager_Local(String robotID, String brokerAddress) {
+//		logger = new TaskManagerLogger(this,interpreter);
+//		init();
+//	}
+//	
+	public TaskManager_Local(String robotID, String brokerAddress, int port, BrokerType brokerType) {
 		ENV_JMS_BROKER = brokerAddress;
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_ADRESS, this,BrokerType.ZEROMQ);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, port, AGENT_PREFIX + TASKMANAGER_ADRESS, this,brokerType);
+		
+		dc = new TaskManagerDataSource(this);
+		
+		dc.connect(ENV_JMS_BROKER, port, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,brokerType);
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
 
 		msgManager = new GLMessageManager(interpreter);
@@ -141,9 +145,6 @@ public class TaskManager_Local extends ArbiAgent {
 
 	@Override
 	public void onStart() {
-		dc = new TaskManagerDataSource(this);
-		
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,BrokerType.ZEROMQ);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
@@ -361,16 +362,19 @@ public class TaskManager_Local extends ArbiAgent {
 	public static void main(String[] args) {
 		String brokerAddress;
 		String robotID;
+		int port;
 		if(args.length == 0) {
-//			brokerAddress = "tcp://172.16.165.141:61316";
-			brokerAddress = "tcp://192.168.100.10:61316";
-//			brokerAddress = "tcp://127.0.0.1:61316";
-			robotID = "Local";	
+			brokerAddress = "172.16.165.141";
+//			brokerAddress = "192.168.100.10";
+//			brokerAddress = "127.0.0.1";
+			robotID = "Local";
+			port = 61316;
 		} else {
 			robotID = args[0];
 			brokerAddress = args[1];
+			port = Integer.parseInt(args[2]);
 		}
 		
-		new TaskManager_Local(robotID, brokerAddress);
+		new TaskManager_Local(robotID, brokerAddress, port, BrokerType.ACTIVEMQ);
 	}
 }
