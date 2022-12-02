@@ -69,11 +69,12 @@ public class TaskManager_Local extends ArbiAgent {
 	public TaskManager_Local(String robotID, String brokerAddress, int port, BrokerType brokerType) {
 		ENV_JMS_BROKER = brokerAddress;
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, port, AGENT_PREFIX + TASKMANAGER_ADRESS, this,brokerType);
-		
 		dc = new TaskManagerDataSource(this);
 		
 		dc.connect(ENV_JMS_BROKER, port, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,brokerType);
+	
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, port, AGENT_PREFIX + TASKMANAGER_ADRESS, this,brokerType);
+		
 		interpreter = JAM.parse(new String[] { "./TaskManagerLocalPlan/boot.jam" });
 
 		msgManager = new GLMessageManager(interpreter);
