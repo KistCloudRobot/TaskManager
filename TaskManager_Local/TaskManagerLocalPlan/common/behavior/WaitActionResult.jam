@@ -10,6 +10,7 @@ PLAN perform WaitActionResult($actionID){
 		$result == "success";
 	BODY:
 		PERFORM ReportActionResult($address, $actionID);
+		//System.out.println("action Complete " + $actionID);
 		RETRACT ActionResult($actionID);
 	UTILITY: 15; 
 }
@@ -21,6 +22,7 @@ PLAN perform WaitActionResult($actionID){
 		FACT ActionResult($actionID, $result);
 		$result == "success";
 	BODY:
+		//System.out.println("action Complete " + $actionID);
 		RETRACT ActionResult($actionID);
 	UTILITY: 10; 
 }

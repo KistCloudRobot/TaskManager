@@ -21,7 +21,7 @@ PLAN PERFORM Navigate($actionID, $robotID,$start,$end){
 		FACT Communication($communicationInstance);
 		FACT  isro:NavigationControllerAddress($nc);
 	BODY:
-		//PERFORM isro:startLog("PERFORM", "Navigate");
+		PERFORM isro:startLog("PERFORM", "Navigate");
 		
 		$data = "(RequestNavigate \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
 		$communicationInstance.request($nc,$data);
@@ -30,6 +30,6 @@ PLAN PERFORM Navigate($actionID, $robotID,$start,$end){
 		ASSERT RequestedAction($robotID, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
-		//PERFORM isro:endLog("PERFORM", "Navigate");
+		PERFORM isro:endLog("PERFORM", "Navigate");
 	UTILITY: 10; 
 }

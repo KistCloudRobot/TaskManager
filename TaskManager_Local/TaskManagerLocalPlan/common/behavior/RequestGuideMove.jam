@@ -18,7 +18,7 @@ PLAN PERFORM GuideMove($actionID, $robotID, $vertex, $direction){
 	PRECONDITION : 
 		FACT isro:NavigationControllerAddress($nc);
 	BODY:
-		//PERFORM isro:startLog("PERFORM", "GuideMove");
+		PERFORM isro:startLog("PERFORM", "GuideMove");
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestGuideMove \"" +$actionID + "\" " + $vertex + " \"" + $direction + "\")";
@@ -28,6 +28,6 @@ PLAN PERFORM GuideMove($actionID, $robotID, $vertex, $direction){
 		ASSERT RequestedAction($nc, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
-		//PERFORM isro:endLog("PERFORM", "GuideMove");
+		PERFORM isro:endLog("PERFORM", "GuideMove");
 	UTILITY : 10;
 }

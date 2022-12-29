@@ -18,7 +18,7 @@ PLAN PERFORM FlatPreciseMove($actionID, $robotID, $vertex){
 	PRECONDITION : 
 		FACT isro:NavigationControllerAddress($nc);
 	BODY:
-	//	PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
+		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestFlatPreciseMove \"" +$actionID + "\" " + $vertex + ")";
@@ -28,6 +28,6 @@ PLAN PERFORM FlatPreciseMove($actionID, $robotID, $vertex){
 		ASSERT RequestedAction($nc, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
-	//	PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
 	UTILITY : 10;
 }

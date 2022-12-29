@@ -17,7 +17,8 @@ PLAN CONCLUDE UpdateContext($old, $new){
 		FACT GLUtility($glUtility);
 	BODY:
 		$data = "(update " + $old + " " + $new +")";
+		//System.out.println("[UPDATE CONTEXT] " + $data);
 		$communicationInstance.updateToLTM($data);
 		RETRACT UpdateContext($old, $new);
-	UTILITY : 100;
+	UTILITY : 1000;
 }

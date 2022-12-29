@@ -61,7 +61,7 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT robotAt($robot, $v1, $v2);
-		
+		System.out.println("assert robotAt : " + $context);
 		$glUtility.assertGL($context);
 		
 		RETRACT ContextRecieved($contextName, $context);
