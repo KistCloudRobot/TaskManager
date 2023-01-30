@@ -1,18 +1,18 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
-PLAN CONCLUDE RequestCancelMove($actionID) {
+PLAN CONCLUDE RequestCancelMove($actionID, $robotID) {
 	ID: "http://www.arbi.com//ConcludeRequestCancelMove"
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "RequestCancelMove");
 		
-		POST PERFORM CancelMove($actionID);
-		RETRACT RequestCancelMove($actionID);
+		POST PERFORM CancelMove($actionID, $robotID);
+		RETRACT RequestCancelMove($actionID, $robotID);
 		PERFORM isro:endLog("CONCLUDE", "RequestCancelMove");
 	UTILITY : 10000;
 }
 
 
-PLAN PERFORM CancelMove($actionID){
+PLAN PERFORM CancelMove($actionID, $robotID){
 	ID: "http://www.arbi.com//RequestCancelMove"
 	PRECONDITION : 
 		FACT Communication($communicationInstance);
