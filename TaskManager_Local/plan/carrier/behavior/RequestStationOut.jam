@@ -1,0 +1,26 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM RequestStationOut($moveType, $vertex){
+	ID: "http://www.arbi.com//RequestStationOut"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:agent($agent);
+		FACT isro:robot($robotID);
+		FACT isro:ManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestStationOut");
+		
+		$actionID = $helper.getActionID($agent);
+			
+		$data =  "(RequestExitFromStation \"" + $actionID + "\" \"" + $robotID + "\" \""+$moveType+"\" " + $vertex +" \"Backward\")";
+		PERFORM request("logistic", $address, $data, $result);
+		
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestStationOut");
+	UTILITY: 10; 
+}

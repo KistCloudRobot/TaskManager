@@ -122,29 +122,12 @@ public class GLMessageManager {
 	
 	
 	public String removeQuotationMarks(Object input) {
-		
-		//System.out.println("removeQuotationMarks ??????" + input.getClass().getSimpleName());
 		String data = input.toString();
-		//System.out.println(data);
-		
 		if (data.startsWith("\"")) {
-			//System.out.println("data start with \\\"?");
-			//System.out.println(data);
 			data = data.substring(1, data.length() - 1);
 		}
 		return data;
 	}
-
-	public String removeQuotationMarks(String input) {
-		
-		if (input.startsWith("\"")) {
-			System.out.println("input start with \\\"?");
-			System.out.println(input);
-			input = input.substring(1, input.length() - 1);
-		}
-		return input;
-	}
-	
 	
 	public String retrieveTime(String input) {
 

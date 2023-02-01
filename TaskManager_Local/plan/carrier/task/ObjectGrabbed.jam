@@ -1,0 +1,40 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE PostObjectGrabbed($object, $location) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostObjectGrabbed"
+	PRECONDITION:
+	BODY:
+		POST PERFORM ObjectGrabbed($object, $location);
+		RETRACT PostObjectGrabbed($object, $location);
+	
+	UTILITY : 10000;
+}
+
+PLAN PERFORM ObjectGrabbed($object, $location){
+	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbedAtPalletizingStation1"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT robotAt($robot, $vertex1, $vertex2);
+		FACT isro:ReasonerAddress($reasoner);
+		FACT ExtraUtility($util);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed at station1");
+		
+		PERFORM isro:QueryStationType($location, $stationType);
+		PERFORM isro:EnterToStation($location, $stationType);
+		
+		PERFORM isro:QueryStationVertex($location, $stationVertex);
+		PERFORM isro:RequestLoad($stationVertex);
+		
+		PERFORM isro:ExitFromStation($location, $stationType);
+				
+		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (ObjectGrabbed \"" + $object +"\" \"" + $location + "\"))");
+	UTILITY: 50; 
+
+}

@@ -1,0 +1,31 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE PostReturnToWait() {
+	ID: "http://www.arbi.com//BuiltInPlan#PostReturnToWait"
+	PRECONDITION:
+	BODY:
+		POST PERFORM ReturnToWait();
+		RETRACT PostReturnToWait();
+	UTILITY : 10000;
+}
+
+
+PLAN perform ReturnToWait(){
+	ID: "http://www.arbi.com//BuiltInPlan#ReturnToWait"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "ReturnToWait");
+		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "start");
+		
+		RETRIEVE robotAt($robot, $v1, $v2);
+		RETRIEVE WaitVertex($waitVertex);
+				
+		PERFORM  isro:RequestNavigate($waitVertex);
+
+		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "complete");
+		PERFORM  isro:endLog("PERFORM", "ReturnToWait");
+	UTILITY: 30; 
+}

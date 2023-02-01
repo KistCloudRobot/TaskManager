@@ -1,0 +1,29 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM RequestEnterPalletizer($robotID, $stationVertex) {
+	ID: "http://www.arbi.com//RequestEnterPalletizer"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RequestEnterPalletizer");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(EnterPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
+		$communicationInstance.request($bi,$data);
+		
+		System.out.println("wait id : " + $actionID);
+		
+		//PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "RequestEnterPalletizer");
+	UTILITY: 20; 
+}

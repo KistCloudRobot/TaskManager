@@ -1,0 +1,27 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM RequestStationIn($moveType, $vertex){
+	ID: "http://www.arbi.com//RequestStationIn"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+//		FACT onRobotTaskStatus($robotID, $status);
+//		$status == "Ready";
+		FACT isro:agent($agent);
+		FACT isro:robot($robotID);
+		FACT isro:ManagerAddress($address);
+		FACT robotStatus($robotID, "Ready");
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestStationIn");
+		
+		$actionID = $helper.getActionID($agent);
+		$data =  "(RequestEnterToStation \"" + $actionID + "\" \"" + $robotID + "\" \"" + $moveType+"\" " + $vertex +" \"Forward\")";
+		PERFORM request("logistic", $address, $data, $result);
+		
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestStationIn");
+	UTILITY: 10; 
+}

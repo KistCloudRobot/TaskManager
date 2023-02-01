@@ -1,0 +1,59 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitRequestedActionSuccess"
+	PRECONDITION:
+		FACT RequestedAction($channel, $address, $actionID);
+		FACT ActionResult($actionID, $result);
+		$result == "success";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "WaitActionResult");
+		
+		PERFORM ReportActionResult($channel, $address, $actionID);
+		RETRACT ActionResult($actionID);
+		RETRACT RequestedAction($channel, $address, $actionID);
+		
+		PERFORM isro:endLog("PERFORM", "WaitActionResult");
+	UTILITY: 15; 
+}
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitActionSuccess"
+	PRECONDITION:
+		FACT ActionResult($actionID, $result);
+		$result == "success";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "WaitActionResult");
+		
+		RETRACT ActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "WaitActionResult");
+	UTILITY: 10; 
+}
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#RequestedActionFailed"
+	PRECONDITION:
+		FACT RequestedAction($channel, $address, $actionID);
+		FACT ActionResult($actionID, $result);
+		$result == "fail";
+	BODY:
+		System.out.println("action failed : " + $actionID);
+		FAIL;
+	UTILITY: 9; 
+}
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitActionFailed"
+	PRECONDITION:
+		FACT ActionResult($actionID, $result);
+		$result == "fail";
+	BODY:
+		System.out.println("action failed : " + $actionID);
+		FAIL;
+	UTILITY: 9; 
+}

@@ -1,0 +1,51 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM isro:RequestLoad($vertex){
+	ID: "http://www.arbi.com//isro:RequestLoad"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestLoad");
+		
+		$actionID = $helper.getActionID($agent);
+		$communicationInstance.request($address, "(Load \"" + $actionID + "\" " + $vertex + ")");
+				
+		System.out.println("wait id : " + $actionID);
+		
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestLoad");
+	UTILITY: 10; 
+}
+
+PLAN PERFORM isro:RequestLoad(){
+	ID: "http://www.arbi.com//isro:RequestLoadUsingRobotAt"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT robotAt($robot, $v1, $v2);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestLoad");
+		
+		$actionID = $helper.getActionID($agent);
+		$communicationInstance.request($address, "(Load \"" + $actionID + "\" " + $v1 + ")");
+				
+		System.out.println("wait id : " + $actionID);
+		
+		PERFORM WaitActionResult($actionID);
+		
+			
+		PERFORM isro:endLog("PERFORM", "isro:RequestLoad");
+	UTILITY: 1; 
+}

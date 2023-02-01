@@ -3,9 +3,9 @@ package taskManager;
 import kr.ac.uos.ai.arbi.ltm.DataSource;
 
 public class TaskManagerDataSource extends DataSource{
-	private TaskManager_Local taskManager;
+	private TaskManager taskManager;
 
-	public TaskManagerDataSource(TaskManager_Local taskManager){
+	public TaskManagerDataSource(TaskManager taskManager){
 		this.taskManager = taskManager;
 	}
 	

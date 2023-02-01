@@ -1,0 +1,27 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
+	ID: "http://www.arbi.com//palletizerPackingFinish"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT isro:BehaviorAddress($bi);
+		
+		FACT  isro:SemanticMapManagerAddress($address);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
+		
+		$data = "(palletizerPackingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
+		PERFORM inform("logistic",$address, $data);
+		RETRACT palletizerPackingFinish($robotID, $stationVertex);
+		
+		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
+	UTILITY: 10000; 
+}

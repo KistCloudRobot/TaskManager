@@ -1,0 +1,48 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift1"
+	PRECONDITION :
+		$robot == "AMR_LIFT1";
+	BODY:
+		//System.out.println("Find robot AMR_LIFT1");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT1";
+	UTILITY: 100;
+}
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift2"
+	PRECONDITION :
+		$robot == "AMR_LIFT2";
+	BODY:
+		//System.out.println("Find robot AMR_LIFT2");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT2";
+	UTILITY: 100;
+}
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift3"
+	PRECONDITION :
+		$robot == "AMR_LIFT3";
+	BODY:
+		//System.out.println("Find robot");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT3";
+	UTILITY: 100;
+}
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift4"
+	PRECONDITION :
+		$robot == "AMR_LIFT4";
+	BODY:
+		//System.out.println("Find robot");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT4";
+	UTILITY: 100;
+}
+
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobot"
+	BODY:
+		System.out.println("Find robot???");
+		System.out.println($robot);
+	UTILITY: 5;
+}

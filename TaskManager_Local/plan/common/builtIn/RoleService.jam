@@ -1,0 +1,17 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN CONCLUDE RoleService($roleName,$liveness, $taskList, $contextList, $knowledgeList){
+	ID: "http://www.arbi.com//RoleServiceRecieved"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT  isro:ServicePackageDispatcherAddress($dispatcher);
+		
+
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RoleService");
+		$data = "(RoleService \"" + $roleName + "\" " + $liveness + " " + $taskList + " " + $contextList + " " + $knowledgeList  + ")"  ;
+		$communicationInstance.inform($dispatcher, $data);
+		PERFORM isro:endLog("CONCLUDE", "RoleService");
+	UTILITY: 10000; 
+}

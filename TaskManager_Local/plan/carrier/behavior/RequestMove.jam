@@ -1,0 +1,40 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE RequestMove($actionID, $path){
+	ID: "http://www.arbi.com//ConcludeRequestMove"
+	PRECONDITION:
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestMove");
+		
+		POST PERFORM Move($actionID, $path);
+		RETRACT RequestMove($actionID, $path);
+		
+		PERFORM isro:endLog("CONCLUDE", "RequestMove");
+	UTILITY: 10000; 
+}
+
+PLAN PERFORM Move($actionID, $path) {
+	ID: "http://www.arbi.com//Move"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:ManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Move");
+		
+		$communicationInstance.request($bi, "(Move \"" + $actionID + "\" " + $path + ")");
+		
+		System.out.println("wait id : " + $actionID);
+		
+		ASSERT RequestedAction("logistic", $address, $actionID);
+		POST PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "Move");
+	UTILITY: 80; 
+}

@@ -1,0 +1,26 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE RackLoadingPreparedRequestedFrom($requester, $goalID, $goal){
+	ID: "http://www.arbi.com//RackLoadingPreparedRequestedFrom"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RackLoadingPreparedRequestedFrom");
+		$goal = $glUtility.convertObjectToString($goal);
+		$unescapedGoal = $glUtility.unescapeGL($goal);
+		$robotID =  $glUtility.retrieveGLExpression($unescapedGoal, 0);
+		
+		$stationVertex =  $glUtility.retrieveGLExpression($unescapedGoal, 1);
+		
+		PERFORM RackLoadingPrepared($robotID, $stationVertex);		
+		
+		$data = "(GoalResult \"" + $agent + "\" " + $goalID + " \"success\")";
+		//System.out.println($data);
+		PERFORM inform("logistic", $requester, $data);
+		
+		RETRACT RackLoadingPreparedRequestedFrom($a, $b, $c);
+		PERFORM isro:endLog("CONCLUDE", "RackLoadingPreparedRequestedFrom");
+	UTILITY : 1000;
+}

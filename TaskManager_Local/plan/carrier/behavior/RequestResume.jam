@@ -1,0 +1,34 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE RequestResume($actionID){
+	ID: "http://www.arbi.com//ConcludeRequestResume"
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestResume");
+		
+		POST PERFORM Resume($actionID, $path);
+		RETRACT RequestResume($actionID, $path);
+		
+		PERFORM isro:endLog("CONCLUDE", "RequestResume");
+	UTILITY: 10000; 
+}
+
+PLAN PERFORM Resume($actionID) {
+	ID: "http://www.arbi.com//Resume"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		FACT isro:ManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Resume");
+		
+		$communicationInstance.request($bi, "(Resume \"" + $actionID + "\")");
+		
+		PERFORM ReportActionResult("logistic", $address, $actionID);
+		
+		PERFORM isro:endLog("PERFORM", "Resume");
+	UTILITY: 20; 
+}

@@ -1,0 +1,46 @@
+
+PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
+	ID: "http://www.arbi.com//BuiltInPlan#RequestToPalletizer11"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:agent($agent);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT PalletizerAgentAddress($address);
+		$load == "Loading";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RequestToPalletizer");
+		$goalID = $helper.getActionID($agent);
+		
+		$goal = "(RackLoadingPrepared \"" + $robot + "\" " + $vertex + ")";
+		PERFORM RackLoadingPreparedRequestedTo($address, $goalID, $goal);
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
+		
+	UTILITY: 10; 
+
+}
+
+PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
+	ID: "http://www.arbi.com//BuiltInPlan#RequestToPalletizer22"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:agent($agent);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT PalletizerAgentAddress($address);
+		$load == "Unloading";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RequestToPalletizer");
+		$goalID = $helper.getActionID($agent);
+		
+		$goal = "(RackUnloadingPrepared \"" + $robot + "\" " + $vertex + ")";
+		PERFORM RackUnloadingPreparedRequestedTo($address, $goalID, $goal);
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
+		
+	UTILITY: 10; 
+
+}

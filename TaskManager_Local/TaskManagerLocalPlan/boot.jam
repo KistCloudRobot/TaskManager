@@ -10,7 +10,7 @@ GOALS:
 	PERFORM	boot;
 	
 FACTS:
-	FACT LOG;
+	//FACT LOG;
 	FACT AGENT_ALIAS("TaskManager",	"agent://www.arbi.com/TaskManager" );
 	FACT CURRENT_TIME (0);
 
@@ -26,7 +26,7 @@ PLAN PERFORM boot() {
 
 		System.out.println("---Start Jam---");
 		RETRIEVE ExtraUtility($helper);
-		System.out.println("---Load plans---");
+		System.out.println("---Load plans--- ?? log ??");
 		
 		$helper.loadPlan("./TaskManagerLocalPlan/planList.jam");
 		
@@ -34,6 +34,7 @@ PLAN PERFORM boot() {
 		PERFORM loadPlanPackage();
 		System.out.println("---Load Complete---");
 		
+		PERFORM isro:startLog("PERFORM", "test");
 		
 		
 		POST PERFORM  ChannelInit();

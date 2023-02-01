@@ -1,0 +1,45 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM isro:ExitFromStation($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#ExitFromStationForGrabAtPalletizingStation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($util);
+		FACT PalletizerAgentAddress($address);
+		$stationType == "PalletizingStation";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		
+		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
+		PERFORM RequestStationOut($moveType, $vertex);
+		
+		PERFORM RackUnloadCompleted($address);
+		
+		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
+		
+	UTILITY: 11; 
+
+}
+
+
+PLAN PERFORM isro:ExitFromStation($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#ExitFromStation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($util);
+	BODY:
+	
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		
+		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
+		
+		PERFORM RequestStationOut($moveType, $vertex);
+		
+		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
+		
+	UTILITY: 10; 
+
+}

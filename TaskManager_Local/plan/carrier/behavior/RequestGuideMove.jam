@@ -1,0 +1,41 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE RequestGuideMove($actionID, $vertex,$direction){
+	ID: "http://www.arbi.com//ConcludeRequestGuideMoveIn"
+	PRECONDITION:
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestGuideMove");
+		
+		POST PERFORM GuideMove($actionID, $vertex,$direction);
+		RETRACT RequestGuideMove($actionID, $vertex,$direction);
+		PERFORM isro:endLog("CONCLUDE", "RequestGuideMove");
+	UTILITY: 10000; 
+}
+
+PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
+	ID: "http://www.arbi.com//GuideMove"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:ManagerAddress($address);
+		
+		FACT robotStatus($robotID, "Ready");
+	BODY:
+		PERFORM isro:startLog("PERFORM", "GuideMove");
+		
+		$data =  "(GuideMove \"" + $actionID + "\" " + $vertex +" \"" + $direction + "\")";
+		
+		$communicationInstance.request($bi, $data);
+		
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction("logistic", $address, $actionID);
+		POST PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "GuideMove");
+	UTILITY: 80; 
+}

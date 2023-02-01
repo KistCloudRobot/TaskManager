@@ -1,0 +1,34 @@
+PLAN PERFORM initialize() {
+	ID : "initialize"
+	PRECONDITION :
+		fact TaskManger($taskManager);
+		fact isro:agent($agent);
+	BODY :
+	
+		$subscribeRule = "(rule (fact (context $context)) --> (notify (context $context)))";
+		$taskManager.subscribe($subscribeRule);		
+		
+		$subscribeRule = "(rule (fact (robotPosition $a $b $c)) --> (notify (context (robotPosition $a $b $c))))";
+		$taskManager.subscribe($subscribeRule);		
+		$subscribeRule = "(rule (fact (robotLoading $a $b)) --> (notify (context (robotLoading $a $b))))";
+		$taskManager.subscribe($subscribeRule);		
+		$subscribeRule = "(rule (fact (robotDegree $a $b)) --> (notify (context (robotDegree $a $b))))";
+		$taskManager.subscribe($subscribeRule);		
+		$subscribeRule = "(rule (fact (robotStatus $a $b)) --> (notify (context (robotStatus $a $b))))";
+		$taskManager.subscribe($subscribeRule);		
+		$subscribeRule = "(rule (fact (batteryRemain $a $b)) --> (notify (context (batteryRemain $a $b))))";
+		$taskManager.subscribe($subscribeRule);		
+		
+		System.out.println("---start ChannelInit---");
+		
+		PERFORM connectAgentChannel("logistic",$channel);
+		
+		ASSERT Channel($channelName, $channel);		
+		
+		System.out.println("---end ChannelInit---");
+		
+		PERFORM intializeContext($agent);
+		
+	UTILITY : 10000;
+}
+

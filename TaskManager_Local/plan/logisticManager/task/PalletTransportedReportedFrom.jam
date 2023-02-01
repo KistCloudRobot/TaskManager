@@ -1,0 +1,46 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN CONCLUDE PalletTransportedReportedFrom($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//PalletTransportedReportedFrom"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "PalletTransportedReportedFrom");
+		
+		System.out.println("Reported Goal : " + $goal);
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (PalletTransportedReportedFrom \"" + $worker + "\" " + $goalID + " " + $goal + "))");
+		
+		PERFORM isro:endLog("CONCLUDE", "PalletTransportedReportedFrom");
+	UTILITY: 1; 
+}
+
+
+PLAN CONCLUDE PalletTransportedReportedFrom($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//PalletTransportedReportedFromb"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT isro:ReasonerAddress($reasoner);
+		//FACT PalletTransportedRequestedTo($worker, $goalID, $goal);
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "PalletTransportedReportedFrom");
+		
+		System.out.println("worker : " + $worker);
+		System.out.println("goalID : " + $goalID);
+		System.out.println("goal : " + $goal);
+		
+		$goalID = $glUtility.removeQuotationMarks($goalID);
+		System.out.println("goalID2 : " + $goalID);
+		PERFORM UpdateGoalAssigned($goalID, $worker);
+		//RETRIEVE PalletTransportedRequestedTo($worker, $goalID, $g);
+		
+		System.out.println("Reported Goal : " + $goal);
+		perform isro:SendGoalComplete("PalletTransportedReportedFrom", $worker, $goalID, $goal);
+		PERFORM isro:endLog("CONCLUDE", "PalletTransportedReportedFrom");
+	UTILITY: 10000; 
+}

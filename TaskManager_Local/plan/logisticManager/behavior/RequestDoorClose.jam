@@ -1,0 +1,25 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM isro:RequestDoorClose(){
+	ID: "http://www.arbi.com//RequestDoorClose"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RequestDoorClose");
+		
+		$actionID =  "Local" + $helper.getActionID();
+			
+		$communicationInstance.request($address, "(doorClose (actionID \"" + $actionID + "\") \"Door1\")");
+				
+		System.out.println("wait id" + $actionID);
+		WAIT actionCompleted($actionID);
+		RETRACT actionCompleted($actionID);
+			
+		PERFORM isro:endLog("PERFORM", "RequestDoorClose");
+}

@@ -1,0 +1,65 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE robotPosition($robot, $x, $y) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotPosition"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (robotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
+		PERFORM inform("logistic", $address, $data);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE robotDegree($robot, $Degree) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotDegree"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+
+		$data = "(context (robotDegree \"" + $robot + "\" " + $Degree + "))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE robotLoading($robot, $load) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotLoading"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+
+		$data = "(context (robotLoading \"" + $robot + "\" \"" + $load + "\"))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE batteryRemain($robot, $battery) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionBatteryRemain"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (batteryRemain \"" + $robot + "\" " + $battery  + "))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+PLAN CONCLUDE robotVelocity($robot, $velocity) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotVelocity"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (robotVelocity \"" + $robot + "\" " + $velocity+ "))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE onRobotTaskStatus($robot, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnRobotTaskStatus"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (onRobotTaskStatus \"" + $robot + "\" \"" + $status+ "\"))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+

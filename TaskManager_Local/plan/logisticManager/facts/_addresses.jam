@@ -1,0 +1,12 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+FACTS:	
+
+	FACT  isro:TaskAllocatorAddress("agent://www.arbi.com/TaskAllocator");
+	FACT  isro:MultiAgentPathFinderAddress("agent://www.arbi.com/MultiAgentPathFinder");
+	FACT  isro:NavigationControllerAddress("agent://www.arbi.com/NavigationController");
+	
+	FACT  isro:SemanticMapManager("agent://www.mcarbi.com/SemanticMapManager");
+	

@@ -1,0 +1,32 @@
+
+PLAN PERFORM QueryRackOnStation($rack,$station){
+	ID: "http://www.arbi.com//QueryStationOnStation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:ContextManagerAddress($address);
+		FACT GLUtility($glUtility);
+		
+	BODY:
+		
+		$queryResult = $communicationInstance.sendQuery($address, "(context (rackOn \"" +$rack + "\" $Station))");
+		$context = $glUtility.retrieveGLExpression($queryResult, 0);
+		$station = $glUtility.retrieveGLExpression($context, 1);
+	UTILITY: 10; 
+}
+
+PLAN PERFORM QueryRackOnRack($rack,$station){
+	ID: "http://www.arbi.com//QueryRackOnStation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:ContextManagerAddress($address);
+		FACT GLUtility($glUtility);
+		
+	BODY:
+		
+		$queryResult = $communicationInstance.sendQuery($address, "(context (rackOn $Rack \"" +  $station + "\"))");
+		$context = $glUtility.retrieveGLExpression($queryResult, 0);
+		$rack = $glUtility.retrieveGLExpression($context, 0);
+	UTILITY: 10; 
+}

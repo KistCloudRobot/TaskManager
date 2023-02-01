@@ -3,60 +3,33 @@ package taskManager;
 import java.util.concurrent.BlockingQueue;
 
 import kr.ac.uos.ai.agentCommunicationFramework.agent.ChannelFactory;
+import kr.ac.uos.ai.agentCommunicationFramework.BrokerType;
 import kr.ac.uos.ai.agentCommunicationFramework.agent.Agent;
 import kr.ac.uos.ai.agentCommunicationFramework.agent.communication.Channel;
-import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import taskManager.utility.RecievedMessage;
 
-public class McARBIAgentCommunicator extends Agent{
-	
-
+public class MultiAgentCommunicator extends Agent{
 	private BlockingQueue<RecievedMessage> messageQueue;
 
 	private boolean isTriggered = false;
 
-	private TaskManagerDataSource dc;
-	
-	public static void main(String[] args) {
-		
-	}
-	
-	public McARBIAgentCommunicator(BlockingQueue<RecievedMessage> queue) {
-		
+	public MultiAgentCommunicator(BlockingQueue<RecievedMessage> queue) {
 		messageQueue = queue;
-		
-		System.out.println("mcARBI Agent start..");
-		// TODO Auto-generated constructor stub
 	}
-
 
 	public String getConversationID() {
 		return this.getConversationID();
 	}
-
-	
-
-	public Channel createAgentChannel(String channelName, String channelType) {
-
-		Channel channel;
-		if(channelType.equals("ZeroMQ")) {
-			channel = ChannelFactory.createChannel(channelName, this, ChannelType.ZeroMQ);
-			return channel;
-			
-		} else if(channelType.equals("ActiveMQ")) {
-			channel = ChannelFactory.createChannel(channelName, this, ChannelType.ActiveMQ);
-			return channel;
-		}
-		return null;
-		
+	public Channel createAgentChannel(String channelName) {
+		Channel channel = new AgentChannel(channelName, this, BrokerType.ZEROMQ, messageQueue);
+		ChannelFactory.createChannel(channel);
+		return channel;
 	}
 	
 	public Channel connectAgentChannel(String channelName) {
-
-		Channel channel;
-		channel = ChannelFactory.connectChannel(channelName, this);
+		Channel channel = new AgentChannel(channelName, this, BrokerType.ZEROMQ, messageQueue);
+		ChannelFactory.connectChannel(channel);
 		return channel;
-		
 	}
 	
 	@Override
@@ -97,19 +70,5 @@ public class McARBIAgentCommunicator extends Agent{
 		messageQueue.add(msg);
 
 		return "(ok)";
-	}
-	
-
-
-	public void addMessage(String sender,String data){
-		RecievedMessage msg = new RecievedMessage(sender,data);
-		messageQueue.add(msg);
-	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "TaskManager";
 	}
 }

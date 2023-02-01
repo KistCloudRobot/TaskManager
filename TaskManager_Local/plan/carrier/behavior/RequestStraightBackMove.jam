@@ -1,0 +1,37 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE RequestStraightBackMove($actionID,$vertex){
+	ID: "http://www.arbi.com//ConcludeRequestStraightBackMove"
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestStraightBackMove");
+		POST PERFORM StraightBackMove($actionID,$vertex);
+		RETRACT RequestStraightBackMove($actionID,$vertex);
+		PERFORM isro:endLog("CONCLUDE", "RequestStraightBackMove");
+	UTILITY: 10000; 
+}
+
+PLAN PERFORM StraightBackMove($actionID,$vertex){
+	ID: "http://www.arbi.com//StraightBackMove"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:ManagerAddress($address);
+		
+		FACT robotStatus($robotID, "Ready");
+	BODY:
+		PERFORM isro:startLog("PERFORM", "StraightBackMove");
+		
+		$data =  "(StraightBackMove \"" + $actionID + "\" " + $vertex +")";
+		
+		$communicationInstance.request($bi, $data);
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction("logistic", $address, $actionID);
+		POST PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "StraightBackMove");
+	UTILITY: 80; 
+}

@@ -1,0 +1,31 @@
+PLAN CONCLUDE RackLoadCompleted($robotID, $vertex) {
+	ID: "http://www.arbi.com//RackLoadCompleted"
+	PRECONDITION:
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		PERFORM RequestExitPalletizer($robotID, $vertex);
+		PERFORM RequestPalletizerStart();
+		RETRACT RackLoadCompleted($robotID, $vertex);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 1000; 
+
+}
+
+PLAN CONCLUDE RackUnloadCompleted($robotID, $vertex) {
+	ID: "http://www.arbi.com//RackUnloadCompleted"
+	PRECONDITION:
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		PERFORM RequestEnterPalletizer($robotID, $vertex);
+		PERFORM RequestPalletizerStart();
+		RETRACT RackUnloadCompleted($robotID, $vertex);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 1000; 
+
+}

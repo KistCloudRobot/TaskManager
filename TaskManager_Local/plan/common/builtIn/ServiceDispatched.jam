@@ -1,0 +1,16 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE ServiceDispatched($serviceName){
+	ID: "http://www.arbi.com//BuiltInPlan#ServiceDispatched"
+	PRECONDITION:
+		FACT TaskManager($tm);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "ServiceDispatched");
+		
+		$tm.initServicePackage($serviceName);
+		
+		RETRACT ServiceDispatched($ServiceDispatched);
+		PERFORM isro:endLog("CONCLUDE", "ServiceDispatched");
+	UTILITY : 10000;
+}

@@ -1,0 +1,18 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM RackLoadingPrepared($robotID, $vertex){
+	ID: "http://www.arbi.com//RackLoadingPrepared"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RackLoadingPrepared");
+		
+		PERFORM RequestPalletizerStop();
+		//PERFORM RequestExitPalletizer($robotID, $vertex);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadingPrepared");
+	UTILITY : 10;
+}

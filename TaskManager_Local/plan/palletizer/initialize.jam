@@ -1,0 +1,17 @@
+PLAN PERFORM initialize() {
+	ID : "initializeForPalletizer"
+	PRECONDITION :
+		fact TaskManger($taskManager);
+	BODY :
+			
+		System.out.println("---start ChannelInit---");
+		
+		PERFORM createAgentChannel("logistic","ZeroMQ", $channel);
+		
+		ASSERT Channel($channelName, $channel);		
+		
+		System.out.println("---end ChannelInit---");
+		
+	UTILITY : 10000;	
+}
+

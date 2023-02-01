@@ -1,0 +1,27 @@
+plan perform agentQuery($address, $data, $result){
+	ID : "queryByBase"
+	precondition:
+		fact AgentCommunication($communication);
+	body:
+		//$result = $communication.query($address,$data);
+}
+
+
+plan perform agentQuery($channelName, $address, $data, $result){
+	ID : "queryByChannel"
+	precondition:
+		fact AgentCommunication($communication);
+		fact Channel($channelName, $channel);
+	body:
+		//$result = $channel.query($address,$data);
+}
+
+plan perform agentQuery($channelName, $address, $data, $result){
+	ID : "queryByChannelFailed"
+	precondition:
+		fact AgentCommunication($communication);
+	body:
+		System.out.println("there is no channel : " + $channelName);
+	utility:-1;
+}
+

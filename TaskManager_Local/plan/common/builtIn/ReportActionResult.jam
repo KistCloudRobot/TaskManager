@@ -1,0 +1,28 @@
+
+PLAN PERFORM ReportActionResult($channelName, $reciever, $actionID) {
+	ID: "http://www.arbi.com//ReportActionResultToAgent"
+	PRECONDITION : 
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReportActionResult");
+		
+		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
+		PERFORM inform($channelName, $reciever, $data);
+		
+		PERFORM isro:endLog("PERFORM", "ReportActionResult");
+	UTILITY : 110;
+}
+
+
+PLAN PERFORM ReportActionResult($reciever, $actionID) {
+	ID: "http://www.arbi.com//ReportActionResult"
+	PRECONDITION : 
+		FACT Communication($communicationInstance);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReportActionResult");
+		
+		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
+		$communicationInstance.inform($reciever, $data);
+		
+		PERFORM isro:endLog("PERFORM", "ReportActionResult");
+	UTILITY : 110;
+}

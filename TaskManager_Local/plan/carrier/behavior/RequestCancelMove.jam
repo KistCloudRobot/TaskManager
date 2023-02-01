@@ -1,0 +1,42 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE RequestCancelMove($actionID){
+	ID: "http://www.arbi.com//ConcludeRequestCancelMove"
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestCancelMove");
+		
+		POST PERFORM CancelMove($actionID, $path);
+		RETRACT RequestCancelMove($actionID, $path);
+		
+		PERFORM isro:endLog("CONCLUDE", "RequestCancelMove");
+	UTILITY: 10000; 
+}
+
+PLAN PERFORM CancelMove($actionID) {
+	ID: "http://www.arbi.com//CancelMove"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		FACT isro:ManagerAddress($address);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Move";
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "CancelMove");
+		
+		RETRIEVE RequestedAction($address, $id);
+		UNPOST PERFORM WaitActionResult($id);
+		RETRACT RequestedAction($channel, $address, $id);
+		
+		ASSERT RequestedAction("logistic", $address, $actionID);
+		
+		$communicationInstance.request($bi, "(CancelMove \"" + $actionID + "\")");
+				
+		POST PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "CancelMove");
+	UTILITY: 20; 
+}

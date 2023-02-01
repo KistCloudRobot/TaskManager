@@ -1,0 +1,11 @@
+PLAN PERFORM RequestGoal($channel, $agent, $goal) {
+	ID : "requestGoalToAgent"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		
+		PERFORM request($channel, $agent, $goal, $result);
+		
+		ASSERT GoalRequestedTo($goal, $agent);
+}

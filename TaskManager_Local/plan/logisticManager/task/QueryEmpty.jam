@@ -1,0 +1,20 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM QueryEmptyStoringStation($empty){
+	ID: "http://www.arbi.com//BuiltInPlan#queryEmptyStation"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT isro:ContextManagerAddress($agent);
+		FACT GLUtility($glUtility);
+	BODY :
+		System.out.println("plan perform queryEmpty");
+	
+		$queryResult = $communicationInstance.sendQuery($agent, "(context (emptyStoringStation $Station))");
+		$context = $glUtility.retrieveGLExpression($queryResult, 0);
+//		System.out.println($context);
+		$empty = $glUtility.retrieveGLExpression($context, 0);
+//		System.out.println($empty);
+	utility : 10;
+}

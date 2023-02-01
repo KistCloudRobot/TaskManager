@@ -1,0 +1,78 @@
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT1"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT1";
+	BODY :
+		$robotID = "AMR_LIFT1";
+		$waitVertex = 143;
+		$chargingStation = 500;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT onRobotTaskStatus($robotID, "wait");
+} 
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT2"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT2";
+	BODY :
+		$robotID = "AMR_LIFT2";
+		$waitVertex = 157;
+		$chargingStation = 500;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT onRobotTaskStatus($robotID, "wait");
+		
+} 
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT3"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT3";
+	BODY :
+		$robotID = "AMR_LIFT3";
+		$waitVertex = 146;
+		$chargingStation = 501;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT onRobotTaskStatus($robotID, "wait");
+		
+} 
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT4"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT4";
+	BODY :
+		$robotID = "AMR_LIFT4";
+		$waitVertex = 158;
+		$chargingStation = 501;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT onRobotTaskStatus($robotID, "wait");
+		
+} 

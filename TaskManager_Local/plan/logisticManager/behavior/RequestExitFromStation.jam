@@ -1,0 +1,33 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE RequestExitFromStation($actionID, $robotID, $moveType, $vertex, $direction) {
+	ID: "http://www.arbi.com//ConcludeRequestExitFromStation"
+	BODY:
+		//PERFORM isro:startLog("CONCLUDE", "RequestExitFromStation");
+		
+		POST PERFORM ExitFromStation($actionID, $robotID, $moveType, $vertex, $direction);
+		RETRACT RequestExitFromStation($actionID, $robotID, $moveType, $vertex, $direction);
+		//PERFORM isro:endLog("CONCLUDE", "RequestExitFromStation");
+	UTILITY : 10000;
+}
+
+
+PLAN PERFORM ExitFromStation($actionID, $robotID, $moveType, $vertex, $direction){
+	ID: "http://www.arbi.com//RequestExitFromStation"
+	PRECONDITION : 
+		FACT Communication($communicationInstance);
+		FACT isro:NavigationControllerAddress($nc);
+	BODY:
+		//PERFORM isro:startLog("PERFORM", "ExitFromStation");
+		
+		
+		$data  = "(RequestExitFromStation \"" +$actionID + "\" \"" + $robotID + "\" \"" +$moveType + "\" " + $vertex + " \"" + $direction + "\")";
+		$communicationInstance.request($nc, $data);
+		
+		//System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction($robotID, $actionID);
+		POST PERFORM WaitActionResult($actionID);
+		//PERFORM isro:endLog("PERFORM", "ExitFromStation");
+	UTILITY : 10;
+}
