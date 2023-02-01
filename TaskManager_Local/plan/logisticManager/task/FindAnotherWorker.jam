@@ -1,0 +1,48 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerLift1"
+	PRECONDITION :
+		$worker == "agent://www.mcarbi.com/AMR_LIFT1";
+	BODY:
+		//System.out.println("Find another worker of Lift1");
+		$another = "agent://www.mcarbi.com/AMR_LIFT2";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerLift2"
+	PRECONDITION :
+		$worker == "agent://www.mcarbi.com/AMR_LIFT2";
+	BODY:
+		//System.out.println("Find another worker of Lift2");
+		$another = "agent://www.mcarbi.com/AMR_LIFT1";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerTow1"
+	PRECONDITION :
+		$worker == "agent://www.mcarbi.com/AMR_LIFT3";
+	BODY:
+		//System.out.println("Find another worker of Tow1");
+		$another = "agent://www.mcarbi.com/AMR_LIFT4";
+	UTILITY: 10;
+}
+
+
+PLAN PERFORM FindAnotherWorker($worker, $another){
+	ID: "http://www.arbi.com//FindAnotherWorkerTow2"
+	PRECONDITION :
+		$worker == "agent://www.mcarbi.com/AMR_LIFT4";
+	BODY:
+		//System.out.println("Find another worker of Tow2");
+		$another = "agent://www.mcarbi.com/AMR_LIFT3";
+	UTILITY: 10;
+}
+
+

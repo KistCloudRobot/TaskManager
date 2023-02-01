@@ -1,0 +1,48 @@
+PLAN PERFORM AssertStationAssignedBy($goal){
+	ID : "AssertStationAssignedBy"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "AssertStationAssigned");
+		
+		System.our.println("start StationAssigned");
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		
+		$startStation = $glUtility.retrieveGLExpression($goal, 2);
+		
+		$endStation = $glUtility.retrieveGLExpression($goal, 3);
+		$data = "(stationAssignedBy \"" + $goalID + "\" \"" + $startStation + "\")";
+		$communicationInstance.assertToLTM($data);
+		
+		$data = "(stationAssignedBy \"" + $goalID + "\" \"" + $endStation + "\")";
+		$communicationInstance.assertToLTM($data);
+		
+		PERFORM isro:endLog("PERFORM", "AssertStationAssigned");
+	UTILITY : 10;
+}
+
+
+PLAN PERFORM AssertStationReleasedFrom($goal){
+	ID : "assertStationReleasedFrom"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "AssertStationReleasedFrom");
+		
+		System.our.println("start StationAssigned : " + $goal);
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		
+		$startStation = $glUtility.retrieveGLExpression($goal, 2);
+		
+		$endStation = $glUtility.retrieveGLExpression($goal, 3);
+		$data = "(stationReleasedFrom \"" + $goalID + "\" \"" + $startStation + "\")";
+		$communicationInstance.assertToLTM($data);
+		
+		$data = "(stationReleasedFrom \"" + $goalID + "\" \"" + $endStation + "\")";
+		$communicationInstance.assertToLTM($data);
+		
+		PERFORM isro:endLog("PERFORM", "AssertStationReleasedFrom");
+	
+}

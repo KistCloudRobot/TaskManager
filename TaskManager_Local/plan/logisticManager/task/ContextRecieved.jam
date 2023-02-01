@@ -1,0 +1,185 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedDefault"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+	BODY:
+		
+		System.out.println("no update : " + $context);
+		$glUtility.assertGL($context);
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 10;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedPersonCall"
+	PRECONDITION:
+		FACT Communication($communication);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "personCall";
+	BODY:
+		System.out.println("PersonCall Recieved!!!!");
+		System.out.println($context);
+		$callID = $glUtility.retrieveGLExpression($context, 0);
+		$location = $glUtility.retrieveGLExpression($context, 1);
+		$taskType = $glUtility.retrieveGLExpression($context, 2);
+		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"" + $taskType + "\"))";
+		System.out.println($data);
+		$communication.assertToLTM($data);
+		RETRACT ContextRecieved($context);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotDegree"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "robotDegree";
+	BODY:
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT robotDegree($robot, $v1);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 100;
+}
+
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrobotAt"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "robotAt";
+	BODY:
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT robotAt($robot, $v1, $v2);
+		System.out.println("assert robotAt : " + $context);
+		$glUtility.assertGL($context);
+		
+		RETRACT ContextRecieved($contextName, $context);
+		
+	UTILITY : 100;
+}
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotLoading"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "robotLoading";
+	BODY:
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT robotLoading($robot, $v1);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrackAt"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "rackAt";
+	BODY:
+		
+		$rack = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT rackAt($rack, $v1, $v2);
+		$glUtility.assertGL($context);
+		RETRACT ContextRecieved($contextName, $context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedcargoAt"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "cargoAt";
+	BODY:
+		
+		$cargoAt = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT cargoAt($cargoAt, $v1, $v2);
+		$glUtility.assertGL($context);
+		RETRACT ContextRecieved($contextName, $context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedBatteryRemain"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "batteryRemain";
+	BODY:
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT batteryRemain($robot, $v1);
+		
+		$glUtility.assertGL($context);
+		
+		RETRACT ContextRecieved($contextName, $context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotVelocity"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "robotVelocity";
+	BODY:
+		
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT robotVelocity($robot, $oldVelocity);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedOnRobotTaskStatus"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "onRobotTaskStatus";
+	BODY:
+		
+		$robot =  $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT onRobotTaskStatus($robot, $oldStatus);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE ContextRecieved($context){
+	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedOnAgentTaskStatus"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "OnAgentTaskStatus";
+	BODY:
+		
+		$agent = $glUtility.retrieveGLExpression($context, 0);
+		
+		RETRACT OnAgentTaskStatus($agent, $oldTask, $oldStatus);
+		$glUtility.assertGL($context);
+				
+		RETRACT ContextRecieved($context);
+		
+	UTILITY : 100;
+}

@@ -32,7 +32,6 @@ PLAN PERFORM boot() {
 		
 		PERFORM loadPlanPackage();
 		System.out.println("---Load Complete---");
-		PERFORM isro:startLog("CONCLUDE", "RequestMove");
 		
 		POST PERFORM  initialize();
 

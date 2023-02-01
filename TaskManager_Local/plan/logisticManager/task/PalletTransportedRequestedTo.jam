@@ -30,6 +30,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
 		PERFORM GoalAssign("logistic", $goal, $worker);
+		PERFORM AssertStationAssignedBy($goal);
 		$escapedGoal = $glUtility.escapeGL($goal);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
@@ -54,6 +55,7 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
 		PERFORM GoalAssign("logistic", $goal, $worker);
+		PERFORM AssertStationAssignedBy($goal);
 		$escapedGoal = $glUtility.escapeGL($goal);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
@@ -78,8 +80,9 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM RequestTaskAllocation($goal, $worker);
 				
 		PERFORM GoalAssign("logistic", $goal, $worker);
-		
+		PERFORM AssertStationAssignedBy($goal);
 		$escapedGoal = $glUtility.escapeGL($goal);
+		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
@@ -102,7 +105,9 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		PERFORM RequestTaskAllocation($goal, $worker);
 		
 		PERFORM GoalAssign("logistic", $goal, $worker);
+		PERFORM AssertStationAssignedBy($goal);
 		$escapedGoal = $glUtility.escapeGL($goal);
+		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 10; 
