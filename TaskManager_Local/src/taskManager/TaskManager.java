@@ -40,7 +40,6 @@ public class TaskManager extends ArbiAgent {
 	public static  String REASONER_ADRESS = "agent://www.arbi.com/TaskReasoner";
 	public static final String PREFIX = "http://www.arbi.com/ontologies#";
 	
-	
 
 	public static final String AGENT_PREFIX = "agent://";
 	public static final String DATASOURCE_PREFIX = "ds://";
@@ -82,14 +81,7 @@ public class TaskManager extends ArbiAgent {
 		msgManager.assertFact("isro:agent", agentID);
 		init();
 	}
-	
-	public String justRemove(Object input) {
 		
-		//System.out.println("??????" + input.getClass().getSimpleName());
-		String data = input.toString();
-		return data.substring(1, data.length()-1);
-	}
-	
 	private void init() {
 		
 		msgManager.assertFact("GLUtility", msgManager);
@@ -114,13 +106,6 @@ public class TaskManager extends ArbiAgent {
 
 	@Override
 	public void onStart() {
-		/*
-		System.out.println("======Start Test Agent======");
-		System.out.println("??");
-		String subscribeStatement = "(rule (fact (context (PersonCall $a $b $c))) --> (notify (context (PersonCall $a $b $c))))";
-		System.out.println("??");
-		dc.subscribe(subscribeStatement);
-		*/
 	}
 
 	public String subscribe(String rule) {

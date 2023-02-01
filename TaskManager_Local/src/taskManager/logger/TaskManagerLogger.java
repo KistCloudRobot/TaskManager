@@ -44,11 +44,11 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 		
 		LoggerManager loggerManager = LoggerManager.getInstance();
 		
-		loggerManager.registerAction(intendAction,LogTiming.NonAction);
-		loggerManager.registerAction(newGoalAction,LogTiming.NonAction);
-		loggerManager.registerAction(unpostGoalAction, LogTiming.NonAction);
-		loggerManager.registerAction(assertAction,LogTiming.NonAction);
-		loggerManager.registerAction(retractAction,LogTiming.NonAction);
+		loggerManager.registerAction(intendAction,LogTiming.Later);
+		loggerManager.registerAction(newGoalAction,LogTiming.Later);
+		loggerManager.registerAction(unpostGoalAction, LogTiming.Later);
+		loggerManager.registerAction(assertAction,LogTiming.Later);
+		loggerManager.registerAction(retractAction,LogTiming.Later);
 		//System.out.println("inited");
 		
 		interpreter.getWorldModelManager().getWorldModel().addChangeListener(this);
