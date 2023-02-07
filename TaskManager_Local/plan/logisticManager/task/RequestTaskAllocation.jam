@@ -14,7 +14,6 @@ PLAN PERFORM RequestMultiAllocation($alocText1,$alocText2, $worker1,$worker2){
 		System.out.println($alocText1 + " " + $alocText2);
 		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $alocText1+" " + $alocText2 + ")");
 		
-		System.out.println("Start Wait");
 		$allocation = $glUtility.retrieveGLExpression($result, 0);
 
 		$allocation = $glUtility.retrieveGLExpression($allocation,1);

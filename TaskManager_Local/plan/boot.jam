@@ -4,13 +4,12 @@ import taskManager.TaskManager;
 PREFIXES:
 	PREFIX arbi: <http://www.arbi.com//ontologies#>;
 	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;		
-	PREFIX dinnerservice: <http://www.isro.com//dinnerservice#>;
 GOALS:
 	MAINTAIN alive  :UTILITY -10000;
 	PERFORM	boot;
 	
 FACTS:
-	//FACT LOG;
+	FACT LOG;
 	FACT AGENT_ALIAS("TaskManager",	"agent://www.arbi.com/TaskManager" );
 	FACT CURRENT_TIME (0);
 
@@ -26,14 +25,14 @@ PLAN PERFORM boot() {
 
 		System.out.println("---Start Jam---");
 		RETRIEVE ExtraUtility($helper);
-		System.out.println("---Load plans---test");
+		System.out.println("---Load plans---");
 				
 		$helper.loadPlan("./plan/planList.jam");
 		
 		PERFORM loadPlanPackage();
 		System.out.println("---Load Complete---");
 		
-		POST PERFORM  initialize();
+		PERFORM initialize();
 
 		System.out.println("---Boot Complete---");
 }

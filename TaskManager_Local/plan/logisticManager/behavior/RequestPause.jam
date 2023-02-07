@@ -28,7 +28,7 @@ PLAN PERFORM Pause($actionID, $robotID){
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 	//	System.out.println("wait id : " + $actionID);
-		ASSERT RequestedAction($nc, $actionID);
+		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		//PERFORM isro:endLog("PERFORM", "Pause");

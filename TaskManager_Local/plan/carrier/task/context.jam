@@ -6,7 +6,7 @@ PLAN CONCLUDE context($context){
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 	BODY:
-		System.out.println("no update : " + $contextName +" " + $context);
+		System.out.println("no update : " +  $context);
 		$glUtility.assertGL($context);
 		RETRACT context($context);
 	UTILITY : 10;
@@ -67,13 +67,11 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-
 	ID: "http://www.arbi.com//BuiltInPlan#contextBatteryRemain"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$contextName  == "batteryRemain";
+		$glUtility.retrieveGLName($context)  == "batteryRemain";
 	BODY:
-		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		
 		RETRACT batteryRemain($robot, $v1);
@@ -105,13 +103,13 @@ PLAN CONCLUDE context($context){
 	ID: "http://www.arbi.com//BuiltInPlan#contextOnRobotTaskStatus"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "onRobotTaskStatus";
+		$glUtility.retrieveGLName($context) == "robotStatus";
 	BODY:
 		
 		$robot =  $glUtility.retrieveGLExpression($context, 0);
 		
 		
-		RETRACT onRobotTaskStatus($robot, $v1);
+		RETRACT robotStatus($robot, $v1);
 		
 		$glUtility.assertGL($context);
 				

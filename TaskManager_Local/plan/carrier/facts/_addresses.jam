@@ -3,22 +3,7 @@ PREFIXES:
 
 
 FACTS:	
-
 	FACT  isro:ManagerAddress("agent://www.mcarbi.com/Local");
-	
-	FACT  isro:TaskLogAddress("agent://www.arbi.com/TaskLog");
-	FACT  isro:ActionAddress("agent://www.arbi.com/action");
-	FACT  isro:BehaviorAddress("agent://www.arbi.com/BehaviorInterface");
-	FACT  isro:ReasonerAddress("agent://www.arbi.com/TaskReasoner");
-	FACT  isro:ContextManagerAddress("agent://www.arbi.com/ContextManager");
-	FACT  isro:ServicePackageDispatcherAddress("agent://www.arbi.com/ServiceDispatcher");
 	FACT  isro:SemanticMapManagerAddress("agent://www.mcarbi.com/SemanticMapManager");
 	FACT  PalletizerAgentAddress("agent://www.mcarbi.com/Palletizer");
-	/*
-	FACT  isro:BehaviorAddress("agent://www.arbi.com/Lift2/BehaviorInterface");
-	FACT  isro:ReasonerAddress("agent://www.arbi.com/Lift2/TaskReasoner");
-	FACT  isro:ContextManagerAddress("agent://www.arbi.com/Lift2/ContextManager");
-	FACT  isro:KnowledgeManagerAddress("agent://www.arbi.com/LIFT1/knowledgeManager");
-	FACT  isro:PerceptionAddress("agent://www.arbi.com/perception");
-	FACT  isro:DialogueAddress("agent://www.arbi.com/dialogueManager");
-	*/
+	

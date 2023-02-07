@@ -1,12 +1,12 @@
 PLAN PERFORM initialize() {
 	ID : "initializeForLocalAgent"
 	PRECONDITION :
-		fact TaskManger($taskManager);
+		FACT TaskManager($tm);
 	BODY :
-	
+		System.out.println("---initialize---");
 		$subscribeRule = "(rule (fact (context (PersonCall $a $b $c))) --> (notify (context (PersonCall $a $b $c))))";
-		$taskManager.subscribe($subscribeRule);		
-		
+		$result = $tm.subscribe($subscribeRule);		
+		System.out.println($result);
 		System.out.println("---start ChannelInit---");
 		
 		PERFORM createAgentChannel("logistic", $channel);

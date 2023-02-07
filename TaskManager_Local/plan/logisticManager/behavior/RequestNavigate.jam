@@ -27,7 +27,8 @@ PLAN PERFORM Navigate($actionID, $robotID,$start,$end){
 		$communicationInstance.request($nc,$data);
 		
 	//	System.out.println("wait id : " + $actionID);
-		ASSERT RequestedAction($robotID, $actionID);
+		PERFORM FindRobotAgent($robotID, $agent);
+		ASSERT RequestedActionFromAgent("logistic", $agent, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Navigate");

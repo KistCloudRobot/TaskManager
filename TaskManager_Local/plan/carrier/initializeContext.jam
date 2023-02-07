@@ -14,7 +14,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotLoading($robotID, "Unloading");
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
-		ASSERT onRobotTaskStatus($robotID, "wait");
+		ASSERT robotStatus($robotID, "wait");
 } 
 
 PLAN PERFORM initializeContext($agentID) {
@@ -33,7 +33,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotLoading($robotID, "Unloading");
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
-		ASSERT onRobotTaskStatus($robotID, "wait");
+		ASSERT robotStatus($robotID, "wait");
 		
 } 
 
@@ -53,7 +53,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotLoading($robotID, "Unloading");
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
-		ASSERT onRobotTaskStatus($robotID, "wait");
+		ASSERT robotStatus($robotID, "wait");
 		
 } 
 
@@ -73,6 +73,6 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotLoading($robotID, "Unloading");
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
-		ASSERT onRobotTaskStatus($robotID, "wait");
+		ASSERT robotStatus($robotID, "wait");
 		
 } 

@@ -24,8 +24,8 @@ PLAN PERFORM EnterToStation($actionID, $robotID, $moveType, $vertex, $direction)
 		$data  = "(RequestEnterToStation \"" +$actionID + "\" \"" + $robotID + "\" \"" +$moveType + "\" " + $vertex + " \"" + $direction + "\")";
 		$communicationInstance.request($nc, $data);
 		
-		//System.out.println("wait id : " + $actionID);
-		ASSERT RequestedAction($robotID, $actionID);
+		PERFORM FindRobotAgent($robotID, $agent);
+		ASSERT RequestedActionFromAgent("logistic", $agent, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		//PERFORM isro:endLog("PERFORM", "EnterToStation");

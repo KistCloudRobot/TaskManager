@@ -36,19 +36,19 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 	
 	
 	public void init(){
-		assertAction = new AgentAction("AssertWorldModel",new AssertFactLogger(taskManager.getMsgManager()));
-		retractAction = new AgentAction("RetractWorldModel",new RetractFactLogger(taskManager.getMsgManager()));
-		newGoalAction = new AgentAction("PostGoal",new NewGoalLogger(taskManager.getMsgManager()));
-		unpostGoalAction = new AgentAction("UnpostGoal",new UnpostGoalLogger(taskManager.getMsgManager()));
-		intendAction = new AgentAction("IntendGoal",new IntendLogger(taskManager.getMsgManager()));
+		assertAction = new AgentAction("AssertWorldModel",new AssertFactLogger());
+		retractAction = new AgentAction("RetractWorldModel",new RetractFactLogger());
+		newGoalAction = new AgentAction("PostGoal",new NewGoalLogger());
+		unpostGoalAction = new AgentAction("UnpostGoal",new UnpostGoalLogger());
+		intendAction = new AgentAction("IntendGoal",new IntendLogger());
 		
 		LoggerManager loggerManager = LoggerManager.getInstance();
 		
-		loggerManager.registerAction(intendAction,LogTiming.Later);
-		loggerManager.registerAction(newGoalAction,LogTiming.Later);
-		loggerManager.registerAction(unpostGoalAction, LogTiming.Later);
-		loggerManager.registerAction(assertAction,LogTiming.Later);
-		loggerManager.registerAction(retractAction,LogTiming.Later);
+		loggerManager.registerAction(intendAction,LogTiming.NonAction);
+		loggerManager.registerAction(newGoalAction,LogTiming.NonAction);
+		loggerManager.registerAction(unpostGoalAction, LogTiming.NonAction);
+		loggerManager.registerAction(assertAction,LogTiming.NonAction);
+		loggerManager.registerAction(retractAction,LogTiming.NonAction);
 		//System.out.println("inited");
 		
 		interpreter.getWorldModelManager().getWorldModel().addChangeListener(this);

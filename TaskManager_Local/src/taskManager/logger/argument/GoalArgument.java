@@ -38,6 +38,17 @@ public class GoalArgument {
 	
 	
 	public String toString(){
-		return name;
+		StringBuilder result = new StringBuilder(name);
+		if(expressionList.size()  > 0) {
+			result.append("(");
+			for(String exp : expressionList){
+				result.append(exp).append(",");
+			}
+			result = new StringBuilder(result.substring(0,result.length()-1)).append(")");
+		}
+		
+		
+		return result.toString();
+		
 	}
 }

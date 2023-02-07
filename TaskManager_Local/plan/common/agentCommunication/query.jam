@@ -1,7 +1,8 @@
 plan perform agentQuery($address, $data, $result){
 	ID : "queryByBase"
 	precondition:
-		fact AgentCommunication($communication);
+		fact Channel($channelName, $channel);
+		$channelName == "base";
 	body:
 		//$result = $communication.query($address,$data);
 }

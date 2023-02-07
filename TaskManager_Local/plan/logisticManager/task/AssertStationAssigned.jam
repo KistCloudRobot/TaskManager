@@ -6,12 +6,12 @@ PLAN PERFORM AssertStationAssignedBy($goal){
 	BODY :
 		PERFORM isro:startLog("PERFORM", "AssertStationAssigned");
 		
-		System.our.println("start StationAssigned");
-		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		$goalIDGL = $glUtility.retrieveGLExpression($goal, 0);
+		$goalID = $glUtility.retrieveGLExpression($goalIDGL, 0);
+		$argument = $glUtility.retrieveGLExpression($goal, 2);
+		$startStation = $glUtility.retrieveGLExpression($argument, 1);
+		$endStation = $glUtility.retrieveGLExpression($argument, 2);
 		
-		$startStation = $glUtility.retrieveGLExpression($goal, 2);
-		
-		$endStation = $glUtility.retrieveGLExpression($goal, 3);
 		$data = "(stationAssignedBy \"" + $goalID + "\" \"" + $startStation + "\")";
 		$communicationInstance.assertToLTM($data);
 		
@@ -19,7 +19,7 @@ PLAN PERFORM AssertStationAssignedBy($goal){
 		$communicationInstance.assertToLTM($data);
 		
 		PERFORM isro:endLog("PERFORM", "AssertStationAssigned");
-	UTILITY : 10;
+	UTILITY : 500;
 }
 
 
@@ -31,12 +31,13 @@ PLAN PERFORM AssertStationReleasedFrom($goal){
 	BODY :
 		PERFORM isro:startLog("PERFORM", "AssertStationReleasedFrom");
 		
-		System.our.println("start StationAssigned : " + $goal);
-		$goalID = $glUtility.retrieveGLExpression($goal, 0);
-		
-		$startStation = $glUtility.retrieveGLExpression($goal, 2);
-		
-		$endStation = $glUtility.retrieveGLExpression($goal, 3);
+		$goal = $glUtility.removeQuotationMarks($goal);
+		$goal = $glUtility.unescapeGL($goal);
+		$goalIDGL = $glUtility.retrieveGLExpression($goal, 0);
+		$goalID = $glUtility.retrieveGLExpression($goalIDGL, 0);
+		$argument = $glUtility.retrieveGLExpression($goal, 2);
+		$startStation = $glUtility.retrieveGLExpression($argument, 1);
+		$endStation = $glUtility.retrieveGLExpression($argument, 2);
 		$data = "(stationReleasedFrom \"" + $goalID + "\" \"" + $startStation + "\")";
 		$communicationInstance.assertToLTM($data);
 		
@@ -45,4 +46,5 @@ PLAN PERFORM AssertStationReleasedFrom($goal){
 		
 		PERFORM isro:endLog("PERFORM", "AssertStationReleasedFrom");
 	
+	UTILITY : 500;
 }

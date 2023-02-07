@@ -4,6 +4,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
+import kr.ac.uos.ai.agentCommunicationFramework.agent.communication.Channel;
 import kr.ac.uos.ai.arbi.BrokerType;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
@@ -24,10 +25,9 @@ public class TaskManager extends ArbiAgent {
 	private Interpreter interpreter;
 	private GLMessageManager msgManager;
 	private BlockingQueue<RecievedMessage> messageQueue;
-	private TaskManagerLogger logger;
+	private TaskManagerLogger taskManagerLogger;
 	private MultiAgentCommunicator agentCommunicator;
 	
-	private boolean isTriggered = false;
 	public static String ENV_JMS_BROKER;
 	public static String MY_AGENT_ADRRESS;
 
@@ -66,17 +66,16 @@ public class TaskManager extends ArbiAgent {
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		agentCommunicator = new MultiAgentCommunicator(messageQueue);
 		dataSource = new TaskManagerDataSource(this);
-	
+		
 		ArbiAgentExecutor.execute(brokerAddress, port, AGENT_PREFIX + TASKMANAGER_ADRESS, this,brokerType);
-		logger = new TaskManagerLogger(this,interpreter);
+		
 
 		AgentExecutor.execute(agentID, agentCommunicator, kr.ac.uos.ai.agentCommunicationFramework.BrokerType.ZEROMQ);
 		
-		dataSource.connect(brokerAddress, port, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,brokerType);
-
 		interpreter = JAM.parse(new String[] { "./plan/boot.jam" });
 		msgManager = new GLMessageManager(interpreter);
 		
+		dataSource.connect(brokerAddress, port, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,brokerType);
 		msgManager.assertFact("AssignedRole", role);
 		msgManager.assertFact("isro:agent", agentID);
 		init();
@@ -89,7 +88,10 @@ public class TaskManager extends ArbiAgent {
 		msgManager.assertFact("ExtraUtility", new JAMUtilityManager(interpreter));
 		msgManager.assertFact("TaskManager", this);
 		msgManager.assertFact("AgentCommunication", agentCommunicator);
+		msgManager.assertFact("Channel", "base", agentCommunicator.getBaseChannel());
 		
+		taskManagerLogger = new TaskManagerLogger(this,interpreter);
+
 		Thread t = new Thread() {
 			public void run() {
 				interpreter.run();
@@ -143,7 +145,7 @@ public class TaskManager extends ArbiAgent {
 					initServicePackage(packageName);
 				}  else if (gl.getName().equals("GoalRequest")) {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
-					msgManager.assertFact(goalGL.getName() + "RequestedFrom", goalGL.getExpression(0), goalGL.getExpression(1));
+					msgManager.assertFact(goalGL.getName() + "RequestedFrom", goalGL.getExpression(0).asValue().stringValue(), goalGL.getExpression(1), goalGL.getExpression(2));
 				} else if (gl.getName().equals("GoalReport")) {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "ReportedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
@@ -271,7 +273,7 @@ public class TaskManager extends ArbiAgent {
 			
 			for (int j = 0; j < contextGL.getExpressionsSize(); j++) {
 				tempText = contextGL.getExpression(j).asGeneralizedList().getExpression(0).toString();
-				System.out.println(tempText);
+				
 				tempText = tempText.substring(1, tempText.length() - 1);
 				contextStatement += " " + tempText;
 			}

@@ -1,6 +1,5 @@
 package taskManager.logger.argument;
 
-import java.util.ArrayList;
 
 
 public class RelationArgument {
@@ -25,12 +24,17 @@ public class RelationArgument {
 	}
 	
 	public String toString(){
-		String result = name ;
-		for(String exp : expressionList){
-			result += exp + " ";
+		StringBuilder result = new StringBuilder(name);
+		if(expressionList.length  > 0) {
+			result.append("(");
+			for(String exp : expressionList){
+				result.append(exp).append(",");
+			}
+			result = new StringBuilder(result.substring(0,result.length()-1)).append(")");
 		}
 		
-		return result;
+		
+		return result.toString();
 	}
 	
 }

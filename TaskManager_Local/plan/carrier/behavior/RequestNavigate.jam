@@ -8,7 +8,7 @@ PLAN PERFORM isro:RequestNavigate($end){
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
-		//FACT OnRobotTaskStatus($robot, $status);
+		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
 		FACT robotAt($robot, $vertex1, $vertex2);
 		FACT isro:agent($agent);

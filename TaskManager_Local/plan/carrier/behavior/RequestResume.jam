@@ -27,7 +27,7 @@ PLAN PERFORM Resume($actionID) {
 		
 		$communicationInstance.request($bi, "(Resume \"" + $actionID + "\")");
 		
-		PERFORM ReportActionResult("logistic", $address, $actionID);
+		PERFORM ReportActionResultToAgent("logistic", $address, $actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Resume");
 	UTILITY: 20; 

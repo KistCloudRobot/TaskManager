@@ -1,12 +1,12 @@
-
 plan perform inform($address, $data){
 	ID : "InformByBase"
 	precondition:
-		fact AgentCommunication($communication);
+		fact Channel($channelName, $channel);
+		$channelName == "base";
 	body:
-		$communication.send($address,$data);
+		$channel.send($address,$data);
+	utility: 1;
 }
-
 
 plan perform inform($channelName, $address, $data){
 	ID : "InformByChannel"

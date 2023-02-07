@@ -1,7 +1,6 @@
 PLAN PERFORM initialize() {
 	ID : "initializeForPalletizer"
 	PRECONDITION :
-		fact TaskManger($taskManager);
 	BODY :
 			
 		System.out.println("---start ChannelInit---");

@@ -25,6 +25,7 @@ PLAN PERFORM CancelMove($actionID, $robotID){
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 		System.out.println("wait id : " + $actionID); 
+		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "CancelMove");

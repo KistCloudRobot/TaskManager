@@ -27,7 +27,7 @@ PLAN PERFORM PreciseMove($actionID, $vertex){
 		$data =  "(PreciseMove \"" + $actionID + "\" " + $vertex +")";
 		
 		$communicationInstance.request($bi, $data);
-		ASSERT RequestedAction("logistic", $address, $actionID);
+		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");

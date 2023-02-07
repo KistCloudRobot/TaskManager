@@ -1,0 +1,11 @@
+PLAN PERFORM createAgentChannel($channelName,$channel) {
+	ID: "createChannel"
+	precondition:
+		fact AgentCommunication($communication);
+	BODY:
+		System.out.println("---creating channel---");
+		
+		$channel = $communication.createAgentChannel($channelName);
+		
+		System.out.println("---create Complete---");
+}

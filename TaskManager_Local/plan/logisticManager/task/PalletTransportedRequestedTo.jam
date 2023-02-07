@@ -10,14 +10,26 @@ PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID) {
 		POST PERFORM PalletTransportedRequestedTo($worker,$goalID);
 		
 		RETRACT PostPalletTransportedRequestedTo($worker,$goalID);
+		
+		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedRequestedTo");
 	UTILITY : 10000;
 }
+
+PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
+	ID : "planfailed?"
+	PRECONDITION :
+		FACT PersonCall($callID,$location,$cmd);
+	BODY :
+		
+		System.out.println("why");
+	UTILITY : 1;
+}
+
 
 PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToCargoStoringPrepared"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
 		FACT PersonCall($callID,$location,$cmd);
 		$cmd == "PrepareStoring";
@@ -34,16 +46,14 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		$escapedGoal = $glUtility.escapeGL($goal);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 10; 
+	UTILITY: 100; 
 }
 
 PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
-		
 		FACT PersonCall($callID,$location,$cmd);
 		$cmd == "Storing";
 	BODY:
@@ -59,14 +69,13 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		$escapedGoal = $glUtility.escapeGL($goal);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 10; 
+	UTILITY: 100; 
 }
 
 PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToStoredCargo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
 		FACT PersonCall($callID,$location,$cmd);
 		$cmd == "PrepareUnstoring";
@@ -85,14 +94,13 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 10; 
+	UTILITY: 100; 
 }
 
 PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 	ID: "http://www.arbi.com//PalletTransportedRequestedToUnstoredCargo"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:ReasonerAddress($reasoner);
 		FACT GLUtility($glUtility);
 		FACT PersonCall($callID,$location,$cmd);
 		$cmd == "Unstoring";
@@ -110,6 +118,6 @@ PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
 		
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 10; 
+	UTILITY: 100; 
 }
 

@@ -53,12 +53,12 @@ PLAN CONCLUDE robotVelocity($robot, $velocity) {
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE onRobotTaskStatus($robot, $status) {
+PLAN CONCLUDE robotStatus($robot, $status) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnRobotTaskStatus"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
-		$data = "(context (onRobotTaskStatus \"" + $robot + "\" \"" + $status+ "\"))";
+		$data = "(context (robotStatus \"" + $robot + "\" \"" + $status+ "\"))";
 		PERFORM inform("logistic", $address, $data);
 	UTILITY : 100;
 }

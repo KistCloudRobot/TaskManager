@@ -17,7 +17,7 @@ PLAN PERFORM isro:EnterToStation($location, $stationType){
 
 		PERFORM RequestToPalletizer($robot, $load, $vertex);
 		
-		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
+		PERFORM isro:QueryMoveType($location, "in", $moveType, $vertex);
 		
 		PERFORM RequestStationIn($moveType, $vertex);
 				
@@ -37,7 +37,7 @@ PLAN PERFORM isro:EnterToStation($location, $stationType){
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "isro:EnterToStation");
 		
-		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
+		PERFORM isro:QueryMoveType($location, "in", $moveType, $vertex);
 		
 		PERFORM RequestStationIn($moveType, $vertex);
 				

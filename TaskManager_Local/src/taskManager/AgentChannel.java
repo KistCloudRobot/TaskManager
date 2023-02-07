@@ -10,12 +10,10 @@ import taskManager.utility.RecievedMessage;
 public class AgentChannel extends Channel{
 
 	private BlockingQueue<RecievedMessage> messageQueue;
-	private final String channelName;
 	
 	public AgentChannel(String channelName, Agent agent, BrokerType brokerType, BlockingQueue<RecievedMessage> queue) {
 		super(channelName, agent, brokerType);
 		this.messageQueue = queue;
-		this.channelName = channelName;
 	}
 	
 	@Override

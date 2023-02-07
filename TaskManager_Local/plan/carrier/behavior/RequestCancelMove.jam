@@ -31,7 +31,7 @@ PLAN PERFORM CancelMove($actionID) {
 		UNPOST PERFORM WaitActionResult($id);
 		RETRACT RequestedAction($channel, $address, $id);
 		
-		ASSERT RequestedAction("logistic", $address, $actionID);
+		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
 		
 		$communicationInstance.request($bi, "(CancelMove \"" + $actionID + "\")");
 				

@@ -2,7 +2,8 @@
 plan perform request($address, $data, $result){
 	ID : "requestByBase"
 	precondition:
-		fact AgentCommunication($communication);
+		fact Channel($channelName, $channel);
+		$channelName == "base";
 	body:
 		$result = $communication.request($address,$data);
 }

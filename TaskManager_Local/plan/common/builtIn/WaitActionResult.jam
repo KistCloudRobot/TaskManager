@@ -3,20 +3,35 @@ PREFIXES:
 
 
 PLAN perform WaitActionResult($actionID){
-	ID: "http://www.arbi.com//BuiltInPlan#WaitRequestedActionSuccess"
+	ID: "http://www.arbi.com//BuiltInPlan#WaitRequestedActionSuccessToAgent"
 	PRECONDITION:
-		FACT RequestedAction($channel, $address, $actionID);
+		FACT RequestedActionFromAgent($channel, $address, $actionID);
 		FACT ActionResult($actionID, $result);
 		$result == "success";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "WaitActionResult");
-		
-		PERFORM ReportActionResult($channel, $address, $actionID);
-		RETRACT ActionResult($actionID);
+		PERFORM isro:startLog("PERFORM", "WaitActionResult - channel request");
+		PERFORM ReportActionResultToAgent($channel, $address, $actionID);
+		RETRACT ActionResult($actionID, $result);
 		RETRACT RequestedAction($channel, $address, $actionID);
 		
 		PERFORM isro:endLog("PERFORM", "WaitActionResult");
-	UTILITY: 15; 
+	UTILITY: 150; 
+}
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#WaitRequestedActionSuccessToBaseAgent"
+	PRECONDITION:
+		FACT RequestedActionFromBaseAgent($address, $actionID);
+		FACT ActionResult($actionID, $result);
+		$result == "success";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "WaitActionResult - ToBaseAgent");
+		
+		PERFORM ReportActionResultToBaseAgent($address, $actionID);
+		RETRACT ActionResult($actionID, $result);
+		RETRACT RequestedAction($address, $actionID);
+		
+		PERFORM isro:endLog("PERFORM", "WaitActionResult");
+	UTILITY: 150; 
 }
 
 PLAN perform WaitActionResult($actionID){

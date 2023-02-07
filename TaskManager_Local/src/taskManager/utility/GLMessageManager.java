@@ -27,8 +27,11 @@ public class GLMessageManager {
 	
 	public static void main(String[] ar) {
 		
-		new GLMessageManager();
-		
+		GLMessageManager manager = new GLMessageManager();
+		String str = "\"(goal (metadata &quot;Local1&quot;) &quot;PalletTransported&quot; (argument &quot;http://www.arbi.com/ontologies/arbi.owl#pallet_02&quot; &quot;http://www.arbi.com/ontologies/arbi.owl#station3&quot; &quot;http://www.arbi.com/ontologies/arbi.owl#station48&quot;))\"";
+		str = manager.removeQuotationMarks(str);
+		str = manager.unescapeGL(str);
+		System.out.println(manager.retrieveGLExpression(str, 0));
 		
 	}
 
@@ -180,6 +183,7 @@ public class GLMessageManager {
 	public String postGoal(String goal, String utility) {
 		String result = null;
 		GeneralizedList gl = null;
+		
 		try {
 			gl = GLFactory.newGLFromGLString(goal);
 			String name = gl.getName();
@@ -196,7 +200,10 @@ public class GLMessageManager {
 			}
 
 			Relation r = interpreter.getWorldModel().newRelation(name, expList);
-			int utilityValue = Integer.valueOf(removeQuotationMarks(utility));
+			int utilityValue = 0;
+			if(!utility.equals("")) {
+				Integer.valueOf(removeQuotationMarks(utility));	
+			}
 
 			AchieveGoalAction generatedGoal = new AchieveGoalAction(name, r, new Value(utilityValue), null, null,
 					interpreter);
@@ -213,21 +220,6 @@ public class GLMessageManager {
 	}
 
 	public String unpostGoal(String goal) {
-
-		String expression1 = "exp1";
-		String expression2 = "exp2";
-		String glName = "glName";
-
-		String glText = "(" + glName + " " + expression1 + " " + expression2 + ")";
-
-		try {
-			GeneralizedList gl = GLFactory.newGLFromGLString(glText);
-
-			gl.getExpression(1).toString();
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
 		String result = null;
 		GeneralizedList gl = null;
@@ -357,6 +349,9 @@ public class GLMessageManager {
 		String result = "";
 		
 		//System.out.println("why? : " + input);
+		if (input.startsWith("\"")) {
+			input = removeQuotationMarks(input);
+		}
 		try {
 			GeneralizedList gl = GLFactory.newGLFromGLString(input);
 
@@ -532,14 +527,14 @@ public class GLMessageManager {
 	}
 	
 	public String escapeGL(String gl) {
-		System.out.println("start escape : " + gl);
+//		System.out.println("start escape : " + gl);
 		String result = GLFactory.escape(gl);
 		System.out.println(result);
 		return result;
 	}
 	public String unescapeGL(Object input) {
 
-		System.out.println("unescape GL ?????? " + input.getClass().getSimpleName());
+//		System.out.println("unescape GL ?????? " + input.getClass().getSimpleName());
 		String gl = input.toString();
 		
 		return GLFactory.unescape(gl);

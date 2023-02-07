@@ -18,14 +18,12 @@ PLAN perform ReturnToWait(){
 		FACT GLUtility($glUtility);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "ReturnToWait");
-		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "start");
 		
 		RETRIEVE robotAt($robot, $v1, $v2);
 		RETRIEVE WaitVertex($waitVertex);
 				
 		PERFORM  isro:RequestNavigate($waitVertex);
 
-		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "complete");
 		PERFORM  isro:endLog("PERFORM", "ReturnToWait");
 	UTILITY: 30; 
 }

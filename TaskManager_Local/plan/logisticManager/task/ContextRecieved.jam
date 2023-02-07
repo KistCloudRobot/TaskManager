@@ -1,21 +1,21 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedDefault"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextDefault"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 	BODY:
 		
 		System.out.println("no update : " + $context);
 		$glUtility.assertGL($context);
-		RETRACT ContextRecieved($context);
+		RETRACT context($context);
 		
 	UTILITY : 10;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedPersonCall"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextPersonCall"
 	PRECONDITION:
 		FACT Communication($communication);
 		FACT GLUtility($glUtility);
@@ -29,12 +29,12 @@ PLAN CONCLUDE ContextRecieved($context){
 		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"" + $taskType + "\"))";
 		System.out.println($data);
 		$communication.assertToLTM($data);
-		RETRACT ContextRecieved($context);
+		RETRACT context($context);
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotDegree"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotDegree"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotDegree";
@@ -45,14 +45,14 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT robotDegree($robot, $v1);
 		$glUtility.assertGL($context);
 				
-		RETRACT ContextRecieved($context);
+		RETRACT context($context);
 		
 	UTILITY : 100;
 }
 
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrobotAt"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextrobotAt"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
@@ -64,12 +64,12 @@ PLAN CONCLUDE ContextRecieved($context){
 		System.out.println("assert robotAt : " + $context);
 		$glUtility.assertGL($context);
 		
-		RETRACT ContextRecieved($contextName, $context);
+		RETRACT context($contextName, $context);
 		
 	UTILITY : 100;
 }
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotLoading"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotLoading"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotLoading";
@@ -80,13 +80,13 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT robotLoading($robot, $v1);
 		$glUtility.assertGL($context);
 				
-		RETRACT ContextRecieved($context);
+		RETRACT context($context);
 		
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedrackAt"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextrackAt"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "rackAt";
@@ -95,13 +95,13 @@ PLAN CONCLUDE ContextRecieved($context){
 		$rack = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT rackAt($rack, $v1, $v2);
 		$glUtility.assertGL($context);
-		RETRACT ContextRecieved($contextName, $context);
+		RETRACT context($contextName, $context);
 		
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedcargoAt"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextcargoAt"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "cargoAt";
@@ -110,13 +110,13 @@ PLAN CONCLUDE ContextRecieved($context){
 		$cargoAt = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT cargoAt($cargoAt, $v1, $v2);
 		$glUtility.assertGL($context);
-		RETRACT ContextRecieved($contextName, $context);
+		RETRACT context($contextName, $context);
 		
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedBatteryRemain"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextBatteryRemain"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "batteryRemain";
@@ -128,13 +128,13 @@ PLAN CONCLUDE ContextRecieved($context){
 		
 		$glUtility.assertGL($context);
 		
-		RETRACT ContextRecieved($contextName, $context);
+		RETRACT context($contextName, $context);
 		
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedRobotVelocity"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotVelocity"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotVelocity";
@@ -145,41 +145,24 @@ PLAN CONCLUDE ContextRecieved($context){
 		RETRACT robotVelocity($robot, $oldVelocity);
 		$glUtility.assertGL($context);
 				
-		RETRACT ContextRecieved($context);
+		RETRACT context($context);
 		
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedOnRobotTaskStatus"
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextOnRobotTaskStatus"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "onRobotTaskStatus";
+		$glUtility.retrieveGLName($context) == "robotStatus";
 	BODY:
 		
 		$robot =  $glUtility.retrieveGLExpression($context, 0);
 		
-		RETRACT onRobotTaskStatus($robot, $oldStatus);
+		RETRACT robotStatus($robot, $oldStatus);
 		$glUtility.assertGL($context);
 				
-		RETRACT ContextRecieved($context);
-		
-	UTILITY : 100;
-}
-
-PLAN CONCLUDE ContextRecieved($context){
-	ID: "http://www.arbi.com//BuiltInPlan#ContextRecievedOnAgentTaskStatus"
-	PRECONDITION:
-		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "OnAgentTaskStatus";
-	BODY:
-		
-		$agent = $glUtility.retrieveGLExpression($context, 0);
-		
-		RETRACT OnAgentTaskStatus($agent, $oldTask, $oldStatus);
-		$glUtility.assertGL($context);
-				
-		RETRACT ContextRecieved($context);
+		RETRACT context($context);
 		
 	UTILITY : 100;
 }

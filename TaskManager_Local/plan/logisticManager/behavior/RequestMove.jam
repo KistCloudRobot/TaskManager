@@ -24,11 +24,11 @@ PLAN PERFORM Move($actionID, $robotID, $path){
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestMove \"" +$actionID + "\" " + $path + ")";
-		System.out.println($data);
+		//System.out.println($data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 	//	System.out.println("wait id : " + $actionID);
-		ASSERT RequestedAction($nc, $actionID);
+		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Move");

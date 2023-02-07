@@ -26,7 +26,7 @@ PLAN PERFORM FlatPreciseMove($actionID, $vertex){
 		$data =  "(FlatPreciseMove \"" + $actionID + "\" " + $vertex +")";
 		
 		$communicationInstance.request($bi, $data);
-		ASSERT RequestedAction("logistic", $address, $actionID);
+		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
 		PERFORM WaitActionResult($actionID);
 
 		

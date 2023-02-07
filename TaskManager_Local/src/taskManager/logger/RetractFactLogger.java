@@ -5,18 +5,14 @@ import taskManager.logger.argument.RelationArgument;
 import taskManager.utility.GLMessageManager;
 
 public class RetractFactLogger implements ActionBody{
-	private GLMessageManager msgManager;
-	
-	public RetractFactLogger(GLMessageManager manager){
-		msgManager = manager;
+
+	public RetractFactLogger(){
+
 	}
 	
 	@Override
 	public Object execute(Object o) {
 		
-		RelationArgument argument = (RelationArgument)o;
-		
-		msgManager.retractFact(argument.getName());
 		return null;
 	}
 

@@ -27,7 +27,7 @@ PLAN PERFORM Pause($actionID) {
 		
 		$communicationInstance.request($bi, "(Pause \"" + $actionID + "\")");
 		
-		PERFORM ReportActionResult("logistic", $address, $actionID);
+		PERFORM ReportActionResultToAgent("logistic", $address, $actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Pause");
 	UTILITY: 20; 

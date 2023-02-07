@@ -22,7 +22,7 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		FACT isro:ReasonerAddress($reasoner);
 		FACT ExtraUtility($util);
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed at station1");
+		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed");
 		
 		PERFORM isro:QueryStationType($location, $stationType);
 		PERFORM isro:EnterToStation($location, $stationType);
