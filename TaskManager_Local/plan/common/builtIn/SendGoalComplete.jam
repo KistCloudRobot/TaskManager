@@ -1,0 +1,12 @@
+
+PLAN PERFORM isro:SendGoalComplete($goalName){
+	ID: "http://www.arbi.com//SendGoalComplete"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	FACT  isro:ReasonerAddress($reasoner);
+	BODY:
+		$data = "(GoalCompleted \"" + $goalName + "\")";
+		$communicationInstance.inform($reasoner, $data);
+	 
+}

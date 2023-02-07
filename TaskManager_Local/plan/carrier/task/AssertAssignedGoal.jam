@@ -1,0 +1,16 @@
+
+PLAN PERFORM AssertAssignedGoal($goal) {
+	ID : "http://www.arbi.com/AssertRequestedGoalForLIFT"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		//$glUtility.retireveExpressionSize($goal) == 4;
+	BODY :
+		System.out.println("AssertAssignedGoal : " + $goal);
+		$goal = $glUtility.unescapeGL($goal);
+		$goalName = $glUtility.retrieveGLName($goal);
+		$goalID = $glUtility.retrieveGLExpression($goal);
+		$arg1 = $glUtility.retrieveGLExpression($goal);
+		$arg2 = $glUtility.retrieveGLExpression($goal);
+		$arg3 = $glUtility.retrieveGLExpression($goal);
+		ASSERT AssignedGoal($goalName, $goalID, $arg1, $arg2, $arg3);
+}

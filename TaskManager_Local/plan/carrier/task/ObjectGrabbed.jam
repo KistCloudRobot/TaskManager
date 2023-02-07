@@ -12,8 +12,20 @@ PLAN CONCLUDE PostObjectGrabbed($object, $location) {
 	UTILITY : 10000;
 }
 
+PLAN CONCLUDE PostObjectGrabbed($object, $location) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostObjectGrabbedTest"
+	PRECONDITION:
+		FACT AssignedGoal($goalName, $goalID, $obj, $startStation, $endStation);
+		$goalName == "PalletTransported";
+	BODY:
+		POST PERFORM ObjectGrabbed($obj, $startStation);
+		RETRACT PostObjectGrabbed($object, $location);
+	
+	UTILITY : -1;
+}
+
 PLAN PERFORM ObjectGrabbed($object, $location){
-	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbedAtPalletizingStation1"
+	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbed"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($address);
@@ -38,3 +50,27 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 	UTILITY: 50; 
 
 }
+
+
+
+PLAN PERFORM ObjectGrabbed($object, $location){
+	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbedTest"
+	PRECONDITION:
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed");
+		
+		PERFORM isro:QueryStationType($location, $stationType);
+		PERFORM isro:EnterToStation($location, $stationType);
+		
+		PERFORM isro:QueryStationVertex($location, $stationVertex);
+		PERFORM isro:RequestLoad($stationVertex);
+		
+		PERFORM isro:ExitFromStation($location, $stationType);
+				
+		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
+		
+	UTILITY: -1; 
+	EFFECTS : 
+		PERFORM isro:SendGoalComplete("ObjectGrabbed");
+}
+

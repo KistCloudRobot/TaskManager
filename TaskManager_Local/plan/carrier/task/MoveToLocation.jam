@@ -10,7 +10,33 @@ PLAN CONCLUDE PostMoveToLocation($location) {
 		RETRACT PostMoveToLocation($location);
 	UTILITY : 10000;
 }
+PLAN CONCLUDE PostMoveToLocation($location) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostMoveToLocationTest11"
+	PRECONDITION:
+		FACT AssignedGoal($goalName, $goalID, $obj, $startStation, $endStation);
+		$goalName == "PalletTransported";
+		FACT robotLoading($robot, $loading);
+		$loading == "Loading";
+	BODY:
+		POST PERFORM MoveToLocation($endStation);
+		System.out.println("move to location posted");
+		RETRACT PostMoveToLocation($location);
+	UTILITY : -1;
+}
 
+PLAN CONCLUDE PostMoveToLocation($location) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostMoveToLocationTest22"
+	PRECONDITION:
+		FACT AssignedGoal($goalName, $goalID, $obj, $startStation, $endStation);
+		$goalName == "PalletTransported";
+		FACT robotLoading($robot, $loading);
+		$loading == "Unloading";
+	BODY:
+		POST PERFORM MoveToLocation($startStation);
+		System.out.println("move to location posted");
+		RETRACT PostMoveToLocation($location);
+	UTILITY : -1;
+}
 
 PLAN perform MoveToLocation($location){
 	ID: "http://www.arbi.com//BuiltInPlan#MoveToLocation"
@@ -32,6 +58,26 @@ PLAN perform MoveToLocation($location){
 		$communicationInstance.inform($reasoner, "(goalComplete (MoveToLocation \"" + $location +"\"))");
 	UTILITY: 20; 
 }
+
+
+PLAN perform MoveToLocation($location){
+	ID: "http://www.arbi.com//BuiltInPlan#MoveToLocationTest"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		FACT robotAt($robot, $vertex1, $vertex2);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "MoveToLocation");
+		
+		PERFORM isro:QueryPriorVertex($location, $preparationVertex);
+
+		PERFORM  isro:RequestNavigate($preparationVertex);
+		
+		PERFORM  isro:endLog("PERFORM", "MoveToLocation");
+	UTILITY: -1; 
+	EFFECTS : 
+		PERFORM isro:SendGoalComplete("MoveToLocation");
+}
+
 
 /*
 PLAN perform MoveToLocation($location){

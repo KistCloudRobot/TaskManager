@@ -1,0 +1,95 @@
+
+PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+	ID: "http://www.arbi.com//PalletTransportedCreatedForPrepareStoring"
+	PRECONDITION :
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "PrepareStoring";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedCreated PrepareStoring");
+		
+		$goalID = $helper.getGoalID($agent);
+		PERFORM QueryIdleLiftRack($rack);
+		PERFORM QueryRackOnStation($rack, $startStation);
+		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
+		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedCreated PrepareStoring");
+	UTILITY: 10; 
+	
+}
+
+
+PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+	ID: "http://www.arbi.com//PalletTransportedCreatedForPrepareUnstoring"
+	PRECONDITION :
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "PrepareUnstoring";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedCreated PrepareUnstoring");
+		
+		$goalID = $helper.getGoalID($agent);
+		PERFORM QueryCargoOnStoringStation($cargo);
+		PERFORM QueryCargoOn($cargo,$rack);
+		Perform QueryRackOnStation($rack,$startStation);
+		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
+		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedCreated PrepareUnstoring");
+	UTILITY: 10; 
+	
+}
+
+
+
+PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+	ID: "http://www.arbi.com//PalletTransportedCreatedForStoring"
+	PRECONDITION :
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "Storing";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedCreated Storing");
+		
+		$goalID = $helper.getGoalID($agent);
+		PERFORM QueryRackOnRack($rack, $location);
+		PERFORM QueryEmptyStoringStation($endStation);
+		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
+		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedCreated Storing");
+	UTILITY: 10; 
+	
+}
+
+
+PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+	ID: "http://www.arbi.com//PalletTransportedCreatedForUnstoring"
+	PRECONDITION :
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT PersonCall($callID,$location,$cmd);
+		$cmd == "Unstoring";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedCreated Unstoring");
+		
+		$goalID = $helper.getGoalID($agent);
+		PERFORM QueryRackOnRack($rack, $location);
+		PERFORM QueryEmptyStoringStation($endStation);
+		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
+		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedCreated Unstoring");
+	UTILITY: 10; 
+	
+}
+
+

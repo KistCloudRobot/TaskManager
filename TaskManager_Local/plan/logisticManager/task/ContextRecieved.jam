@@ -2,7 +2,7 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextDefault"
+	ID: "http://www.arbi.com//BuiltInPlan#contextDefaultForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 	BODY:
@@ -34,7 +34,7 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextRobotDegree"
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotDegreeForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotDegree";
@@ -52,7 +52,7 @@ PLAN CONCLUDE context($context){
 
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextrobotAt"
+	ID: "http://www.arbi.com//BuiltInPlan#contextrobotAtForLogisticManager"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
@@ -69,7 +69,7 @@ PLAN CONCLUDE context($context){
 	UTILITY : 100;
 }
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextRobotLoading"
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotLoadingForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotLoading";
@@ -86,7 +86,7 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextrackAt"
+	ID: "http://www.arbi.com//BuiltInPlan#contextrackAtForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "rackAt";
@@ -101,7 +101,7 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextcargoAt"
+	ID: "http://www.arbi.com//BuiltInPlan#contextcargoAtForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "cargoAt";
@@ -116,7 +116,7 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextBatteryRemain"
+	ID: "http://www.arbi.com//BuiltInPlan#contextBatteryRemainForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "batteryRemain";
@@ -134,7 +134,7 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextRobotVelocity"
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotVelocityForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotVelocity";
@@ -151,7 +151,7 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextOnRobotTaskStatus"
+	ID: "http://www.arbi.com//BuiltInPlan#contextOnRobotTaskStatusForLogisticManager"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotStatus";

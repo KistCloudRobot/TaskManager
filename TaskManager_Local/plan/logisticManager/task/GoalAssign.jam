@@ -24,6 +24,26 @@ PLAN PERFORM GoalAssign($channelName, $goal, $worker) {
 	UTILITY: 10; 
 }
 
+PLAN PERFORM GoalAssign($channelName, $goal, $worker) {
+	ID: "http://www.arbi.com//GoalAssignTest"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY:
+		
+		PERFORM RequestTaskAllocation($goal, $robot);
+				
+		System.out.println("========Goal Assign to " + $robot + "=======");
+		$data = "(GoalRequest " + $goal + ")";
+		
+		PERFORM FindRobotAgent($robot, $worker);
+		PERFORM request($channelName, $worker, $data, $result);
+	UTILITY: -1; 
+	EFFECTS : 
+		PERFORM UpdateGoalAssigned($goal, $worker);
+}
+
+
 
 PLAN PERFORM GoalAssign($channelName,$goal, $worker) {
 	ID: "http://www.arbi.com//GoalAssignToAnotherWorker"

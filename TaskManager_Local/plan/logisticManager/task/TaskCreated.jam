@@ -93,3 +93,15 @@ plan perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal){
 		PERFORM isro:endLog("PERFORM","BuildPalletGoal");
 	utility : 100000;
 }	
+
+
+
+plan perform BuildPalletGoal($goalID,$rack,$startStation,$endStation,$goal){
+	ID: "http://www.arbi.com//Test"
+	BODY:
+		PERFORM isro:startLog("PERFORM", "BuildPalletGoal");
+		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $endStation + "\")";
+		System.out.println("goal build result : " + $goal);
+		PERFORM isro:endLog("PERFORM","BuildPalletGoal");
+	utility : -1;
+}	
