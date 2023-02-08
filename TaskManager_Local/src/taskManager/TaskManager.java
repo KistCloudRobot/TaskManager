@@ -27,24 +27,15 @@ public class TaskManager extends ArbiAgent {
 	private BlockingQueue<RecievedMessage> messageQueue;
 	private TaskManagerLogger taskManagerLogger;
 	private MultiAgentCommunicator agentCommunicator;
+	private TaskManagerDataSource dataSource;
 	
 	public static String ENV_JMS_BROKER;
 	public static String MY_AGENT_ADRRESS;
 
-	public static final String TASKMANAGER_ADRESS = "www.arbi.com/TaskManager";
-	public static  String CONTEXTMANAGER_ADRESS = "agent://www.arbi.com/ContextManager";
-	public static final String KNOWLEDGEMANAGER_ADRESS = "agent://www.arbi.com/KnowledgeManager";
-	public static  String BEHAVIOUR_INTERFACE_ADDRESS = "agent://www.arbi.com/BehaviorInterface";
-	public static final String PERCEPTION_ADRESS = "agent://www.arbi.com/perception";
-	public static final String ACTION_ADRESS = "agent://www.arbi.com/action";
-	public static  String REASONER_ADRESS = "agent://www.arbi.com/TaskReasoner";
-	public static final String PREFIX = "http://www.arbi.com/ontologies#";
-	
+	public static final String TASKMANAGER_ADRESS = "www.arbi.com/TaskManager";	
 
 	public static final String AGENT_PREFIX = "agent://";
 	public static final String DATASOURCE_PREFIX = "ds://";
-	private TaskManagerDataSource dataSource;
-
 	
 //	public TaskManager_Local() {
 //		
