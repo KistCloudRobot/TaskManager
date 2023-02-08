@@ -1,0 +1,16 @@
+PLAN CONCLUDE GoalNameReportedFrom($goal, $channelName, $worker){
+	ID: "http://www.arbi.com//GoalNameReportedFromTest"
+	PRECONDITION:
+		FACT GoalNameRequestedTo($worker, $goalID, $goal);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "GoalNameReportedFrom");
+				
+		PERFORM isro:endLog("CONCLUDE", "GoalNameReportedFrom");
+	EFFECTS : 
+		//PERFORM UpdateGoalAssigned($goal, $worker);
+		//PERFORM AssertStationReleasedFrom($goal);
+		RETRACT GoalNameRequestedTo($goal, $channelName, $worker);
+		perform isro:SendGoalComplete("GoalNameReportedFrom");
+		
+	UTILITY: 10000; 
+}

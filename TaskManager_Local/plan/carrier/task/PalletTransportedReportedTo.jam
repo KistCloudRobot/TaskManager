@@ -1,13 +1,13 @@
 
-PLAN CONCLUDE PostPalletTransportedReportedToReporedtTo($goal, $channel, $agent) {
+PLAN CONCLUDE PostPalletTransportedReportedTo($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/PostPalletTransportedReportedToReporedtToForLIFT"
 	PRECONDITION :
 		FACT PalletTransportedRequestedFrom($goal, $channel, $agent);
 	BODY :
-		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedReportedToReporedtTo");
+		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedReportedTo");
 		
 		POST PERFORM PalletTransportedReportedTo($goal, $channel, $agent);
-		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedReportedToReporedtTo");
+		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedReportedTo");
 	UTILITY : 10000;
 	EFFECTS :
 		RETRACT PostPalletTransportedReportedToReporedtTo($goal, $channel, $agent);

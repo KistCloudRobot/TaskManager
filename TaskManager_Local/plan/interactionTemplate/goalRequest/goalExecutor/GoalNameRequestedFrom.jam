@@ -1,0 +1,15 @@
+
+PLAN CONCLUDE GoalNameRequestedFrom($goal, $channel, $agent){
+	ID : "http://www.arbi.com/GoalNameRequestedFromForTemplateReceiver"
+	PRECONDITION :
+	BODY :
+		PERFORM isro:startLog("PERFORM", "GoalNameRequestedFrom");
+		
+		PERFORM AssertRequestedGoal($goal);
+		
+		PERFORM isro:endLog("PERFORM", "GoalNameRequestedFrom");
+	UTILITY : 10000;
+	EFFECTS :
+		PERFORM isro:SendGoalComplete("GoalNameRequestedFrom");
+}
+

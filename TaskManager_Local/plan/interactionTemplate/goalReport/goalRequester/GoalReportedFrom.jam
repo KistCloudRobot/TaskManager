@@ -1,15 +1,15 @@
 
 PLAN CONCLUDE GoalReportedFrom($goal, $channelName, $worker) {
-	ID: "http://www.arbi.com//GoalReportedTestForLocal"
+	ID: "http://www.arbi.com//GoalReportedForTemplateSender"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($goal) == "PalletTransported";
+		$glUtility.retrieveGLName($goal) == "GoalName";
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "GoalReportedFrom");
 		
 		System.out.println("Reported Goal : " + $goal);
-		ASSERT PalletTransportedReportedFrom($goal, $channelName, $worker);
+		ASSERT GoalNameReportedFrom($goal, $channelName, $worker);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalReportedFrom");
-	UTILITY: 10000;
+	UTILITY: -1;
 }

@@ -1,0 +1,43 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE PostGoalNameRequestedTo($goal, $channelName, $worker) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostGoalNameRequestedTo"
+	PRECONDITION:
+		//Goal Condition
+		FACT PersonCall($callID,$location,$cmd);
+	BODY:
+		
+		PERFORM isro:startLog("CONCLUDE", "PostGoalNameRequestedTo");
+
+		POST PERFORM GoalNameRequestedTo($goal, "logistic", $worker);
+
+		PERFORM isro:endLog("CONCLUDE", "PostGoalNameRequestedTo");
+	UTILITY : 10000;
+	EFFECTS :
+		RETRACT  PostGoalNameRequestedTo($goal, $channelName, $worker);
+}
+		
+		
+PLAN ACHIEVE GoalNameRequestedTo($goal, $channelName, $worker) {
+	ID: "http://www.arbi.com//GoalNameRequestedTo"
+	PRECONDITION :
+		FACT PersonCall($callID,$location,$cmd);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "GoalNameRequestedTo");
+		
+		PERFORM GoalNameCreated($cmd, $goal);
+		
+		PERFORM GoalAssign($goal, $worker);
+		PERFORM GoalRequestTo($goal, $channelName, $worker);
+		
+		PERFORM isro:endLog("ACHIEVE", "GoalNameRequestedTo");
+	UTILITY: 100; 
+	
+	EFFECTS :
+		//PERFORM AssertStationAssignedBy($goal); 
+		//PERFORM UpdateGoalAssigned($goal, $worker);
+		RETRACT PersonCall($callID,$location,$cmd);
+		perform isro:SendGoalComplete("GoalNameRequestedTo");
+}
+
