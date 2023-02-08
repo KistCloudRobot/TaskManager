@@ -1,0 +1,11 @@
+
+PLAN PERFORM RetractRequestedGoal($goal) {
+ 	ID : "http://www.arbi.com/RetractRequestedGoal"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveExpressionSize($goal) == 4;
+	BODY :
+		$goalName = $glUtility.retrieveGLName($goal);
+		RETRACT RequestedGoal($goalName, $arg1, $arg2, $arg3);
+	UTILITY : 10;
+}

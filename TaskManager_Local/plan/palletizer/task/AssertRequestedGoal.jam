@@ -1,0 +1,16 @@
+
+PLAN PERFORM AssertRequestedGoal($goal) {
+	ID : "http://www.arbi.com/AssertRequestedGoalForPalletizer"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		//$glUtility.retrieveExpressionSize($goal) == 3;
+	BODY :
+		System.out.println("AssertAssignedGoal : " + $goal);
+		$goal = $glUtility.unescapeGL($goal);
+		$goalName = $glUtility.retrieveGLName($goal);
+		$goalID = $glUtility.retrieveGLExpression($goal);
+		$arg1 = $glUtility.retrieveGLExpression($goal);
+		$arg2 = $glUtility.retrieveGLExpression($goal);
+		ASSERT RequestedGoal($goalName, $goalID, $arg1, $arg2);
+
+}

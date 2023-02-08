@@ -4,8 +4,9 @@ PLAN PERFORM UpdateGoalAssigned($goalID, $worker) {
 		FACT Communication($communicationInstance);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
-		ASSERT goalAssigned($goalID, $worker);
-		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
+		PERFORM FindRobot($worker, $robot);
+		ASSERT goalAssigned($goalID, $robot);
+		$data = "(goalAssigned \"" + $goalID + "\" \"" + $robot + "\")";
 		$communicationInstance.assertToLTM($data);
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
 	UTILITY : 10;
@@ -15,11 +16,11 @@ PLAN PERFORM UpdateGoalAssigned($goalID, $worker) {
 	ID: "http://www.arbi.com//retractGoalAssigned"
 	PRECONDITION :
 		FACT Communication($communicationInstance);
-		FACT goalAssigned($goalID, $worker);
+		FACT goalAssigned($goalID, $r);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
-		RETRACT goalAssigned($goalID, $worker);
-		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
+		RETRACT goalAssigned($goalID, $r);
+		$data = "(goalAssigned \"" + $goalID + "\" \"" + $r + "\")";
 		$communicationInstance.retractFromLTM($data);
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
 	UTILITY : 20;

@@ -1,12 +1,22 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
+PLAN CONCLUDE PostRackLoadingPrepared($object, $location) {
+	ID: "http://www.arbi.com//PostRackLoadingPrepared"
+	PRECONDITION:
+		FACT RequestedGoal($goalName, $goalID, $robotID, $stationVertex);
+		$goalName == "RackLoadingPrepared";
+	BODY:
+		POST PERFORM RackLoadingPrepared($robotID, $stationVertex);
+
+		RETRACT PostRackLoadingPreparedd($object, $location);
+	UTILITY : 10000;
+}
+
+
 PLAN PERFORM RackLoadingPrepared($robotID, $vertex){
 	ID: "http://www.arbi.com//RackLoadingPrepared"
 	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
-		FACT isro:ReasonerAddress($reasoner);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RackLoadingPrepared");
 		
@@ -15,4 +25,6 @@ PLAN PERFORM RackLoadingPrepared($robotID, $vertex){
 		
 		PERFORM isro:endLog("PERFORM", "RackLoadingPrepared");
 	UTILITY : 10;
+	EFFECTS :
+		PERFORM isro:SendGoalComplete("RackLoadingPrepared");
 }

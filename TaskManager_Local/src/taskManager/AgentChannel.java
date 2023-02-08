@@ -5,6 +5,9 @@ import java.util.concurrent.BlockingQueue;
 import kr.ac.uos.ai.agentCommunicationFramework.BrokerType;
 import kr.ac.uos.ai.agentCommunicationFramework.agent.Agent;
 import kr.ac.uos.ai.agentCommunicationFramework.agent.communication.Channel;
+import kr.ac.uos.ai.arbi.model.GLFactory;
+import kr.ac.uos.ai.arbi.model.GeneralizedList;
+import kr.ac.uos.ai.arbi.model.parser.ParseException;
 import taskManager.utility.RecievedMessage;
 
 public class AgentChannel extends Channel{
@@ -24,6 +27,18 @@ public class AgentChannel extends Channel{
 
 	@Override
 	public String onRequest(String sender, String request) {
+		GeneralizedList gl;
+		try {
+			gl = GLFactory.newGLFromGLString(request);
+			if (gl.getName().equals("GoalRequest")) {
+				request = "(GoalRequestFrom " +request + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
+			} else if (gl.getName().equals("GoalReport")) {
+				request = "(GoalReportedFrom " +request + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		RecievedMessage msg = new RecievedMessage(sender, request);
 		messageQueue.add(msg);	
 		return "(ok)";

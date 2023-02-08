@@ -1,10 +1,9 @@
 
-PLAN PERFORM WaitGoalResult($goalID){
+PLAN PERFORM WaitGoalCompleted($goalID){
 	ID: "http://www.arbi.com//WaitGoalReport"
 	PRECONDITION:
-		FACT GLUtility($glUtility);
-		FACT GoalResult($executor, $goalID, $result);
+		FACT GoalCompleted($goalID);
 	BODY:
-		RETRACT GoalReport($a, $goalID, $c);
+		FACT GoalCompleted($goalID);
 	UTILITY : 10;
 }

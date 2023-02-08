@@ -1,8 +1,7 @@
 
 PLAN PERFORM GoalReportTo($goal, $channel, $agent) {
-	ID : "http://www.arbi.com/GoalReportToForLIFT"
+	ID : "http://www.arbi.com/GoalReportToForPalletizer"
 	PRECONDITION :
-		FACT GoalAssignedFrom($goal, $channel, $agent);
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalReportTo");
 		
@@ -13,5 +12,5 @@ PLAN PERFORM GoalReportTo($goal, $channel, $agent) {
 	UTILITY : 10000;
 	EFFECTS :
 		PERFORM isro:SendGoalComplete("GoalReportedTo"); 
-		RETRACT GoalAssignedFrom($goal, $channel, $agent);
 }
+

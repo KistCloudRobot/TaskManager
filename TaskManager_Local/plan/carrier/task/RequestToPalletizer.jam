@@ -12,9 +12,9 @@ PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
 		PERFORM  isro:startLog("PERFORM", "RequestToPalletizer");
 		$goalID = $helper.getActionID($agent);
 		
-		$goal = "(RackLoadingPrepared \"" + $robot + "\" " + $vertex + ")";
+		$goal = "(RackLoadingPrepared \""+$goalID + "\" \"" + $robot + "\" " + $vertex + ")";
 		PERFORM RackLoadingPreparedRequestedTo($address, $goalID, $goal);
-		PERFORM WaitGoalResult($goalID);
+		PERFORM WaitGoalComplete($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
 		
@@ -35,9 +35,9 @@ PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
 		PERFORM  isro:startLog("PERFORM", "RequestToPalletizer");
 		$goalID = $helper.getActionID($agent);
 		
-		$goal = "(RackUnloadingPrepared \"" + $robot + "\" " + $vertex + ")";
+		$goal = "(RackUnloadingPrepared \""+$goalID + "\" \"" + $robot + "\" " + $vertex + ")";
 		PERFORM RackUnloadingPreparedRequestedTo($address, $goalID, $goal);
-		PERFORM WaitGoalResult($goalID);
+		PERFORM WaitGoalComplete($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
 		

@@ -1,0 +1,16 @@
+
+PLAN CONCLUDE GoalReportedFrom($goal, $channelName, $worker) {
+	ID: "http://www.arbi.com//GoalReportedTestForLocal"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "PalletTransported";
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "GoalReportedFrom");
+		
+		System.out.println("Reported Goal : " + $goal);
+		ASSERT PalletTransportedReportedFrom($goal, $channelName, $worker);
+		
+		PERFORM isro:endLog("CONCLUDE", "GoalReportedFrom");
+	UTILITY: -1;
+}

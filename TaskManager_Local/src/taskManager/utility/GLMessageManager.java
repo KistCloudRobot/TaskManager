@@ -151,7 +151,6 @@ public class GLMessageManager {
 			GeneralizedList gl = GLFactory.newGLFromGLString(glString);
 			result = gl.getName();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -160,7 +159,7 @@ public class GLMessageManager {
 	}
 	
 	
-	public int retireveExpressionSize(String expression) {
+	public int retrieveExpressionSize(String expression) {
 		int result = 0;
 
 		try {

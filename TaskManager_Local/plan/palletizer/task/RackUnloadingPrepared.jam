@@ -1,6 +1,20 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
+PLAN CONCLUDE PostRackUnloadingPrepared($object, $location) {
+	ID: "http://www.arbi.com//PostRackUnloadingPrepared"
+	PRECONDITION:
+		FACT RequestedGoal($goalName, $goalID, $robotID, $stationVertex);
+		$goalName == "RackUnloadingPrepared";
+	BODY:
+		POST PERFORM RackUnloadingPrepared($robotID, $stationVertex);
+
+	UTILITY : 10000;
+	EFFECTS : 
+		RETRACT PostRackUnloadingPreparedd($object, $location);
+}
+
+
 PLAN PERFORM RackUnloadingPrepared($robotID, $vertex){
 	ID: "http://www.arbi.com//RackUnloadingPrepared"
 	PRECONDITION:
@@ -11,7 +25,10 @@ PLAN PERFORM RackUnloadingPrepared($robotID, $vertex){
 		PERFORM isro:startLog("PERFORM", "RackUnloadingPrepared");
 		
 		PERFORM RequestPalletizerStop();
+		//PERFORM RequestEnterPalletizer($robotID, $vertex);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadingPrepared");
 	UTILITY : 10;
+	//EFFECTS :
+	//	PERFORM isro:SendGoalComplete("RackUnloadingPrepared"); 
 }

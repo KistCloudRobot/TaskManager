@@ -2,29 +2,20 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN CONCLUDE RackUnloadingPreparedRequestedFrom($requester, $goalID, $goal){
+PLAN CONCLUDE RackUnloadingPreparedRequestedFrom($goal, $channel, $agent){
 	ID: "http://www.arbi.com//RackUnloadingPreparedRequestedFrom"
 	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
-		FACT isro:agent($agent);
+		FACT RequestedGoal($goalName, $goalID, $robotID, $stationVertex);
+		$goalName == "RackUnloadingPrepared";
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "RackUnloadingPreparedRequestedFrom");
 		
-		$goal = $glUtility.convertObjectToString($goal);
-		$unescapedGoal = $glUtility.unescapeGL($goal);
-		$robotID =  $glUtility.retrieveGLExpression($unescapedGoal, 0);
+		PERFORM RackUnloadingPrepared($robotID, $stationVertex);
+		PERFORM GoalReportTo($goal, $channel, $agent);
 		
-		//System.out.println($robotID);
-		$stationVertex =  $glUtility.retrieveGLExpression($unescapedGoal, 1);
-		
-		//System.out.println($stationVertex);
-		PERFORM RackUnloadingPrepared($robotID, $stationVertex);	
-		
-		$data = "(GoalResult \"" + $agent + "\" " + $goalID + " \"success\")";
-		PERFORM inform("logistic",$requester, $data);
-		
-		RETRACT RackLoadingPreparedRequestedFrom($a, $b, $c);
 		PERFORM isro:endLog("CONCLUDE", "RackUnloadingPreparedRequestedFrom");
+	EFFECTS :
+		PERFORM RetractRequestedGoal($goal);
+		PERFORM isro:SendGoalComplete("RackLoadingPreparedRequestedFrom"); 
 	UTILITY : 10;
 }

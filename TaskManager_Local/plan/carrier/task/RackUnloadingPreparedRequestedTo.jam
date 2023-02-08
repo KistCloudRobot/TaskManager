@@ -14,8 +14,8 @@ PLAN PERFORM RackUnloadingPreparedRequestedTo($worker, $goalID, $goal){
 		//System.out.println("escapedGoal : " + $escapedGoal);
 		//System.out.println("$agent = " + $agent);
 		$data = "(GoalRequest (RackUnloadingPrepared \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))";
-		
-		PERFORM request("logistic",$worker, $data, $request);
+
+		PERFORM request("logistic",$worker, $data, $result);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadingPreparedRequestedTo");
 	UTILITY : 10;

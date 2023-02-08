@@ -1,0 +1,15 @@
+
+PLAN CONCLUDE PalletTransportedRequestedFrom($goal, $channel, $agent){
+	ID : "http://www.arbi.com/PalletTransportedRequestedFromForLIFT"
+	PRECONDITION :
+	BODY :
+		PERFORM isro:startLog("PERFORM", "PalletTransportedRequestedFrom");
+		
+		PERFORM AssertRequestedGoal($goal);
+		
+		PERFORM isro:endLog("PERFORM", "PalletTransportedRequestedFrom");
+	UTILITY : 10000;
+	EFFECTS :
+		PERFORM isro:SendGoalComplete("PalletTransportedRequestedFrom");
+}
+

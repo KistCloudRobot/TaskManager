@@ -2,50 +2,15 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN CONCLUDE PostObjectPlaced($object, $location) {
-	ID: "http://www.arbi.com//BuiltInPlan#PostObjectPlaced"
-	PRECONDITION:
-	BODY:
-		POST PERFORM ObjectPlaced($object, $location);
-
-		RETRACT PostObjectPlaced($object, $location);
-	UTILITY : 10000;
-}
-
-PLAN CONCLUDE PostObjectPlaced($object, $location) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostObjectPlacedTest"
 	PRECONDITION:
-		FACT AssignedGoal($goalName, $goalID, $obj, $startStation, $endStation);
+		FACT RequestedGoal($goalName, $goalID, $obj, $startStation, $endStation);
 		$goalName == "PalletTransported";
 	BODY:
 		POST PERFORM ObjectPlaced($obj, $endStation);
 
 		RETRACT PostObjectPlaced($object, $location);
-	UTILITY : -1;
-}
-PLAN PERFORM ObjectPlaced($object, $location){
-	ID: "http://www.arbi.com//BuiltInPlan#ObjectPlaced"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($address);
-		FACT GLUtility($glUtility);
-		FACT robotAt($robot, $vertex1, $vertex2);
-		FACT  isro:ReasonerAddress($reasoner);
-		FACT ExtraUtility($util);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "ObjectPlaced");
-		
-		PERFORM isro:QueryStationType($location, $stationType);
-		PERFORM isro:EnterToStation($location, $stationType);
-		
-		PERFORM isro:QueryStationVertex($location, $stationVertex);
-		PERFORM isro:RequestUnload($stationVertex);
-		
-		PERFORM isro:ExitFromStation($location, $stationType);
-				
-		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
-		$communicationInstance.inform($reasoner, "(goalComplete (ObjectPlaced \"" + $object +"\" \"" + $location + "\"))");
-	UTILITY: 51; 
-
+	UTILITY : 10000;
 }
 
 PLAN PERFORM ObjectPlaced($object, $location){
@@ -63,7 +28,7 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		PERFORM isro:ExitFromStation($location, $stationType);
 				
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
-	UTILITY: -1; 
+	UTILITY: 50; 
 	EFFECTS : 
 		PERFORM isro:SendGoalComplete("ObjectPlaced");
 }

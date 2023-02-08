@@ -13,7 +13,7 @@ PLAN PERFORM RackLoadingPreparedRequestedTo($worker, $goalID, $goal){
 		
 		$data = "(GoalRequest (RackLoadingPrepared \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))";
 
-		PERFORM inform("logistic",$worker, $data);
+		PERFORM request("logistic",$worker, $data, $result);
 		
 		PERFORM isro:endLog("PERFORM", "RackLoadingPreparedRequestedTo");
 	UTILITY : 10;

@@ -1,122 +1,44 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
-		
-PLAN CONCLUDE PostPalletTransportedRequestedTo($worker,$goalID) {
+
+PLAN CONCLUDE PostPalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostPalletTransportedRequestedTo"
 	PRECONDITION:
+		FACT PersonCall($callID,$location,$cmd);
 	BODY:
 		
 		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedRequestedTo");
-		POST PERFORM PalletTransportedRequestedTo($worker,$goalID);
-		
-		RETRACT PostPalletTransportedRequestedTo($worker,$goalID);
-		
+
+		POST PERFORM PalletTransportedRequestedTo($goal, "logistic", $worker);
+
 		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedRequestedTo");
 	UTILITY : 10000;
+	EFFECTS :
+		RETRACT  PostPalletTransportedRequestedTo($goal, $channelName, $worker);
 }
-
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
-	ID : "planfailed?"
-	PRECONDITION :
-		FACT PersonCall($callID,$location,$cmd);
-	BODY :
 		
-		System.out.println("why");
-	UTILITY : 1;
-}
-
-
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
-	ID: "http://www.arbi.com//PalletTransportedRequestedToCargoStoringPrepared"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "PrepareStoring";
-	BODY:
-		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 		
-		PERFORM TaskCreated("PrepareStoring",$location, $goalID, $goal);
-		RETRACT PersonCall($callID,$location,$cmd);
-		PERFORM RequestTaskAllocation($goal, $worker);
-		
-		PERFORM GoalAssign("logistic", $goal, $worker);
-		PERFORM AssertStationAssignedBy($goal);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
-		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 100; 
-}
-
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
+PLAN ACHIEVE PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
-	PRECONDITION:
+	PRECONDITION :
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "Storing";
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 		
-		PERFORM TaskCreated("Storing", $location,$goalID, $goal);
+		PERFORM PalletTransportedCreated($cmd, $goal);
 		
-		RETRACT PersonCall($callID,$location,$cmd);
-		PERFORM RequestTaskAllocation($goal, $worker);
+		PERFORM GoalAssign($goal, $worker);
+		PERFORM GoalRequestTo($goal, $channelName, $worker);
 		
-		PERFORM GoalAssign("logistic", $goal, $worker);
-		PERFORM AssertStationAssignedBy($goal);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
 	UTILITY: 100; 
-}
-
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
-	ID: "http://www.arbi.com//PalletTransportedRequestedToStoredCargo"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "PrepareUnstoring";
-		
-	BODY:
-		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
-		
-		PERFORM TaskCreated("PrepareUnstoring",$location, $goalID, $goal);
-		
+	
+	EFFECTS :
+		PERFORM AssertStationAssignedBy($goal); 
+		PERFORM UpdateGoalAssigned($goal, $worker);
 		RETRACT PersonCall($callID,$location,$cmd);
-		PERFORM RequestTaskAllocation($goal, $worker);
-				
-		PERFORM GoalAssign("logistic", $goal, $worker);
-		PERFORM AssertStationAssignedBy($goal);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
-		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 100; 
-}
-
-PLAN PERFORM PalletTransportedRequestedTo($worker, $goalID){
-	ID: "http://www.arbi.com//PalletTransportedRequestedToUnstoredCargo"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "Unstoring";
-	BODY:
-		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
-		
-		PERFORM TaskCreated("Unstoring",$location, $goalID, $goal);
-		
-		RETRACT PersonCall($callID,$location,$cmd);
-		PERFORM RequestTaskAllocation($goal, $worker);
-		
-		PERFORM GoalAssign("logistic", $goal, $worker);
-		PERFORM AssertStationAssignedBy($goal);
-		$escapedGoal = $glUtility.escapeGL($goal);
-		
-		perform isro:SendGoalComplete("PalletTransportedRequestedTo", $worker, $goalID, $escapedGoal);
-		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 100; 
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
 }
 

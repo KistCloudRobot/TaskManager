@@ -1,0 +1,17 @@
+
+
+PLAN conclude GoalReportedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/GoalReportedFromForLIFT"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalReportedFrom");
+
+		System.out.println("Reported Goal : " + $goal);
+		$goalID = $glUtility.retrieveGLExpression($goal,0); 
+		ASSERT GoalCompleted($goalID);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalReportedFrom");
+	UTILITY : 10000;
+}
+
