@@ -20,59 +20,19 @@ public class CommunicationUtility {
 	}
 
 	public void assertToLTM(String data) {
-//		System.out.println("before assert");
 		ds.assertFact(data);
-//		System.out.println("after assert");
 	}
 	
 	public void retractFromLTM(String data) {
-//		System.out.println("retract : " + data);
 		String result = ds.retractFact(data);
-//		System.out.println("result : " + result);
 	}
 	public void inform(String receiver, String content) {
-		//System.out.println("inform : " + receiver + " " + content);
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		taskManager.send(receiver, content);
-
 	}	
 	
 	public void unsubscribe(String receiver, String content) {
 		System.out.println("unsubscribe : " + receiver + " " + content);
-
 		taskManager.unsubscribe(receiver, content);
-	}
-
-	public void repeatMove(String location) {
-		System.out.println("Request");
-		String result = "";
-		int count = 2;
-
-		while (result.equals("true") == false) {
-			result = taskManager.request(TaskManager.ACTION_ADRESS, "(move " + location + " (actionID " + count + "))");
-			count++;
-			
-			GeneralizedList gl;
-			try {
-				gl = GLFactory.newGLFromGLString(result);
-				result = gl.getExpression(0).asGeneralizedList().getExpression(2).toString();
-				System.out.println(result);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-
-			
-		}
-		
-		System.out.println("result : " + result);
-
 	}
 
 	public String sendQuery(String receiver, String content) {

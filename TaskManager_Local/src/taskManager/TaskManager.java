@@ -67,6 +67,7 @@ public class TaskManager extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		dataSource.connect(brokerAddress, port, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,brokerType);
+		
 		msgManager.assertFact("AssignedRole", role);
 		msgManager.assertFact("isro:agent", agentID);
 		init();
@@ -100,11 +101,6 @@ public class TaskManager extends ArbiAgent {
 	@Override
 	public void onStart() {
 	}
-
-	public String subscribe(String rule) {
-		String result = this.dataSource.subscribe(rule);
-		return result;
-	}
 	
 	public boolean dequeueMessage() {
 		if (messageQueue.isEmpty())
@@ -134,12 +130,6 @@ public class TaskManager extends ArbiAgent {
 					String packageName = gl.getExpression(0).toString();
 					packageName = packageName.substring(1, packageName.length() - 1);
 					initServicePackage(packageName);
-				}  else if (gl.getName().equals("GoalRequest")) {
-					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
-					msgManager.assertFact(goalGL.getName() + "RequestedFrom", goalGL.getExpression(0).asValue().stringValue(), goalGL.getExpression(1), goalGL.getExpression(2));
-				} else if (gl.getName().equals("GoalReport")) {
-					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
-					msgManager.assertFact(goalGL.getName() + "ReportedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
 				} else {
 					//System.out.println("assert context : " + data);
 					msgManager.assertGL(data);
@@ -225,7 +215,6 @@ public class TaskManager extends ArbiAgent {
 				plan = GLFactory.unescape(gl.getExpression(3).toString());
 				plan = plan.substring(1, plan.length() - 1);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -247,7 +236,6 @@ public class TaskManager extends ArbiAgent {
 			try {
 				gl = GLFactory.newGLFromGLString(retrieve);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String context = GLFactory.unescape(gl.getExpression(1).toString());
@@ -256,7 +244,6 @@ public class TaskManager extends ArbiAgent {
 			try {
 				contextGL = GLFactory.newGLFromGLString(context);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			String contextStatement = "(" + contextGL.getName();
@@ -281,7 +268,6 @@ public class TaskManager extends ArbiAgent {
 		try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -310,8 +296,6 @@ public class TaskManager extends ArbiAgent {
 		int port;
 		if(args.length == 0) {
 			brokerAddress = "172.16.165.141";
-//			brokerAddress = "192.168.100.10";
-//			brokerAddress = "127.0.0.1";
 			robotID = "Local";
 			port = 61316;
 		} else {

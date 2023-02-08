@@ -77,13 +77,13 @@ public class MessageReceivedPanel extends JPanel{
 	public void addMessage(String message, String sender){
 		Object[] msg = new Object[1];
 		msg[0] = message;
-		if(sender.equals(TaskManager.CONTEXTMANAGER_ADRESS)){
+		if(sender.equals("agent://www.arbi.com/ContextManager")){
 			contextManagerMessage.addRow(msg);
 			selected = 0;
-		}else if(sender.equals(TaskManager.KNOWLEDGEMANAGER_ADRESS)){
+		}else if(sender.equals("agent://www.arbi.com/KnowledgeManager")){
 			knowledgeManagerMessage.addRow(msg);
 			selected = 1;
-		}else if(sender.equals(TaskManager.BEHAVIOUR_INTERFACE_ADDRESS)){
+		}else if(sender.equals("agent://www.arbi.com/BehaviorInterface")){
 			behaviorManagerMessage.addRow(msg);
 			selected = 2;
 		}else{
