@@ -8,9 +8,9 @@ PLAN PERFORM AssertRequestedGoal($goal) {
 		System.out.println("AssertAssignedGoal : " + $goal);
 		$goal = $glUtility.unescapeGL($goal);
 		$goalName = $glUtility.retrieveGLName($goal);
-		$goalID = $glUtility.retrieveGLExpression($goal);
-		$arg1 = $glUtility.retrieveGLExpression($goal);
-		$arg2 = $glUtility.retrieveGLExpression($goal);
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$arg1 = $glUtility.retrieveGLExpression($goal,1);
+		$arg2 = $glUtility.retrieveGLExpression($goal,2);
 		ASSERT RequestedGoal($goalName, $goalID, $arg1, $arg2);
 
 }

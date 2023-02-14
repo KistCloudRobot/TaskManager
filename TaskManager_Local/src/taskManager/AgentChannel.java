@@ -21,8 +21,19 @@ public class AgentChannel extends Channel{
 	
 	@Override
 	public void onData(String sender, String data) {
+		GeneralizedList gl;
+		try {
+			gl = GLFactory.newGLFromGLString(data);
+			if (gl.getName().equals("GoalReport")) {
+				System.out.println(gl.toString());
+				data = "(GoalReportedFrom " + gl.getExpression(0).asGeneralizedList().toString() + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
+			} 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+//		System.out.println("channel on data : " + data);
 		RecievedMessage msg = new RecievedMessage(sender, data);
-		messageQueue.add(msg);	
+		messageQueue.add(msg);		
 	}
 
 	@Override
@@ -31,12 +42,10 @@ public class AgentChannel extends Channel{
 		try {
 			gl = GLFactory.newGLFromGLString(request);
 			if (gl.getName().equals("GoalRequest")) {
-				request = "(GoalRequestFrom " +request + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
-			} else if (gl.getName().equals("GoalReport")) {
-				request = "(GoalReportedFrom " +request + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
-			}
+				System.out.println(gl.toString());
+				request = "(GoalRequestedFrom " + gl.getExpression(0).asGeneralizedList().toString() + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
+			} 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		RecievedMessage msg = new RecievedMessage(sender, request);

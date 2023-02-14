@@ -11,14 +11,13 @@ PLAN CONCLUDE PostPalletTransportedRequestedTo($goal, $channelName, $worker) {
 
 		POST PERFORM PalletTransportedRequestedTo($goal, "logistic", $worker);
 
+		RETRACT PostPalletTransportedRequestedTo($goal, $channelName, $worker);
 		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedRequestedTo");
-	UTILITY : 10000;
-	EFFECTS :
-		RETRACT  PostPalletTransportedRequestedTo($goal, $channelName, $worker);
+	UTILITY : 50000;
 }
 		
 		
-PLAN ACHIEVE PalletTransportedRequestedTo($goal, $channelName, $worker) {
+PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
 	PRECONDITION :
 		FACT Communication($communicationInstance);
@@ -32,13 +31,14 @@ PLAN ACHIEVE PalletTransportedRequestedTo($goal, $channelName, $worker) {
 		PERFORM GoalAssign($goal, $worker);
 		PERFORM GoalRequestTo($goal, $channelName, $worker);
 		
-		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 100; 
-	
-	EFFECTS :
 		PERFORM AssertStationAssignedBy($goal); 
 		PERFORM UpdateGoalAssigned($goal, $worker);
-		RETRACT PersonCall($callID,$location,$cmd);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
+		
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
+	UTILITY: 10; 
+	
+	EFFECTS :
+		RETRACT PersonCall($callID,$location,$cmd);
 }
 

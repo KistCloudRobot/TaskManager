@@ -5,13 +5,13 @@ PLAN PERFORM initialize() {
 	BODY :
 		System.out.println("---initialize---");
 		$subscribeRule = "(rule (fact (context (PersonCall $a $b $c))) --> (notify (context (PersonCall $a $b $c))))";
-		$result = $communication.subscribe($subscribeRule);		
+		$result = $communication.subscribeToLTM($subscribeRule);		
 		System.out.println($result);
 		System.out.println("---start ChannelInit---");
 		
 		PERFORM createAgentChannel("logistic", $channel);
 		
-		ASSERT Channel($channelName, $channel);		
+		ASSERT Channel("logistic", $channel);		
 		
 		System.out.println("---end ChannelInit---");
 		

@@ -3,14 +3,16 @@ PLAN PERFORM AssertRequestedGoal($goal) {
 	ID : "http://www.arbi.com/AssertRequestedGoalForLIFT"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		//$glUtility.retrieveExpressionSize($goal) == 4;
+		$glUtility.retrieveExpressionSize($goal) == 4;
 	BODY :
-		System.out.println("AssertRequestedGoal : " + $goal);
+		PERFORM  isro:startLog("PERFORM", "AssertRequestedGoal");
+		//System.out.println("AssertRequestedGoal : " + $goal);
 		$goal = $glUtility.unescapeGL($goal);
 		$goalName = $glUtility.retrieveGLName($goal);
-		$goalID = $glUtility.retrieveGLExpression($goal);
-		$arg1 = $glUtility.retrieveGLExpression($goal);
-		$arg2 = $glUtility.retrieveGLExpression($goal);
-		$arg3 = $glUtility.retrieveGLExpression($goal);
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$arg1 = $glUtility.retrieveGLExpression($goal,1);
+		$arg2 = $glUtility.retrieveGLExpression($goal,2);
+		$arg3 = $glUtility.retrieveGLExpression($goal,3);
 		ASSERT RequestedGoal($goalName, $goalID, $arg1, $arg2, $arg3);
+		PERFORM isro:endLog("PERFORM", "AssertRequestedGoal");
 }

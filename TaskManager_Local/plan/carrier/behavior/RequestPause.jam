@@ -30,6 +30,6 @@ PLAN PERFORM Pause($actionID) {
 		PERFORM ReportActionResultToAgent("logistic", $address, $actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Pause");
-	UTILITY: 20; 
+	UTILITY: 100; 
 }
 

@@ -10,6 +10,7 @@ public class TaskManagerDataSource extends DataSource{
 	}
 	
 	public void onNotify(String content) {
+//		System.out.println("notified : " + content);
 		taskManager.onNotify("LTM", content);
 	}
 }

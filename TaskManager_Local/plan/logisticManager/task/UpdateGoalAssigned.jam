@@ -1,27 +1,30 @@
-PLAN PERFORM UpdateGoalAssigned($goalID, $worker) {
+PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 	ID: "http://www.arbi.com//assertGoalAssigned"
 	PRECONDITION :
 		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
-		PERFORM FindRobot($worker, $robot);
-		ASSERT goalAssigned($goalID, $robot);
-		$data = "(goalAssigned \"" + $goalID + "\" \"" + $robot + "\")";
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		ASSERT goalAssigned($goal, $worker);
+		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
 		$communicationInstance.assertToLTM($data);
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
 	UTILITY : 10;
 }
 
-PLAN PERFORM UpdateGoalAssigned($goalID, $worker) {
+PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 	ID: "http://www.arbi.com//retractGoalAssigned"
 	PRECONDITION :
+		FACT GLUtility($glUtility);
 		FACT Communication($communicationInstance);
-		FACT goalAssigned($goalID, $r);
+		FACT goalAssigned($goal, $worker);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
-		RETRACT goalAssigned($goalID, $r);
-		$data = "(goalAssigned \"" + $goalID + "\" \"" + $r + "\")";
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
 		$communicationInstance.retractFromLTM($data);
+		RETRACT goalAssigned($goal, $worker);
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
 	UTILITY : 20;
 }

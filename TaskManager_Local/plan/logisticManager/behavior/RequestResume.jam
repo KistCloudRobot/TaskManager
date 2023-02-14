@@ -3,7 +3,7 @@ PREFIXES:
 
 
 PLAN CONCLUDE RequestResume($actionID, $robotID) {
-	ID: "http://www.arbi.com//ConcludeRequestResume"
+	ID: "http://www.arbi.com//ConcludeRequestResumeForManager"
 	BODY:
 		//PERFORM isro:startLog("CONCLUDE", "RequestResume");
 		
@@ -32,5 +32,5 @@ PLAN PERFORM Resume($actionID, $robotID){
 		POST PERFORM WaitActionResult($actionID);
 		
 		//PERFORM isro:endLog("PERFORM", "Resume");
-	UTILITY : 11;
+	UTILITY : 100;
 }

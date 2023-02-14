@@ -25,6 +25,4 @@ PLAN PERFORM RackLoadingPrepared($robotID, $vertex){
 		
 		PERFORM isro:endLog("PERFORM", "RackLoadingPrepared");
 	UTILITY : 10;
-	EFFECTS :
-		PERFORM isro:SendGoalComplete("RackLoadingPrepared");
 }

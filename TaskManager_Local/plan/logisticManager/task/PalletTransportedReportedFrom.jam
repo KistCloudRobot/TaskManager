@@ -2,16 +2,15 @@ PLAN CONCLUDE PalletTransportedReportedFrom($goal, $channelName, $worker){
 	ID: "http://www.arbi.com//PalletTransportedReportedFromTest"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		FACT PalletTransportedRequestedTo($worker, $goalID, $goal);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "PalletTransportedReportedFrom");
 				
-		PERFORM isro:endLog("CONCLUDE", "PalletTransportedReportedFrom");
-	EFFECTS : 
 		PERFORM UpdateGoalAssigned($goal, $worker);
 		PERFORM AssertStationReleasedFrom($goal);
-		RETRACT PalletTransportedRequestedTo($goal, $channelName, $worker);
 		perform isro:SendGoalComplete("PalletTransportedReportedFrom");
 		
-	UTILITY: 10000; 
+		PERFORM isro:endLog("CONCLUDE", "PalletTransportedReportedFrom");
+	EFFECTS : 
+		RETRACT PalletTransportedReportedFrom($goal, $channelName, $worker);
+	UTILITY: 50000; 
 }

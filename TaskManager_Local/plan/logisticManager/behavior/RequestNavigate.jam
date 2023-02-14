@@ -24,6 +24,7 @@ PLAN PERFORM Navigate($actionID, $robotID,$start,$end){
 		PERFORM isro:startLog("PERFORM", "Navigate");
 		
 		$data = "(RequestNavigate \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
+		System.out.println($data);
 		$communicationInstance.request($nc,$data);
 		
 	//	System.out.println("wait id : " + $actionID);
@@ -32,5 +33,5 @@ PLAN PERFORM Navigate($actionID, $robotID,$start,$end){
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Navigate");
-	UTILITY: 10; 
+	UTILITY: 100; 
 }

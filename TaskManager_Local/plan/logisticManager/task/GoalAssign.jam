@@ -7,12 +7,13 @@ PLAN PERFORM GoalAssign($goal, $worker) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 	BODY:
+		PERFORM isro:startLog("PERFORM", "GoalAssign");
 		
 		PERFORM RequestTaskAllocation($goal, $robot);
 		PERFORM FindRobotAgent($robot, $worker);
-	UTILITY: 100; 
-	EFFECTS : 
-		PERFORM UpdateGoalAssigned($goal, $robot);
+		
+		PERFORM isro:endLog("PERFORM", "GoalAssign");
+	UTILITY: 10; 
 }
 
 

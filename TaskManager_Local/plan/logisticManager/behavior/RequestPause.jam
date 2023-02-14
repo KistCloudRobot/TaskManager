@@ -3,7 +3,7 @@ PREFIXES:
 
 
 PLAN CONCLUDE RequestPause($actionID, $robotID) {
-	ID: "http://www.arbi.com//ConcludeRequestPause"
+	ID: "http://www.arbi.com//ConcludeRequestPauseForManager"
 	BODY:
 		//PERFORM isro:startLog("CONCLUDE", "RequestMove");
 		
@@ -32,5 +32,5 @@ PLAN PERFORM Pause($actionID, $robotID){
 		POST PERFORM WaitActionResult($actionID);
 		
 		//PERFORM isro:endLog("PERFORM", "Pause");
-	UTILITY : 11;
+	UTILITY : 100;
 }

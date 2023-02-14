@@ -5,8 +5,6 @@ PLAN PERFORM RequestStationOut($moveType, $vertex){
 	ID: "http://www.arbi.com//RequestStationOut"
 	PRECONDITION:
 		FACT ExtraUtility($helper);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
 		FACT isro:agent($agent);
 		FACT isro:robot($robotID);
 		FACT isro:ManagerAddress($address);
@@ -22,5 +20,5 @@ PLAN PERFORM RequestStationOut($moveType, $vertex){
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "isro:RequestStationOut");
-	UTILITY: 10; 
+	UTILITY: 1; 
 }

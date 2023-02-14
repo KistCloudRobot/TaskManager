@@ -11,5 +11,7 @@ PLAN CONCLUDE GoalReportedFrom($goal, $channelName, $worker) {
 		ASSERT PalletTransportedReportedFrom($goal, $channelName, $worker);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalReportedFrom");
-	UTILITY: 10000;
+	UTILITY: 50000;
+	EFFECTS :
+		RETRACT GoalReportedFrom($goal, $channelName, $worker);
 }

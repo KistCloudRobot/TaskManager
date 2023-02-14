@@ -7,7 +7,7 @@ PLAN CONCLUDE PostReturnToWait() {
 	BODY:
 		POST PERFORM ReturnToWait();
 		RETRACT PostReturnToWait();
-	UTILITY : 10000;
+	UTILITY : 50000;
 }
 
 
@@ -22,8 +22,8 @@ PLAN perform ReturnToWait(){
 		RETRIEVE robotAt($robot, $v1, $v2);
 		RETRIEVE WaitVertex($waitVertex);
 				
-		PERFORM  isro:RequestNavigate($waitVertex);
-
-		PERFORM  isro:endLog("PERFORM", "ReturnToWait");
-	UTILITY: 30; 
+		PERFORM isro:RequestNavigate($waitVertex);
+		PERFORM isro:SendGoalComplete("ReturnToWait"); 
+		PERFORM isro:endLog("PERFORM", "ReturnToWait");
+	UTILITY: 10; 
 }

@@ -22,11 +22,12 @@ PLAN PERFORM GuideMove($actionID, $robotID, $vertex, $direction){
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestGuideMove \"" +$actionID + "\" " + $vertex + " \"" + $direction + "\")";
+		System.out.println($data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "GuideMove");
-	UTILITY : 10;
+	UTILITY : 100;
 }

@@ -10,9 +10,9 @@ PLAN CONCLUDE RackLoadingPreparedRequestedFrom($goal, $channel, $agent){
 		PERFORM RackLoadingPrepared($robotID, $stationVertex);
 		PERFORM GoalReportTo($goal, $channel, $agent);
 		
-		PERFORM isro:endLog("CONCLUDE", "RackLoadingPreparedRequestedFrom");
-	EFFECTS :
 		PERFORM RetractRequestedGoal($goal);
 		PERFORM isro:SendGoalComplete("RackLoadingPreparedRequestedFrom"); 
+		PERFORM isro:endLog("CONCLUDE", "RackLoadingPreparedRequestedFrom");
+	EFFECTS :
 	UTILITY : 1000;
 }

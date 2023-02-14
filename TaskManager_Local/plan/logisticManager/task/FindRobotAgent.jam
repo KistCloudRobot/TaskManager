@@ -7,7 +7,7 @@ PLAN PERFORM FindRobotAgent($robot, $agent){
 	PRECONDITION :
 		$robot == "AMR_LIFT1";
 	BODY:
-		//System.out.println("Find robot AMR_LIFT1");
+		System.out.println("Find robot AMR_LIFT1");
 		$agent = "agent://www.mcarbi.com/AMR_LIFT1";
 	UTILITY: 100;
 }

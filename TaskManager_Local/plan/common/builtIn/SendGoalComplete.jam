@@ -5,7 +5,9 @@ PLAN PERFORM isro:SendGoalComplete($goalName){
 		FACT Communication($communicationInstance);
 		FACT isro:ReasonerAddress($reasoner);
 	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:SendGoalComplete");
 		$data = "(GoalCompleted \"" + $goalName + "\")";
 		$communicationInstance.inform($reasoner, $data);
 	 
+		PERFORM isro:endLog("PERFORM", "isro:SendGoalComplete");
 }

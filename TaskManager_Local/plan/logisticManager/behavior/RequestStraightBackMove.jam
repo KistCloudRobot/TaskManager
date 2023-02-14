@@ -2,7 +2,7 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN CONCLUDE RequestStraightBackMove($actionID, $robotID, $vertex) {
-	ID: "http://www.arbi.com//ConcludeRequestStraightBackMove"
+	ID: "http://www.arbi.com//ConcludeRequestStraightBackMoveForManager"
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "RequestStraightBackMove");
 		
@@ -14,7 +14,7 @@ PLAN CONCLUDE RequestStraightBackMove($actionID, $robotID, $vertex) {
 
 
 PLAN PERFORM StraightBackMove($actionID, $robotID, $vertex){
-	ID: "http://www.arbi.com//StraightBackMove"
+	ID: "http://www.arbi.com//StraightBackMoveForManager"
 	PRECONDITION : 
 		FACT isro:NavigationControllerAddress($nc);
 	BODY:
@@ -22,11 +22,12 @@ PLAN PERFORM StraightBackMove($actionID, $robotID, $vertex){
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestStraightBackMove \"" +$actionID + "\" " + $vertex + ")";
+		System.out.println($data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "StraightBackMove");
-	UTILITY : 11;
+	UTILITY : 100;
 }

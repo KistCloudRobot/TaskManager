@@ -23,7 +23,7 @@ PLAN PERFORM isro:EnterToStation($location, $stationType){
 				
 		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
 		
-	UTILITY: 11; 
+	UTILITY: 2; 
 
 }
 
@@ -38,11 +38,19 @@ PLAN PERFORM isro:EnterToStation($location, $stationType){
 		PERFORM  isro:startLog("PERFORM", "isro:EnterToStation");
 		
 		PERFORM isro:QueryMoveType($location, "in", $moveType, $vertex);
-		
 		PERFORM RequestStationIn($moveType, $vertex);
 				
 		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
 		
-	UTILITY: 10; 
+	UTILITY: 1; 
 
+}
+
+PLAN PERFORM isro:EnterToStation($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationForGrabFail"
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "isro:EnterToStationFail");
+		
+		PERFORM isro:endLog("PERFORM", "isro:EnterToStationFail");		
+	UTILITY: 0; 
 }

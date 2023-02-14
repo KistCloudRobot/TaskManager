@@ -498,7 +498,24 @@ public class GLMessageManager {
 		}
 
 	}
-
+	public void updateContextGL(String context) {
+		String oldContext = "";
+		if (context.startsWith("(")) {
+			try {
+				GeneralizedList gl = GLFactory.newGLFromGLString(context);
+				oldContext = "(" + gl.getName();
+				for(int i = 0; i < gl.getExpressionsSize(); i++) {
+					oldContext = oldContext + " $v";
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		oldContext = oldContext + ")";
+		updateFact(oldContext, context);
+	}
+	
 	public void updateFact(String string, String string2) {
 		String name = "";
 

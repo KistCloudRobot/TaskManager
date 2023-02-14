@@ -11,7 +11,7 @@ PLAN CONCLUDE PostObjectGrabbed($object, $location) {
 		POST PERFORM ObjectGrabbed($obj, $startStation);
 		RETRACT PostObjectGrabbed($object, $location);
 	
-	UTILITY : 10000;
+	UTILITY : 50000;
 }
 
 PLAN PERFORM ObjectGrabbed($object, $location){
@@ -28,10 +28,9 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		
 		PERFORM isro:ExitFromStation($location, $stationType);
 				
+		PERFORM isro:SendGoalComplete("ObjectGrabbed");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
 		
-	UTILITY: -1; 
-	EFFECTS : 
-		PERFORM isro:SendGoalComplete("ObjectGrabbed");
+	UTILITY: 10; 
 }
 

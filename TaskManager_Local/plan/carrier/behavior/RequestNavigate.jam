@@ -23,9 +23,7 @@ PLAN PERFORM isro:RequestNavigate($end){
 		System.out.println($data);
 		PERFORM request("logistic", $address, $data, $result);
 
-		System.out.println("wait id : " + $actionID);
 		PERFORM WaitActionResult($actionID);
-
 		
 		PERFORM isro:endLog("PERFORM", "isro:RequestNavigate");
 	UTILITY: 10; 

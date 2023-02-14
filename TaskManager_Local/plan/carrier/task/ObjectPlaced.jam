@@ -10,7 +10,7 @@ PLAN CONCLUDE PostObjectPlaced($object, $location) {
 		POST PERFORM ObjectPlaced($obj, $endStation);
 
 		RETRACT PostObjectPlaced($object, $location);
-	UTILITY : 10000;
+	UTILITY : 50000;
 }
 
 PLAN PERFORM ObjectPlaced($object, $location){
@@ -27,8 +27,7 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		
 		PERFORM isro:ExitFromStation($location, $stationType);
 				
-		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
-	UTILITY: 50; 
-	EFFECTS : 
 		PERFORM isro:SendGoalComplete("ObjectPlaced");
+		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
+	UTILITY: 10; 
 }

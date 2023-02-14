@@ -28,10 +28,10 @@ PLAN PERFORM StraightBackMove($actionID,$vertex){
 		$data =  "(StraightBackMove \"" + $actionID + "\" " + $vertex +")";
 		
 		$communicationInstance.request($bi, $data);
-		System.out.println("wait id : " + $actionID);
+		//System.out.println("wait id : " + $actionID);
 		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "StraightBackMove");
-	UTILITY: 80; 
+	UTILITY: 100; 
 }

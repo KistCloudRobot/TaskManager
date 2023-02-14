@@ -27,16 +27,18 @@ PLAN PERFORM CancelMove($actionID) {
 	BODY:
 		PERFORM isro:startLog("PERFORM", "CancelMove");
 		
-		RETRIEVE RequestedAction($address, $id);
-		UNPOST PERFORM WaitActionResult($id);
-		RETRACT RequestedAction($channel, $address, $id);
+		System.out.println("RETRIEVE RequestedAction");
+		RETRIEVE RequestedActionFromAgent($channel, $address, $id);
+		System.out.println("cancel action : " + $id);
+		UNPOST PERFORM Move($id, $path);
+		RETRACT RequestedActionFromAgent($channel, $address, $id);
 		
 		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
 		
 		$communicationInstance.request($bi, "(CancelMove \"" + $actionID + "\")");
 				
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "CancelMove");
-	UTILITY: 20; 
+	UTILITY: 200; 
 }

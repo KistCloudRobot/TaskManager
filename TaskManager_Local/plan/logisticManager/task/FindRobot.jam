@@ -5,7 +5,7 @@ PREFIXES:
 PLAN PERFORM FindRobot($agent, $robot){
 	ID: "http://www.arbi.com//FindRobotLift2"
 	PRECONDITION :
-		$agent == "Lift2";
+		$agent == "agent://www.mcarbi.com/AMR_LIFT2";
 	BODY:
 		//System.out.println("Find robot");
 		$robot = "AMR_LIFT2";
@@ -14,7 +14,7 @@ PLAN PERFORM FindRobot($agent, $robot){
 PLAN PERFORM FindRobot($agent, $robot){
 	ID: "http://www.arbi.com//FindRobotLift1"
 	PRECONDITION :
-		$agent == "Lift1";
+		$agent == "agent://www.mcarbi.com/AMR_LIFT1";
 	BODY:
 		//System.out.println("Find robot");
 		$robot = "AMR_LIFT1";
@@ -22,21 +22,21 @@ PLAN PERFORM FindRobot($agent, $robot){
 }
 
 PLAN PERFORM FindRobot($agent, $robot){
-	ID: "http://www.arbi.com//FindRobotTow2"
+	ID: "http://www.arbi.com//FindRobotLIFT3"
 	PRECONDITION :
-		$agent == "Tow2";
+		$agent == "agent://www.mcarbi.com/AMR_LIFT3";
 	BODY:
 		//System.out.println("Find robot");
-		$robot = "AMR_TOW2";
+		$robot = "AMR_LIFT3";
 	UTILITY: 10;
 }
 
 PLAN PERFORM FindRobot($agent, $robot){
-	ID: "http://www.arbi.com//FindRobotTow1"
+	ID: "http://www.arbi.com//FindRobotLIFT4"
 	PRECONDITION :
-		$agent == "Tow1";
+		$agent == "agent://www.mcarbi.com/AMR_LIFT4";
 	BODY:
 		//System.out.println("Find robot");
-		$robot = "AMR_TOW1";
+		$robot = "AMR_LIFT4";
 	UTILITY: 10;
 }

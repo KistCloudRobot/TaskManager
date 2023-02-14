@@ -6,12 +6,11 @@ PLAN PERFORM RequestStationIn($moveType, $vertex){
 	ID: "http://www.arbi.com//RequestStationIn"
 	PRECONDITION:
 		FACT ExtraUtility($helper);
-//		FACT onRobotTaskStatus($robotID, $status);
-//		$status == "Ready";
 		FACT isro:agent($agent);
 		FACT isro:robot($robotID);
 		FACT isro:ManagerAddress($address);
-		FACT robotStatus($robotID, "Ready");
+		//FACT robotStatus($robotID, $status);
+		//$status == "Ready";
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:RequestStationIn");
@@ -23,5 +22,5 @@ PLAN PERFORM RequestStationIn($moveType, $vertex){
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "isro:RequestStationIn");
-	UTILITY: 10; 
+	UTILITY: 1; 
 }

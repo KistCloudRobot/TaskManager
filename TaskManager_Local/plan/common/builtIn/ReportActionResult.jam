@@ -9,7 +9,7 @@ PLAN PERFORM ReportActionResultToAgent($channelName, $receiver, $actionID) {
 		PERFORM inform($channelName, $receiver, $data);
 		
 		PERFORM isro:endLog("PERFORM", "ReportActionResultToAgent");
-	UTILITY : 100;
+	UTILITY : 10;
 }
 
 
@@ -25,5 +25,5 @@ PLAN PERFORM ReportActionResultToBaseAgent($receiver, $actionID) {
 		$communicationInstance.inform($receiver, $data);
 		
 		PERFORM isro:endLog("PERFORM", "ReportActionResultToBaseAgent");
-	UTILITY : 100;
+	UTILITY : 10;
 }

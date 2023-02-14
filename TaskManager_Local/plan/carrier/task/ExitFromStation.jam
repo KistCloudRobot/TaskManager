@@ -18,8 +18,7 @@ PLAN PERFORM isro:ExitFromStation($location, $stationType){
 		PERFORM RackUnloadCompleted($address);
 		
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
-		
-	UTILITY: 11; 
+	UTILITY : 2;
 
 }
 
@@ -40,6 +39,6 @@ PLAN PERFORM isro:ExitFromStation($location, $stationType){
 		
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 		
-	UTILITY: 10; 
+	UTILITY: 1; 
 
 }

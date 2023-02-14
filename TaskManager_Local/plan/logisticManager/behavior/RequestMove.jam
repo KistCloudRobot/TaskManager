@@ -3,7 +3,7 @@ PREFIXES:
 
 
 PLAN CONCLUDE RequestMove($actionID, $robotID, $path) {
-	ID: "http://www.arbi.com//ConcludeRequestMove"
+	ID: "http://www.arbi.com//ConcludeRequestMoveForManager"
 	BODY:
 		//PERFORM isro:startLog("CONCLUDE", "RequestMove");
 		
@@ -24,7 +24,7 @@ PLAN PERFORM Move($actionID, $robotID, $path){
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestMove \"" +$actionID + "\" " + $path + ")";
-		//System.out.println($data);
+		System.out.println($data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 	//	System.out.println("wait id : " + $actionID);
@@ -32,5 +32,5 @@ PLAN PERFORM Move($actionID, $robotID, $path){
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Move");
-	UTILITY : 11;
+	UTILITY : 100;
 }

@@ -5,10 +5,16 @@ PLAN CONCLUDE RequestFlatPreciseMove($actionID, $vertex){
 	ID: "http://www.arbi.com//ConcludeRequestFlatPreciseMove"
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "RequestFlatPreciseMove");
+		System.out.println($actionID);
+		System.out.println($vertex);
+		RETRIEVE robotStatus($robot,$status);
+		System.out.println($status);
 		POST PERFORM FlatPreciseMove($actionID, $vertex);
-		RETRACT RequestFlatPreciseMove($actionID, $vertex);
+		
 		PERFORM isro:endLog("CONCLUDE", "RequestFlatPreciseMove");
 	UTILITY: 10000; 
+	EFFECTS :
+		RETRACT RequestFlatPreciseMove($actionID, $vertex); 
 }
 
 
@@ -19,7 +25,8 @@ PLAN PERFORM FlatPreciseMove($actionID, $vertex){
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($bi);
 		FACT isro:ManagerAddress($address);
-		FACT robotStatus($robotID, "Ready");
+		//FACT robotStatus($robot,$status);
+		//$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
 		
@@ -29,7 +36,19 @@ PLAN PERFORM FlatPreciseMove($actionID, $vertex){
 		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
 		PERFORM WaitActionResult($actionID);
 
-		
 		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
-	UTILITY:80; 
+	UTILITY: 100; 
 }
+
+
+PLAN PERFORM FlatPreciseMove($actionID, $vertex){
+	ID: "http://www.arbi.com//FlatPreciseMoveFailed?"
+	PRECONDITION:
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
+		System.out.println("FlatPreciseMove dose not act : " + $actionID);
+		System.out.println("FlatPreciseMove dose not act : " + $vertex);
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+	UTILITY: 10; 
+}
+

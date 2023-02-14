@@ -9,7 +9,7 @@ PLAN CONCLUDE context($context){
 		System.out.println("no update : " +  $context);
 		$glUtility.assertGL($context);
 		RETRACT context($context);
-	UTILITY : 10;
+	UTILITY : 9999;
 }
 
 PLAN CONCLUDE context($context){
@@ -18,11 +18,13 @@ PLAN CONCLUDE context($context){
 		FACT GLUtility($glUtility);
 		$glUtility.retrieveGLName($context) == "robotPosition";
 	BODY:
+		//PERFORM  isro:startLog("CONCLUDE", "context robotPosition");
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT robotPosition($robot, $v1, $v2);
 		$glUtility.assertGL($context);
 		RETRACT context( $context);
-	UTILITY : 100;
+		//PERFORM isro:endLog("CONCLUDE", "context robotPosition");
+	UTILITY : 10000;
 }
 
 
@@ -36,7 +38,7 @@ PLAN CONCLUDE context($context){
 		RETRACT robotDegree($robot, $degree);
 		$glUtility.assertGL($context);
 		RETRACT context($context);
-	UTILITY : 100;
+	UTILITY : 10000;
 }
 
 
@@ -51,7 +53,7 @@ PLAN CONCLUDE context($context){
 		RETRACT context( $context);
 		$glUtility.assertGL($context);
 		
-	UTILITY : 100;
+	UTILITY : 10000;
 }
 
 PLAN CONCLUDE context($context){
@@ -63,7 +65,7 @@ PLAN CONCLUDE context($context){
 		RETRACT robotAt($robot, $v1, $v2);
 		$glUtility.assertGL($context);
 		RETRACT context($context);
-	UTILITY : 100;
+	UTILITY : 10000;
 }
 
 PLAN CONCLUDE context($context){
@@ -79,7 +81,7 @@ PLAN CONCLUDE context($context){
 		$glUtility.assertGL($context);
 		RETRACT context($context);
 		
-	UTILITY : 100;
+	UTILITY : 10000;
 }
 
 
@@ -96,7 +98,7 @@ PLAN CONCLUDE context($context){
 				
 		RETRACT context($context);
 		
-	UTILITY : 100;
+	UTILITY : 10000;
 }
 
 PLAN CONCLUDE context($context){
@@ -107,32 +109,13 @@ PLAN CONCLUDE context($context){
 	BODY:
 		
 		$robot =  $glUtility.retrieveGLExpression($context, 0);
-		
-		
 		RETRACT robotStatus($robot, $v1);
 		
 		$glUtility.assertGL($context);
 				
 		RETRACT context($context);
 		
-	UTILITY : 100;
+	UTILITY : 10000;
 }
 
-PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextOnAgentTaskStatus"
-	PRECONDITION:
-		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "OnAgentTaskStatus";
-	BODY:
-		
-		$agent = $glUtility.retrieveGLExpression($context, 0);
-		RETRIEVE OnAgentTaskStatus($robot, $v1, $v2);
-		
-		RETRACT OnAgentTaskStatus($agent, $v1, $v2);
-		$glUtility.assertGL($context);
-				
-		RETRACT context($context);
-		
-	UTILITY : 100;
-}
 

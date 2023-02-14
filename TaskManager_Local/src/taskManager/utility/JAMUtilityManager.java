@@ -52,7 +52,7 @@ public class JAMUtilityManager {
 		_lock.writeLock().lock();
 		try {
 			actionID += 1;
-			System.out.println("actionID retrieved");
+			//System.out.println("actionID retrieved");
 			return input + "_" + actionID;
 		} finally {
 			_lock.writeLock().unlock();

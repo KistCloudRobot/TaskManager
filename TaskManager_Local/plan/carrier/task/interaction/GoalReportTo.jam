@@ -2,7 +2,6 @@
 PLAN PERFORM GoalReportTo($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/GoalReportToForLIFT"
 	PRECONDITION :
-		FACT GoalRequestedFrom($goal, $channel, $agent);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "GoalReportTo");
 		
@@ -10,5 +9,5 @@ PLAN PERFORM GoalReportTo($goal, $channel, $agent) {
 		PERFORM inform($channel, $agent, $report);
 		
 		PERFORM isro:endLog("PERFORM", "GoalReportTo");
-	UTILITY : 10000;
+	UTILITY : 10;
 }

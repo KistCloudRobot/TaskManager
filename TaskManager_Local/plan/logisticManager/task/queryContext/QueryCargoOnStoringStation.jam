@@ -11,7 +11,7 @@ PLAN PERFORM QueryCargoOnStoringStation($cargoID){
 	BODY :
 		$queryResult = $communicationInstance.sendQuery($agent, "(context (cargoOnStoringStation $CargoID))");
 		$context = $glUtility.retrieveGLExpression($queryResult, 0);
-		System.out.println($context);
+		//System.out.println($context);
 		$cargoID = $glUtility.retrieveGLExpression($context, 0);
 	utility : 10;
 }

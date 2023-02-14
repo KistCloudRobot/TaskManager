@@ -7,12 +7,30 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom");
 
+		//System.out.println("Requested Goal : " + $goal);
+		ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");
+	UTILITY : 50000;
+	
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/GoalRequestedFromFor??"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom fail");
+
 		System.out.println("Requested Goal : " + $goal);
 		ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");
-	UTILITY : 10000;
-	
+	UTILITY : 10;
 	EFFECTS :
 		RETRACT GoalRequestedFrom($goal, $channel, $agent);
 }

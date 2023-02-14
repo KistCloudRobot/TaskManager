@@ -19,7 +19,7 @@ PLAN PERFORM EnterToStation($actionID, $robotID, $moveType, $vertex, $direction)
 		FACT Communication($communicationInstance);
 		FACT isro:NavigationControllerAddress($nc);
 	BODY:
-		//PERFORM isro:startLog("PERFORM", "EnterToStation");
+		PERFORM isro:startLog("PERFORM", "EnterToStation");
 		
 		$data  = "(RequestEnterToStation \"" +$actionID + "\" \"" + $robotID + "\" \"" +$moveType + "\" " + $vertex + " \"" + $direction + "\")";
 		$communicationInstance.request($nc, $data);
@@ -28,6 +28,6 @@ PLAN PERFORM EnterToStation($actionID, $robotID, $moveType, $vertex, $direction)
 		ASSERT RequestedActionFromAgent("logistic", $agent, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
-		//PERFORM isro:endLog("PERFORM", "EnterToStation");
-	UTILITY : 10;
+		PERFORM isro:endLog("PERFORM", "EnterToStation");
+	UTILITY : 100;
 }

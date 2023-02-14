@@ -6,10 +6,11 @@ PLAN CONCLUDE robotPosition($robot, $x, $y) {
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
+		//PERFORM  isro:startLog("CONCLUDE", "robotPosition");
 		$data = "(context (robotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
 		PERFORM inform("logistic", $address, $data);
-		
-	UTILITY : 100;
+		//PERFORM isro:endLog("CONCLUDE", "robotPosition");
+	UTILITY : 10001;
 }
 
 PLAN CONCLUDE robotDegree($robot, $Degree) {
@@ -17,10 +18,9 @@ PLAN CONCLUDE robotDegree($robot, $Degree) {
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
-
 		$data = "(context (robotDegree \"" + $robot + "\" " + $Degree + "))";
 		PERFORM inform("logistic", $address, $data);
-	UTILITY : 100;
+	UTILITY : 10001;
 }
 
 PLAN CONCLUDE robotLoading($robot, $load) {
@@ -31,7 +31,7 @@ PLAN CONCLUDE robotLoading($robot, $load) {
 
 		$data = "(context (robotLoading \"" + $robot + "\" \"" + $load + "\"))";
 		PERFORM inform("logistic", $address, $data);
-	UTILITY : 100;
+	UTILITY : 10001;
 }
 
 PLAN CONCLUDE batteryRemain($robot, $battery) {
@@ -41,7 +41,7 @@ PLAN CONCLUDE batteryRemain($robot, $battery) {
 	BODY:
 		$data = "(context (batteryRemain \"" + $robot + "\" " + $battery  + "))";
 		PERFORM inform("logistic", $address, $data);
-	UTILITY : 100;
+	UTILITY : 10001;
 }
 PLAN CONCLUDE robotVelocity($robot, $velocity) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotVelocity"
@@ -50,7 +50,7 @@ PLAN CONCLUDE robotVelocity($robot, $velocity) {
 	BODY:
 		$data = "(context (robotVelocity \"" + $robot + "\" " + $velocity+ "))";
 		PERFORM inform("logistic", $address, $data);
-	UTILITY : 100;
+	UTILITY : 10001;
 }
 
 PLAN CONCLUDE robotStatus($robot, $status) {
@@ -60,6 +60,6 @@ PLAN CONCLUDE robotStatus($robot, $status) {
 	BODY:
 		$data = "(context (robotStatus \"" + $robot + "\" \"" + $status+ "\"))";
 		PERFORM inform("logistic", $address, $data);
-	UTILITY : 100;
+	UTILITY : 10001;
 }
 

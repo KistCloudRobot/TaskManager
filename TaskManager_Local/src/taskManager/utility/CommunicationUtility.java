@@ -36,7 +36,7 @@ public class CommunicationUtility {
 	}
 
 	public String sendQuery(String receiver, String content) {
-		System.out.println("query : " + receiver + " " + content);
+		//System.out.println("query : " + receiver + " " + content);
 		String result = "";
 		try {
 			Thread.sleep(50);
@@ -46,7 +46,7 @@ public class CommunicationUtility {
 		}
 		result = taskManager.query(receiver, content);
 
-		System.out.println("query result :" + result);
+		//System.out.println("query result :" + result);
 		return result;
 
 	}
@@ -78,6 +78,11 @@ public class CommunicationUtility {
 	public void subscribe(String receiver,String content){
 		taskManager.subscribe(receiver, content);
 	}
+	public String subscribeToLTM(String content){
+		String result = ds.subscribe(content);
+		return result;
+	}
+	
 	
 	public void updateToLTM(String content) {
 		//System.out.println("==== updateFact To LTM : " + content + " ====");

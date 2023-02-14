@@ -1,7 +1,7 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN PERFORM GoalRequestedTo($goal, $channel, $worker){
+PLAN PERFORM GoalRequestTo($goal, $channel, $worker){
 	ID: "http://www.arbi.com//GoalRequestedToForlogisticManager"
 	PRECONDITION:
 	BODY:

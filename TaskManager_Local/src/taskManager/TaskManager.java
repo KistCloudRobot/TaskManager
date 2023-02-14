@@ -130,8 +130,11 @@ public class TaskManager extends ArbiAgent {
 					String packageName = gl.getExpression(0).toString();
 					packageName = packageName.substring(1, packageName.length() - 1);
 					initServicePackage(packageName);
-				} else {
+				} else if (gl.getName().equals("update")){
 					//System.out.println("assert context : " + data);
+					System.out.println("update context : " + data);
+					msgManager.updateContextGL(data);
+				} else {
 					msgManager.assertGL(data);
 				}
 
