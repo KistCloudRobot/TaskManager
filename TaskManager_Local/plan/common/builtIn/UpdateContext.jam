@@ -8,7 +8,7 @@ PLAN CONCLUDE UpdateContext($old, $new){
 	BODY:
 		System.out.println("no update : " + $new);
 		RETRACT UpdateContext($old, $new);
-	UTILITY : 10;
+	UTILITY : 1000;
 }
 PLAN CONCLUDE UpdateContext($old, $new){
 	ID: "http://www.arbi.com//BuiltInPlan#UpdateContext"
@@ -19,7 +19,7 @@ PLAN CONCLUDE UpdateContext($old, $new){
 		$data = "(update " + $old + " " + $new +")";
 		//System.out.println("[UPDATE CONTEXT] " + $data);
 		$communicationInstance.updateToLTM($data);
-	UTILITY : 100;
+	UTILITY : 10000;
 	EFFECTS :
 		RETRACT UpdateContext($old, $new); 
 }

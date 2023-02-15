@@ -10,10 +10,10 @@ PLAN PERFORM AssertStationAssignedBy($goal){
 		$startStation = $glUtility.retrieveGLExpression($goal, 2);
 		$endStation = $glUtility.retrieveGLExpression($goal, 3);
 		
-		$data = "(stationAssignedBy \"" + $goalID + "\" \"" + $startStation + "\")";
+		$data = "(context (stationAssignedBy \"" + $goalID + "\" \"" + $startStation + "\"))";
 		$communicationInstance.assertToLTM($data);
 		
-		$data = "(stationAssignedBy \"" + $goalID + "\" \"" + $endStation + "\")";
+		$data = "(context (stationAssignedBy \"" + $goalID + "\" \"" + $endStation + "\"))";
 		$communicationInstance.assertToLTM($data);
 		
 		PERFORM isro:endLog("PERFORM", "AssertStationAssigned");

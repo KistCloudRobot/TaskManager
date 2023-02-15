@@ -1,38 +1,8 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
-		
-PLAN PERFORM RequestMultiAllocation($alocText1,$alocText2, $worker1,$worker2){
-	ID: "http://www.arbi.com//MultiTaskAllocatiodn"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT ExtraUtility($helper);
-		FACT isro:TaskAllocatorAddress($allocator);
-		FACT GLUtility($glUtility);
-
-	BODY:
-		PERFORM isro:startLog("PERFORM", "RequestTaskAllocation");
-		System.out.println($alocText1 + " " + $alocText2);
-		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $alocText1+" " + $alocText2 + ")");
-		
-		$allocation = $glUtility.retrieveGLExpression($result, 0);
-
-		$allocation = $glUtility.retrieveGLExpression($allocation,1);
-		System.out.println("allocation : " + $allocation);
-		PERFORM FindRobotAgent($allocation, $worker1);
-		System.out.println("worker " + $worker1);
-		
-		$allocation = $glUtility.retrieveGLExpression($result, 1);
-
-		$allocation = $glUtility.retrieveGLExpression($allocation,1);
-		System.out.println("allcation2 : " + $allocation);
-		PERFORM FindRobotAgent($allocation, $worker2);
-		System.out.println("worker " + $worker2);
-		PERFORM isro:endLog("PERFORM", "RequestTaskAllocation");
-	UTILITY: 10; 
-}
 
 PLAN PERFORM RequestTaskAllocation($goal, $worker){
-	ID: "http://www.arbi.com//RequestTaskAllocationTest"
+	ID: "http://www.arbi.com//RequestTaskAllocation"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT ExtraUtility($helper);
@@ -53,8 +23,36 @@ PLAN PERFORM RequestTaskAllocation($goal, $worker){
 	UTILITY: 1; 
 }
 
+PLAN PERFORM RequestTwoTasksAllocation($goal1, $worker1, $goal2, $worker2){
+	ID: "http://www.arbi.com//RequestTwoTasksAllocation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:TaskAllocatorAddress($allocator);
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RequestTwoTasksAllocation");
+		
+		PERFORM BuildTaskAllocationText($goal1, $text1);
+		PERFORM BuildTaskAllocationText($goal2, $text2);
+		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $text1+ " " + $text2 +")");
+		
+		$allocation1 = $glUtility.retrieveGLExpression($result, 0);
+		System.out.println("allocation1 : " + $allocation);
+		$worker1 = $glUtility.retrieveGLExpression($allocation1,1);
+		System.out.println("allocated Robot1 : " + $worker);
+		
+		$allocation2 = $glUtility.retrieveGLExpression($result, 1);
+		System.out.println("allocation2 : " + $allocation);
+		$worker2 = $glUtility.retrieveGLExpression($allocation2,1);
+		System.out.println("allocated Robot2 : " + $worker);
+		
+		PERFORM isro:endLog("PERFORM", "RequestTwoTasksAllocation");
+	UTILITY: 1; 
+}
+
 plan perform BuildTaskAllocationText($goal,$text){
-	ID: "http://www.arbi.com//buildAlocTextForTest"
+	ID: "http://www.arbi.com//buildAllocationText"
 	precondition:
 		FACT GLUtility($glUtility);
 	BODY:

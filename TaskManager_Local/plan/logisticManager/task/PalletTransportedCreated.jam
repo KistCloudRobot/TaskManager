@@ -1,5 +1,5 @@
 
-PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForPrepareStoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
@@ -22,7 +22,7 @@ PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
 }
 
 
-PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForPrepareUnstoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
@@ -47,7 +47,7 @@ PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
 
 
 
-PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForStoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
@@ -70,7 +70,7 @@ PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
 }
 
 
-PLAN PERFORM PalletTransportedCreated($cmd, $goal) {
+PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForUnstoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);

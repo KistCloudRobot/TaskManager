@@ -2,7 +2,7 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN PERFORM GoalAssign($goal, $worker) {
-	ID: "http://www.arbi.com//GoalAssignTest"
+	ID: "http://www.arbi.com//GoalAssign"
 	PRECONDITION :
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
@@ -11,6 +11,23 @@ PLAN PERFORM GoalAssign($goal, $worker) {
 		
 		PERFORM RequestTaskAllocation($goal, $robot);
 		PERFORM FindRobotAgent($robot, $worker);
+		
+		PERFORM isro:endLog("PERFORM", "GoalAssign");
+	UTILITY: 10; 
+}
+
+PLAN PERFORM TwoGoalsAssign($goal1, $worker1, $goal2, $worker2) {
+	ID: "http://www.arbi.com//TwoGoalAssign"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "GoalAssign");
+		
+		PERFORM RequestTwoTasksAllocation($goal1, $robot1, $goal2, $robot2);
+		
+		PERFORM FindRobotAgent($robot1, $worker1);
+		PERFORM FindRobotAgent($robot2, $worker2);
 		
 		PERFORM isro:endLog("PERFORM", "GoalAssign");
 	UTILITY: 10; 

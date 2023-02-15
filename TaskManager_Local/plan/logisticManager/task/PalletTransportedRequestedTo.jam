@@ -4,29 +4,27 @@ PREFIXES:
 PLAN CONCLUDE PostPalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostPalletTransportedRequestedTo"
 	PRECONDITION:
-		FACT PersonCall($callID,$location,$cmd);
+		//FACT PersonCall($callID,$location,$cmd);
 	BODY:
 		
 		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedRequestedTo");
 
 		POST PERFORM PalletTransportedRequestedTo($goal, "logistic", $worker);
-
-		RETRACT PostPalletTransportedRequestedTo($goal, $channelName, $worker);
+		
 		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedRequestedTo");
 	UTILITY : 50000;
+	EFFECTS :
+		RETRACT PostPalletTransportedRequestedTo($goal, $channelName, $worker); 
 }
-		
 		
 PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
 	PRECONDITION :
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
 		FACT PersonCall($callID,$location,$cmd);
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 		
-		PERFORM PalletTransportedCreated($cmd, $goal);
+		PERFORM PalletTransportedCreated($callID, $goal);
 		
 		PERFORM GoalAssign($goal, $worker);
 		PERFORM GoalRequestTo($goal, $channelName, $worker);
@@ -39,6 +37,41 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	UTILITY: 10; 
 	
 	EFFECTS :
+		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
 		RETRACT PersonCall($callID,$location,$cmd);
+}
+		
+PLAN PERFORM PalletTransportedRequestedTo($goal1, $channelName, $worker1) {
+	ID: "http://www.arbi.com//PalletTransportedRequestedToTwoWorkers"
+	PRECONDITION :
+		FACT PersonCall($callID1,$location1,$cmd1);
+		//$cmd1 == "Unstoring";
+		FACT PersonCall($callID2,$location2,$cmd2);
+		//$cmd2 == "PrepareUnstoring";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "PalletTransportedRequestedTo - Two Goals");
+		System.out.println("PersonCall 1 : " + $callID1);
+		System.out.println("PersonCall 2 : " + $callID2);
+		PERFORM PalletTransportedCreated($callID1, $goal1);
+		PERFORM PalletTransportedCreated($callID2, $goal2);
+		PERFORM TwoGoalsAssign($goal1, $worker1, $goal2, $worker2);
+		
+		PERFORM GoalRequestTo($goal1, $channelName, $worker1);
+		PERFORM GoalRequestTo($goal2, $channelName, $worker2);
+		
+		PERFORM AssertStationAssignedBy($goal); 
+		PERFORM UpdateGoalAssigned($goal, $worker);
+		
+		PERFORM AssertStationAssignedBy($goal1); 
+		PERFORM UpdateGoalAssigned($goal1, $worker1);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
+		
+		PERFORM isro:endLog("PERFORM", "PalletTransportedRequestedTo - Two Goals");
+	UTILITY: 11; 
+	
+	EFFECTS :
+		ASSERT PalletTransportedRequestedTo($goal1, $channelName, $worker1);
+		RETRACT PersonCall($callID1,$location1,$cmd1);
+		RETRACT PersonCall($callID2,$location2,$cmd2);
 }
 
