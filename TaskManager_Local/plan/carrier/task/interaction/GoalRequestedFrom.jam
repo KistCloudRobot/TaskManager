@@ -3,21 +3,126 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/GoalRequestedFromForLIFT"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		$glUtility.getGLName($goal) == "PalletTransported";
+		$glUtility.retrieveGLName($goal) == "PalletTransported";
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom");
 
-		//System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
 		ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");
 	UTILITY : 50000;
-	
 	EFFECTS :
 		RETRACT GoalRequestedFrom($goal, $channel, $agent);
 }
 
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/MoveGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "Move";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - Move");
 
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		POST PERFORM MoveRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - Move");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/StraightBackMoveGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "StraightBackMove";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - StraightBackMove");
+
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		POST PERFORM StraightBackMoveRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - StraightBackMove");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/GuideMoveGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "GuideMove";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - GuideMove");
+
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		POST PERFORM GuideMoveRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - GuideMove");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/PreciseMoveGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "PreciseMove";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - PreciseMove");
+
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		POST PERFORM PreciseMoveRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - PreciseMove");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/FlatPreciseMoveGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "FlatPreciseMove";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - FlatPreciseMove");
+
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		POST PERFORM FlatPreciseMoveRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - FlatPreciseMove");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/CancelMoveGoalRequestedFromForLIFT22"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "CancelMove";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - CancelMove");
+
+		System.out.println("Requested Goal : " + $goal);
+		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		POST PERFORM CancelMoveRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - CancelMove");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
 
 PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/GoalRequestedFromFor??"
@@ -26,11 +131,11 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom fail");
 
-		System.out.println("Requested Goal : " + $goal);
-		ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
+		System.out.println("Requested Goal ?? : " + $goal);
+		//ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");
-	UTILITY : 10;
+	UTILITY : 10001;
 	EFFECTS :
 		RETRACT GoalRequestedFrom($goal, $channel, $agent);
 }

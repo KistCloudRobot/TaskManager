@@ -1,22 +1,29 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN CONCLUDE PostRackLoadingPrepared($object, $location) {
-	ID: "http://www.arbi.com//PostRackLoadingPrepared"
+PLAN PERFORM  RackLoadingPreparedRequestedFrom($goal, $channel, $agent){
+	ID: "http://www.arbi.com//RackLoadingPreparedRequestedFrom"
 	PRECONDITION:
-		FACT RequestedGoal($goalName, $goalID, $robotID, $stationVertex);
-		$goalName == "RackLoadingPrepared";
+		FACT GLUtility($glUtility);
 	BODY:
-		POST PERFORM RackLoadingPrepared($robotID, $stationVertex);
-
-		RETRACT PostRackLoadingPreparedd($object, $location);
-	UTILITY : 10000;
+		PERFORM isro:startLog("CONCLUDE", "RackLoadingPreparedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		$robotID = $glUtility.retrieveGLExpression($goal, 1);
+		$robotID = $glUtility.retrieveGLExpression($goal, 2);
+		PERFORM RackLoadingPrepared($goalID, $robotID, $stationVertex);
+		PERFORM GoalResultReportTo($goalID,"success" ,$channel, $agent);
+		
+		PERFORM isro:endLog("CONCLUDE", "RackLoadingPreparedRequestedFrom");
+	EFFECTS :
+	UTILITY : 100;
 }
 
-
-PLAN PERFORM RackLoadingPrepared($robotID, $vertex){
+PLAN PERFORM RackLoadingPrepared($goalID, $robotID, $vertex){
 	ID: "http://www.arbi.com//RackLoadingPrepared"
 	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RackLoadingPrepared");
 		

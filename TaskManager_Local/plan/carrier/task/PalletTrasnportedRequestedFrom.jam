@@ -9,6 +9,6 @@ PLAN CONCLUDE PalletTransportedRequestedFrom($goal, $channel, $agent){
 		
 		PERFORM isro:SendGoalComplete("PalletTransportedRequestedFrom");
 		PERFORM isro:endLog("CONCLUDE", "PalletTransportedRequestedFrom");
-	UTILITY : 50000;
+	UTILITY : 10;
 }
 

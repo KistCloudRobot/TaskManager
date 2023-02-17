@@ -1,0 +1,49 @@
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/NavigateGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "Navigate";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - Navigate");
+
+		System.out.println("Requested Goal : " + $goal);
+		POST PERFORM NavigateRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - Navigate");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/EnterToStationGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "EnterToStation";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - EnterToStation");
+		//System.out.println("Requested Goal : " + $goal);
+		POST PERFORM EnterToStationRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - EnterToStation");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/ExitFromStationGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "ExitFromStation";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - ExitFromStation");
+		
+		//System.out.println("Requested Goal : " + $goal);
+		POST PERFORM ExitFromStationRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - ExitFromStation");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}

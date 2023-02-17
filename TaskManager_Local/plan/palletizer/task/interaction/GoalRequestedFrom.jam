@@ -3,13 +3,13 @@ PLAN conclude GoalReuqestedFrom($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/GoalRequestedFromForPalletizerRackLoadingPrepared"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		$glUtility.getGLName($goal) == "RackLoadingPrepared";
+		$glUtility.retrieveGLName($goal) == "RackLoadingPrepared";
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalReuqestedFrom");
 		
 		System.out.println("Requested Goal : " + $goal);
-		PERFORM AssertRequestedGoal($goal);
-		ASSERT RackLoadingPreparedRequestedFrom($goal, $channel, $agent);
+		
+		POST PERFORM RackLoadingPreparedRequestedFrom($goal, $channel, $agent);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalReuqestedFrom");
 	UTILITY : 10000;
@@ -20,13 +20,12 @@ PLAN conclude GoalReuqestedFrom($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/GoalRequestedFromForPalletizerRackUnloadingPrepared"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		$glUtility.getGLName($goal) == "RackUnloadingPrepared";
+		$glUtility.retrieveGLName($goal) == "RackUnloadingPrepared";
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalReuqestedFrom");
 		
 		System.out.println("Requested Goal : " + $goal);
-		PERFORM AssertRequestedGoal($goal);
-		ASSERT RackUnloadingPreparedRequestedFrom($goal, $channel, $agent);
+		POST PERFORM RackUnloadingPreparedRequestedFrom($goal, $channel, $agent);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalReuqestedFrom");
 	UTILITY : 10000;

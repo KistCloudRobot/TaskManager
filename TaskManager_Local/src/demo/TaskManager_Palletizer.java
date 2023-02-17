@@ -11,9 +11,7 @@ public class TaskManager_Palletizer {
 //		String brokerAddress = "127.0.0.1";
 		String brokerAddress = "172.16.165.143";
 		int port = 61112;
-		BrokerType brokerType = BrokerType.ACTIVEMQ;
-		
-		TaskManager taskManager = new TaskManager(role, agentID, brokerAddress, port, brokerType);
-		
+
+		TaskManager taskManager = new TaskManager(role, agentID, brokerAddress, brokerAddress, port);		
 	}
 }

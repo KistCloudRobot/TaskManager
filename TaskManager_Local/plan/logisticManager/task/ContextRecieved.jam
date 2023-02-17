@@ -61,7 +61,7 @@ PLAN CONCLUDE context($context){
 		
 		$robot = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT robotAt($robot, $v1, $v2);
-		System.out.println("assert robotAt : " + $context);
+		//System.out.println("assert robotAt : " + $context);
 		$glUtility.assertGL($context);
 		
 		RETRACT context($contextName, $context);
@@ -107,8 +107,8 @@ PLAN CONCLUDE context($context){
 		$glUtility.retrieveGLName($context) == "cargoAt";
 	BODY:
 		
-		$cargoAt = $glUtility.retrieveGLExpression($context, 0);
-		RETRACT cargoAt($cargoAt, $v1, $v2);
+		$cargo = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT cargoAt($cargo, $v1, $v2);
 		$glUtility.assertGL($context);
 		RETRACT context($contextName, $context);
 		
@@ -158,7 +158,6 @@ PLAN CONCLUDE context($context){
 	BODY:
 		
 		$robot =  $glUtility.retrieveGLExpression($context, 0);
-		
 		RETRACT robotStatus($robot, $oldStatus);
 		$glUtility.assertGL($context);
 				

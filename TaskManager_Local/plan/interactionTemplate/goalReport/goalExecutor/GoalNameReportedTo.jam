@@ -2,7 +2,7 @@
 PLAN CONCLUDE PostGoalNameReportedTo($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/PostGoalNameReportedToReporedtToForTemplateReceiver"
 	PRECONDITION :
-		FACT PalletTransportedRequestedFrom($goal, $channel, $agent);
+		FACT GoalNameRequestedFrom($goal, $channel, $agent);
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "PostGoalNameReportedTo");
 		
@@ -10,7 +10,7 @@ PLAN CONCLUDE PostGoalNameReportedTo($goal, $channel, $agent) {
 		PERFORM isro:endLog("CONCLUDE", "PostGoalNameReportedTo");
 	UTILITY : 10000;
 	EFFECTS :
-		RETRACT PostPalletTransportedReportedToReporedtTo($goal, $channel, $agent);
+		RETRACT PostGoalNameReportedToReporedtTo($goal, $channel, $agent);
 }
 
 PLAN PERFORM GoalNameReportedTo($goal, $channel, $agent) {
@@ -19,12 +19,12 @@ PLAN PERFORM GoalNameReportedTo($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("PERFORM", "GoalNameReportedTo");
 		
-		PERFORM GoalReportedTo($goal, $channel, $agent);
+		PERFORM GoalReportTo($goal, $channel, $agent);
 		
+		PERFORM isro:SendGoalComplete("GoalNameReportedTo"); 
 		PERFORM isro:endLog("PERFORM", "GoalNameReportedTo");
 	UTILITY : 10000;
 	EFFECTS :
 		PERFORM RetractRequestedGoal($goal);
 		RETRACT GoalNameRequestedFrom($goal, $channel, $agent);
-		PERFORM isro:SendGoalComplete("PalletTransportedReportedTo"); 
 }

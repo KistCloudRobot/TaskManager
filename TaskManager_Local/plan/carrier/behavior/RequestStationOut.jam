@@ -14,10 +14,10 @@ PLAN PERFORM RequestStationOut($moveType, $vertex){
 		
 		$actionID = $helper.getActionID($agent);
 			
-		$data =  "(RequestExitFromStation \"" + $actionID + "\" \"" + $robotID + "\" \""+$moveType+"\" " + $vertex +" \"Backward\")";
+		$data =  "(ExitFromStation \"" + $actionID + "\" \"" + $robotID + "\" \""+$moveType+"\" " + $vertex +" \"Backward\")";
 		PERFORM request("logistic", $address, $data, $result);
 		
-		PERFORM WaitActionResult($actionID);
+		PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "isro:RequestStationOut");
 	UTILITY: 1; 

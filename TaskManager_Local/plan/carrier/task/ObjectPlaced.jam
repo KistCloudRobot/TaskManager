@@ -20,12 +20,12 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		PERFORM isro:startLog("PERFORM", "ObjectPlaced");
 		
 		PERFORM isro:QueryStationType($location, $stationType);
-		PERFORM isro:EnterToStation($location, $stationType);
+		PERFORM EnterToStation($location, $stationType);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
 		PERFORM isro:RequestUnload($stationVertex);
 		
-		PERFORM isro:ExitFromStation($location, $stationType);
+		PERFORM ExitFromStation($location, $stationType);
 				
 		PERFORM isro:SendGoalComplete("ObjectPlaced");
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");

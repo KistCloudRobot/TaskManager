@@ -10,8 +10,6 @@ PLAN PERFORM RequestPalletizerStop() {
 		FACT ExtraUtility($helper);
 		FACT isro:BehaviorAddress($bi);
 		FACT isro:agent($agent);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestPalletizerStop");
@@ -24,5 +22,5 @@ PLAN PERFORM RequestPalletizerStop() {
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestPalletizerStop");
-	UTILITY: 20; 
+	UTILITY: 0; 
 }

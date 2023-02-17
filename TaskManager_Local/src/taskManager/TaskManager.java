@@ -29,13 +29,14 @@ public class TaskManager extends ArbiAgent {
 	private MultiAgentCommunicator agentCommunicator;
 	private TaskManagerDataSource dataSource;
 	
-	public static String ENV_JMS_BROKER;
-	public static String MY_AGENT_ADRRESS;
-
-	public static final String TASKMANAGER_ADRESS = "www.arbi.com/TaskManager";	
-
-	public static final String AGENT_PREFIX = "agent://";
-	public static final String DATASOURCE_PREFIX = "ds://";
+	private String ENV_JMS_BROKER;
+	private int brokerPort;
+	private String myAgentID;
+	
+	private String channelHost;
+	 
+	private static final String TASKMANAGER_ADRESS = "agent://www.arbi.com/TaskManager";	
+	private static final String TASKMANAGER_DATASOURCE_PREFIX = "ds://www.arbi.com/TaskManager";
 	
 //	public TaskManager_Local() {
 //		
@@ -53,27 +54,28 @@ public class TaskManager extends ArbiAgent {
 //		init();
 //	}
 //	
-	public TaskManager(String role, String agentID, String brokerAddress, int port, BrokerType brokerType) {
+	public TaskManager(String role, String agentID, String channelHost,String brokerAddress, int port) {
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		agentCommunicator = new MultiAgentCommunicator(messageQueue);
 		dataSource = new TaskManagerDataSource(this);
-		
-		ArbiAgentExecutor.execute(brokerAddress, port, AGENT_PREFIX + TASKMANAGER_ADRESS, this,brokerType);
-		
-
-		AgentExecutor.execute(agentID, agentCommunicator, kr.ac.uos.ai.agentCommunicationFramework.BrokerType.ZEROMQ);
+		this.channelHost = channelHost;
+		this.ENV_JMS_BROKER = brokerAddress;
+		this.brokerPort = port;
+		this.myAgentID = agentID;
 		
 		interpreter = JAM.parse(new String[] { "./plan/boot.jam" });
 		msgManager = new GLMessageManager(interpreter);
-		
-		dataSource.connect(brokerAddress, port, DATASOURCE_PREFIX +TASKMANAGER_ADRESS,brokerType);
-		
+
 		msgManager.assertFact("AssignedRole", role);
 		msgManager.assertFact("isro:agent", agentID);
+	
 		init();
 	}
 		
 	private void init() {
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, brokerPort, TASKMANAGER_ADRESS, this,BrokerType.ACTIVEMQ);
+		AgentExecutor.execute(channelHost, myAgentID, agentCommunicator, kr.ac.uos.ai.agentCommunicationFramework.BrokerType.ZEROMQ);
+		dataSource.connect(ENV_JMS_BROKER, brokerPort, TASKMANAGER_DATASOURCE_PREFIX +TASKMANAGER_ADRESS, BrokerType.ACTIVEMQ);
 		
 		msgManager.assertFact("GLUtility", msgManager);
 		msgManager.assertFact("Communication", new CommunicationUtility(this, dataSource));
@@ -113,7 +115,6 @@ public class TaskManager extends ArbiAgent {
 				String sender = message.getSender();
 
 				//aplViewer.msgReceived(data, sender);
-
 				gl = GLFactory.newGLFromGLString(data);
 
 				//System.out.println("message dequeued : " + gl.toString());
@@ -170,7 +171,6 @@ public class TaskManager extends ArbiAgent {
 				msgManager.updateFact(gl.getExpression(0).toString(), gl.getExpression(1).toString());
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -307,6 +307,6 @@ public class TaskManager extends ArbiAgent {
 			port = Integer.parseInt(args[2]);
 		}
 		
-		new TaskManager("logisticManager",robotID, brokerAddress, port, BrokerType.ACTIVEMQ);
+		//new TaskManager("logisticManager",robotID, brokerAddress, port, BrokerType.ACTIVEMQ);
 	}
 }

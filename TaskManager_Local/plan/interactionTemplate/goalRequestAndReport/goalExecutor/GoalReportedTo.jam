@@ -1,5 +1,5 @@
 
-PLAN PERFORM GoalReporedtTo($goal, $channel, $agent) {
+PLAN PERFORM GoalReporedTo($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/TemplateGoalReportTo"
 	PRECONDITION :
 		FACT GoalRequestedFrom($goal, $channel, $agent);

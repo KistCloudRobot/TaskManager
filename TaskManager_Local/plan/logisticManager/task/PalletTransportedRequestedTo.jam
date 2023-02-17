@@ -34,7 +34,7 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
 		
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 10; 
+	UTILITY: 100; 
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
@@ -67,7 +67,7 @@ PLAN PERFORM PalletTransportedRequestedTo($goal1, $channelName, $worker1) {
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
 		
 		PERFORM isro:endLog("PERFORM", "PalletTransportedRequestedTo - Two Goals");
-	UTILITY: 11; 
+	UTILITY: -1; 
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal1, $channelName, $worker1);

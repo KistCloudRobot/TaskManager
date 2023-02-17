@@ -2,40 +2,36 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN CONCLUDE RequestMove($actionID, $path){
-	ID: "http://www.arbi.com//ConcludeRequestMove"
-	PRECONDITION:
+PLAN PERFORM MoveRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//MoveRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "MoveRequestedFrom");
 		
-	BODY:
-		PERFORM isro:startLog("CONCLUDE", "RequestMove");
-		POST PERFORM Move($actionID, $path);
-				
-		PERFORM isro:endLog("CONCLUDE", "RequestMove");
-	UTILITY: 10000; 
-	EFFECTS :
-		RETRACT RequestMove($actionID, $path); 
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$path = $glUtility.retrieveGLExpression($goal,1);
+		PERFORM Move($goalID, $path);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "MoveRequestedFrom");
+	UTILITY: 100; 
 }
 
-
-
-PLAN PERFORM Move($actionID, $path) {
+PLAN PERFORM Move($goalID, $path) {
 	ID: "http://www.arbi.com//Move"
 	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($bi);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 		FACT robotStatus($robot, $status);
 		$status == "Ready";
-		FACT isro:ManagerAddress($address);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "Move");
 		
-		$communicationInstance.request($bi, "(Move \"" + $actionID + "\" " + $path + ")");
-		
-		System.out.println("wait id : " + $actionID);
-		
-		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
-		PERFORM WaitActionResult($actionID);
+		$actionID = $helper.getActionID($agent);
+		$data = "(Move \"" + $actionID + "\" " + $path + ")";
+		PERFORM isro:RequestBehavior($actionID, $data);
 		
 		PERFORM isro:endLog("PERFORM", "Move");
-	UTILITY: 100; 
+	UTILITY: 1; 
 }

@@ -1,44 +1,37 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-
-PLAN CONCLUDE RequestCancelMove($actionID){
-	ID: "http://www.arbi.com//ConcludeRequestCancelMove"
+PLAN PERFORM CancelMoveRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//CancelMoveRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "CancelMoveRequestedFrom");
+		UNPOST PERFORM MoveRequestedFrom($a, $b, $c);
 		
-	BODY:
-		PERFORM isro:startLog("CONCLUDE", "RequestCancelMove");
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		PERFORM CancelMove($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		
-		POST PERFORM CancelMove($actionID, $path);
-		RETRACT RequestCancelMove($actionID, $path);
-		
-		PERFORM isro:endLog("CONCLUDE", "RequestCancelMove");
-	UTILITY: 10000; 
+		PERFORM isro:endLog("PERFORM", "CancelMoveRequestedFrom");
+	UTILITY: 100; 
 }
 
-PLAN PERFORM CancelMove($actionID) {
+PLAN PERFORM CancelMove($goalID) {
 	ID: "http://www.arbi.com//CancelMove"
 	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($bi);
-		FACT isro:ManagerAddress($address);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 		//FACT OnRobotTaskStatus($robot, $status);
 		//$status == "Move";
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "CancelMove");
 		
-		System.out.println("RETRIEVE RequestedAction");
-		RETRIEVE RequestedActionFromAgent($channel, $address, $id);
-		System.out.println("cancel action : " + $id);
-		UNPOST PERFORM Move($id, $path);
-		RETRACT RequestedActionFromAgent($channel, $address, $id);
-		
-		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
-		
-		$communicationInstance.request($bi, "(CancelMove \"" + $actionID + "\")");
-				
-		PERFORM WaitActionResult($actionID);
-		
+		$actionID = $helper.getActionID($agent);
+		$data = "(CancelMove \"" + $actionID + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);	
+			
 		PERFORM isro:endLog("PERFORM", "CancelMove");
 	UTILITY: 200; 
 }

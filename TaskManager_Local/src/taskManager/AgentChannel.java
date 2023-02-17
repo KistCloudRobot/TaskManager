@@ -24,10 +24,10 @@ public class AgentChannel extends Channel{
 		GeneralizedList gl;
 		try {
 			gl = GLFactory.newGLFromGLString(data);
-			if (gl.getName().equals("GoalReport")) {
-				System.out.println(gl.toString());
-				data = "(GoalReportedFrom " + gl.getExpression(0).asGeneralizedList().toString() + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
-			} 
+		//	System.out.println(gl.toString());
+			if(gl.getName().equals("GoalResult")) {
+				data = "(GoalResultReportedFrom " + gl.getExpression(0).toString() + " " + gl.getExpression(1).toString()+ " \"" + this.getChannelName() + "\" \"" + sender +"\")";
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -41,10 +41,8 @@ public class AgentChannel extends Channel{
 		GeneralizedList gl;
 		try {
 			gl = GLFactory.newGLFromGLString(request);
-			if (gl.getName().equals("GoalRequest")) {
-				System.out.println(gl.toString());
-				request = "(GoalRequestedFrom " + gl.getExpression(0).asGeneralizedList().toString() + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
-			} 
+			System.out.println(gl.toString());
+			request = "(GoalRequestedFrom " + request + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

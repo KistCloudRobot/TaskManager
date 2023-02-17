@@ -1,0 +1,16 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE GoalNameReportedFrom($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//TemplateGoalNameReportedFrom"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "GoalNameReportedFrom");
+		
+		PERFORM WaitGoalComplete();
+		
+		PERFORM isro:endLog("CONCLUDE", "GoalNameReportedFrom");
+	UTILITY : 10;
+}

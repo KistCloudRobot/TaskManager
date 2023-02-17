@@ -1,0 +1,44 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+PLAN PERFORM EnterToStationRequestedFrom($goal, $channel, $agent){
+	ID: "http://www.arbi.com//EnterToStationRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "EnterToStationRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		$robotID = $glUtility.retrieveGLExpression($goal, 1);
+		$moveType = $glUtility.retrieveGLExpression($goal, 2);
+		$vertex = $glUtility.retrieveGLExpression($goal, 3);
+		$direction = $glUtility.retrieveGLExpression($goal, 4);
+		
+		ASSERT GoalRequester($goalID, $channel, $agent);
+		POST PERFORM EnterToStation($goalID, $robotID,$moveType, $vertex, $direction);
+		
+		PERFORM isro:endLog("PERFORM", "EnterToStationRequestedFrom");
+	UTILITY: 100; 
+}
+
+PLAN PERFORM EnterToStation($goalID, $robotID, $moveType, $vertex, $direction){
+	ID: "http://www.arbi.com//RequestEnterToStation"
+	PRECONDITION : 
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT Communication($communicationInstance);
+		FACT isro:NavigationControllerAddress($nc);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "EnterToStation");
+		
+		$actionID = $helper.getActionID($agent);
+		$data  = "(RequestEnterToStation \"" +$actionID + "\" \"" + $robotID + "\" \"" +$moveType + "\" " + $vertex + " \"" + $direction + "\")";
+		System.out.println($data);
+		$communicationInstance.request($nc, $data);
+		
+		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
+		POST PERFORM WaitGoalResult($actionID);
+		PERFORM isro:endLog("PERFORM", "EnterToStation");
+	UTILITY : 10;
+	EFFECTS : 
+		RETRACT GoalRequester($goalID, $channel, $agent);
+}

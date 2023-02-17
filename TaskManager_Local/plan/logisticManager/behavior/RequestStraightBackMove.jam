@@ -17,16 +17,20 @@ PLAN PERFORM StraightBackMove($actionID, $robotID, $vertex){
 	ID: "http://www.arbi.com//StraightBackMoveForManager"
 	PRECONDITION : 
 		FACT isro:NavigationControllerAddress($nc);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "StraightBackMove");
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
-		$data  = "(RequestStraightBackMove \"" +$actionID + "\" " + $vertex + ")";
+		$actionID = $helper.getActionID($agent);
+		$data  = "(StraightBackMove \"" +$actionID + "\" " + $vertex + ")";
 		System.out.println($data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
-		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM WaitGoalResult($actionID);
+		
+		PERFORM isro:ReportActionResult($nc, $requestedActionID, "success");
 		
 		PERFORM isro:endLog("PERFORM", "StraightBackMove");
 	UTILITY : 100;

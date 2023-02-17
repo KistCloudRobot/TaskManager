@@ -1,17 +1,34 @@
 
-PLAN CONCLUDE GoalReportedFrom($goal, $channelName, $worker) {
+PLAN CONCLUDE GoalResultReportedFrom($goalID, $result, $channelName, $worker) {
+	ID: "http://www.arbi.com//PalletTransportedGoalReportedTestForLocal"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		FACT PalletTransportedRequestedTo($goal, $channelName, $worker);
+		$glUtility.retrieveGLExpression($goal,0) == $goalID;
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "GoalResultReportedFrom");
+		
+		System.out.println("Reported Goal id : " + $goalID);
+		ASSERT PalletTransportedReportedFrom($goalID, $result, $channelName, $worker);
+		
+		PERFORM isro:endLog("CONCLUDE", "GoalResultReportedFrom");
+	UTILITY: 50001;
+	EFFECTS :
+		RETRACT GoalResultReportedFrom($goalID, $result, $channelName, $worker);
+}
+
+PLAN CONCLUDE GoalResultReportedFrom($goalID, $result, $channelName, $worker) {
 	ID: "http://www.arbi.com//GoalReportedTestForLocal"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($goal) == "PalletTransported";
 	BODY:
-		PERFORM isro:startLog("CONCLUDE", "GoalReportedFrom");
+		PERFORM isro:startLog("CONCLUDE", "GoalResultReportedFrom");
 		
-		System.out.println("Reported Goal : " + $goal);
-		ASSERT PalletTransportedReportedFrom($goal, $channelName, $worker);
+		System.out.println("Reported Goal id : " + $goalID);
+		ASSERT GoalResult($goalID, $result);
 		
-		PERFORM isro:endLog("CONCLUDE", "GoalReportedFrom");
+		PERFORM isro:endLog("CONCLUDE", "GoalResultReportedFrom");
 	UTILITY: 50000;
 	EFFECTS :
-		RETRACT GoalReportedFrom($goal, $channelName, $worker);
+		RETRACT GoalResultReportedFrom($goalID, $result,$channelName, $worker);
 }

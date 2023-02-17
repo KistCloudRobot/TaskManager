@@ -1,41 +1,37 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-
-PLAN CONCLUDE RequestGuideMove($actionID, $vertex,$direction){
-	ID: "http://www.arbi.com//ConcludeRequestGuideMoveIn"
-	PRECONDITION:
+PLAN PERFORM GuideMoveRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//GuideMoveRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "GuideMoveRequestedFrom");
 		
-	BODY:
-		PERFORM isro:startLog("CONCLUDE", "RequestGuideMove");
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$vertex = $glUtility.retrieveGLExpression($goal,1);
+		$direction = $glUtility.retrieveGLExpression($goal,2);
+		PERFORM GuideMove($goalID, $vertex, $direction);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		
-		POST PERFORM GuideMove($actionID, $vertex,$direction);
-		RETRACT RequestGuideMove($actionID, $vertex,$direction);
-		PERFORM isro:endLog("CONCLUDE", "RequestGuideMove");
-	UTILITY: 10000; 
+		PERFORM isro:endLog("PERFORM", "GuideMoveRequestedFrom");
+	UTILITY: 100; 
 }
 
-PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
+PLAN PERFORM GuideMove($goalID, $vertex, $direction) {
 	ID: "http://www.arbi.com//GuideMove"
 	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($bi);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
-		FACT isro:ManagerAddress($address);
-		
-		FACT robotStatus($robotID, "Ready");
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT robotStatus($robot, $status);
+		$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "GuideMove");
 		
+		$actionID = $helper.getActionID($agent);
 		$data =  "(GuideMove \"" + $actionID + "\" " + $vertex +" \"" + $direction + "\")";
-		
-		$communicationInstance.request($bi, $data);
-		
-		System.out.println("wait id : " + $actionID);
-		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM isro:RequestBehavior($actionID, $data);
 		
 		PERFORM isro:endLog("PERFORM", "GuideMove");
-	UTILITY: 100; 
+	UTILITY: 1; 
 }

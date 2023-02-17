@@ -4,7 +4,6 @@ PLAN CONCLUDE RequestCancelMove($actionID, $robotID) {
 	ID: "http://www.arbi.com//ConcludeRequestCancelMoveForLocal"
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "RequestCancelMove");
-		
 		POST PERFORM CancelMove($actionID, $robotID);
 		RETRACT RequestCancelMove($actionID, $robotID);
 		PERFORM isro:endLog("CONCLUDE", "RequestCancelMove");
@@ -12,21 +11,24 @@ PLAN CONCLUDE RequestCancelMove($actionID, $robotID) {
 }
 
 
-PLAN PERFORM CancelMove($actionID, $robotID){
+PLAN PERFORM CancelMove($requestID, $robotID){
 	ID: "http://www.arbi.com//RequestCancelMove"
 	PRECONDITION : 
-		FACT Communication($communicationInstance);
 		FACT isro:NavigationControllerAddress($nc);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "CancelMove");
 		
+		PERFORM UnpostMoveGoalWait($requestID);
 		PERFORM FindRobotAgent($robotID, $reciever);
-		$data  = "(RequestCancelMove \"" +$actionID + "\")";
+		$actionID = $helper.getActionID($agent);
+		$data  = "(CancelMove \"" +$actionID + "\")";
 		PERFORM request("logistic", $reciever,$data,$result);
 		
-		System.out.println("wait id : " + $actionID); 
-		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
+		ASSERT GoalRequester($requestID, $nc);
+		POST PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "CancelMove");
 	UTILITY : 100;

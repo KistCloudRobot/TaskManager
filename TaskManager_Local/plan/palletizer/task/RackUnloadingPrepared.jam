@@ -1,21 +1,25 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN CONCLUDE PostRackUnloadingPrepared($object, $location) {
-	ID: "http://www.arbi.com//PostRackUnloadingPrepared"
+PLAN PERFORM RackUnloadingPreparedRequestedFrom($goal, $channel, $agent){
+	ID: "http://www.arbi.com//RackUnloadingPreparedRequestedFrom"
 	PRECONDITION:
-		FACT RequestedGoal($goalName, $goalID, $robotID, $stationVertex);
-		$goalName == "RackUnloadingPrepared";
+		FACT GLUtility($glUtility);
 	BODY:
-		POST PERFORM RackUnloadingPrepared($robotID, $stationVertex);
-
-	UTILITY : 10000;
-	EFFECTS : 
-		RETRACT PostRackUnloadingPreparedd($object, $location);
+		PERFORM isro:startLog("CONCLUDE", "RackUnloadingPreparedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		$robotID = $glUtility.retrieveGLExpression($goal, 1);
+		$robotID = $glUtility.retrieveGLExpression($goal, 2);
+		PERFORM RackUnloadingPrepared($goalID, $robotID, $stationVertex);
+		PERFORM GoalResultReportTo($goalID,"success" ,$channel, $agent);
+		
+		PERFORM isro:endLog("CONCLUDE", "RackUnloadingPreparedRequestedFrom");
+	EFFECTS :
+	UTILITY : 100;
 }
 
-
-PLAN PERFORM RackUnloadingPrepared($robotID, $vertex){
+PLAN PERFORM RackUnloadingPrepared($goalID, $robotID, $vertex){
 	ID: "http://www.arbi.com//RackUnloadingPrepared"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -28,5 +32,5 @@ PLAN PERFORM RackUnloadingPrepared($robotID, $vertex){
 		//PERFORM RequestEnterPalletizer($robotID, $vertex);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadingPrepared");
-	UTILITY : 10;
+	UTILITY : 0;
 }

@@ -16,10 +16,13 @@ PLAN CONCLUDE PostPalletTransportedReportedTo($goal, $channel, $agent) {
 PLAN PERFORM PalletTransportedReportedTo($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/PalletTrasnportedReportedToGoalReportToForLIFT"
 	PRECONDITION :
+		FACT GLUtility($glUtility);
 		FACT PalletTransportedRequestedFrom($goal, $channel, $agent);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "PalletTransportedReportedTo");
-		PERFORM GoalReportTo($goal, $channel, $agent);
+		
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		PERFORM RetractRequestedGoal($goal);
 		PERFORM isro:SendGoalComplete("PalletTransportedReportedTo"); 
 		

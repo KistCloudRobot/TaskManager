@@ -7,9 +7,7 @@ PLAN PERFORM GoalRequestTo($goal, $channel, $worker){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "GoalRequestedTo");
 		
-		$data = "(GoalRequest " + $goal+")";
-
-		PERFORM request($channel,$worker, $data, $result);
+		PERFORM request($channel,$worker, $goal, $result);
 		
 		PERFORM isro:endLog("PERFORM", "GoalRequestedTo");
 	UTILITY : 10;

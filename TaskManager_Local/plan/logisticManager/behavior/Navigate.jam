@@ -1,0 +1,47 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM NavigateRequestedFrom($goal, $channel, $agent){
+	ID: "http://www.arbi.com//NavigateRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		Fact ChangableUtility($utility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "NavigateRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		$robotID = $glUtility.retrieveGLExpression($goal, 1);
+		$start = $glUtility.retrieveGLExpression($goal, 2);
+		$end = $glUtility.retrieveGLExpression($goal, 3);
+		
+		ASSERT GoalRequester($goalID, $channel, $agent);
+		PERFORM Navigate($goalID, $robotID,$start,$end) :UTILITY -100;
+		
+		PERFORM isro:endLog("PERFORM", "NavigateRequestedFrom");
+	UTILITY: $utility; 
+}
+
+
+PLAN PERFORM Navigate($goalID, $robotID,$start,$end){
+	ID: "http://www.arbi.com//Navigate"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT isro:NavigationControllerAddress($nc);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Navigate");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(RequestNavigate \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
+		System.out.println($data);
+		$communicationInstance.request($nc,$data);
+		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
+		PERFORM WaitGoalResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "Navigate");
+	UTILITY: 0; 
+	EFFECTS : 
+		RETRACT GoalRequester($goalID, $channel, $agent);
+}

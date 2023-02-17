@@ -1,0 +1,15 @@
+
+PLAN CONCLUDE GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/TemplateGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.getGLName($goal) == "GoalName";
+		
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom");
+		
+		POST PERFORM GoalName();
+		
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");
+	UTILITY : 10000;
+}

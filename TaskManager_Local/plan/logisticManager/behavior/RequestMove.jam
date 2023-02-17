@@ -5,31 +5,35 @@ PREFIXES:
 PLAN CONCLUDE RequestMove($actionID, $robotID, $path) {
 	ID: "http://www.arbi.com//ConcludeRequestMoveForManager"
 	BODY:
-		//PERFORM isro:startLog("CONCLUDE", "RequestMove");
+		PERFORM isro:startLog("CONCLUDE", "RequestMove");
 		
 		POST PERFORM Move($actionID, $robotID, $path);
 		RETRACT RequestMove($actionID, $robotID, $path);
-		//PERFORM isro:endLog("CONCLUDE", "RequestMove");
+		PERFORM isro:endLog("CONCLUDE", "RequestMove");
 	UTILITY : 10000;
 }
 
 
-PLAN PERFORM Move($actionID, $robotID, $path){
+PLAN PERFORM Move($requestID, $robotID, $path){
 	ID: "http://www.arbi.com//RequestMove"
 	PRECONDITION : 
-		FACT Communication($communicationInstance);
 		FACT isro:NavigationControllerAddress($nc);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "Move");
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
-		$data  = "(RequestMove \"" +$actionID + "\" " + $path + ")";
+		$actionID = $helper.getActionID($agent);
+		$data  = "(Move \"" +$actionID + "\" " + $path + ")";
 		System.out.println($data);
+		System.out.println($requestID);
+		
 		PERFORM request("logistic", $reciever,$data,$result);
 		
-	//	System.out.println("wait id : " + $actionID);
-		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
+		ASSERT GoalRequester($requestID, $nc);
+		POST PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Move");
 	UTILITY : 100;

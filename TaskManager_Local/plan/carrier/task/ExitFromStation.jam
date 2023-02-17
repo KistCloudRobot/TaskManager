@@ -1,7 +1,7 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN PERFORM isro:ExitFromStation($location, $stationType){
+PLAN PERFORM ExitFromStation($location, $stationType){
 	ID: "http://www.arbi.com//BuiltInPlan#ExitFromStationForGrabAtPalletizingStation"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -23,7 +23,7 @@ PLAN PERFORM isro:ExitFromStation($location, $stationType){
 }
 
 
-PLAN PERFORM isro:ExitFromStation($location, $stationType){
+PLAN PERFORM ExitFromStation($location, $stationType){
 	ID: "http://www.arbi.com//BuiltInPlan#ExitFromStation"
 	PRECONDITION:
 		FACT Communication($communicationInstance);

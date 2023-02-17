@@ -1,0 +1,15 @@
+
+PLAN PERFORM isro:RequestBehavior($actionID, $action){
+	ID : "http://www.arbi.com//RequestBehavior"
+	PRECONDITION :
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "RequestBehavior");
+		
+		$communicationInstance.request($bi,$action);
+		System.out.println("wait id : " + $actionID);
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "RequestBehavior");
+}

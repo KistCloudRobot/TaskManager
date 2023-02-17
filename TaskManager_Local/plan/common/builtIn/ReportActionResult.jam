@@ -1,29 +1,14 @@
 
-PLAN PERFORM ReportActionResultToAgent($channelName, $receiver, $actionID) {
-	ID: "http://www.arbi.com//ReportActionResultToAgent"
-	PRECONDITION: 
-		FACT RequestedActionFromAgent($channelName, $receiver, $actionID);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "ReportActionResultToAgent - channel");
-		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
-		PERFORM inform($channelName, $receiver, $data);
-		
-		PERFORM isro:endLog("PERFORM", "ReportActionResultToAgent");
-	UTILITY : 10;
-}
-
-
-PLAN PERFORM ReportActionResultToBaseAgent($receiver, $actionID) {
-	ID: "http://www.arbi.com//ReportActionResultToBaseAgent"
-	PRECONDITION : 
+PLAN PERFORM isro:ReportActionResult($reciever, $actionID, $result) {
+	ID : "http://www.arbi.com/ReportActionResult"
+	PRECONDITION :
 		FACT Communication($communicationInstance);
-		FACT RequestedActionFromBaseAgent($receiver, $actionID);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "ReportActionResultToBaseAgent");
+	BODY :
+		PERFORM isro:startLog("PERFORM", "isro:ReportActionResult");
 		
-		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
-		$communicationInstance.inform($receiver, $data);
+		$report = "(ActionResult \""+ $actionID+"\" \"" +$result + "\")";
+		$communicationInstance.inform($reciever, $report);
 		
-		PERFORM isro:endLog("PERFORM", "ReportActionResultToBaseAgent");
+		PERFORM isro:endLog("PERFORM", "isro:ReportActionResult");
 	UTILITY : 10;
 }

@@ -1,0 +1,16 @@
+
+PLAN PERFORM GoalResultReportToBaseAgent($goalID, $result, $agent) {
+	ID : "http://www.arbi.com/GoalResultReportToBaseAgent"
+	PRECONDITION :
+		FACT Communication($communication);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "GoalResultReportToBaseAgent");
+		System.out.println($goalID);
+		System.out.println($result);
+		System.out.println($agent);
+		$report = "(GoalResult \""+ $goalID+"\" \"" +$result + "\")";
+		$communication.inform($agent,$report);
+		
+		PERFORM isro:endLog("PERFORM", "GoalResultReportToBaseAgent");
+	UTILITY : 10;
+}

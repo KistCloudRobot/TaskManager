@@ -2,12 +2,12 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN PERFORM GoalNameRequestedTo($worker, $goalID, $goal){
-	ID: "http://www.arbi.com//GoalNameRequestedTo"
+	ID: "http://www.arbi.com//TemplateGoalNameRequestedTo"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		FACT isro:agent($agent);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "RackLoadingPreparedRequestedTo");
+		PERFORM isro:startLog("PERFORM", "GoalNameRequestedTo");
 		
 		PERFORM RackLodingPreparedCreated($goal);
 		
@@ -15,6 +15,8 @@ PLAN PERFORM GoalNameRequestedTo($worker, $goalID, $goal){
 
 		PERFORM request("logistic",$worker, $data, $result);
 		
-		PERFORM isro:endLog("PERFORM", "RackLoadingPreparedRequestedTo");
+		PERFORM WaitGoalComplete();
+		
+		PERFORM isro:endLog("PERFORM", "GoalNameRequestedTo");
 	UTILITY : 10;
 }

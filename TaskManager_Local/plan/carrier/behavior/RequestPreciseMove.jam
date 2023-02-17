@@ -1,49 +1,36 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN CONCLUDE RequestPreciseMove($actionID, $vertex){
-	ID: "http://www.arbi.com//ConcludeRequestPreciseMove"
-	BODY:
-		PERFORM isro:startLog("CONCLUDE", "RequestPreciseMove");
-		System.out.println($actionID);
-		System.out.println($vertex);
-		RETRIEVE  robotStatus($robot,$status);
-		System.out.println($status);
-		POST PERFORM PreciseMove($actionID, $vertex);
-		PERFORM isro:endLog("CONCLUDE", "RequestPreciseMove");
-	UTILITY: 10000; 
-	EFFECTS : 
-		RETRACT RequestPreciseMove($actionID, $vertex);
+PLAN PERFORM PreciseMoveRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//PreciseMoveRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "PreciseMoveRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$vertex = $glUtility.retrieveGLExpression($goal,1);
+		PERFORM PreciseMove($goalID, $vertex);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "PreciseMoveRequestedFrom");
+	UTILITY: 100; 
 }
 
-PLAN PERFORM PreciseMove($actionID, $vertex){
-	ID: "http://www.arbi.com//PreciseMoveFailed?"
-	PRECONDITION:
-	BODY:
-		PERFORM isro:startLog("PERFORM", "PreciseMove");
-		System.out.println("PreciseMove dose not act : " + $actionID);
-		System.out.println("PreciseMove dose not act : " + $vertex);
-		PERFORM isro:endLog("PERFORM", "PreciseMove");
-	UTILITY:-1; 
-}
-
-PLAN PERFORM PreciseMove($actionID, $vertex){
+PLAN PERFORM PreciseMove($goalID, $vertex){
 	ID: "http://www.arbi.com//PreciseMove"
 	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($bi);
-		FACT isro:ManagerAddress($address);
-		//FACT robotStatus($robot,$status);
-		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT robotStatus($robot, $status);
+		$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PreciseMove");
 		
+		$actionID = $helper.getActionID($agent);
 		$data =  "(PreciseMove \"" + $actionID + "\" " + $vertex +")";
-		
-		$communicationInstance.request($bi, $data);
-		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
-		PERFORM WaitActionResult($actionID);
+		PERFORM isro:RequestBehavior($actionID, $data);
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");
-	UTILITY: 100; 
+	UTILITY: 1; 
 }

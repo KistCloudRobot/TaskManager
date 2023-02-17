@@ -21,12 +21,12 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed");
 		
 		PERFORM isro:QueryStationType($location, $stationType);
-		PERFORM isro:EnterToStation($location, $stationType);
+		PERFORM EnterToStation($location, $stationType);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
 		PERFORM isro:RequestLoad($stationVertex);
 		
-		PERFORM isro:ExitFromStation($location, $stationType);
+		PERFORM ExitFromStation($location, $stationType);
 				
 		PERFORM isro:SendGoalComplete("ObjectGrabbed");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");

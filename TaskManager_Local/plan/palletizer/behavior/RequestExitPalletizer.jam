@@ -6,7 +6,6 @@ PLAN PERFORM RequestExitPalletizer($robotID, $stationVertex) {
 	ID: "http://www.arbi.com//RequestExitPalletizer"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:BehaviorAddress($bi);
 		FACT isro:agent($agent);
@@ -20,9 +19,6 @@ PLAN PERFORM RequestExitPalletizer($robotID, $stationVertex) {
 		$data = "(ExitPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
 		$communicationInstance.request($bi, $data);
 		
-		System.out.println("wait id : " + $actionID);
-		
-		
 		PERFORM isro:endLog("PERFORM", "RequestExitPalletizer");
-	UTILITY: 20; 
+	UTILITY: 0; 
 }

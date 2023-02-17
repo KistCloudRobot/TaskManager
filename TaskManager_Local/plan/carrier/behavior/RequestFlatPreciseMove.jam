@@ -1,54 +1,37 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
-
-PLAN CONCLUDE RequestFlatPreciseMove($actionID, $vertex){
-	ID: "http://www.arbi.com//ConcludeRequestFlatPreciseMove"
-	BODY:
-		PERFORM isro:startLog("CONCLUDE", "RequestFlatPreciseMove");
-		System.out.println($actionID);
-		System.out.println($vertex);
-		RETRIEVE robotStatus($robot,$status);
-		System.out.println($status);
-		POST PERFORM FlatPreciseMove($actionID, $vertex);
 		
-		PERFORM isro:endLog("CONCLUDE", "RequestFlatPreciseMove");
-	UTILITY: 10000; 
-	EFFECTS :
-		RETRACT RequestFlatPreciseMove($actionID, $vertex); 
-}
-
-
-
-PLAN PERFORM FlatPreciseMove($actionID, $vertex){
-	ID: "http://www.arbi.com//FlatPreciseMove"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($bi);
-		FACT isro:ManagerAddress($address);
-		//FACT robotStatus($robot,$status);
-		//$status == "Ready";
-	BODY:
-		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
+PLAN PERFORM FlatPreciseMoveRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//FlatPreciseMoveRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "FlatPreciseMoveRequestedFrom");
 		
-		$data =  "(FlatPreciseMove \"" + $actionID + "\" " + $vertex +")";
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$vertex = $glUtility.retrieveGLExpression($goal,1);
+		PERFORM FlatPreciseMove($goalID, $vertex);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		
-		$communicationInstance.request($bi, $data);
-		ASSERT RequestedActionFromAgent("logistic", $address, $actionID);
-		PERFORM WaitActionResult($actionID);
-
-		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMoveRequestedFrom");
 	UTILITY: 100; 
 }
 
 
-PLAN PERFORM FlatPreciseMove($actionID, $vertex){
-	ID: "http://www.arbi.com//FlatPreciseMoveFailed?"
+PLAN PERFORM FlatPreciseMove($goalID, $vertex){
+	ID: "http://www.arbi.com//FlatPreciseMove"
 	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT robotStatus($robot, $status);
+		$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
-		System.out.println("FlatPreciseMove dose not act : " + $actionID);
-		System.out.println("FlatPreciseMove dose not act : " + $vertex);
-		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
-	UTILITY: 10; 
-}
+		
+		$actionID = $helper.getActionID($agent);
+		$data =  "(FlatPreciseMove \"" + $actionID + "\" " + $vertex +")";
+		PERFORM isro:RequestBehavior($actionID, $data);
 
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+	UTILITY: 1; 
+}
