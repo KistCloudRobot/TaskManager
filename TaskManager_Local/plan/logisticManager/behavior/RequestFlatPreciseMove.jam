@@ -30,7 +30,6 @@ PLAN PERFORM FlatPreciseMove($requestID, $robotID, $vertex){
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);
-		POST PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
 	UTILITY : 100;

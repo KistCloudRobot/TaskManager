@@ -1,52 +1,59 @@
 
-PLAN PERFORM UnpostMoveGoalWait($cancelId){
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
 	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT1"
 	PRECONDITION :
 		$cancelID == "AMR_LIFT1+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT1+Move";
 	BODY :
-		$moveID = "AMR_LIFT1+Move";
-		RETRIEVE GeneratedGoalByBaseAgentRequest($goalID, $moveID);
-		UNPOST PERFORM WaitGoalResult($goalID);
 		RETRACT GoalRequester($moveID, $nc);
 		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
 }
 
 
-PLAN PERFORM UnpostMoveGoalWait($cancelId){
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
 	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT2"
 	PRECONDITION :
 		$cancelID == "AMR_LIFT2+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT2+Move";
 	BODY :
-		$moveID = "AMR_LIFT2+Move";
-		RETRIEVE GeneratedGoalByBaseAgentRequest($goalID, $moveID);
-		UNPOST PERFORM WaitGoalResult($goalID);
 		RETRACT GoalRequester($moveID, $nc);
 		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
 }
 
 
-PLAN PERFORM UnpostMoveGoalWait($cancelId){
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
 	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT3"
 	PRECONDITION :
 		$cancelID == "AMR_LIFT3+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT3+Move";
 	BODY :
-		$moveID = "AMR_LIFT3+Move";
-		RETRIEVE GeneratedGoalByBaseAgentRequest($goalID, $moveID);
-		UNPOST PERFORM WaitGoalResult($goalID);
 		RETRACT GoalRequester($moveID, $nc);
 		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
 }
 
 
-PLAN PERFORM UnpostMoveGoalWait($cancelId){
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
 	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT4"
 	PRECONDITION :
 		$cancelID == "AMR_LIFT4+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT4+Move";
 	BODY :
-		$moveID = "AMR_LIFT4+Move";
-		RETRIEVE GeneratedGoalByBaseAgentRequest($goalID, $moveID);
-		UNPOST PERFORM WaitGoalResult($goalID);
 		RETRACT GoalRequester($moveID, $nc);
 		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
+}
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
+	ID : "http://www.arbi.com//UnpostMoveGoalWaitUnpostNothing"
+	PRECONDITION :
+	BODY :
+		System.out.println("UnPostMoveGoalWait -> not moving : " + $cancelID);
+	UTILITY: -1;
 }
 

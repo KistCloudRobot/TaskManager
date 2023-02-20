@@ -14,7 +14,7 @@ PLAN PERFORM EnterToStationRequestedFrom($goal, $channel, $agent){
 		$direction = $glUtility.retrieveGLExpression($goal, 4);
 		
 		ASSERT GoalRequester($goalID, $channel, $agent);
-		POST PERFORM EnterToStation($goalID, $robotID,$moveType, $vertex, $direction);
+		PERFORM EnterToStation($goalID, $robotID,$moveType, $vertex, $direction);
 		
 		PERFORM isro:endLog("PERFORM", "EnterToStationRequestedFrom");
 	UTILITY: 100; 
@@ -36,7 +36,7 @@ PLAN PERFORM EnterToStation($goalID, $robotID, $moveType, $vertex, $direction){
 		$communicationInstance.request($nc, $data);
 		
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
-		POST PERFORM WaitGoalResult($actionID);
+		
 		PERFORM isro:endLog("PERFORM", "EnterToStation");
 	UTILITY : 10;
 	EFFECTS : 

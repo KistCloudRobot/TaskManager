@@ -14,7 +14,7 @@ PLAN PERFORM CancelMoveRequestedFrom($goal, $channel, $agent) {
 		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		
 		PERFORM isro:endLog("PERFORM", "CancelMoveRequestedFrom");
-	UTILITY: 100; 
+	UTILITY: 200; 
 }
 
 PLAN PERFORM CancelMove($goalID) {

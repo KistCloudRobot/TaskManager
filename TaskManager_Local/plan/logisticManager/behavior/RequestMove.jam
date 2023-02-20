@@ -33,7 +33,6 @@ PLAN PERFORM Move($requestID, $robotID, $path){
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);
-		POST PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Move");
 	UTILITY : 100;

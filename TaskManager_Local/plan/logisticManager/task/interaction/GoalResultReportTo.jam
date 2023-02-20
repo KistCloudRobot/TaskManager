@@ -11,3 +11,4 @@ PLAN PERFORM GoalResultReportTo($goalID, $result, $channel, $agent) {
 		PERFORM isro:endLog("PERFORM", "GoalResultReportTo");
 	UTILITY : 10;
 }
+

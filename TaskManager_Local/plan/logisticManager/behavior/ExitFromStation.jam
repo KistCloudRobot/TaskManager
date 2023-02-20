@@ -16,7 +16,7 @@ PLAN PERFORM ExitFromStationRequestedFrom($goal, $channel, $agent){
 		$direction = $glUtility.retrieveGLExpression($goal, 4);
 		
 		ASSERT GoalRequester($goalID, $channel, $agent);
-		POST PERFORM ExitFromStation($goalID, $robotID,$moveType, $vertex, $direction);
+		PERFORM ExitFromStation($goalID, $robotID,$moveType, $vertex, $direction);
 		
 		PERFORM isro:endLog("PERFORM", "ExitFromStationRequestedFrom");
 	UTILITY: 100; 
@@ -40,7 +40,6 @@ PLAN PERFORM ExitFromStation($goalID, $robotID, $moveType, $vertex, $direction){
 		$communicationInstance.request($nc, $data);
 		
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
-		POST PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "ExitFromStation");
 	UTILITY : 10;

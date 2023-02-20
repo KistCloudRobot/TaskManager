@@ -15,7 +15,7 @@ PLAN PERFORM StraightBackMoveRequestedFrom($goal, $channel, $agent) {
 		PERFORM isro:endLog("PERFORM", "StraightBackMoveRequestedFrom");
 	UTILITY: 100; 
 }
-PLAN PERFORM StraightBackMove($actionID,$vertex){
+PLAN PERFORM StraightBackMove($goalID,$vertex){
 	ID: "http://www.arbi.com//StraightBackMove"
 	PRECONDITION:
 		FACT ExtraUtility($helper);

@@ -30,7 +30,6 @@ PLAN PERFORM GuideMove($requestID, $robotID, $vertex, $direction){
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);
-		POST PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "GuideMove");
 	UTILITY : 100;

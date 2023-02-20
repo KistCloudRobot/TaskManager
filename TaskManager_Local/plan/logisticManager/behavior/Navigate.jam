@@ -6,7 +6,6 @@ PLAN PERFORM NavigateRequestedFrom($goal, $channel, $agent){
 	ID: "http://www.arbi.com//NavigateRequestedFrom"
 	PRECONDITION :
 		FACT GLUtility($glUtility);
-		Fact ChangableUtility($utility);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "NavigateRequestedFrom");
 		
@@ -19,7 +18,7 @@ PLAN PERFORM NavigateRequestedFrom($goal, $channel, $agent){
 		PERFORM Navigate($goalID, $robotID,$start,$end) :UTILITY -100;
 		
 		PERFORM isro:endLog("PERFORM", "NavigateRequestedFrom");
-	UTILITY: $utility; 
+	UTILITY: 100; 
 }
 
 
@@ -38,10 +37,7 @@ PLAN PERFORM Navigate($goalID, $robotID,$start,$end){
 		System.out.println($data);
 		$communicationInstance.request($nc,$data);
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
-		PERFORM WaitGoalResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Navigate");
 	UTILITY: 0; 
-	EFFECTS : 
-		RETRACT GoalRequester($goalID, $channel, $agent);
 }
