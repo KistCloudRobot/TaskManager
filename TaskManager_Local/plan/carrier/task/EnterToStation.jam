@@ -14,7 +14,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		PERFORM isro:startLog("PERFORM", "isro:EnterToStation at palletizing to unload");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
-		PERFORM RequestRackUnloadingPrepared($vertex);
+		//PERFORM RequestRackUnloadingPrepared($vertex);
 		
 		PERFORM isro:QueryMoveType($location, "in", $moveType, $vertex);
 		

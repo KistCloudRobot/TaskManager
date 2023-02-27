@@ -22,7 +22,7 @@ PLAN PERFORM CancelMove($goalID) {
 	PRECONDITION:
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
-		//FACT OnRobotTaskStatus($robot, $status);
+		//FACT robotStatus($robot, $status);
 		//$status == "Move";
 		
 	BODY:

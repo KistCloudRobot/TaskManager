@@ -1,6 +1,6 @@
 package taskManager.logger;
 
-import kr.ac.uos.ai.arbi.agent.logger.ActionBody;
+import kr.ac.uos.ai.arbi.agent.logger.action.ActionBody;
 import taskManager.logger.argument.RelationArgument;
 import taskManager.utility.GLMessageManager;
 

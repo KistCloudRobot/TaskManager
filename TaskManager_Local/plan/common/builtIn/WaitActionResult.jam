@@ -2,43 +2,6 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN perform WaitActionResult($actionID){
-	ID: "http://www.arbi.com//BuiltInPlan#WaitActionResultGeneratedByRequestedGoal"
-	PRECONDITION:
-		FACT GeneratedActionByRequestedGoal($actionID, $goalID);
-		FACT GoalRequester($goalID, $channel, $address);
-		FACT ActionResult($actionID, $result);
-		$result == "success";
-	BODY:
-		PERFORM isro:startLog("PERFORM", "WaitActionResult GeneratedByRequestedGoal");
-		
-		PERFORM GoalResultReportTo($goalID, "success", $channel, $address);
-		
-		PERFORM isro:endLog("PERFORM", "WaitActionResult GeneratedByRequestedGoal");
-	UTILITY: 10001;
-	EFFECTS :
-		RETRACT GeneratedActionByRequestedGoal($actionID, $goalID);
-		RETRACT GoalRequester($goalID, $channel, $address);
-		RETRACT ActionResult($actionID, $result);
-}
-PLAN perform WaitActionResult($actionID){
-	ID: "http://www.arbi.com//BuiltInPlan#WaitActionResultGeneratedByBaseAgentRequest"
-	PRECONDITION:
-		FACT GeneratedActionFromBaseAgent($actionID, $address);
-		FACT ActionResult($actionID, $result);
-		$result == "success";
-	BODY:
-		PERFORM isro:startLog("PERFORM", "WaitActionResult GeneratedByBaseAgentRequest");
-		
-		PERFORM ReportActionResult($address, $actionID, "success");
-		
-		PERFORM isro:endLog("PERFORM", "WaitActionResult GeneratedByBaseAgentRequest");
-	UTILITY: 10001;
-	EFFECTS :
-		RETRACT GeneratedActionFromBaseAgent($actionID, $goalID);
-		RETRACT ActionResult($actionID, $result);
-}
-
-PLAN perform WaitActionResult($actionID){
 	ID: "http://www.arbi.com//BuiltInPlan#WaitActionSuccess"
 	PRECONDITION:
 		FACT ActionResult($actionID, $result);
@@ -49,19 +12,6 @@ PLAN perform WaitActionResult($actionID){
 		RETRACT ActionResult($actionID, $result);
 		PERFORM isro:endLog("PERFORM", "WaitActionResult");
 	UTILITY: 10000; 
-}
-
-
-PLAN perform WaitActionResult($actionID){
-	ID: "http://www.arbi.com//BuiltInPlan#RequestedActionFailed"
-	PRECONDITION:
-		FACT RequestedActionFromBaseAgent($actionID, $address);
-		FACT ActionResult($actionID, $result);
-		$result == "fail";
-	BODY:
-		System.out.println("action failed : " + $actionID);
-		FAIL;
-	UTILITY: 9999; 
 }
 
 

@@ -10,7 +10,7 @@ PLAN PERFORM RackUnloadingPreparedRequestedFrom($goal, $channel, $agent){
 		
 		$goalID = $glUtility.retrieveGLExpression($goal, 0);
 		$robotID = $glUtility.retrieveGLExpression($goal, 1);
-		$robotID = $glUtility.retrieveGLExpression($goal, 2);
+		$stationVertex = $glUtility.retrieveGLExpression($goal, 2);
 		PERFORM RackUnloadingPrepared($goalID, $robotID, $stationVertex);
 		PERFORM GoalResultReportTo($goalID,"success" ,$channel, $agent);
 		
@@ -29,7 +29,7 @@ PLAN PERFORM RackUnloadingPrepared($goalID, $robotID, $vertex){
 		PERFORM isro:startLog("PERFORM", "RackUnloadingPrepared");
 		
 		PERFORM RequestPalletizerStop();
-		//PERFORM RequestEnterPalletizer($robotID, $vertex);
+		PERFORM RequestEnterPalletizer($robotID, $vertex);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadingPrepared");
 	UTILITY : 0;

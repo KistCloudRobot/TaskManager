@@ -5,9 +5,9 @@ PLAN PERFORM initialize() {
 			
 		System.out.println("---start ChannelInit---");
 		
-		PERFORM createAgentChannel("logistic","ZeroMQ", $channel);
+		PERFORM connectAgentChannel("logistic",$channel);
 		
-		ASSERT Channel($channelName, $channel);		
+		ASSERT Channel("logistic", $channel);
 		
 		System.out.println("---end ChannelInit---");
 		

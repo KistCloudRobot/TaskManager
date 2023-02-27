@@ -1,16 +1,13 @@
 
-PLAN PERFORM GoalReportTo($goal, $channel, $agent) {
+PLAN PERFORM GoalResultReportTo($goalID, $result, $channel, $agent) {
 	ID : "http://www.arbi.com/GoalReportToForPalletizer"
 	PRECONDITION :
 	BODY :
-		PERFORM isro:startLog("CONCLUDE", "GoalReportTo");
+		PERFORM isro:startLog("PERFORM", "GoalResultReportTo");
 		
-		$report = "(GoalReport "+ $goal+")";
+		$report = "(GoalResult \""+ $goalID+"\" \"" +$result + "\")";
 		PERFORM inform($channel, $agent, $report);
 		
-		PERFORM isro:endLog("CONCLUDE", "GoalReportTo");
-	UTILITY : 10000;
-	EFFECTS :
-		PERFORM isro:SendGoalComplete("GoalReportedTo"); 
+		PERFORM isro:endLog("PERFORM", "GoalResultReportTo");
+	UTILITY : 10;
 }
-

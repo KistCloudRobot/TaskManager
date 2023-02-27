@@ -9,7 +9,7 @@ public class TaskManager_Local {
 		String role = "logisticManager";
 		String agentID = "agent://www.mcarbi.com/Local";
 //		String brokerAddress = "127.0.0.1";
-		String brokerAddress = "172.16.165.143";
+		String brokerAddress = "172.16.165.158";
 		int port = 61316;
 
 		TaskManager taskManager = new TaskManager(role, agentID, brokerAddress, brokerAddress, port);		
