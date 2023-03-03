@@ -1,0 +1,28 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM RequestReturn($wait){
+	ID: "http://www.arbi.com//RequestReturn"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+		FACT robotAt($robot, $vertex1, $vertex2);
+		FACT isro:agent($agent);
+		FACT isro:robot($robotID);
+		FACT isro:ManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RequestReturn");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(Return \"" + $actionID + "\" \"" + $robotID + "\" " + $vertex1 +" " + $wait + ")";
+		System.out.println($data);
+		PERFORM request("logistic", $address, $data, $result);
+
+		PERFORM WaitGoalResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "RequestReturn");
+	UTILITY: 10; 
+}

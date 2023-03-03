@@ -10,7 +10,6 @@ PLAN CONCLUDE PostReturnToWait() {
 	UTILITY : 50000;
 }
 
-
 PLAN perform ReturnToWait(){
 	ID: "http://www.arbi.com//BuiltInPlan#ReturnToWait"
 	PRECONDITION:
@@ -23,6 +22,23 @@ PLAN perform ReturnToWait(){
 		RETRIEVE WaitVertex($waitVertex);
 				
 		PERFORM isro:RequestNavigate($waitVertex);
+		PERFORM isro:SendGoalComplete("ReturnToWait"); 
+		PERFORM isro:endLog("PERFORM", "ReturnToWait");
+	UTILITY: 11; 
+}
+
+PLAN perform ReturnToWait(){
+	ID: "http://www.arbi.com//BuiltInPlan#ReturnToWait2"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "ReturnToWait");
+		
+		RETRIEVE robotAt($robot, $v1, $v2);
+		RETRIEVE WaitVertex($waitVertex);
+				
+		PERFORM RequestReturn($waitVertex);
 		PERFORM isro:SendGoalComplete("ReturnToWait"); 
 		PERFORM isro:endLog("PERFORM", "ReturnToWait");
 	UTILITY: 10; 

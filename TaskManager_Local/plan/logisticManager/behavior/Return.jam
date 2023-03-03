@@ -1,0 +1,43 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM ReturnRequestedFrom($goal, $channel, $agent){
+	ID: "http://www.arbi.com//ReturnRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReturnRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal, 0);
+		$robotID = $glUtility.retrieveGLExpression($goal, 1);
+		$start = $glUtility.retrieveGLExpression($goal, 2);
+		$end = $glUtility.retrieveGLExpression($goal, 3);
+		
+		ASSERT GoalRequester($goalID, $channel, $agent);
+		PERFORM Return($goalID, $robotID,$start,$end) :UTILITY -100;
+		
+		PERFORM isro:endLog("PERFORM", "ReturnRequestedFrom");
+	UTILITY: 100; 
+}
+
+
+PLAN PERFORM Return($goalID, $robotID,$start,$end){
+	ID: "http://www.arbi.com//Return"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT isro:NavigationControllerAddress($nc);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Return");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(RequestReturn \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
+		System.out.println($data);
+		$communicationInstance.request($nc,$data);
+		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
+		
+		PERFORM isro:endLog("PERFORM", "Return");
+	UTILITY: 0; 
+}
