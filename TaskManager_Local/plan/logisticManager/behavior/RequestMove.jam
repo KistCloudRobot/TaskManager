@@ -26,8 +26,7 @@ PLAN PERFORM Move($requestID, $robotID, $path){
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$actionID = $helper.getActionID($agent);
 		$data  = "(Move \"" +$actionID + "\" " + $path + ")";
-		System.out.println($data);
-		System.out.println($requestID);
+		PERFORM isro:argumentLog("$request", $data);
 		
 		PERFORM request("logistic", $reciever,$data,$result);
 		

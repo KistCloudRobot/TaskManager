@@ -6,7 +6,7 @@ PLAN CONCLUDE GoalResultReportedFrom($goalID, $result, $channelName, $worker) {
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "GoalResultReportedFrom");
 		
-		System.out.println("Reported Goal id : " + $goalID);
+		PERFORM isro:argumentLog("$goalID", $goalID);
 		ASSERT GoalResult($goalID, $result);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalResultReportedFrom");

@@ -15,9 +15,9 @@ PLAN PERFORM RequestTaskAllocation($goal, $worker){
 		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $text+")");
 		
 		$allocation = $glUtility.retrieveGLExpression($result, 0);
-		System.out.println("allocation : " + $allocation);
+		PERFORM isro:argumentLog("$allocation", $allocation);
 		$worker = $glUtility.retrieveGLExpression($allocation,1);
-		System.out.println("allocated Robot : " + $worker);
+		PERFORM isro:argumentLog("$worker", $worker);
 		
 		PERFORM isro:endLog("PERFORM", "RequestTaskAllocation");
 	UTILITY: 1; 

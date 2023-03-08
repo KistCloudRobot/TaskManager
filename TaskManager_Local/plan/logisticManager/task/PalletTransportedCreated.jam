@@ -15,7 +15,8 @@ PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 		PERFORM QueryIdleLiftRack($rack);
 		PERFORM QueryRackOnStation($rack, $startStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
-		System.out.println("cretaed goal : " + $goal);
+		
+		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated PrepareStoring");
 	UTILITY: 10; 
 	
@@ -39,7 +40,7 @@ PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 		PERFORM QueryCargoOn($cargo,$rack);
 		Perform QueryRackOnStation($rack,$startStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
-		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated PrepareUnstoring");
 	UTILITY: 10; 
 	
@@ -63,7 +64,7 @@ PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 		PERFORM QueryRackOnRack($rack, $location);
 		PERFORM QueryEmptyStoringStation($endStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
-		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated Storing");
 	UTILITY: 10; 
 	
@@ -86,7 +87,7 @@ PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 		PERFORM QueryRackOnRack($rack, $location);
 		PERFORM QueryEmptyStoringStation($endStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
-		System.out.println("cretaed goal : " + $goal);
+		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated Unstoring");
 	UTILITY: 10; 
 	

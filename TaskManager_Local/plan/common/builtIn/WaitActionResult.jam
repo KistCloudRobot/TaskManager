@@ -8,7 +8,8 @@ PLAN perform WaitActionResult($actionID){
 		$result == "success";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "WaitActionResult");
-		System.out.println("action success? : " + $actionID);
+		
+		PERFORM isro:argumentLog("$actionID", $actionID);
 		RETRACT ActionResult($actionID, $result);
 		PERFORM isro:endLog("PERFORM", "WaitActionResult");
 	UTILITY: 10000; 
@@ -21,7 +22,10 @@ PLAN perform WaitActionResult($actionID){
 		FACT ActionResult($actionID, $result);
 		$result == "fail";
 	BODY:
-		System.out.println("action failed : " + $actionID);
+		PERFORM isro:startLog("PERFORM", "WaitActionResult - fail");
+		
+		PERFORM isro:argumentLog("$actionID", $actionID);
+		RETRACT ActionResult($actionID, $result);
 		FAIL;
 	UTILITY: 9999; 
 }

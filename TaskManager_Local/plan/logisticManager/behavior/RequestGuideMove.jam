@@ -25,7 +25,7 @@ PLAN PERFORM GuideMove($requestID, $robotID, $vertex, $direction){
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$actionID = $helper.getActionID($agent);
 		$data  = "(GuideMove \"" +$actionID + "\" " + $vertex + " \"" + $direction + "\")";
-		System.out.println($data);
+		PERFORM isro:argumentLog("$request", $data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);

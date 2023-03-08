@@ -6,9 +6,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 		$glUtility.retrieveGLName($goal) == "PalletTransported";
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom");
-
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");
@@ -25,8 +23,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - Move");
 
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		POST PERFORM MoveRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - Move");
@@ -43,8 +40,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - StraightBackMove");
 
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		POST PERFORM StraightBackMoveRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - StraightBackMove");
@@ -61,8 +57,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - GuideMove");
 
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		POST PERFORM GuideMoveRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - GuideMove");
@@ -79,8 +74,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - PreciseMove");
 
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		POST PERFORM PreciseMoveRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - PreciseMove");
@@ -96,8 +90,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - FlatPreciseMove");
 
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		POST PERFORM FlatPreciseMoveRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - FlatPreciseMove");
@@ -114,8 +107,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - CancelMove");
 
-		System.out.println("Requested Goal : " + $goal);
-		System.out.println("Requested Goal : " + $glUtility.retrieveGLName($goal));
+		PERFORM isro:argumentLog("$goal", $goal);
 		POST PERFORM CancelMoveRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - CancelMove");
@@ -131,7 +123,7 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom fail");
 
-		System.out.println("Requested Goal ?? : " + $goal);
+		PERFORM isro:argumentLog("$goal", $goal);
 		//ASSERT PalletTransportedRequestedFrom($goal, $channel, $agent);
 
 		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom");

@@ -9,7 +9,7 @@ public class TaskManager_Lift4 {
 		String role = "carrier";
 		String agentID = "agent://www.mcarbi.com/AMR_LIFT4";
 //		String brokerAddress = "127.0.0.1";
-		String brokerAddress = "172.16.165.158";
+		String brokerAddress = "172.16.165.164";
 		int port = 61113;
 
 		TaskManager taskManager = new TaskManager(role, agentID, brokerAddress, brokerAddress, port);

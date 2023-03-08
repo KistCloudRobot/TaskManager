@@ -8,7 +8,7 @@ PLAN PERFORM isro:RequestBehavior($actionID, $action){
 		PERFORM isro:startLog("PERFORM", "RequestBehavior");
 		
 		$communicationInstance.request($bi,$action);
-		System.out.println("wait id : " + $actionID);
+		PERFORM isro:argumentLog("$actionID", $actionID);
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestBehavior");

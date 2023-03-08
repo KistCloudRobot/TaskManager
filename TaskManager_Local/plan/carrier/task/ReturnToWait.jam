@@ -24,7 +24,7 @@ PLAN perform ReturnToWait(){
 		PERFORM isro:RequestNavigate($waitVertex);
 		PERFORM isro:SendGoalComplete("ReturnToWait"); 
 		PERFORM isro:endLog("PERFORM", "ReturnToWait");
-	UTILITY: 11; 
+	UTILITY: 10; 
 }
 
 PLAN perform ReturnToWait(){
@@ -41,5 +41,5 @@ PLAN perform ReturnToWait(){
 		PERFORM RequestReturn($waitVertex);
 		PERFORM isro:SendGoalComplete("ReturnToWait"); 
 		PERFORM isro:endLog("PERFORM", "ReturnToWait");
-	UTILITY: 10; 
+	UTILITY: 11; 
 }

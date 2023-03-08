@@ -14,8 +14,9 @@ PLAN PERFORM RequestExitPalletizer($robotID, $stationVertex) {
 		PERFORM isro:startLog("PERFORM", "RequestExitPalletizer");
 		
 		$actionID = $helper.getActionID($agent);
-		System.out.println($robotID);
-		System.out.println($stationVertex);
+		
+		PERFORM isro:argumentLog("$robotID", $robotID);
+		PERFORM isro:argumentLog("$stationVertex", $stationVertex);
 		$data = "(ExitPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
 		$communicationInstance.request($bi, $data);
 		

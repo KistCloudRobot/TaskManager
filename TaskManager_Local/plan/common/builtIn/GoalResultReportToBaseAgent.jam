@@ -5,9 +5,11 @@ PLAN PERFORM GoalResultReportToBaseAgent($goalID, $result, $agent) {
 		FACT Communication($communication);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "GoalResultReportToBaseAgent");
-		System.out.println($goalID);
-		System.out.println($result);
-		System.out.println($agent);
+		
+		PERFORM isro:argumentLog("$goalID", $goalID);
+		PERFORM isro:argumentLog("$result", $result);
+		PERFORM isro:argumentLog("$agent", $agent);
+		
 		$report = "(GoalResult \""+ $goalID+"\" \"" +$result + "\")";
 		$communication.inform($agent,$report);
 		

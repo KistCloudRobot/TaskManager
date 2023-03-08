@@ -5,7 +5,8 @@ PLAN PERFORM AssertRequestedGoal($goal) {
 		FACT GLUtility($glUtility);
 		//$glUtility.retrieveExpressionSize($goal) == 3;
 	BODY :
-		System.out.println("AssertAssignedGoal : " + $goal);
+	
+		PERFORM isro:argumentLog("$goal", $goal);
 		$goal = $glUtility.unescapeGL($goal);
 		$goalName = $glUtility.retrieveGLName($goal);
 		$goalID = $glUtility.retrieveGLExpression($goal,0);

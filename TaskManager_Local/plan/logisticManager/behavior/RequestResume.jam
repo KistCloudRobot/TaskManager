@@ -24,7 +24,7 @@ PLAN PERFORM Resume($actionID, $robotID){
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestResume \"" +$actionID + "\")";
-		System.out.println($data);
+		PERFORM isro:argumentLog("$request", $data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 	//	System.out.println("wait id : " + $actionID);

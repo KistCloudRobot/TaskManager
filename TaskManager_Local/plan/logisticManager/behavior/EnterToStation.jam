@@ -32,7 +32,7 @@ PLAN PERFORM EnterToStation($goalID, $robotID, $moveType, $vertex, $direction){
 		
 		$actionID = $helper.getActionID($agent);
 		$data  = "(RequestEnterToStation \"" +$actionID + "\" \"" + $robotID + "\" \"" +$moveType + "\" " + $vertex + " \"" + $direction + "\")";
-		System.out.println($data);
+		PERFORM isro:argumentLog("$request", $data);
 		$communicationInstance.request($nc, $data);
 		
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);

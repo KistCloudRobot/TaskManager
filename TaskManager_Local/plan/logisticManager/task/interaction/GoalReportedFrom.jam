@@ -7,8 +7,7 @@ PLAN CONCLUDE GoalResultReportedFrom($goalID, $result, $channelName, $worker) {
 		$glUtility.retrieveGLExpression($goal,0) == $goalID;
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "GoalResultReportedFrom");
-		
-		System.out.println("Reported Goal id : " + $goalID);
+		PERFORM isro:argumentLog("$goalID", $goalID);
 		ASSERT PalletTransportedReportedFrom($goalID, $result, $channelName, $worker);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalResultReportedFrom");
@@ -23,8 +22,7 @@ PLAN CONCLUDE GoalResultReportedFrom($goalID, $result, $channelName, $worker) {
 		FACT GLUtility($glUtility);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "GoalResultReportedFrom");
-		
-		System.out.println("Reported Goal id : " + $goalID);
+		PERFORM isro:argumentLog("$goalID", $goalID);
 		ASSERT GoalResult($goalID, $result);
 		
 		PERFORM isro:endLog("CONCLUDE", "GoalResultReportedFrom");

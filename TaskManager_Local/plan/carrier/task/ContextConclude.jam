@@ -8,7 +8,7 @@ PLAN CONCLUDE robotPosition($robot, $x, $y) {
 	BODY:
 		//PERFORM  isro:startLog("CONCLUDE", "robotPosition");
 		$data = "(context (robotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
-		PERFORM inform("logistic", $address, $data);
+		PERFORM notify("logistic", $address, $data);
 		//PERFORM isro:endLog("CONCLUDE", "robotPosition");
 	UTILITY : 10001;
 }
@@ -19,7 +19,7 @@ PLAN CONCLUDE robotDegree($robot, $Degree) {
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
 		$data = "(context (robotDegree \"" + $robot + "\" " + $Degree + "))";
-		PERFORM inform("logistic", $address, $data);
+		PERFORM notify("logistic", $address, $data);
 	UTILITY : 10001;
 }
 
@@ -30,7 +30,7 @@ PLAN CONCLUDE robotLoading($robot, $load) {
 	BODY:
 
 		$data = "(context (robotLoading \"" + $robot + "\" \"" + $load + "\"))";
-		PERFORM inform("logistic", $address, $data);
+		PERFORM notify("logistic", $address, $data);
 	UTILITY : 10001;
 }
 
@@ -40,7 +40,7 @@ PLAN CONCLUDE batteryRemain($robot, $battery) {
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
 		$data = "(context (batteryRemain \"" + $robot + "\" " + $battery  + "))";
-		PERFORM inform("logistic", $address, $data);
+		PERFORM notify("logistic", $address, $data);
 	UTILITY : 10001;
 }
 PLAN CONCLUDE robotVelocity($robot, $velocity) {
@@ -49,7 +49,7 @@ PLAN CONCLUDE robotVelocity($robot, $velocity) {
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
 		$data = "(context (robotVelocity \"" + $robot + "\" " + $velocity+ "))";
-		PERFORM inform("logistic", $address, $data);
+		PERFORM notify("logistic", $address, $data);
 	UTILITY : 10001;
 }
 
@@ -59,7 +59,7 @@ PLAN CONCLUDE robotStatus($robot, $status) {
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
 		$data = "(context (robotStatus \"" + $robot + "\" \"" + $status+ "\"))";
-		PERFORM inform("logistic", $address, $data);
+		PERFORM notify("logistic", $address, $data);
 	UTILITY : 10001;
 }
 

@@ -34,7 +34,7 @@ PLAN PERFORM Return($goalID, $robotID,$start,$end){
 		
 		$actionID = $helper.getActionID($agent);
 		$data = "(RequestReturn \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
-		System.out.println($data);
+		PERFORM isro:argumentLog("$request", $data);
 		$communicationInstance.request($nc,$data);
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
 		

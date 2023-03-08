@@ -25,7 +25,7 @@ PLAN PERFORM FlatPreciseMove($requestID, $robotID, $vertex){
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$actionID = $helper.getActionID($agent);
 		$data  = "(FlatPreciseMove \"" +$actionID + "\" " + $vertex + ")";
-		System.out.println($data);
+		PERFORM isro:argumentLog("$request", $data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);

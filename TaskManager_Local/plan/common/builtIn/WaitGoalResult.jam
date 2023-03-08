@@ -4,9 +4,10 @@ PLAN PERFORM WaitGoalResult($goalID){
 	PRECONDITION:
 		FACT GoalResult($goalID, $result);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "WaitGoalResult - Just wait");
+		PERFORM isro:startLog("PERFORM", "WaitGoalResult");
 		
-		System.out.println("goal Result : " + $goalID + ", " + $result);
+		PERFORM isro:argumentLog("$goalID", $goalID);
+		PERFORM isro:argumentLog("$result", $result);
 		RETRACT GoalResult($goalID, $result);
 		
 		PERFORM isro:endLog("PERFORM", "WaitGoalResult");

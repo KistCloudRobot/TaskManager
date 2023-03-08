@@ -10,7 +10,7 @@ PLAN CONCLUDE PostMoveToLocation($location) {
 		$loading == "Loading";
 	BODY:
 		POST PERFORM MoveToLocation($endStation);
-		System.out.println("move to location For Unloading posted");
+		//System.out.println("move to location For Unloading posted");
 		RETRACT PostMoveToLocation($location);
 	UTILITY : 50000;
 	EFFECTS : 
@@ -27,7 +27,7 @@ PLAN CONCLUDE PostMoveToLocation($location) {
 	BODY:
 		
 		POST PERFORM MoveToLocation($startStation);
-		System.out.println("move to location For Loading posted");
+		//System.out.println("move to location For Loading posted");
 	UTILITY : 50000;
 	EFFECTS : 
 		RETRACT PostMoveToLocation($location);

@@ -1,0 +1,25 @@
+plan perform notify($address, $data){
+	ID : "notifyByBase"
+	precondition:
+		fact Channel($channelName, $channel);
+		$channelName == "base";
+	body:
+		$channel.notify($address,$data);
+	utility: 1;
+}
+
+plan perform notify($channelName, $address, $data){
+	ID : "notifyByChannel"
+	precondition:
+		fact Channel($channelName, $channel);
+	body:
+		$channel.notify($address,$data);
+	utility : 1000;
+}
+
+plan perform notify($channelName, $address, $data){
+	ID : "notifyByChannelFailed"
+	body:
+		System.out.println("there is no channel : " + $channelName);
+	utility:-1;
+}

@@ -19,8 +19,7 @@ PLAN PERFORM RequestEnterPalletizer($robotID, $stationVertex) {
 		$actionID = $helper.getActionID($agent);
 		$data = "(EnterPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
 		$communicationInstance.request($bi,$data);
-		
-		System.out.println("wait id : " + $actionID);
+		PERFORM isro:argumentLog("$actionID", $actionID);
 		
 		//PERFORM WaitActionResult($actionID);
 		

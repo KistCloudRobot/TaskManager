@@ -25,7 +25,7 @@ PLAN PERFORM StraightBackMove($requestID, $robotID, $vertex){
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$actionID = $helper.getActionID($agent);
 		$data  = "(StraightBackMove \"" +$actionID + "\" " + $vertex + ")";
-		System.out.println($data);
+		PERFORM isro:argumentLog("$request", $data);
 		PERFORM request("logistic", $reciever,$data,$result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
