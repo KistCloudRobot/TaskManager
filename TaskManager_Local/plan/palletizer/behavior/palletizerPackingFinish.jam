@@ -8,12 +8,7 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
-		FACT isro:agent($agent);
-		FACT isro:BehaviorAddress($bi);
-		
 		FACT  isro:SemanticMapManagerAddress($address);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
 		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
@@ -23,5 +18,5 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 		
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
-	UTILITY: 10000; 
+	UTILITY: 50000; 
 }

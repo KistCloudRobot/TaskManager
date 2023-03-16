@@ -17,11 +17,11 @@ PLAN CONCLUDE RackUnloadCompleted() {
 	ID: "http://www.arbi.com//RackUnloadCompleted"
 	PRECONDITION:
 	BODY:
-		PERFORM  isro:startLog("CONCLUDE", "RackLoadCompleted");
+		PERFORM  isro:startLog("CONCLUDE", "RackUnloadCompleted");
 		
 		PERFORM RequestPalletizerStart();
 		
-		PERFORM isro:endLog("CONCLUDE", "RackLoadCompleted");
+		PERFORM isro:endLog("CONCLUDE", "RackUnloadCompleted");
 		
 	UTILITY: 10000; 
 	EFFECTS : 

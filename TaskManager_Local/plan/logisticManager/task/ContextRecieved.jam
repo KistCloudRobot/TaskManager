@@ -15,18 +15,18 @@ PLAN CONCLUDE context($context){
 }
 
 PLAN CONCLUDE context($context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextPersonCall"
+	ID: "http://www.arbi.com//BuiltInPlan#contextReceivedCargo"
 	PRECONDITION:
 		FACT Communication($communication);
 		FACT GLUtility($glUtility);
-		$glUtility.retrieveGLName($context) == "personCall";
+		$glUtility.retrieveGLName($context) == "receivedCargo";
 	BODY:
-		System.out.println("PersonCall Recieved!!!!");
 		System.out.println($context);
-		$callID = $glUtility.retrieveGLExpression($context, 0);
+		$cargoID = $glUtility.retrieveGLExpression($context, 0);
 		$location = $glUtility.retrieveGLExpression($context, 1);
-		$taskType = $glUtility.retrieveGLExpression($context, 2);
-		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"" + $taskType + "\"))";
+		$callID = $glUtility.retrieveGLExpression($context, 2);
+
+		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"Stroing\"))";
 		System.out.println($data);
 		$communication.assertToLTM($data);
 		RETRACT context($context);
