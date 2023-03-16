@@ -29,7 +29,7 @@ PLAN PERFORM CancelMove($goalID) {
 		PERFORM isro:startLog("PERFORM", "CancelMove");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(CancelMove \"" + $actionID + "\")";
+		$data = "(CancelMove \"" + $actionID + "\")"; 
 		PERFORM isro:RequestBehavior($actionID, $data);	
 			
 		PERFORM isro:endLog("PERFORM", "CancelMove");

@@ -17,7 +17,7 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
 		PERFORM RequestStationOut($moveType, $vertex);
 		
-		//PERFORM RackUnloadCompleted($address);
+		PERFORM RackUnloadCompleted($address);
 		
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 	UTILITY : 2;
@@ -39,7 +39,7 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
 		PERFORM RequestStationOut($moveType, $vertex);
 		
-		//PERFORM RackLoadCompleted($address);
+		PERFORM RackLoadCompleted($address);
 		
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 	UTILITY : 2;
