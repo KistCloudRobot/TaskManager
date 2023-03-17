@@ -1,0 +1,7 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+FACTS:	
+	FACT  isro:SemanticMapManagerAddress("agent://www.mcarbi.com/SemanticMapManager");
+	
