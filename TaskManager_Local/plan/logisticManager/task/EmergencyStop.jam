@@ -1,0 +1,14 @@
+PLAN CONCLUDE EmergencyStop(){
+	ID: "http://www.arbi.com//EmergencyStop"
+	PRECONDITION:
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "EmergencyStop");
+				
+		PERFORM Pause("stop1", "AMR_LIFT1");
+		PERFORM Pause("stop1", "AMR_LIFT2");
+		PERFORM Pause("stop1", "AMR_LIFT3");
+		PERFORM Pause("stop1", "AMR_LIFT4");
+		
+		PERFORM isro:endLog("CONCLUDE", "EmergencyStop");
+	UTILITY: 100001; 
+}

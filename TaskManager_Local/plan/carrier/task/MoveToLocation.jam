@@ -40,14 +40,14 @@ PLAN perform MoveToLocation($location){
 	PRECONDITION:
 		FACT robotAt($robot, $vertex1, $vertex2);
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "MoveToLocation");
+		PERFORM isro:startLog("PERFORM", "MoveToLocation");
 		
 		PERFORM isro:QueryPriorVertex($location, $preparationVertex);
 
-		PERFORM  isro:RequestNavigate($preparationVertex);
+		PERFORM isro:RequestNavigate($preparationVertex);
 		
 		PERFORM isro:SendGoalComplete("MoveToLocation");
-		PERFORM  isro:endLog("PERFORM", "MoveToLocation");
+		PERFORM isro:endLog("PERFORM", "MoveToLocation");
 	UTILITY: 10; 
 }
 

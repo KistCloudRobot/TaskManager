@@ -41,7 +41,8 @@ public class AgentChannel extends Channel{
 		GeneralizedList gl;
 		try {
 			gl = GLFactory.newGLFromGLString(request);
-			System.out.println(gl.toString());
+			System.out.println(gl.toString() + " timestamp : " + System.currentTimeMillis());
+			
 			request = "(GoalRequestedFrom " + request + " \"" + this.getChannelName() + "\" \"" + sender +"\")";
 		} catch (ParseException e) {
 			e.printStackTrace();

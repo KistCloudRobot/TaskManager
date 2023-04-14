@@ -14,7 +14,22 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	EFFECTS :
 		RETRACT GoalRequestedFrom($goal, $channel, $agent);
 }
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/PauseGoalRequestedFromForLIFT"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "Pause";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - Pause");
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM PauseRequestedFrom($goal, $channel, $agent);
 
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - Pause");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
 PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/MoveGoalRequestedFrom"
 	PRECONDITION :

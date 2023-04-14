@@ -2,17 +2,19 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN CONCLUDE RequestPause($actionID){
+PLAN PERFORM PauseRequestedFrom($goal, $channel, $agent){
 	ID: "http://www.arbi.com//ConcludeRequestPause"
-		
+	PRECONDITION :
+		FACT GLUtility($glUtility);
 	BODY:
-		PERFORM isro:startLog("CONCLUDE", "RequestPause");
+		PERFORM isro:startLog("PERFORM", "PauseRequestedFrom");
 		
-		POST PERFORM Pause($actionID, $path);
-		RETRACT RequestPause($actionID, $path);
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		PERFORM Pause($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		
-		PERFORM isro:endLog("CONCLUDE", "RequestPause");
-	UTILITY: 10000; 
+		PERFORM isro:endLog("PERFORM", "PauseRequestedFrom");
+	UTILITY: 100000; 
 }
 
 PLAN PERFORM Pause($actionID) {
@@ -27,7 +29,7 @@ PLAN PERFORM Pause($actionID) {
 		
 		$communicationInstance.request($bi, "(Pause \"" + $actionID + "\")");
 		
-		PERFORM ReportActionResultToAgent("logistic", $address, $actionID);
+		//PERFORM ReportActionResultToAgent("logistic", $address, $actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Pause");
 	UTILITY: 100; 
