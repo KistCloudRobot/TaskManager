@@ -26,6 +26,6 @@ PLAN perform WaitActionResult($actionID){
 		
 		PERFORM isro:argumentLog("$actionID", $actionID);
 		RETRACT ActionResult($actionID, $result);
-		FAIL;
+		WAIT Restart();
 	UTILITY: 9999; 
 }
