@@ -136,6 +136,8 @@ public class TaskManager extends ArbiAgent {
 					System.out.println("update context : " + data);
 					msgManager.updateContextGL(data);
 				} else {
+					if(gl.getName().equals("ActionResult")) System.out.println("action result dequeued : " + gl.toString());
+						
 					msgManager.assertGL(data);
 				}
 

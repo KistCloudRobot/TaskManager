@@ -8,20 +8,14 @@ PLAN PERFORM RequestPalletizerStart() {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
-		FACT isro:BehaviorAddress($bi);
 		FACT isro:agent($agent);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestPalletizerStart");
 		
 		$actionID = $helper.getActionID($agent);
-		$communicationInstance.inform($bi, "(PalletizerStart \"" + $actionID + "\")");
-		
-		PERFORM isro:argumentLog("$actionID", $actionID);
-		
-		PERFORM WaitActionResult($actionID);
+		$action = "(PalletizerStart \"" + $actionID + "\")";
+		PERFORM isro:RequestBehavior($actionID, $action);
 		
 		PERFORM isro:endLog("PERFORM", "RequestPalletizerStart");
 	UTILITY: 20; 

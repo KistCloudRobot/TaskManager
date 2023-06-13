@@ -17,11 +17,10 @@ PLAN PERFORM RequestEnterPalletizer($robotID, $stationVertex) {
 		PERFORM isro:startLog("PERFORM", "RequestEnterPalletizer");
 		
 		$actionID = $helper.getActionID($agent);
+		PERFORM isro:argumentLog("$robotID", $robotID);
+		PERFORM isro:argumentLog("$stationVertex", $stationVertex);
 		$data = "(EnterPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
 		$communicationInstance.request($bi,$data);
-		PERFORM isro:argumentLog("$actionID", $actionID);
-		
-		//PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestEnterPalletizer");
 	UTILITY: 20; 

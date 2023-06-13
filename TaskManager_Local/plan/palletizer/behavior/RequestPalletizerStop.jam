@@ -8,18 +8,15 @@ PLAN PERFORM RequestPalletizerStop() {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
-		FACT isro:BehaviorAddress($bi);
 		FACT isro:agent($agent);
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestPalletizerStop");
 		
 		$actionID = $helper.getActionID($agent);
-		$communicationInstance.inform($bi, "(PalletizerStop \"" + $actionID + "\")");
 		
-		PERFORM isro:argumentLog("$actionID", $actionID);
-		
-		PERFORM WaitActionResult($actionID);
+		$action = "(PalletizerStop \"" + $actionID + "\")";
+		PERFORM isro:RequestBehavior($actionID, $action);
 		
 		PERFORM isro:endLog("PERFORM", "RequestPalletizerStop");
 	UTILITY: 0; 

@@ -110,7 +110,7 @@ PLAN CONCLUDE context($context){
 		$cargo = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT cargoAt($cargo, $v1, $v2);
 		$glUtility.assertGL($context);
-		RETRACT context($contextName, $context);
+		RETRACT context($context);
 		
 	UTILITY : 10000;
 }
@@ -128,7 +128,7 @@ PLAN CONCLUDE context($context){
 		
 		$glUtility.assertGL($context);
 		
-		RETRACT context($contextName, $context);
+		RETRACT context($context);
 		
 	UTILITY : 10000;
 }
