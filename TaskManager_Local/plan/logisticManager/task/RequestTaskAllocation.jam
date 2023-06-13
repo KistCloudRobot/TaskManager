@@ -38,16 +38,90 @@ PLAN PERFORM RequestTwoTasksAllocation($goal1, $worker1, $goal2, $worker2){
 		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $text1+ " " + $text2 +")");
 		
 		$allocation1 = $glUtility.retrieveGLExpression($result, 0);
-		System.out.println("allocation1 : " + $allocation);
+		System.out.println("allocation1 : " + $allocation1);
 		$worker1 = $glUtility.retrieveGLExpression($allocation1,1);
-		System.out.println("allocated Robot1 : " + $worker);
+		System.out.println("allocated Robot1 : " + $worker1);
 		
 		$allocation2 = $glUtility.retrieveGLExpression($result, 1);
-		System.out.println("allocation2 : " + $allocation);
+		System.out.println("allocation2 : " + $allocation2);
 		$worker2 = $glUtility.retrieveGLExpression($allocation2,1);
-		System.out.println("allocated Robot2 : " + $worker);
+		System.out.println("allocated Robot2 : " + $worker2);
 		
 		PERFORM isro:endLog("PERFORM", "RequestTwoTasksAllocation");
+	UTILITY: 1; 
+}
+
+PLAN PERFORM RequestThreeTasksAllocation($goal1, $worker1, $goal2, $worker2, $goal3, $worker3){
+	ID: "http://www.arbi.com//RequestThreeTasksAllocation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:TaskAllocatorAddress($allocator);
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RequestThreeTasksAllocation");
+		
+		PERFORM BuildTaskAllocationText($goal1, $text1);
+		PERFORM BuildTaskAllocationText($goal2, $text2);
+		PERFORM BuildTaskAllocationText($goal3, $text3);
+		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $text1+ " " + $text2 + " " + $text3 +")");
+		
+		$allocation1 = $glUtility.retrieveGLExpression($result, 0);
+		System.out.println("allocation1 : " + $allocation1);
+		$worker1 = $glUtility.retrieveGLExpression($allocation1,1);
+		System.out.println("allocated Robot1 : " + $worker1);
+		
+		$allocation2 = $glUtility.retrieveGLExpression($result, 1);
+		System.out.println("allocation2 : " + $allocation2);
+		$worker2 = $glUtility.retrieveGLExpression($allocation2,1);
+		System.out.println("allocated Robot2 : " + $worker2);
+		
+		$allocation3 = $glUtility.retrieveGLExpression($result, 2);
+		System.out.println("allocation3 : " + $allocation3);
+		$worker3 = $glUtility.retrieveGLExpression($allocation3,1);
+		System.out.println("allocated Robot3 : " + $worker3);
+		
+		PERFORM isro:endLog("PERFORM", "RequestThreeTasksAllocation");
+	UTILITY: 1; 
+}
+
+
+PLAN PERFORM RequestFourTasksAllocation($goal1, $worker1, $goal2, $worker2, $goal3, $worker3, $goal4, $worker4){
+	ID: "http://www.arbi.com//RequestFourTasksAllocation"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:TaskAllocatorAddress($allocator);
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RequestFourTasksAllocation");
+		
+		PERFORM BuildTaskAllocationText($goal1, $text1);
+		PERFORM BuildTaskAllocationText($goal2, $text2);
+		PERFORM BuildTaskAllocationText($goal3, $text3);
+		PERFORM BuildTaskAllocationText($goal4, $text4);
+		$result = $communicationInstance.request($allocator, "(TaskAllocation "+ $text1+ " " + $text2 + " " + $text3 + " " + $text4 +")");
+		
+		$allocation1 = $glUtility.retrieveGLExpression($result, 0);
+		System.out.println("allocation1 : " + $allocation1);
+		$worker1 = $glUtility.retrieveGLExpression($allocation1,1);
+		System.out.println("allocated Robot1 : " + $worker1);
+		
+		$allocation2 = $glUtility.retrieveGLExpression($result, 1);
+		System.out.println("allocation2 : " + $allocation2);
+		$worker2 = $glUtility.retrieveGLExpression($allocation2,1);
+		System.out.println("allocated Robot2 : " + $worker2);
+		
+		$allocation3 = $glUtility.retrieveGLExpression($result, 2);
+		System.out.println("allocation3 : " + $allocation3);
+		$worker3 = $glUtility.retrieveGLExpression($allocation3,1);
+		System.out.println("allocated Robot3 : " + $worker3);
+		
+		$allocation4 = $glUtility.retrieveGLExpression($result, 3);
+		System.out.println("allocation4 : " + $allocation4);
+		$worker4 = $glUtility.retrieveGLExpression($allocation3,1);
+		System.out.println("allocated Robot4 : " + $worker4);
+		PERFORM isro:endLog("PERFORM", "RequestFourTasksAllocation");
 	UTILITY: 1; 
 }
 

@@ -21,7 +21,7 @@ import uos.ai.jam.plan.action.AchieveGoalAction;
 
 public class GLMessageManager {
 	public Interpreter interpreter;
-	private Queue<String> messageQueue;
+//	private Queue<String> messageQueue;
 
 	
 	
@@ -42,11 +42,7 @@ public class GLMessageManager {
 		return result;
 	}
 	
-	public  String turnbackPosition(String input) {
-		String[] data = input.split(" ");
-		return data[0] + " " + data[1] + " " + data[2] + " " + data[4] + " " + data[3];
-	}
-	
+
 	public String contains(String input, String text) {
 		if(input.contains(text)) {
 			return "true";
@@ -54,31 +50,31 @@ public class GLMessageManager {
 		
 		return "false";
 	}
-	
-	public void dequeueMessage() {
-
-		if (messageQueue.isEmpty() == false) {
-			String message = messageQueue.poll();
-			GeneralizedList gl = null;
-			try {
-				gl = GLFactory.newGLFromGLString(message);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			if (gl.getName().equals("PostGoal")) {
-				if (gl.getExpressionsSize() == 1)
-					this.postGoal(gl.getExpression(0).toString(), "100");
-				else {
-					this.postGoal(gl.getExpression(0).toString(), gl.getExpression(1).toString());
-				}
-			} else if (gl.getName().equals("AssertFact")) {
-				this.assertGL(gl.getExpression(0).toString());
-			}
-		}
-
-	}
+//	
+//	public void dequeueMessage() {
+//
+//		if (messageQueue.isEmpty() == false) {
+//			String message = messageQueue.poll();
+//			GeneralizedList gl = null;
+//			try {
+//				gl = GLFactory.newGLFromGLString(message);
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//			if (gl.getName().equals("PostGoal")) {
+//				if (gl.getExpressionsSize() == 1)
+//					this.postGoal(gl.getExpression(0).toString(), "100");
+//				else {
+//					this.postGoal(gl.getExpression(0).toString(), gl.getExpression(1).toString());
+//				}
+//			} else if (gl.getName().equals("AssertFact")) {
+//				this.assertGL(gl.getExpression(0).toString());
+//			}
+//		}
+//
+//	}
 
 	public void removePlan(String planID) {
 		interpreter.getPlanLibrary().removePlan(planID);
@@ -86,7 +82,7 @@ public class GLMessageManager {
 
 	public GLMessageManager(Interpreter interpreter) {
 		this.interpreter = interpreter;
-		messageQueue = new LinkedList<String>();
+//		messageQueue = new LinkedList<String>();
 	}
 
 	public GLMessageManager() {
@@ -105,25 +101,25 @@ public class GLMessageManager {
 		return input;
 	}
 
-	public String retrieveElement(String input) {
-
-		GeneralizedList list = null;
-		String result = "";
-		try {
-			list = GLFactory.newGLFromGLString(input);
-
-			for (int i = 0; i < list.getExpressionsSize(); i++) {
-				result += removeQuotationMarks(list.getExpression(i).toString()) + ", ";
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return result;
-	}
-	
-	
+//	public String retrieveElement(String input) {
+//
+//		GeneralizedList list = null;
+//		String result = "";
+//		try {
+//			list = GLFactory.newGLFromGLString(input);
+//
+//			for (int i = 0; i < list.getExpressionsSize(); i++) {
+//				result += removeQuotationMarks(list.getExpression(i).toString()) + ", ";
+//			}
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return result;
+//	}
+//	
+//	
 	public String removeQuotationMarks(Object input) {
 		String data = input.toString();
 		if (data.startsWith("\"")) {
@@ -179,71 +175,71 @@ public class GLMessageManager {
 		return value;
 	}
 
-	public String postGoal(String goal, String utility) {
-		String result = null;
-		GeneralizedList gl = null;
-		
-		try {
-			gl = GLFactory.newGLFromGLString(goal);
-			String name = gl.getName();
-			List<Expression> expList = new ArrayList<Expression>();
-
-			for (int i = 0; i < gl.getExpressionsSize(); i++) {
-				String expressionValue = gl.getExpression(i).toString();
-				expressionValue = this.removeQuotationMarks(expressionValue);
-				System.out.println("=======expression Value : " + expressionValue);
-				if(expressionValue.startsWith("$")) {
-					expressionValue = "null";
-				}
-				expList.add(new Value(expressionValue));
-			}
-
-			Relation r = interpreter.getWorldModel().newRelation(name, expList);
-			int utilityValue = 0;
-			if(!utility.equals("")) {
-				Integer.valueOf(removeQuotationMarks(utility));	
-			}
-
-			AchieveGoalAction generatedGoal = new AchieveGoalAction(name, r, new Value(utilityValue), null, null,
-					interpreter);
-			interpreter.getIntentionStructure().addUnique(generatedGoal, null, null);
-			System.out.println("achieve goal posted : " + r.toString());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		} catch (AgentRuntimeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return result;
-	}
-
-	public String unpostGoal(String goal) {
-
-		String result = null;
-		GeneralizedList gl = null;
-
-		try {
-			gl = GLFactory.newGLFromGLString(goal);
-			String name = gl.getName();
-			List<Expression> expList = new ArrayList<Expression>();
-
-			for (int i = 0; i < gl.getExpressionsSize(); i++) {
-				String expressionValue = gl.getExpression(i).toString();
-				expList.add(new Value(expressionValue));
-			}
-
-			Relation r = interpreter.getWorldModel().newRelation(name, expList);
-
-			AchieveGoalAction generatedGoal = new AchieveGoalAction(name, r, new Value(0), null, null, interpreter);
-
-			interpreter.getIntentionStructure().drop(generatedGoal, null);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return result;
-	}
+//	public String postGoal(String goal, String utility) {
+//		String result = null;
+//		GeneralizedList gl = null;
+//		
+//		try {
+//			gl = GLFactory.newGLFromGLString(goal);
+//			String name = gl.getName();
+//			List<Expression> expList = new ArrayList<Expression>();
+//
+//			for (int i = 0; i < gl.getExpressionsSize(); i++) {
+//				String expressionValue = gl.getExpression(i).toString();
+//				expressionValue = this.removeQuotationMarks(expressionValue);
+//				System.out.println("=======expression Value : " + expressionValue);
+//				if(expressionValue.startsWith("$")) {
+//					expressionValue = "null";
+//				}
+//				expList.add(new Value(expressionValue));
+//			}
+//
+//			Relation r = interpreter.getWorldModel().newRelation(name, expList);
+//			int utilityValue = 0;
+//			if(!utility.equals("")) {
+//				Integer.valueOf(removeQuotationMarks(utility));	
+//			}
+//
+//			AchieveGoalAction generatedGoal = new AchieveGoalAction(name, r, new Value(utilityValue), null, null,
+//					interpreter);
+//			interpreter.getIntentionStructure().addUnique(generatedGoal, null, null);
+//			System.out.println("achieve goal posted : " + r.toString());
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		} catch (AgentRuntimeException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return result;
+//	}
+//
+//	public String unpostGoal(String goal) {
+//
+//		String result = null;
+//		GeneralizedList gl = null;
+//
+//		try {
+//			gl = GLFactory.newGLFromGLString(goal);
+//			String name = gl.getName();
+//			List<Expression> expList = new ArrayList<Expression>();
+//
+//			for (int i = 0; i < gl.getExpressionsSize(); i++) {
+//				String expressionValue = gl.getExpression(i).toString();
+//				expList.add(new Value(expressionValue));
+//			}
+//
+//			Relation r = interpreter.getWorldModel().newRelation(name, expList);
+//
+//			AchieveGoalAction generatedGoal = new AchieveGoalAction(name, r, new Value(0), null, null, interpreter);
+//
+//			interpreter.getIntentionStructure().drop(generatedGoal, null);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return result;
+//	}
 	/*
 	 * public String switchUtility(String goal1,String goal2){ String result = null;
 	 * GeneralizedList gl = null;
@@ -318,31 +314,31 @@ public class GLMessageManager {
 	 * return result; }
 	 * 
 	 */
-
-	public void startGoal(String arg) {
-		try {
-
-			GeneralizedList gl = GLFactory.newGLFromGLString(arg);
-			String goal = "(ServicePerformed ";
-
-			for (int i = 0; i < gl.getExpressionsSize(); i++) {
-				goal += gl.getExpression(i).toString() + " ";
-			}
-
-			goal = goal.substring(0, goal.length() - 1);
-
-			goal += ")";
-
-			this.postGoal(goal, "100");
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
-	
+//
+//	public void startGoal(String arg) {
+//		try {
+//
+//			GeneralizedList gl = GLFactory.newGLFromGLString(arg);
+//			String goal = "(ServicePerformed ";
+//
+//			for (int i = 0; i < gl.getExpressionsSize(); i++) {
+//				goal += gl.getExpression(i).toString() + " ";
+//			}
+//
+//			goal = goal.substring(0, goal.length() - 1);
+//
+//			goal += ")";
+//
+//			this.postGoal(goal, "100");
+//
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
+//	
+//	
 
 	public String retrieveGLExpression(String input, int i) {
 		String result = "";

@@ -4,8 +4,6 @@ PREFIXES:
 PLAN PERFORM GoalAssign($goal, $worker) {
 	ID: "http://www.arbi.com//GoalAssign"
 	PRECONDITION :
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "GoalAssign");
 		
@@ -19,19 +17,52 @@ PLAN PERFORM GoalAssign($goal, $worker) {
 PLAN PERFORM TwoGoalsAssign($goal1, $worker1, $goal2, $worker2) {
 	ID: "http://www.arbi.com//TwoGoalAssign"
 	PRECONDITION :
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "GoalAssign");
+		PERFORM isro:startLog("PERFORM", "TwoGoalsAssign");
 		
 		PERFORM RequestTwoTasksAllocation($goal1, $robot1, $goal2, $robot2);
 		
 		PERFORM FindRobotAgent($robot1, $worker1);
 		PERFORM FindRobotAgent($robot2, $worker2);
 		
-		PERFORM isro:endLog("PERFORM", "GoalAssign");
+		PERFORM isro:endLog("PERFORM", "TwoGoalsAssign");
 	UTILITY: 10; 
 }
+
+PLAN PERFORM ThreeGoalsAssign($goal1, $worker1, $goal2, $worker2, $goal3, $worker3) {
+	ID: "http://www.arbi.com//ThreeGoalAssign"
+	PRECONDITION :
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ThreeGoalsAssign");
+		
+		PERFORM RequestThreeTasksAllocation($goal1, $robot1, $goal2, $robot2, $goal3, $robot3);
+		
+		PERFORM FindRobotAgent($robot1, $worker1);
+		PERFORM FindRobotAgent($robot2, $worker2);
+		PERFORM FindRobotAgent($robot3, $worker3);
+		
+		PERFORM isro:endLog("PERFORM", "ThreeGoalsAssign");
+	UTILITY: 10; 
+}
+
+PLAN PERFORM FourGoalsAssign($goal1, $worker1, $goal2, $worker2, $goal3, $worker3, $goal4, $worker4) {
+	ID: "http://www.arbi.com//FourGoalAssign"
+	PRECONDITION :
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FourGoalsAssign");
+		
+		PERFORM RequestFourTasksAllocation($goal1, $robot1, $goal2, $robot2, $goal3, $robot3, $goal4, $robot4);
+		
+		PERFORM FindRobotAgent($robot1, $worker1);
+		PERFORM FindRobotAgent($robot2, $worker2);
+		PERFORM FindRobotAgent($robot3, $worker3);
+		PERFORM FindRobotAgent($robot3, $worker4);
+		
+		PERFORM isro:endLog("PERFORM", "FourGoalsAssign");
+	UTILITY: 10; 
+}
+
+
 
 
 /*

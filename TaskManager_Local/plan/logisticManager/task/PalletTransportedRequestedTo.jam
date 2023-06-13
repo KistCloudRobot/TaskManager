@@ -1,10 +1,11 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX logi: <http://www.arbi.com//Logistic#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
 
 PLAN CONCLUDE PostPalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//BuiltInPlan#PostPalletTransportedRequestedTo"
 	PRECONDITION:
-		//FACT PersonCall($callID,$location,$cmd);
 	BODY:
 		
 		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedRequestedTo");
@@ -20,16 +21,18 @@ PLAN CONCLUDE PostPalletTransportedRequestedTo($goal, $channelName, $worker) {
 PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	ID: "http://www.arbi.com//PalletTransportedRequestedTo"
 	PRECONDITION :
-		FACT PersonCall($callID,$location,$cmd);
+		FACT PersonCall($callID,$commands);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveExpressionSize($commands) == 1;
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo");
 		
-		PERFORM PalletTransportedCreated($callID, $goal);
+		$command = $glUtility.retrieveGLExpression($commands, 0);
+		PERFORM PalletTransportedCreated($command, $goal);
 		
 		PERFORM GoalAssign($goal, $worker);
 		PERFORM GoalRequestTo($goal, $channelName, $worker);
 		
-		PERFORM AssertStationAssignedBy($goal); 
 		PERFORM UpdateGoalAssigned($goal, $worker);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
 		
@@ -38,40 +41,118 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
-		RETRACT PersonCall($callID,$location,$cmd);
+		RETRACT PersonCall($callID,$commands);
 }
 		
-PLAN PERFORM PalletTransportedRequestedTo($goal1, $channelName, $worker1) {
-	ID: "http://www.arbi.com//PalletTransportedRequestedToTwoWorkers"
+PLAN PERFORM PalletTransportedRequestedTo($goal0, $channelName, $worker0) {
+	ID: "http://www.arbi.com//PalletTransportedRequestedTo2"
 	PRECONDITION :
-		FACT PersonCall($callID1,$location1,$cmd1);
-		//$cmd1 == "Unstoring";
-		FACT PersonCall($callID2,$location2,$cmd2);
-		//$cmd2 == "PrepareUnstoring";
+		FACT PersonCall($callID,$commands);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveExpressionSize($commands) == 2;
 	BODY:
-		PERFORM isro:startLog("PERFORM", "PalletTransportedRequestedTo - Two Goals");
-		System.out.println("PersonCall 1 : " + $callID1);
-		System.out.println("PersonCall 2 : " + $callID2);
-		PERFORM PalletTransportedCreated($callID1, $goal1);
-		PERFORM PalletTransportedCreated($callID2, $goal2);
-		PERFORM TwoGoalsAssign($goal1, $worker1, $goal2, $worker2);
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo 2 commands");
+		$command0 = $glUtility.retrieveGLExpression($commands, 0);
+		System.out.println("command0");
+		System.out.println($command0);
+		PERFORM PalletTransportedCreated($command0, $goal0);
 		
+		$command1 = $glUtility.retrieveGLExpression($commands, 1);
+		PERFORM PalletTransportedCreated($command1, $goal1);
+		
+		PERFORM TwoGoalsAssign($goal0, $worker0, $goal1, $worker1);		
+		
+		PERFORM GoalRequestTo($goal0, $channelName, $worker0);
 		PERFORM GoalRequestTo($goal1, $channelName, $worker1);
-		PERFORM GoalRequestTo($goal2, $channelName, $worker2);
 		
-		PERFORM AssertStationAssignedBy($goal); 
-		PERFORM UpdateGoalAssigned($goal, $worker);
-		
-		PERFORM AssertStationAssignedBy($goal1); 
+		PERFORM UpdateGoalAssigned($goal0, $worker0);
 		PERFORM UpdateGoalAssigned($goal1, $worker1);
 		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
 		
-		PERFORM isro:endLog("PERFORM", "PalletTransportedRequestedTo - Two Goals");
-	UTILITY: -1; 
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo 2 commands");
+	UTILITY: 100; 
 	
 	EFFECTS :
-		ASSERT PalletTransportedRequestedTo($goal1, $channelName, $worker1);
-		RETRACT PersonCall($callID1,$location1,$cmd1);
-		RETRACT PersonCall($callID2,$location2,$cmd2);
+		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
+		RETRACT PersonCall($callID,$commands);
+}
+
+		
+PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
+	ID: "http://www.arbi.com//PalletTransportedRequestedTo3"
+	PRECONDITION :
+		FACT PersonCall($callID,$commands);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveExpressionSize($commands) == 3;
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo 3 commands");
+		$command0 = $glUtility.retrieveGLExpression($commands, 0);
+		PERFORM PalletTransportedCreated($command0, $goal0);
+		
+		$command1 = $glUtility.retrieveGLExpression($commands, 1);
+		PERFORM PalletTransportedCreated($command1, $goal1);
+		
+		$command2 = $glUtility.retrieveGLExpression($commands, 2);
+		PERFORM PalletTransportedCreated($command1, $goal2);
+		
+		PERFORM ThreeGoalsAssign($goal0, $worker0, $goal1, $worker1, $goal2 , $worker2);		
+		
+		PERFORM GoalRequestTo($goal0, $channelName, $worker0);
+		PERFORM GoalRequestTo($goal1, $channelName, $worker1);
+		PERFORM GoalRequestTo($goal2, $channelName, $worker2);
+		
+		PERFORM UpdateGoalAssigned($goal0, $worker0);
+		PERFORM UpdateGoalAssigned($goal1, $worker1);
+		PERFORM UpdateGoalAssigned($goal2, $worker2);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
+		
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo 3 commands");
+	UTILITY: 100; 
+	
+	EFFECTS :
+		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
+		RETRACT PersonCall($callID,$commands);
+}
+
+		
+PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
+	ID: "http://www.arbi.com//PalletTransportedRequestedTo4"
+	PRECONDITION :
+		FACT PersonCall($callID,$commands);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveExpressionSize($commands) == 4;
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PalletTransportedRequestedTo 4 commands");
+		$command0 = $glUtility.retrieveGLExpression($commands, 0);
+		PERFORM PalletTransportedCreated($command0, $goal0);
+		
+		$command1 = $glUtility.retrieveGLExpression($commands, 1);
+		PERFORM PalletTransportedCreated($command1, $goal1);
+		
+		$command2 = $glUtility.retrieveGLExpression($commands, 2);
+		PERFORM PalletTransportedCreated($command2, $goal2);
+		
+		$command3 = $glUtility.retrieveGLExpression($commands, 3);
+		PERFORM PalletTransportedCreated($command3, $goal3);
+		
+		PERFORM FourGoalsAssign($goal0, $worker0, $goal1, $worker1, $goal2 , $worker2, $goal3 , $worker3);		
+		
+		PERFORM GoalRequestTo($goal0, $channelName, $worker0);
+		PERFORM GoalRequestTo($goal1, $channelName, $worker1);
+		PERFORM GoalRequestTo($goal2, $channelName, $worker2);
+		PERFORM GoalRequestTo($goal3, $channelName, $worker3);
+		
+		PERFORM UpdateGoalAssigned($goal0, $worker0);
+		PERFORM UpdateGoalAssigned($goal1, $worker1);
+		PERFORM UpdateGoalAssigned($goal2, $worker2);
+		PERFORM UpdateGoalAssigned($goal3, $worker3);
+		perform isro:SendGoalComplete("PalletTransportedRequestedTo");
+		
+		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo 4 commands");
+	UTILITY: 100; 
+	
+	EFFECTS :
+		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
+		RETRACT PersonCall($callID,$commands);
 }
 

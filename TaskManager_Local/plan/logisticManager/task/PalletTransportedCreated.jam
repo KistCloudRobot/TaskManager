@@ -1,46 +1,48 @@
 
-PLAN PERFORM PalletTransportedCreated($callID, $goal) {
+PLAN PERFORM PalletTransportedCreated($command, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForPrepareStoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "PrepareStoring";
+		$glUtility.retrieveGLExpression($command, 1) == "PrepareStoring";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PalletTransportedCreated PrepareStoring");
 		
 		$goalID = $helper.getGoalID($agent);
+		$location = $glUtility.retrieveGLExpression($command, 0);
 		PERFORM QueryIdleLiftRack($rack);
 		PERFORM QueryRackOnStation($rack, $startStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
 		
 		PERFORM isro:argumentLog("$goal", $goal);
+		PERFORM AssertStationAssignedBy($goal); 
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated PrepareStoring");
 	UTILITY: 10; 
 	
 }
 
 
-PLAN PERFORM PalletTransportedCreated($callID, $goal) {
+PLAN PERFORM PalletTransportedCreated($command, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForPrepareUnstoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "PrepareUnstoring";
+		$glUtility.retrieveGLExpression($command, 1) == "PrepareUnstoring";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PalletTransportedCreated PrepareUnstoring");
 		
 		$goalID = $helper.getGoalID($agent);
+		$location = $glUtility.retrieveGLExpression($command, 0);
 		PERFORM QueryCargoOnStoringStation($cargo);
 		PERFORM QueryCargoOn($cargo,$rack);
 		Perform QueryRackOnStation($rack,$startStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
 		PERFORM isro:argumentLog("$goal", $goal);
+		PERFORM AssertStationAssignedBy($goal); 
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated PrepareUnstoring");
 	UTILITY: 10; 
 	
@@ -48,46 +50,49 @@ PLAN PERFORM PalletTransportedCreated($callID, $goal) {
 
 
 
-PLAN PERFORM PalletTransportedCreated($callID, $goal) {
+PLAN PERFORM PalletTransportedCreated($command, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForStoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "Storing";
+		$glUtility.retrieveGLExpression($command, 1) == "Storing";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PalletTransportedCreated Storing");
 		
 		$goalID = $helper.getGoalID($agent);
+		$location = $glUtility.retrieveGLExpression($command, 0);
 		PERFORM QueryRackOnRack($rack, $location);
 		PERFORM QueryEmptyStoringStation($endStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
 		PERFORM isro:argumentLog("$goal", $goal);
+		PERFORM AssertStationAssignedBy($goal); 
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated Storing");
 	UTILITY: 10; 
 	
 }
 
 
-PLAN PERFORM PalletTransportedCreated($callID, $goal) {
+PLAN PERFORM PalletTransportedCreated($command, $goal) {
 	ID: "http://www.arbi.com//PalletTransportedCreatedForUnstoring"
 	PRECONDITION :
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		FACT PersonCall($callID,$location,$cmd);
-		$cmd == "Unstoring";
+		$glUtility.retrieveGLExpression($command, 1) == "Unstoring";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PalletTransportedCreated Unstoring");
 		
 		$goalID = $helper.getGoalID($agent);
+		$location = $glUtility.retrieveGLExpression($command, 0);
+		
 		PERFORM QueryRackOnRack($rack, $location);
 		PERFORM QueryEmptyStoringStation($endStation);
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
 		PERFORM isro:argumentLog("$goal", $goal);
+		PERFORM AssertStationAssignedBy($goal); 
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated Unstoring");
 	UTILITY: 10; 
 	
