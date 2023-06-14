@@ -25,8 +25,8 @@ PLAN CONCLUDE context($context){
 		$cargoID = $glUtility.retrieveGLExpression($context, 0);
 		$location = $glUtility.retrieveGLExpression($context, 1);
 		$callID = $glUtility.retrieveGLExpression($context, 2);
-
-		$data = "(context (PersonCall \"" + $callID + "\" \"" + $location + "\" \"Storing\"))";
+		$command = "(command \"" + $location + "\" \"Storing\")";
+		$data = "(context (PersonCall \"" + $callID + "\" (commands " + $command + "))";
 		System.out.println($data);
 		$communication.assertToLTM($data);
 		RETRACT context($context);
