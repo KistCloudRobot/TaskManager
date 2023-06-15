@@ -74,6 +74,7 @@ PLAN PERFORM PalletTransportedRequestedTo($goal0, $channelName, $worker0) {
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal0, $channelName, $worker0);
+		ASSERT PalletTransportedRequestedTo($goal1, $channelName, $worker1);
 		RETRACT PersonCall($callID,$commands);
 }
 
@@ -111,6 +112,8 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal0, $channelName, $worker0);
+		ASSERT PalletTransportedRequestedTo($goal1, $channelName, $worker1);
+		ASSERT PalletTransportedRequestedTo($goal2, $channelName, $worker2);
 		RETRACT PersonCall($callID,$commands);
 }
 
@@ -153,6 +156,10 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal0, $channelName, $worker0);
+		ASSERT PalletTransportedRequestedTo($goal1, $channelName, $worker1);
+		ASSERT PalletTransportedRequestedTo($goal2, $channelName, $worker2);
+		ASSERT PalletTransportedRequestedTo($goal3, $channelName, $worker3);
+		
 		RETRACT PersonCall($callID,$commands);
 }
 

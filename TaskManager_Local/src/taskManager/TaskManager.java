@@ -74,7 +74,7 @@ public class TaskManager extends ArbiAgent {
 		
 	private void init() {
 		ArbiAgentExecutor.execute(ENV_JMS_BROKER, brokerPort, TASKMANAGER_ADRESS, this,BrokerType.ACTIVEMQ);
-		AgentExecutor.execute(channelHost, myAgentID, agentCommunicator, kr.ac.uos.ai.agentCommunicationFramework.BrokerType.ZEROMQ);
+		AgentExecutor.execute(channelHost, myAgentID, agentCommunicator, kr.ac.uos.ai.agentCommunicationFramework.BrokerType.ACTIVEMQ);
 		dataSource.connect(ENV_JMS_BROKER, brokerPort, TASKMANAGER_DATASOURCE_PREFIX +TASKMANAGER_ADRESS, BrokerType.ACTIVEMQ);
 		
 		msgManager.assertFact("GLUtility", msgManager);

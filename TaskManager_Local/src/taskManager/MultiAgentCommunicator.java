@@ -21,13 +21,16 @@ public class MultiAgentCommunicator extends Agent{
 		return this.getConversationID();
 	}
 	public Channel createAgentChannel(String channelName) {
-		Channel channel = new AgentChannel(channelName, this, BrokerType.ZEROMQ, messageQueue);
+		System.out.println("create?");
+		Channel channel = new AgentChannel(channelName, this, BrokerType.ACTIVEMQ, messageQueue);
+		System.out.println("create?");
 		ChannelFactory.createChannel(channel);
+		System.out.println("create?");
 		return channel;
 	}
 	
 	public Channel connectAgentChannel(String channelName) {
-		Channel channel = new AgentChannel(channelName, this, BrokerType.ZEROMQ, messageQueue);
+		Channel channel = new AgentChannel(channelName, this, BrokerType.ACTIVEMQ, messageQueue);
 		ChannelFactory.connectChannel(channel);
 		return channel;
 	}

@@ -119,7 +119,7 @@ PLAN PERFORM RequestFourTasksAllocation($goal1, $worker1, $goal2, $worker2, $goa
 		
 		$allocation4 = $glUtility.retrieveGLExpression($result, 3);
 		System.out.println("allocation4 : " + $allocation4);
-		$worker4 = $glUtility.retrieveGLExpression($allocation3,1);
+		$worker4 = $glUtility.retrieveGLExpression($allocation4,1);
 		System.out.println("allocated Robot4 : " + $worker4);
 		PERFORM isro:endLog("PERFORM", "RequestFourTasksAllocation");
 	UTILITY: 1; 

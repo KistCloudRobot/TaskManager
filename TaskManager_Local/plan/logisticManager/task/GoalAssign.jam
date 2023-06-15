@@ -56,7 +56,7 @@ PLAN PERFORM FourGoalsAssign($goal1, $worker1, $goal2, $worker2, $goal3, $worker
 		PERFORM FindRobotAgent($robot1, $worker1);
 		PERFORM FindRobotAgent($robot2, $worker2);
 		PERFORM FindRobotAgent($robot3, $worker3);
-		PERFORM FindRobotAgent($robot3, $worker4);
+		PERFORM FindRobotAgent($robot4, $worker4);
 		
 		PERFORM isro:endLog("PERFORM", "FourGoalsAssign");
 	UTILITY: 10; 
