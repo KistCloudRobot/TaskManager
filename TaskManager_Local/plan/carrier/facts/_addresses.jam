@@ -4,6 +4,5 @@ PREFIXES:
 
 FACTS:	
 	FACT  isro:ManagerAddress("agent://www.mcarbi.com/Local");
-	FACT  isro:SemanticMapManagerAddress("agent://www.mcarbi.com/SemanticMapManager");
 	FACT  PalletizerAgentAddress("agent://www.mcarbi.com/Palletizer");
 	

@@ -8,3 +8,4 @@ FACTS:
 	FACT  isro:ReasonerAddress("agent://www.arbi.com/TaskReasoner");
 	FACT  isro:ContextManagerAddress("agent://www.arbi.com/ContextManager");
 	FACT  isro:ServicePackageDispatcherAddress("agent://www.arbi.com/ServiceDispatcher");
+	FACT  isro:SemanticMapManagerAddress("agent://www.mcarbi.com/SemanticMapManager");

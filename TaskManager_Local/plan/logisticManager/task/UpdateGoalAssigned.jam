@@ -3,12 +3,19 @@ PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 	PRECONDITION :
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
+		FACT isro:SemanticMapManagerAddress($address);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
+		
 		$goalID = $glUtility.retrieveGLExpression($goal,0);
 		ASSERT goalAssigned($goal, $worker);
+		
 		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
 		$communicationInstance.assertToLTM($data);
+		
+		$context = "(TaskCreated \"" + $goalID + "\")";
+		PERFORM notify("logistic", $address, $context);
+		
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
 	UTILITY : 10;
 }
@@ -19,12 +26,20 @@ PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 		FACT GLUtility($glUtility);
 		FACT Communication($communicationInstance);
 		FACT goalAssigned($goal, $worker);
+		FACT isro:SemanticMapManagerAddress($address);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
+		
+
 		$goalID = $glUtility.retrieveGLExpression($goal,0);
 		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
+		
 		$communicationInstance.retractFromLTM($data);
 		RETRACT goalAssigned($goal, $worker);
+		
+		$context = "(TaskCompleted \"" + $goalID + "\")";
+		PERFORM notify("logistic", $address, $context);
+		
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
 	UTILITY : 20;
 }

@@ -2,7 +2,7 @@
 PLAN PERFORM NotifyRobotPath($robotID, $path){
 	ID: "http://www.arbi.com//NotifyRobotPathForLocal"
 	PRECONDITION : 
-		FACT  isro:SemanticMapManager($address);
+		FACT  isro:SemanticMapManagerAddress($address);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "NotifyRobotPath");
 		

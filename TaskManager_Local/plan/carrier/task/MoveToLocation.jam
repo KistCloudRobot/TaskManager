@@ -11,7 +11,6 @@ PLAN CONCLUDE PostMoveToLocation($location) {
 	BODY:
 		POST PERFORM MoveToLocation($endStation);
 		//System.out.println("move to location For Unloading posted");
-		RETRACT PostMoveToLocation($location);
 	UTILITY : 50000;
 	EFFECTS : 
 		RETRACT PostMoveToLocation($location);
@@ -41,12 +40,16 @@ PLAN perform MoveToLocation($location){
 		FACT robotAt($robot, $vertex1, $vertex2);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "MoveToLocation");
+		PERFORM UpdateAgentTaskStatus($goalID, "MoveToLocation", "start");
 		
 		PERFORM isro:QueryPriorVertex($location, $preparationVertex);
 
+		PERFORM UpdateAgentTaskStatus($goalID, "MoveToLocation", "progress");
 		PERFORM isro:RequestNavigate($preparationVertex);
 		
 		PERFORM isro:SendGoalComplete("MoveToLocation");
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "MoveToLocation", "complete");
 		PERFORM isro:endLog("PERFORM", "MoveToLocation");
 	UTILITY: 10; 
 }

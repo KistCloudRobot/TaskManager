@@ -1,0 +1,8 @@
+PLAN CONCLUDE AgentTaskStatus($robot, $id, $taskName, $status){
+	ID: "http://www.arbi.com//BuiltInPlan#AgentTaskStatus"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+	BODY:
+		
+	UTILITY : 100;
+}

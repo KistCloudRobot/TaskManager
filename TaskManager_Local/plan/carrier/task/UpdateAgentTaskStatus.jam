@@ -1,0 +1,35 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM UpdateAgentTaskStatus($taskID, $taskName, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#UpdateAgentTaskStatusNewTask"
+	PRECONDITION:
+		FACT isro:robot($robot);
+		FACT AgentTaskStatus($robot, $oldID, $oldTask, $oldStatus);
+		FACT isro:SemanticMapManagerAddress($address);
+	BODY:
+		RETRACT AgentTaskStatus($robot, $oldID, $oldTask, $oldStatus);
+		
+		ASSERT AgentTaskStatus($robot, $taskID, $taskName, $status);
+		$data = "(context (AgentTaskStatus \"" + $robot + "\" \"" + $taskID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
+		PERFORM notify("logistic", $address, $data);
+	
+	UTILITY : 50000;
+}
+
+
+PLAN PERFORM UpdateAgentTaskStatus($taskID, $taskName, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#UpdateAgentTaskStatusCurrentTask"
+	PRECONDITION:
+		FACT isro:robot($robot);
+		FACT AgentTaskStatus($robot, $taskID, $oldTask, $oldStatus);
+		FACT isro:SemanticMapManagerAddress($address);
+	BODY:
+		RETRACT AgentTaskStatus($robot, $taskID, $oldTask, $oldStatus);
+		
+		ASSERT AgentTaskStatus($robot, $taskID, $taskName, $status);
+		$data = "(context (AgentTaskStatus \"" + $robot + "\" \"" + $taskID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
+		PERFORM notify("logistic", $address, $data);
+	
+	UTILITY : 50001;
+}

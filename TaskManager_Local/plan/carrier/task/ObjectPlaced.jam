@@ -19,7 +19,10 @@ PLAN PERFORM ObjectPlaced($object, $location){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "ObjectPlaced");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "ObjectPlaced", "start");
 		PERFORM isro:QueryStationType($location, $stationType);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "ObjectPlaced", "progress");
 		PERFORM EnterToStation($location, $stationType);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
@@ -28,6 +31,7 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		PERFORM ExitFromStation($location, $stationType);
 				
 		PERFORM isro:SendGoalComplete("ObjectPlaced");
+		PERFORM UpdateAgentTaskStatus($goalID, "ObjectPlaced", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
 	UTILITY: 10; 
 }

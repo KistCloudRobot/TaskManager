@@ -8,6 +8,8 @@ PLAN PERFORM initializeContext($agentID) {
 		$chargingStation = 500;
 		
 		ASSERT isro:robot($robotID);
+		
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
 		ASSERT WaitVertex($waitVertex);
 		ASSERT robotPosition($robotID, 0, 0);
 		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
@@ -27,6 +29,7 @@ PLAN PERFORM initializeContext($agentID) {
 		$chargingStation = 500;
 		
 		ASSERT isro:robot($robotID);
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
 		ASSERT WaitVertex($waitVertex);
 		ASSERT robotPosition($robotID, 0, 0);
 		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
@@ -47,6 +50,7 @@ PLAN PERFORM initializeContext($agentID) {
 		$chargingStation = 501;
 		
 		ASSERT isro:robot($robotID);
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
 		ASSERT WaitVertex($waitVertex);
 		ASSERT robotPosition($robotID, 0, 0);
 		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
@@ -67,6 +71,7 @@ PLAN PERFORM initializeContext($agentID) {
 		$chargingStation = 501;
 		
 		ASSERT isro:robot($robotID);
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
 		ASSERT WaitVertex($waitVertex);
 		ASSERT robotPosition($robotID, 0, 0);
 		ASSERT robotAt($robotID, $waitVertex, $waitVertex);

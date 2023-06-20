@@ -6,10 +6,8 @@ PLAN CONCLUDE robotPosition($robot, $x, $y) {
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
-		//PERFORM  isro:startLog("CONCLUDE", "robotPosition");
 		$data = "(context (robotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
 		PERFORM notify("logistic", $address, $data);
-		//PERFORM isro:endLog("CONCLUDE", "robotPosition");
 	UTILITY : 10001;
 }
 

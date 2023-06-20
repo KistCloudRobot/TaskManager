@@ -11,7 +11,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotLoading($robot, $load);
 		$load == "Loading";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "isro:EnterToStation at palletizing to unload");
+		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to unload");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
 		//PERFORM RequestRackUnloadingPrepared($vertex);
@@ -20,7 +20,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		
 		PERFORM RequestStationIn($moveType, $vertex);
 				
-		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
+		PERFORM isro:endLog("PERFORM", "EnterToStation");
 		
 	UTILITY: 2; 
 }
@@ -35,7 +35,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotLoading($robot, $load);
 		$load == "Unloading";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "isro:EnterToStation at palletizing to load");
+		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to load");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
 
@@ -45,7 +45,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		
 		PERFORM RequestStationIn($moveType, $vertex);
 				
-		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
+		PERFORM isro:endLog("PERFORM", "EnterToStation");
 		
 	UTILITY: 2; 
 
@@ -57,12 +57,12 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotAt($robot, $vertex1, $vertex2);
 		FACT ExtraUtility($util);
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "isro:EnterToStation");
+		PERFORM  isro:startLog("PERFORM", "EnterToStation");
 		
 		PERFORM isro:QueryMoveType($location, "in", $moveType, $vertex);
 		PERFORM RequestStationIn($moveType, $vertex);
 				
-		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
+		PERFORM isro:endLog("PERFORM", "EnterToStation");
 		
 	UTILITY: 1; 
 
@@ -71,8 +71,8 @@ PLAN PERFORM EnterToStation($location, $stationType){
 PLAN PERFORM EnterToStation($location, $stationType){
 	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationForGrabFail"
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "isro:EnterToStationFail");
+		PERFORM  isro:startLog("PERFORM", "EnterToStation Fail");
 		
-		PERFORM isro:endLog("PERFORM", "isro:EnterToStationFail");		
+		PERFORM isro:endLog("PERFORM", "EnterToStation Fail");		
 	UTILITY: 0; 
 }

@@ -9,6 +9,7 @@ PLAN CONCLUDE PostObjectGrabbed($object, $location) {
 		$goalName == "PalletTransported";
 	BODY:
 		POST PERFORM ObjectGrabbed($obj, $startStation);
+		
 		RETRACT PostObjectGrabbed($object, $location);
 	
 	UTILITY : 50000;
@@ -18,9 +19,12 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbedTest"
 	PRECONDITION:
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed");
+		PERFORM isro:startLog("PERFORM", "ObjectGrabbed");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "ObjectGrabbed", "start");
 		PERFORM isro:QueryStationType($location, $stationType);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "ObjectGrabbed", "progress");
 		PERFORM EnterToStation($location, $stationType);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
@@ -29,6 +33,7 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		PERFORM ExitFromStation($location, $stationType);
 				
 		PERFORM isro:SendGoalComplete("ObjectGrabbed");
+		PERFORM UpdateAgentTaskStatus($goalID, "ObjectGrabbed", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
 		
 	UTILITY: 10; 
