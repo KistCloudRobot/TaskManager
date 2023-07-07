@@ -21,10 +21,10 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "ObjectGrabbed");
 		
-		PERFORM UpdateAgentTaskStatus($goalID, "ObjectGrabbed", "start");
+		PERFORM UpdateAgentTaskStatus("ObjectGrabbed", "start");
 		PERFORM isro:QueryStationType($location, $stationType);
 		
-		PERFORM UpdateAgentTaskStatus($goalID, "ObjectGrabbed", "progress");
+		PERFORM UpdateAgentTaskStatus("ObjectGrabbed", "progress");
 		PERFORM EnterToStation($location, $stationType);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
@@ -33,7 +33,7 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		PERFORM ExitFromStation($location, $stationType);
 				
 		PERFORM isro:SendGoalComplete("ObjectGrabbed");
-		PERFORM UpdateAgentTaskStatus($goalID, "ObjectGrabbed", "complete");
+		PERFORM UpdateAgentTaskStatus("ObjectGrabbed", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
 		
 	UTILITY: 10; 
