@@ -1,0 +1,17 @@
+
+PLAN PERFORM FrontGraspped($x, $y) {
+	ID: "http://www.arbi.com//FrontGraspped"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FrontGraspped");
+		
+		PERFORM MoveToTray("Front", $x, $y);
+		PERFORM Grasp("Front");
+		
+		PERFORM isro:endLog("PERFORM", "FrontGraspped");
+	UTILITY: 1; 
+}

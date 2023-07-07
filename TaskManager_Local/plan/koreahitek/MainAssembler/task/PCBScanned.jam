@@ -1,0 +1,15 @@
+
+PLAN PERFORM PCBScanned() {
+	ID: "http://www.arbi.com//PCBScanned"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "PCBScanned");
+		
+		PERFORM MoveToPosition("PCBScan");
+		
+		PERFORM isro:endLog("PERFORM", "PCBScanned");
+}

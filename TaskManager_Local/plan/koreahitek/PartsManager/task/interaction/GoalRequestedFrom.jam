@@ -1,0 +1,50 @@
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/HousingLabeledGoalRequestedFromForPartsManager"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "HousingLabeled";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - HousingLabeled");
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM HousingLabeledRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - HousingLabeled");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/ProductInspectedGoalRequestedFromForLIFT"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "ProductInspected";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - ProductInspected");
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM ProductInspectedRequestedFrom($goal, $channel, $agent);
+
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - ProductInspected");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/GuideJigRisedGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "GuideJigRised";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - GuideJigRised");
+
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM GuideJigRisedRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - GuideJigRised");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}

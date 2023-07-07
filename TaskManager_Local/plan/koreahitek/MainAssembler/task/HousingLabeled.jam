@@ -1,0 +1,18 @@
+
+PLAN PERFORM HousingLabeled() {
+	ID: "http://www.arbi.com//HousingLabeld"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT RoleAssigned("PartsManager", $address);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "HousingLabeled");
+		
+		$goalID = $helper.getGoalID($agent);
+		$goal = "(HousingLabeled \"" + $goalID +"\")";
+		PERFORM GoalRequestTo($goal, "Assembly",$address);
+		
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "HousingLabeled");
+}

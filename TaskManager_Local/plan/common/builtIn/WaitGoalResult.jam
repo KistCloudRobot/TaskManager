@@ -8,8 +8,10 @@ PLAN PERFORM WaitGoalResult($goalID){
 		
 		PERFORM isro:argumentLog("$goalID", $goalID);
 		PERFORM isro:argumentLog("$result", $result);
-		RETRACT GoalResult($goalID, $result);
 		
 		PERFORM isro:endLog("PERFORM", "WaitGoalResult");
 	UTILITY : 10000;
+	
+	EFFECTS :
+		RETRACT GoalResult($goalID, $result);
 }

@@ -1,0 +1,13 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+FACTS :
+
+	FACT LensPosition(1,1);
+	FACT FrontPosition(1,1);
+	FACT isro:robot("UR");
+	FACT RoleAssigned("MainAssembler", "agent://www.mcarbi.com/MainAssembler");
+	FACT RoleAssigned("SubAssembler", "agent://www.mcarbi.com/SubAssembler");
+	FACT RoleAssigned("PartsManager", "agent://www.mcarbi.com/PartsManager");
+	

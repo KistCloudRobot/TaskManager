@@ -1,0 +1,13 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+FACTS :
+
+	FACT PCBPosition(1,1);
+	FACT HousingPosition(1,1);
+	FACT isro:robot("Epson");
+	FACT RoleAssigned("MainAssembler", "agent://www.mcarbi.com/MainAssembler");
+	FACT RoleAssigned("SubAssembler", "agent://www.mcarbi.com/SubAssembler");
+	FACT RoleAssigned("PartsManager", "agent://www.mcarbi.com/PartsManager");
+	

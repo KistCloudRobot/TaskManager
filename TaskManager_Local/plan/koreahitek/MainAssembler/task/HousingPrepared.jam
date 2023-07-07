@@ -1,0 +1,19 @@
+
+PLAN ACHIEVE HousingPrepared() {
+	ID: "http://www.arbi.com//HousingPrepared"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "HousingPrepared");
+		
+		PERFORM FindHousingPosition($x, $y);
+		PERFORM HousingGraspped($x, $y);
+		PERFORM MoveToPosition("HousingLabel");
+		
+		PERFORM HousingLabeled();
+		
+		PERFORM isro:endLog("ACHIEVE", "HousingPrepared");
+}

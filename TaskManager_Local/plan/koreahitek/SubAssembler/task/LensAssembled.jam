@@ -1,0 +1,37 @@
+
+PLAN PERFORM LensAssembledRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//LensAssembledRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "LensAssembledRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM LensAssembled($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "LensAssembledRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM LensAssembled($goalID) {
+	ID: "http://www.arbi.com//LensAssembled"
+	PRECONDITION:
+		FACT LensPrepared();
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "LensAssembled");
+		
+		PERFORM MoveToPosition("LensPut");
+		PERFORM Release("Lens");
+		PERFORM MoveToPosition("URPutWait");
+	
+		PERFORM isro:endLog("ACHIEVE", "LensAssembled");
+	UTILITY: 1; 
+	
+	EFFECTS :
+		RETRACT LensPrepared();
+}

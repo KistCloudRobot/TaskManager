@@ -3,14 +3,16 @@ import taskManager.TaskManager;
 
 PREFIXES:
 	PREFIX arbi: <http://www.arbi.com//ontologies#>;
-	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;		
+	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+	
 GOALS:
 	MAINTAIN alive  :UTILITY -10000;
 	PERFORM	boot;
 	
 FACTS:
-	FACT LOG;
-	FACT AGENT_ALIAS("TaskManager",	"agent://www.arbi.com/TaskManager" );
+	FACT PlanTest();
+	FACT LOG();
+	FACT AGENT_ALIAS("TaskManager",	"agent://www.arbi.com/TaskManager");
 	FACT CURRENT_TIME (0);
 
 OBSERVER: {

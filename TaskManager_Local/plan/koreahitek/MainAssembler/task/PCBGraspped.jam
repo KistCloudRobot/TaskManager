@@ -1,0 +1,17 @@
+
+PLAN PERFORM PCBGraspped($x, $y) {
+	ID: "http://www.arbi.com//PCBGraspped"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "PCBGraspped");
+		
+		PERFORM MoveToTray("PCB", $x, $y);
+		PERFORM Grasp("PCB");
+		
+		PERFORM isro:endLog("PERFORM", "PCBGraspped");
+	UTILITY: 1; 
+}

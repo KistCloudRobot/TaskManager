@@ -1,0 +1,21 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+	
+PLAN ACHIEVE GuideJigRisedRequestedTo($goalID, $channelName, $worker) {
+	ID: "http://www.arbi.com//GuideJigRisedRequestedTo"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		FACT ExtraUtility($helper);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "GuideJigRisedRequestedTo");
+		
+		$goalID = $helper.getGoalID($agent);
+		$goal = "(GuideJigRised \"" + $goalID + "\")";
+		PERFORM GoalRequestTo($goal, $channelName, $worker);	
+		
+		PERFORM isro:endLog("ACHIEVE", "GuideJigRisedRequestedTo");
+	
+}
+

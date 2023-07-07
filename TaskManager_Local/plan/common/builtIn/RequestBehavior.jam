@@ -13,3 +13,25 @@ PLAN PERFORM isro:RequestBehavior($actionID, $action){
 		
 		PERFORM isro:endLog("PERFORM", "RequestBehavior");
 }
+
+
+
+
+PLAN PERFORM isro:RequestBehavior($actionID, $action){
+	ID : "http://www.arbi.com//RequestBehaviorForPlanTest"
+	PRECONDITION :
+		FACT ExtraUtility($helper);
+		FACT PlanTest();
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "RequestBehavior PlanTest");
+		
+		PERFORM isro:argumentLog("$actionID", $actionID);
+		PERFORM isro:argumentLog("$action", $action);
+
+		$helper.sleepAwhile(1000);
+		
+		PERFORM isro:endLog("PERFORM", "RequestBehavior PlanTest");
+	UTILITY : 10;
+}

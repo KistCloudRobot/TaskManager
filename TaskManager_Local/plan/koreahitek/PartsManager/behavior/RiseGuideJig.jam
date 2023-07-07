@@ -1,0 +1,14 @@
+PLAN PERFORM RiseGuideJig() {
+	ID: "http://www.arbi.com//RiseGuideJig"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RiseGuideJig");
+		
+		System.out.println("TODO - RiseGuideJig");
+	
+		PERFORM isro:endLog("PERFORM", "RiseGuideJig");
+	UTILITY: 1; 
+	
+}

@@ -1,0 +1,18 @@
+
+PLAN ACHIEVE PCBPrepared() {
+	ID: "http://www.arbi.com//PCBPrepared"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PCBPrepared");
+		
+		PERFORM FindPCBPosition($x, $y);
+		PERFORM PCBGraspped($x, $y);
+		PERFORM PCBScanned();
+		
+		PERFORM isro:endLog("ACHIEVE", "PCBPrepared");
+	UTILITY: 1; 
+}

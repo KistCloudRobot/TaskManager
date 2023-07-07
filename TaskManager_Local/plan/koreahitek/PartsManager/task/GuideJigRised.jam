@@ -1,0 +1,32 @@
+
+PLAN PERFORM GuideJigRisedRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//GuideJigRisedRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "GuideJigRisedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM GuideJigRised($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "GuideJigRisedRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM GuideJigRised($goalID) {
+	ID: "http://www.arbi.com//GuideJigRised"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "GuideJigRised");
+		
+		PERFORM RiseGuideJig();
+	
+		PERFORM isro:endLog("PERFORM", "GuideJigRised");
+	UTILITY: 1; 
+	
+}

@@ -1,0 +1,17 @@
+PLAN PERFORM initialize() {
+	ID : "initializeForMainAssembler"
+	PRECONDITION :
+		FACT Communication($communication);
+	BODY :
+		System.out.println("---initialize---");
+
+		System.out.println("---start ChannelInit---");
+		
+		PERFORM connectAgentChannel("Assembly", $channel);
+		
+		ASSERT Channel("Assembly", $channel);
+		System.out.println("---end ChannelInit---");
+		
+	UTILITY : 10000;	
+}
+

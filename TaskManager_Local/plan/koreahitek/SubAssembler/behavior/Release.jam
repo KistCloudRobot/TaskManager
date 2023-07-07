@@ -1,0 +1,18 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM Release($object) {
+	ID: "http://www.arbi.com//RequestReleaseForSub"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Grasp");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(Release \"" + $actionID + "\" \"" +$object + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+		PERFORM isro:endLog("PERFORM", "Grasp");
+}

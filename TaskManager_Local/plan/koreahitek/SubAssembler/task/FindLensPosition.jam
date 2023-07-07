@@ -1,0 +1,64 @@
+
+PLAN PERFORM FindLensPosition($x, $y) {
+	ID: "http://www.arbi.com//FindLensPosition"
+	PRECONDITION:
+		FACT LensPosition($oldX, $oldY);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FindLensPosition");
+		
+		$x = $oldX;
+		$y = $oldY;
+		
+		$nextX = $oldX;
+		$nextY = $oldY + 1;
+		
+		UPDATE (LensPosition($oldX, $oldY)) (LensPosition($nextX, $nextY)); 
+		
+		PERFORM isro:endLog("PERFORM", "FindLensPosition");
+}
+
+PLAN PERFORM FindLensPosition($x, $y) {
+	ID: "http://www.arbi.com//FindLensPositionMaxY"
+	PRECONDITION:
+		FACT LensPosition($oldX, $oldY);
+		$oldY == 8;
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FindLensPosition");
+		
+		$x = $oldX;
+		$y = $oldY;
+		
+		$nextX = $oldX + 1;
+		$nextY = 1;
+		
+		UPDATE (LensPosition($oldX, $oldY)) (LensPosition($nextX, $nextY)); 
+		
+		PERFORM isro:endLog("PERFORM", "FindLensPosition");
+	UTILITY: 10; 
+}
+
+
+
+
+PLAN PERFORM FindLensPosition($x, $y) {
+	ID: "http://www.arbi.com//FindLensPositionMaxX"
+	PRECONDITION:
+		FACT LensPosition($oldX, $oldY);
+		$oldX == 4;
+		$oldY == 8;
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FindLensPosition");
+		
+		$x = $oldX;
+		$y = $oldY;
+		
+		$nextX = 1;
+		$nextY = 1;
+		
+		UPDATE (LensPosition($oldX, $oldY)) (LensPosition($nextX, $nextY)); 
+		
+		ASSERT EmptyLensTray();
+		
+		PERFORM isro:endLog("PERFORM", "FindLensPosition");
+	UTILITY: 100; 
+}

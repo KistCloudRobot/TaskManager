@@ -1,0 +1,50 @@
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/MainPartsPreparedGoalRequestedFromForLIFT"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "MainPartsPrepared";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - MainPartsPrepared");
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM MainPartsPreparedRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - MainPartsPrepared");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/PCBAssembledGoalRequestedFromForLIFT"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "PCBAssembled";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - PCBAssembled");
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM PCBAssembledRequestedFrom($goal, $channel, $agent);
+
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - PCBAssembled");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/HousingAssembledGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "HousingAssembled";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - HousingAssembled");
+
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM HousingAssembledRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - HousingAssembled");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}

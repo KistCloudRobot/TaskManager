@@ -1,0 +1,40 @@
+
+PLAN PERFORM PCBAssembledRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//PCBAssembledRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "PCBAssembledRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM PCBAssembled($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "PCBAssembledRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM PCBAssembled($goalID) {
+	ID: "http://www.arbi.com//PCBAssembled"
+	PRECONDITION:
+		FACT PCBPrepared();
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PCBAssembled");
+		
+		PERFORM Rotate();
+		PERFORM MoveToPosition("PCBPut");
+		PERFORM Release("PCB");
+		PERFORM MoveToPosition("EpsonPutWait");
+		PERFORM Rotate();	
+	
+		PERFORM isro:endLog("ACHIEVE", "PCBAssembled");
+	UTILITY: 1; 
+	
+	EFFECTS :
+		RETRACT PCBPrepared();
+		RETRACT MainPartsPrepared();
+}

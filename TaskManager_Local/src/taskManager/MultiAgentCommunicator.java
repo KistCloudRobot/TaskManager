@@ -21,11 +21,8 @@ public class MultiAgentCommunicator extends Agent{
 		return this.getConversationID();
 	}
 	public Channel createAgentChannel(String channelName) {
-		System.out.println("create?");
 		Channel channel = new AgentChannel(channelName, this, BrokerType.ACTIVEMQ, messageQueue);
-		System.out.println("create?");
 		ChannelFactory.createChannel(channel);
-		System.out.println("create?");
 		return channel;
 	}
 	

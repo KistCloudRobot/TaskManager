@@ -1,0 +1,17 @@
+
+PLAN PERFORM HousingGraspped($x, $y) {
+	ID: "http://www.arbi.com//HousingGraspped"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "HousingGraspped");
+		
+		PERFORM MoveToTray("Housing", $x, $y);
+		PERFORM Grasp("Housing");
+		
+		PERFORM isro:endLog("PERFORM", "HousingGraspped");
+	UTILITY: 1; 
+}

@@ -1,0 +1,16 @@
+
+PLAN CONCLUDE GoalResultReportedFrom($goalID, $result, $channelName, $worker) {
+	ID: "http://www.arbi.com//GoalReportedTestForSub"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "GoalResultReportedFrom");
+		
+		PERFORM isro:argumentLog("$goalID", $goalID);
+		ASSERT GoalResult($goalID, $result);
+		
+		PERFORM isro:endLog("CONCLUDE", "GoalResultReportedFrom");
+	UTILITY: 50000;
+	EFFECTS :
+		RETRACT GoalResultReportedFrom($goalID, $result,$channelName, $worker);
+}

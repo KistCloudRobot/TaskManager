@@ -1,0 +1,17 @@
+
+PLAN PERFORM LensGraspped($x, $y) {
+	ID: "http://www.arbi.com//LensGraspped"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "LensGraspped");
+		
+		PERFORM MoveToTray("Lens", $x, $y);
+		PERFORM Grasp("Lens");
+		
+		PERFORM isro:endLog("PERFORM", "LensGraspped");
+	UTILITY: 1; 
+}

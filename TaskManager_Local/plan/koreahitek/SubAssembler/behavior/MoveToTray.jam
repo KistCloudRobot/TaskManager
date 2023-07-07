@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM MoveToTray($object, $x, $y) {
+	ID: "http://www.arbi.com//MoveToTrayForSub"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "MoveToPosition");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(MoveToTray \"" + $actionID + "\" \"" +$object + "\" " + $x + " " + $y + ")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+		
+		PERFORM isro:endLog("PERFORM", "MoveToPosition");
+}

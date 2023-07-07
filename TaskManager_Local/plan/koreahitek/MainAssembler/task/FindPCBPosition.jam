@@ -1,0 +1,64 @@
+
+PLAN PERFORM FindPCBPosition($x, $y) {
+	ID: "http://www.arbi.com//FindPCBPosition"
+	PRECONDITION:
+		FACT PCBPosition($oldX, $oldY);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FindPCBPosition");
+		
+		$x = $oldX;
+		$y = $oldY;
+		
+		$nextX = $oldX;
+		$nextY = $oldY + 1;
+		
+		UPDATE (PCBPosition($oldX, $oldY)) (PCBPosition($nextX, $nextY)); 
+		
+		PERFORM isro:endLog("PERFORM", "FindPCBPosition");
+}
+
+PLAN PERFORM FindPCBPosition($x, $y) {
+	ID: "http://www.arbi.com//FindPCBPositionMaxY"
+	PRECONDITION:
+		FACT PCBPosition($oldX, $oldY);
+		$oldY == 4;
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FindPCBPosition");
+		
+		$x = $oldX;
+		$y = $oldY;
+		
+		$nextX = $oldX + 1;
+		$nextY = 1;
+		
+		UPDATE (PCBPosition($oldX, $oldY)) (PCBPosition($nextX, $nextY)); 
+		
+		PERFORM isro:endLog("PERFORM", "FindPCBPosition");
+	UTILITY: 10; 
+}
+
+
+
+
+PLAN PERFORM FindPCBPosition($x, $y) {
+	ID: "http://www.arbi.com//FindPCBPositionMaxX"
+	PRECONDITION:
+		FACT PCBPosition($oldX, $oldY);
+		$oldX == 4;
+		$oldY == 4;
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FindPCBPosition");
+		
+		$x = $oldX;
+		$y = $oldY;
+		
+		$nextX = 1;
+		$nextY = 1;
+		
+		UPDATE (PCBPosition($oldX, $oldY)) (PCBPosition($nextX, $nextY)); 
+		
+		ASSERT EmptyPCBTray();
+		
+		PERFORM isro:endLog("PERFORM", "FindPCBPosition");
+	UTILITY: 100; 
+}

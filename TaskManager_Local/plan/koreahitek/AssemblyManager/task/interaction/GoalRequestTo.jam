@@ -1,0 +1,14 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM GoalRequestTo($goal, $channel, $worker){
+	ID: "http://www.arbi.com//GoalRequestedTo"
+	PRECONDITION:
+	BODY:
+		PERFORM isro:startLog("PERFORM", "GoalRequestedTo");
+		
+		PERFORM request($channel,$worker, $goal, $result);
+		
+		PERFORM isro:endLog("PERFORM", "GoalRequestedTo");
+}
+

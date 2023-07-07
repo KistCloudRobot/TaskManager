@@ -1,0 +1,17 @@
+
+PLAN ACHIEVE FrontPrepared() {
+	ID: "http://www.arbi.com//FrontPrepared"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "FrontPrepared");
+		
+		PERFORM FindFrontPosition($x, $y);
+		PERFORM FrontGraspped($x, $y);
+		
+		PERFORM isro:endLog("ACHIEVE", "FrontPrepared");
+	UTILITY: 1; 
+}

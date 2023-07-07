@@ -1,0 +1,14 @@
+PLAN PERFORM VisionInspect() {
+	ID: "http://www.arbi.com//VisionInspect"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "VisionInspect");
+		
+		System.out.println("TODO - VisionInspect");
+	
+		PERFORM isro:endLog("PERFORM", "VisionInspect");
+	UTILITY: 1; 
+	
+}

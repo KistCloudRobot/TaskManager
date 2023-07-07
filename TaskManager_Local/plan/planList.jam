@@ -30,3 +30,43 @@ Plan PERFORM loadPlanPackage(){
 		$helper.loadPlanPackage("./plan/common");
 		$helper.loadPlanPackage("./plan/palletizer");
 }
+
+Plan PERFORM loadPlanPackage(){
+	ID: "loadPlanPackageForAssemblyManager"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT AssignedRole("AssemblyManager");
+	BODY:
+		$helper.loadPlanPackage("./plan/common");
+		$helper.loadPlanPackage("./plan/koreahitek/AssemblyManager");
+}
+
+Plan PERFORM loadPlanPackage(){
+	ID: "loadPlanPackageForPartsManager"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT AssignedRole("PartsManager");
+	BODY:
+		$helper.loadPlanPackage("./plan/common");
+		$helper.loadPlanPackage("./plan/koreahitek/PartsManager");
+}
+
+Plan PERFORM loadPlanPackage(){
+	ID: "loadPlanPackageForMainAssembler"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT AssignedRole("MainAssembler");
+	BODY:
+		$helper.loadPlanPackage("./plan/common");
+		$helper.loadPlanPackage("./plan/koreahitek/MainAssembler");
+}
+
+Plan PERFORM loadPlanPackage(){
+	ID: "loadPlanPackageForSubAssembler"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT AssignedRole("SubAssembler");
+	BODY:
+		$helper.loadPlanPackage("./plan/common");
+		$helper.loadPlanPackage("./plan/koreahitek/SubAssembler");
+}

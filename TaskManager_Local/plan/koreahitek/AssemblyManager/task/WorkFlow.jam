@@ -1,0 +1,43 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+		
+		
+PLAN CONCLUDE StartService() {
+	ID: "http://www.arbi.com//StartService"
+	BODY :
+		POST PERFORM Workflow();
+}
+		
+PLAN PERFORM Workflow() {
+	ID: "http://www.arbi.com//AssemblyManagerWorkflow"
+	PRECONDITION :
+		FACT RoleAssigned("MainAssembler", $main);
+		FACT RoleAssigned("SubAssembler", $sub);
+		FACT RoleAssigned("PartsManager", $parts);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Workflow");
+
+		ACHIEVE MainPartsPreparedRequestedTo($g1, "Assembly", $main);		
+		ACHIEVE SubPartsPreparedRequestedTo($g2, "Assembly", $sub);
+		PERFORM WaitGoalResult($g1);
+		PERFORM WaitGoalResult($g2);
+		ACHIEVE HousingAssembledRequestedTo($g3, "Assembly", $main);
+		PERFORM WaitGoalResult($g3);
+		ACHIEVE PCBAssembledRequestedTo($g4, "Assembly", $main);
+		PERFORM WaitGoalResult($g4);
+		ACHIEVE LensAssembledRequestedTo($g5, "Assembly", $sub);
+		PERFORM WaitGoalResult($g5);
+		ACHIEVE GuideJigRisedRequestedTo($g6, "Assembly", $parts);
+		PERFORM WaitGoalResult($g6);
+		ACHIEVE FrontAssembledRequestedTo($g7, "Assembly", $sub);
+		PERFORM WaitGoalResult($g7);
+		ACHIEVE ProductInspectedRequestedTo($g8, "Assembly", $parts);
+		PERFORM WaitGoalResult($g8);
+		PERFORM isro:endLog("PERFORM", "Workflow");
+	UTILITY: 100; 
+	
+}
+
+		

@@ -1,0 +1,37 @@
+
+PLAN PERFORM HousingAssembledRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//HousingAssembledRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "HousingAssembledRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM HousingAssembled($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "HousingAssembledRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM HousingAssembled($goalID) {
+	ID: "http://www.arbi.com//HousingAssembled"
+	PRECONDITION:
+		FACT HousingPrepared();
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "HousingAssembled");
+		
+		PERFORM MoveToPosition("HousingPut");
+		PERFORM Release("Housing");
+		PERFORM MoveToPosition("EpsonPutWait");	
+	
+		PERFORM isro:endLog("ACHIEVE", "HousingAssembled");
+	UTILITY: 1; 
+	
+	EFFECTS :
+		RETRACT HousingPrepared();
+}

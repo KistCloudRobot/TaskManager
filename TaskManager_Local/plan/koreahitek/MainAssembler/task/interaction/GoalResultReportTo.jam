@@ -1,0 +1,13 @@
+
+PLAN PERFORM GoalResultReportTo($goalID, $result, $channel, $agent) {
+	ID : "http://www.arbi.com/GoalReportToForMain"
+	PRECONDITION :
+	BODY :
+		PERFORM isro:startLog("PERFORM", "GoalResultReportTo");
+		
+		$report = "(GoalResult \""+ $goalID+"\" \"" +$result + "\")";
+		PERFORM inform($channel, $agent, $report);
+		
+		PERFORM isro:endLog("PERFORM", "GoalResultReportTo");
+	UTILITY : 10;
+}

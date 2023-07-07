@@ -1,0 +1,18 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM Grasp($object) {
+	ID: "http://www.arbi.com//RequestGrasp"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Grasp");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(Grasp \"" + $actionID + "\" \"" +$object + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+		PERFORM isro:endLog("PERFORM", "Grasp");
+}

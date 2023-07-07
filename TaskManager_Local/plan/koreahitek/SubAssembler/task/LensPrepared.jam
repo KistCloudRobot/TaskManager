@@ -1,0 +1,17 @@
+
+PLAN ACHIEVE LensPrepared() {
+	ID: "http://www.arbi.com//LensPrepared"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "LensPrepared");
+		
+		PERFORM FindLensPosition($x, $y);
+		PERFORM LensGraspped($x, $y);
+		
+		PERFORM isro:endLog("ACHIEVE", "LensPrepared");
+	UTILITY: 1; 
+}

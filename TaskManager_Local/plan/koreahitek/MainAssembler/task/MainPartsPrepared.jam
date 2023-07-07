@@ -1,0 +1,38 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM MainPartsPreparedRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//MainPartsPreparedRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "MainPartsPreparedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		ACHIEVE MainPartsPrepared($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "MainPartsPreparedRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN ACHIEVE MainPartsPrepared($goalID) {
+	ID: "http://www.arbi.com//MainPartsPrepared"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "MainPartsPrepared");
+		
+		ACHIEVE PCBPrepared();
+		ACHIEVE HousingPrepared();
+		PERFORM MoveToPosition("EpsonPutWait");	
+	
+		PERFORM isro:endLog("ACHIEVE", "MainPartsPrepared");
+	UTILITY: 1; 
+}

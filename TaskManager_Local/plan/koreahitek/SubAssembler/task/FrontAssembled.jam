@@ -1,0 +1,38 @@
+
+PLAN PERFORM FrontAssembledRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//FrontAssembledRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "FrontAssembledRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM FrontAssembled($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "FrontAssembledRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM FrontAssembled($goalID) {
+	ID: "http://www.arbi.com//FrontAssembled"
+	PRECONDITION:
+		FACT FrontPrepared();
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "FrontAssembled");
+		
+		PERFORM MoveToPosition("FrontPut");
+		PERFORM Release("Front");
+		PERFORM MoveToPosition("URPutWait");
+	
+		PERFORM isro:endLog("ACHIEVE", "FrontAssembled");
+	UTILITY: 1; 
+	
+	EFFECTS :
+		RETRACT FrontPrepared();
+		RETRACT SubPartsPrepared();
+}

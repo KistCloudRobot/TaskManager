@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM MoveToPosition($position) {
+	ID: "http://www.arbi.com//MoveToPosition"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "MoveToPosition");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(MoveToPosition \"" + $actionID + "\" \"" +$position + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+		
+		PERFORM isro:endLog("PERFORM", "MoveToPosition");
+}

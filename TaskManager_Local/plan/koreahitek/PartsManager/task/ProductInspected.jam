@@ -1,0 +1,33 @@
+
+
+PLAN PERFORM ProductInspectedRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//ProductInspectedRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "ProductInspectedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM ProductInspected($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "ProductInspectedRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM ProductInspected($goalID) {
+	ID: "http://www.arbi.com//ProductInspected"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ProductInspected");
+		
+		PERFORM VisionInspect();
+	
+		PERFORM isro:endLog("PERFORM", "ProductInspected");
+	UTILITY: 1; 
+	
+}
