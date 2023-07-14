@@ -1,18 +1,18 @@
-PLAN PERFORM CheckLable() {
-	ID: "http://www.arbi.com//CheckLable"
+PLAN PERFORM LiftUp() {
+	ID: "http://www.arbi.com//LiftUp"
 	PRECONDITION:
 		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "CheckLable");
+		PERFORM isro:startLog("PERFORM", "LiftUp");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(CheckLable \"" + $actionID + "\")";
+		$data = "(StopVacuum \"" + $actionID + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
-		PERFORM isro:endLog("PERFORM", "CheckLable");
+		PERFORM isro:endLog("PERFORM", "LiftUp");
 	UTILITY: 1; 
 	
 }

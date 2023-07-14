@@ -9,7 +9,7 @@ PLAN PERFORM LensGraspped($x, $y) {
 	BODY:
 		PERFORM isro:startLog("PERFORM", "LensGraspped");
 		
-		PERFORM MoveToTray("Lens", $x, $y);
+		PERFORM MoveToTray("LensGet", $x, $y);
 		PERFORM Grasp("Lens");
 		
 		PERFORM isro:endLog("PERFORM", "LensGraspped");

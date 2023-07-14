@@ -1,0 +1,18 @@
+PLAN PERFORM RotateToLabelPosition() {
+	ID: "http://www.arbi.com//RotateToLabelPosition"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RotateToLabelPosition");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(RotateToLabelPosition \"" + $actionID + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+	
+		PERFORM isro:endLog("PERFORM", "RotateToLabelPosition");
+	UTILITY: 1; 
+	
+}

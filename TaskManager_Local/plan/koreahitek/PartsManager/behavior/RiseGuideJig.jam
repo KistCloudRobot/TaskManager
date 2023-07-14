@@ -3,10 +3,14 @@ PLAN PERFORM RiseGuideJig() {
 	PRECONDITION:
 		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RiseGuideJig");
 		
-		System.out.println("TODO - RiseGuideJig");
+		$actionID = $helper.getActionID($agent);
+		$data = "(RiseGuideJig \"" + $actionID + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
 	
 		PERFORM isro:endLog("PERFORM", "RiseGuideJig");
 	UTILITY: 1; 

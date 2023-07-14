@@ -25,11 +25,11 @@ PLAN PERFORM PCBAssembled($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PCBAssembled");
 		
-		PERFORM Rotate();
+		PERFORM Rotate("On");
 		PERFORM MoveToPosition("PCBPut");
 		PERFORM Release("PCB");
 		PERFORM MoveToPosition("EpsonPutWait");
-		PERFORM Rotate();	
+		PERFORM Rotate("Off");	
 	
 		PERFORM isro:endLog("ACHIEVE", "PCBAssembled");
 	UTILITY: 1; 

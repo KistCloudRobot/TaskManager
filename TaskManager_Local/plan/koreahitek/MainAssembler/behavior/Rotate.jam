@@ -1,7 +1,7 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN PERFORM Rotate() {
+PLAN PERFORM Rotate($action) {
 	ID: "http://www.arbi.com//RequestRotate"
 	PRECONDITION:
 		FACT ExtraUtility($helper);
@@ -12,7 +12,7 @@ PLAN PERFORM Rotate() {
 		PERFORM isro:startLog("PERFORM", "Rotate");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(Rotate \"" + $actionID + "\")";
+		$data = "(Rotate \"" + $actionID + "\" \"" + $action + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 		
 		PERFORM isro:endLog("PERFORM", "Rotate");

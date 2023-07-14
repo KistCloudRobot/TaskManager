@@ -21,10 +21,28 @@ PLAN PERFORM HousingLabeled($goalID) {
 	PRECONDITION:
 		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "HousingLabeled");
 		
-		PERFORM LabelHousing();
+		PERFORM RotateToLabelPosition();
+		$helper.sleepAwhile(2000);
+		PERFORM LiftDown();
+		$helper.sleepAwhile(2000);
+		PERFORM StartVacuum();
+		$helper.sleepAwhile(2000);
+		PERFORM LiftUp();
+		$helper.sleepAwhile(2000);
+		PERFORM RotateToAttachPosition();
+		$helper.sleepAwhile(2000);
+		PERFORM LiftDown();
+		$helper.sleepAwhile(2000);
+		PERFORM StopVacuum();
+		$helper.sleepAwhile(2000);
+		PERFORM LiftUp();
+		$helper.sleepAwhile(2000);
+		
+		PERFORM CheckLabel();
 	
 		PERFORM isro:endLog("PERFORM", "HousingLabeled");
 	UTILITY: 1; 
