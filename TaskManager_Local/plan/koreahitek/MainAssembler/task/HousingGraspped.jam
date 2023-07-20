@@ -13,5 +13,7 @@ PLAN PERFORM HousingGraspped($x, $y) {
 		PERFORM Grasp("Housing");
 		
 		PERFORM isro:endLog("PERFORM", "HousingGraspped");
-	UTILITY: 1; 
+	UTILITY: 1;
+	FAILURE :
+		FAIL;
 }

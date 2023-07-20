@@ -4,8 +4,7 @@ PLAN ACHIEVE PCBPrepared() {
 	PRECONDITION:
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
-		//FACT robotStatus($robot, $status);
-		//$status == "Ready";
+
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PCBPrepared");
 		
@@ -15,4 +14,6 @@ PLAN ACHIEVE PCBPrepared() {
 		
 		PERFORM isro:endLog("ACHIEVE", "PCBPrepared");
 	UTILITY: 1; 
+	FAILURE :
+		FAIL;
 }

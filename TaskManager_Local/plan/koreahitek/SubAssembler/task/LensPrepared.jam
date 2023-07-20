@@ -13,5 +13,7 @@ PLAN ACHIEVE LensPrepared() {
 		PERFORM LensGraspped($x, $y);
 		
 		PERFORM isro:endLog("ACHIEVE", "LensPrepared");
-	UTILITY: 1; 
+	UTILITY: 1;
+	FAILURE :
+		FAIL; 
 }

@@ -19,14 +19,16 @@ PLAN PERFORM Workflow() {
 	BODY:
 		PERFORM isro:startLog("PERFORM", "Workflow");
 
-		ACHIEVE MainPartsPreparedRequestedTo($g1, "Assembly", $main);		
-		ACHIEVE SubPartsPreparedRequestedTo($g2, "Assembly", $sub);
+		ACHIEVE MainPartsPreparedRequestedTo($g1, "Assembly", $main);	
 		PERFORM WaitGoalResult($g1);
-		PERFORM WaitGoalResult($g2);
 		ACHIEVE HousingAssembledRequestedTo($g3, "Assembly", $main);
 		PERFORM WaitGoalResult($g3);
 		ACHIEVE PCBAssembledRequestedTo($g4, "Assembly", $main);
 		PERFORM WaitGoalResult($g4);
+			
+		ACHIEVE SubPartsPreparedRequestedTo($g2, "Assembly", $sub);
+		PERFORM WaitGoalResult($g2);
+		
 		ACHIEVE LensAssembledRequestedTo($g5, "Assembly", $sub);
 		PERFORM WaitGoalResult($g5);
 		ACHIEVE GuideJigRisedRequestedTo($g6, "Assembly", $parts);

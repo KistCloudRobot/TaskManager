@@ -14,4 +14,6 @@ PLAN PERFORM PCBGraspped($x, $y) {
 		
 		PERFORM isro:endLog("PERFORM", "PCBGraspped");
 	UTILITY: 1; 
+	FAILURE :
+		FAIL;
 }

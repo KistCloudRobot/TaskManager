@@ -1,3 +1,6 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
 PLAN PERFORM initialize() {
 	ID : "initializeForSubAssembler"
 	PRECONDITION :
@@ -11,6 +14,21 @@ PLAN PERFORM initialize() {
 		
 		ASSERT Channel("Assembly", $channel);
 		System.out.println("---end ChannelInit---");
+		
+		PERFORM initGripper();
+		
+	UTILITY : 10000;	
+}
+
+PLAN PERFORM initGripper() {
+	ID : "initGripperForSubAssembler"
+	PRECONDITION :
+		FACT Communication($communication);
+	BODY :
+		System.out.println("---initialize---");
+		
+		$data = "(InitGripper \"init\")";
+		PERFORM isro:RequestBehavior("init", $data);
 		
 	UTILITY : 10000;	
 }

@@ -14,4 +14,6 @@ PLAN PERFORM FrontGraspped($x, $y) {
 		
 		PERFORM isro:endLog("PERFORM", "FrontGraspped");
 	UTILITY: 1; 
+	FAILURE :
+		FAIL;
 }

@@ -15,4 +15,6 @@ PLAN PERFORM Grasp($object) {
 		$data = "(Grasp \"" + $actionID + "\" \"" +$object + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 		PERFORM isro:endLog("PERFORM", "Grasp");
+	FAILURE :
+		FAIL;
 }
