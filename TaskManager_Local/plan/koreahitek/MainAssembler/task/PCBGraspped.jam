@@ -10,6 +10,7 @@ PLAN PERFORM PCBGraspped($x, $y) {
 		PERFORM isro:startLog("PERFORM", "PCBGraspped");
 		
 		PERFORM MoveToTray("PCBGet", $x, $y);
+		PERFORM Perceive("PCB");
 		PERFORM Grasp("PCB");
 		
 		PERFORM isro:endLog("PERFORM", "PCBGraspped");

@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM Perceive($object) {
+	ID: "http://www.arbi.com//RequestPerceive"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "Perceive");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(Perceive \"" + $actionID + "\" \"" +$object + "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+		
+		PERFORM isro:endLog("PERFORM", "Perceive");
+	FAILURE :
+		FAIL;
+}

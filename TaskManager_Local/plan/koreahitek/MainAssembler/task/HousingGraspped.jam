@@ -10,6 +10,7 @@ PLAN PERFORM HousingGraspped($x, $y) {
 		PERFORM isro:startLog("PERFORM", "HousingGraspped");
 		
 		PERFORM MoveToTray("HousingGet", $x, $y);
+		PERFORM Perceive("Housing");
 		PERFORM Grasp("Housing");
 		
 		PERFORM isro:endLog("PERFORM", "HousingGraspped");
