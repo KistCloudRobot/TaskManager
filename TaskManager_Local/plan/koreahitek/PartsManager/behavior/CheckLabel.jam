@@ -1,18 +1,18 @@
-PLAN PERFORM VisionInspect() {
-	ID: "http://www.arbi.com//VisionInspect"
+PLAN PERFORM CheckLabel() {
+	ID: "http://www.arbi.com//CheckLabel"
 	PRECONDITION:
 		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "VisionInspect");
+		PERFORM isro:startLog("PERFORM", "CheckLabel");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(VisionInspect \"" + $actionID + "\")";
+		$data = "(CheckLabel \"" + $actionID + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
-		PERFORM isro:endLog("PERFORM", "VisionInspect");
+		PERFORM isro:endLog("PERFORM", "CheckLabel");
 	UTILITY: 1; 
 	
 }
