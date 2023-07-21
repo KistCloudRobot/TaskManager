@@ -31,12 +31,15 @@ PLAN PERFORM Workflow() {
 		
 		ACHIEVE LensAssembledRequestedTo($g5, "Assembly", $sub);
 		PERFORM WaitGoalResult($g5);
-		ACHIEVE GuideJigRisedRequestedTo($g6, "Assembly", $parts);
-		PERFORM WaitGoalResult($g6);
+		//ACHIEVE GuideJigRisedRequestedTo($g6, "Assembly", $parts);
+		//PERFORM WaitGoalResult($g6);
+		
 		ACHIEVE FrontAssembledRequestedTo($g7, "Assembly", $sub);
 		PERFORM WaitGoalResult($g7);
-		ACHIEVE ProductInspectedRequestedTo($g8, "Assembly", $parts);
-		PERFORM WaitGoalResult($g8);
+		
+		//ACHIEVE ProductInspectedRequestedTo($g8, "Assembly", $parts);
+		//PERFORM WaitGoalResult($g8);
+		
 		PERFORM isro:endLog("PERFORM", "Workflow");
 	UTILITY: 100; 
 	

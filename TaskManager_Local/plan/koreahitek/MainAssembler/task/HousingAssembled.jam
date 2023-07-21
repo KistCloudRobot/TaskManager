@@ -28,6 +28,8 @@ PLAN PERFORM HousingAssembled($goalID) {
 		PERFORM MoveToPosition("HousingPut");
 		PERFORM Release("Housing");
 		PERFORM MoveToPosition("EpsonPutWait");	
+		
+		PERFORM MoveToPosition("EpsonHome");	
 	
 		PERFORM isro:endLog("ACHIEVE", "HousingAssembled");
 	UTILITY: 1; 

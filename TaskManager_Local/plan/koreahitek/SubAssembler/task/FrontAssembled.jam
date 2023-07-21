@@ -20,14 +20,13 @@ PLAN PERFORM FrontAssembled($goalID) {
 	ID: "http://www.arbi.com//FrontAssembled"
 	PRECONDITION:
 		FACT FrontPrepared();
-		//FACT robotStatus($robot, $status);
-		//$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "FrontAssembled");
 		
 		PERFORM MoveToPosition("FrontPut");
 		PERFORM Release("Front");
 		PERFORM MoveToPosition("URPutWait");
+		PERFORM MoveToPosition("URHome");
 	
 		PERFORM isro:endLog("ACHIEVE", "FrontAssembled");
 	UTILITY: 1; 
@@ -36,3 +35,4 @@ PLAN PERFORM FrontAssembled($goalID) {
 		RETRACT FrontPrepared();
 		RETRACT SubPartsPrepared();
 }
+

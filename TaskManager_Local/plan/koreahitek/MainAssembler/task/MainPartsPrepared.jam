@@ -31,7 +31,6 @@ PLAN ACHIEVE MainPartsPrepared($goalID) {
 		
 		ACHIEVE PCBPrepared();
 		ACHIEVE HousingPrepared();
-		PERFORM MoveToPosition("EpsonPutWait");	
 	
 		PERFORM isro:endLog("ACHIEVE", "MainPartsPrepared");
 	UTILITY: 1; 
