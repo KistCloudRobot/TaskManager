@@ -1,0 +1,6 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+FACTS:	
+
+	FACT local1Agent("agent://www.mcarbi.com/Local1");
+	FACT local2Agent("agent://www.mcarbi.com/Local2");

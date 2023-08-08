@@ -1,13 +1,15 @@
 PLAN CONCLUDE EmergencyStop(){
 	ID: "http://www.arbi.com//EmergencyStop"
 	PRECONDITION:
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Local1";
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "EmergencyStop");
 				
 		PERFORM Pause("stop1", "AMR_LIFT1");
-		PERFORM Pause("stop1", "AMR_LIFT2");
-		PERFORM Pause("stop1", "AMR_LIFT3");
-		PERFORM Pause("stop1", "AMR_LIFT4");
+		PERFORM Pause("stop2", "AMR_LIFT2");
+		PERFORM Pause("stop3", "AMR_LIFT3");
+		PERFORM Pause("stop4", "AMR_LIFT4");
 		
 		PERFORM isro:endLog("CONCLUDE", "EmergencyStop");
 	UTILITY: 100001; 

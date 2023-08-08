@@ -81,3 +81,69 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotStatus($robotID, "wait");
 		
 } 
+
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT5"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT5";
+	BODY :
+		$robotID = "AMR_LIFT5";
+		$waitVertex = 1146;
+		$chargingStation = 1500;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT robotStatus($robotID, "wait");
+		
+} 
+
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT6"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT6";
+	BODY :
+		$robotID = "AMR_LIFT6";
+		$waitVertex = 1111;
+		$chargingStation = 1500;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT robotStatus($robotID, "wait");
+		
+} 
+
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForAMR-LIFT7"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/AMR_LIFT7";
+	BODY :
+		$robotID = "AMR_LIFT7";
+		$waitVertex = 1131;
+		$chargingStation = 1501;
+		
+		ASSERT isro:robot($robotID);
+		ASSERT AgentTaskStatus($robotID, "wait", "wait", "wait");
+		ASSERT WaitVertex($waitVertex);
+		ASSERT robotPosition($robotID, 0, 0);
+		ASSERT robotAt($robotID, $waitVertex, $waitVertex);
+		ASSERT robotLoading($robotID, "Unloading");
+		ASSERT robotVelocity($robotID, 0);
+		ASSERT batteryRemain($robotID, 50);
+		ASSERT robotStatus($robotID, "wait");
+		
+} 

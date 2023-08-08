@@ -17,3 +17,19 @@ PLAN PERFORM initialize() {
 	UTILITY : 10000;	
 }
 
+PLAN PERFORM initialize() {
+	ID : "initializeForLocalAgent2"
+	PRECONDITION :
+		FACT Communication($communication);
+	BODY :
+		System.out.println("---initialize---");
+		System.out.println("---start ChannelInit---");
+		
+		PERFORM connectAgentChannel("logistic", $channel);
+		
+		ASSERT Channel("logistic", $channel);
+		System.out.println("---end ChannelInit---");
+		
+	UTILITY : 10000;	
+}
+

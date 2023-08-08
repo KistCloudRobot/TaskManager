@@ -64,8 +64,6 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 				RelationArgument argument = generateRelationArgument(asserted);
 	
 				assertAction.execute(argument);
-				
-			
 			}
 		}
 		if (retracted != null) {

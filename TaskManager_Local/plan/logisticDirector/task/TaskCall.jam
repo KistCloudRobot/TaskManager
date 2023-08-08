@@ -1,0 +1,39 @@
+PREFIXES:
+	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE TaskCall($location, $call) {
+	ID : "PotenitTaskCall"
+	PRECONDITION :
+		$location == "potenit";
+		FACT local1Agent($agent);
+	BODY :
+		$data = "(TaskRequest " + $call+ ")";
+		PERFORM inform("logistic", $agent, $data);
+	EFFECTS :
+		RETRACT TaskCall($location, $call);
+	UTILITY : 1;
+}
+
+PLAN CONCLUDE TaskCall($location, $call) {
+	ID : "IsaacTaskCall"
+	PRECONDITION :
+		$location == "isaac";
+		FACT local2Agent($agent);
+	BODY :
+		$data = "(TaskRequest " + $call+ ")";
+		PERFORM inform("logistic", $agent, $data);
+	EFFECTS :
+		RETRACT TaskCall($location, $call);
+	UTILITY : 1;
+}
+
+PLAN CONCLUDE TaskCall($location, $call) {
+	ID : "TaskCallFail"
+	PRECONDITION :
+	BODY :
+		System.out.println("TaskCall Failed");
+		PERFORM isro:argumentLog("$location", $location);
+		PERFORM isro:argumentLog("$call", $call);
+	EFFECTS :
+		RETRACT TaskCall($location, $call);
+}

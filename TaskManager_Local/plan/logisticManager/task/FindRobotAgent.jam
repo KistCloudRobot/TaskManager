@@ -38,6 +38,34 @@ PLAN PERFORM FindRobotAgent($robot, $agent){
 		$agent = "agent://www.mcarbi.com/AMR_LIFT4";
 	UTILITY: 100;
 }
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift5"
+	PRECONDITION :
+		$robot == "AMR_LIFT5";
+	BODY:
+		//System.out.println("Find robot");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT5";
+	UTILITY: 100;
+}
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift6"
+	PRECONDITION :
+		$robot == "AMR_LIFT6";
+	BODY:
+		//System.out.println("Find robot");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT6";
+	UTILITY: 100;
+}
+PLAN PERFORM FindRobotAgent($robot, $agent){
+	ID: "http://www.arbi.com//FindRobotAgentLift7"
+	PRECONDITION :
+		$robot == "AMR_LIFT7";
+	BODY:
+		//System.out.println("Find robot");
+		$agent = "agent://www.mcarbi.com/AMR_LIFT7";
+	UTILITY: 100;
+}
+
 
 PLAN PERFORM FindRobotAgent($robot, $agent){
 	ID: "http://www.arbi.com//FindRobot"
