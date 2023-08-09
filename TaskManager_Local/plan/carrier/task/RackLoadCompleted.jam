@@ -2,9 +2,93 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN PERFORM RackLoadCompleted($address) {
-	ID: "http://www.arbi.com//SendRackLoadCompleted"
+PLAN PERFORM RackLoadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackLoadCompleted1"
 	PRECONDITION:
+		$vertex == 1;
+		FACT Palletizer1AgentAddress($address);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		$data = "(RackLoadCompleted)";		
+		PERFORM inform("logistic", $address, $data);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 10; 
+
+}
+
+PLAN PERFORM RackLoadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackLoadCompleted2"
+	PRECONDITION:
+		$vertex == 2;
+		FACT Palletizer1AgentAddress($address);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		$data = "(RackLoadCompleted)";		
+		PERFORM inform("logistic", $address, $data);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 10; 
+
+}
+
+PLAN PERFORM RackLoadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackLoadCompleted1001"
+	PRECONDITION:
+		$vertex == 1001;
+		FACT Palletizer2AgentAddress($address);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		$data = "(RackLoadCompleted)";		
+		PERFORM inform("logistic", $address, $data);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 10; 
+
+}
+PLAN PERFORM RackLoadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackLoadCompleted1002"
+	PRECONDITION:
+		$vertex == 1002;
+		FACT Palletizer2AgentAddress($address);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		$data = "(RackLoadCompleted)";		
+		PERFORM inform("logistic", $address, $data);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 10; 
+
+}
+PLAN PERFORM RackLoadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackLoadCompleted1003"
+	PRECONDITION:
+		$vertex == 1003;
+		FACT Palletizer3AgentAddress($address);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
+		
+		$data = "(RackLoadCompleted)";		
+		PERFORM inform("logistic", $address, $data);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
+		
+	UTILITY: 10; 
+
+}
+PLAN PERFORM RackLoadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackLoadCompleted1004"
+	PRECONDITION:
+		$vertex == 1004;
+		FACT Palletizer3AgentAddress($address);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
 		

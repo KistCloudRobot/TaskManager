@@ -2,6 +2,16 @@ PREFIXES:
 	PREFIX arbi: <http://www.arbi.com//ontologies#>;
 
 Plan PERFORM loadPlanPackage(){
+	ID: "loadPlanPackageForLogisticDirector"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT AssignedRole("logisticDirector");
+	BODY:
+		$helper.loadPlanPackage("./plan/common");
+		$helper.loadPlanPackage("./plan/logisticDirector");
+}
+
+Plan PERFORM loadPlanPackage(){
 	ID: "loadPlanPackageForLogisticManager"
 	PRECONDITION:
 		FACT ExtraUtility($helper);

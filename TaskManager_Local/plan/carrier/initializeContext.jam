@@ -17,6 +17,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
+		ASSERT robotLocation("potenit");
 } 
 
 PLAN PERFORM initializeContext($agentID) {
@@ -37,7 +38,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
-		
+		ASSERT robotLocation("potenit");
 } 
 
 PLAN PERFORM initializeContext($agentID) {
@@ -58,7 +59,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
-		
+		ASSERT robotLocation("potenit");
 } 
 
 PLAN PERFORM initializeContext($agentID) {
@@ -79,7 +80,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
-		
+		ASSERT robotLocation("potenit");
 } 
 
 
@@ -101,7 +102,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
-		
+		ASSERT robotLocation("isaac");
 } 
 
 
@@ -123,7 +124,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
-		
+		ASSERT robotLocation("isaac");
 } 
 
 
@@ -145,5 +146,5 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT robotVelocity($robotID, 0);
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
-		
+		ASSERT robotLocation("isaac");
 } 

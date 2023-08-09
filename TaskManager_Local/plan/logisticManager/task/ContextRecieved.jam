@@ -14,6 +14,26 @@ PLAN CONCLUDE context($context){
 	UTILITY : 10;
 }
 
+
+PLAN CONCLUDE context($context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextReleasedCargo"
+	PRECONDITION:
+		FACT Communication($communication);
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($context) == "releasedCargo";
+	BODY:
+		System.out.println($context);
+		$cargoID = $glUtility.retrieveGLExpression($context, 0);
+		$location = $glUtility.retrieveGLExpression($context, 1);
+		$callID = $glUtility.retrieveGLExpression($context, 2);
+		$command = "(command \"" + $location + "\" \"Unstoring\")";
+		$data = "(context (PersonCall \"" + $callID + "\" (commands " + $command + ")))";
+		System.out.println($data);
+		$communication.assertToLTM($data);
+		RETRACT context($context);
+	UTILITY : 10000;
+}
+
 PLAN CONCLUDE context($context){
 	ID: "http://www.arbi.com//BuiltInPlan#contextReceivedCargo"
 	PRECONDITION:
