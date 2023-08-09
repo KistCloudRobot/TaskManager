@@ -30,7 +30,7 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		
 		PERFORM ExitFromStation($location, $stationType);
 				
-		PERFORM isro:SendGoalComplete("ObjectPlaced");
+		//PERFORM isro:SendGoalComplete("ObjectPlaced");
 		PERFORM UpdateAgentTaskStatus("ObjectPlaced", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
 	UTILITY: 10; 

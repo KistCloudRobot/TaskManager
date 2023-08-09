@@ -1,0 +1,20 @@
+
+PLAN PERFORM PalletTransported($goalID, $rackID, $startLocation, $endLocation){
+	ID : "http://www.arbi.com/PalletTransported"
+	PRECONDITION :
+		FACT PalletTransportedRequestedFrom($goal, $channel, $agent);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "PalletTransported");
+		
+		PERFORM MoveToLocation($startLocation);
+		PERFORM ObjectGrabbed($rackID,$startLocation);
+		PERFORM MoveToLocation($endLocation);
+		PERFORM ObjectPlaced($rackID,$endLocation);
+		
+		PERFORM PalletTransportedReportedTo($goal, $channel, $agent);
+		
+		PERFORM ReturnToWait();
+		
+		PERFORM isro:endLog("PERFORM", "PalletTransported");
+	UTILITY : 10;
+}

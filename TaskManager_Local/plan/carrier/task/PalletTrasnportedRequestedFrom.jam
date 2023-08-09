@@ -12,3 +12,21 @@ PLAN CONCLUDE PalletTransportedRequestedFrom($goal, $channel, $agent){
 	UTILITY : 10;
 }
 
+
+PLAN CONCLUDE PalletTransportedRequestedFrom($goal, $channel, $agent){
+	ID : "http://www.arbi.com/PalletTransportedRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "PalletTransported";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "PalletTransportedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$rackID = $glUtility.retrieveGLExpression($goal,1);
+		$startLocation = $glUtility.retrieveGLExpression($goal,2);
+		$endLocation = $glUtility.retrieveGLExpression($goal,3);
+		
+		POST PERFORM PalletTransported($goalID, $rackID, $startLocation, $endLocation);
+		PERFORM isro:endLog("CONCLUDE", "PalletTransportedRequestedFrom");
+	UTILITY : 20;
+}

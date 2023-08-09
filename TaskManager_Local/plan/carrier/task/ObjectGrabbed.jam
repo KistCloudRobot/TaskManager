@@ -32,7 +32,7 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		
 		PERFORM ExitFromStation($location, $stationType);
 				
-		PERFORM isro:SendGoalComplete("ObjectGrabbed");
+		//PERFORM isro:SendGoalComplete("ObjectGrabbed");
 		PERFORM UpdateAgentTaskStatus("ObjectGrabbed", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
 		

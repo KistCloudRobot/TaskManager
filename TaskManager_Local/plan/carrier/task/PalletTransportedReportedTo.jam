@@ -23,8 +23,8 @@ PLAN PERFORM PalletTransportedReportedTo($goal, $channel, $agent) {
 		
 		$goalID = $glUtility.retrieveGLExpression($goal, 0);
 		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
-		PERFORM RetractRequestedGoal($goal);
-		PERFORM isro:SendGoalComplete("PalletTransportedReportedTo"); 
+		//PERFORM RetractRequestedGoal($goal);
+		//PERFORM isro:SendGoalComplete("PalletTransportedReportedTo"); 
 		
 		PERFORM isro:endLog("PERFORM", "PalletTransportedReportedTo");
 	UTILITY : 10;
