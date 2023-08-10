@@ -46,7 +46,6 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		PERFORM RequestStationIn($moveType, $vertex);
 				
 		PERFORM isro:endLog("PERFORM", "EnterToStation");
-		
 	UTILITY: 2; 
 
 }
@@ -54,6 +53,8 @@ PLAN PERFORM EnterToStation($location, $stationType){
 PLAN PERFORM EnterToStation($location, $stationType){
 	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationUnloadAtReleasing"
 	PRECONDITION:
+		FACT robotLocation($isaac);
+		$isaac == "isaac";
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:robot($robot);
@@ -78,6 +79,8 @@ PLAN PERFORM EnterToStation($location, $stationType){
 PLAN PERFORM EnterToStation($location, $stationType){
 	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationLoadAtReleasing"
 	PRECONDITION:
+		FACT robotLocation($isaac);
+		$isaac == "isaac";
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:robot($robot);

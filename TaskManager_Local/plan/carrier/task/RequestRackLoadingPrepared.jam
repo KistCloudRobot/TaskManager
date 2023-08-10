@@ -49,7 +49,7 @@ PLAN PERFORM RequestRackLoadingPrepared($vertex){
 PLAN PERFORM RequestRackLoadingPrepared($vertex){
 	ID: "http://www.arbi.com//RequestRackLoadingPrepared1002"
 	PRECONDITION:
-		$vertex == 1001;
+		$vertex == 1002;
 		FACT robotLocation($location);
 		$location == "isaac";
 		FACT Palletizer2AgentAddress($address);
