@@ -4,7 +4,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
-import kr.ac.uos.ai.agentCommunicationFramework.agent.communication.Channel;
 import kr.ac.uos.ai.arbi.BrokerType;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
@@ -84,7 +83,7 @@ public class TaskManager extends ArbiAgent {
 		msgManager.assertFact("AgentCommunication", agentCommunicator);
 		msgManager.assertFact("Channel", "base", agentCommunicator.getBaseChannel());
 		
-		taskManagerLogger = new TaskManagerLogger(this,interpreter);
+//		taskManagerLogger = new TaskManagerLogger(this,interpreter);
 
 		Thread t = new Thread() {
 			public void run() {
@@ -293,6 +292,22 @@ public class TaskManager extends ArbiAgent {
 	
 	public String toString() {
 		return "TaskManager";
+	}
+	
+	public String getPalletizerAddress(Object o) {
+		String input = o.toString();
+		String result = "";
+		System.out.println("find palletizer - " + input);
+		
+		if (input.equals("1") || input.equals("2")) {
+			result = "agent://www.mcarbi.com/Palletizer1";
+		} else if (input.equals("1001") || input.equals("1002")) {
+			result = "agent://www.mcarbi.com/Palletizer2";
+		} else if (input.equals("1003") || input.equals("1004")) {
+			result = "agent://www.mcarbi.com/Palletizer3";
+		}
+		
+		return result;
 	}
 
 	public static void main(String[] args) {

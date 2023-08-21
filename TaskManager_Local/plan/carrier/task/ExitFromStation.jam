@@ -11,12 +11,10 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		FACT robotLoading($robot, $loading);
 		$loading == "Unloading";
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation - Receieve Unloading");
 		
 		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
 		PERFORM RequestStationOut($moveType, $vertex);
-		
-		PERFORM RackUnloadCompleted($vertex);
 		
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 	UTILITY : 2;
@@ -32,13 +30,11 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		FACT robotLoading($robot, $loading);
 		$loading == "Loading";
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation - Receieve Loading");
 		
 		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
 		PERFORM RequestStationOut($moveType, $vertex);
-		
-		PERFORM RackLoadCompleted($vertex);
-		
+
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 	UTILITY : 2;
 }
@@ -50,39 +46,16 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($util);
 		$stationType == "ReleaseStation";
-		FACT robotLoading($robot, $loading);
-		$loading == "Unloading";
-	BODY:
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
-		
-		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
-		PERFORM RequestStationOut($moveType, $vertex);
-		
-		PERFORM RackUnloadCompleted($vertex);
-		
-		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
-	UTILITY : 2;
-}
 
-PLAN PERFORM ExitFromStation($location, $stationType){
-	ID: "http://www.arbi.com//BuiltInPlan#ExitFromStationForGrabAtReleaseStation"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT GLUtility($glUtility);
-		FACT ExtraUtility($util);
-		$stationType == "ReleaseStation";
-		FACT robotLoading($robot, $loading);
-		$loading == "Loading";
+		$location == "http://www.arbi.com/ontologies/arbi.owl#station1004";
 	BODY:
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation - ReleaseStation Unloading");
 		
 		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
 		PERFORM RequestStationOut($moveType, $vertex);
-		
-		PERFORM RackLoadCompleted($vertex);
-		
+
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
-	UTILITY : 2;
+	UTILITY : 3;
 }
 
 
@@ -94,7 +67,7 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		FACT ExtraUtility($util);
 	BODY:
 	
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation - normal");
 		
 		PERFORM isro:QueryMoveType($location, "out", $moveType, $vertex);
 		
@@ -103,5 +76,4 @@ PLAN PERFORM ExitFromStation($location, $stationType){
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 		
 	UTILITY: 1; 
-
 }

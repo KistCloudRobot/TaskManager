@@ -94,7 +94,7 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 		PERFORM PalletTransportedCreated($command1, $goal1);
 		
 		$command2 = $glUtility.retrieveGLExpression($commands, 2);
-		PERFORM PalletTransportedCreated($command1, $goal2);
+		PERFORM PalletTransportedCreated($command2, $goal2);
 		
 		PERFORM ThreeGoalsAssign($goal0, $worker0, $goal1, $worker1, $goal2 , $worker2);		
 		

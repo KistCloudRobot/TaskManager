@@ -5,7 +5,7 @@ PREFIXES:
 PLAN PERFORM RackUnloadCompleted($vertex) {
 	ID: "http://www.arbi.com//SendRackUnloadCompleted1"
 	PRECONDITION:
-		$vertex == 1;
+		$vertex == "1";
 		FACT Palletizer1AgentAddress($address);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
@@ -21,7 +21,7 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 PLAN PERFORM RackUnloadCompleted($vertex) {
 	ID: "http://www.arbi.com//SendRackUnloadCompleted2"
 	PRECONDITION:
-		$vertex == 2;
+		$vertex == "2";
 		FACT Palletizer1AgentAddress($address);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
@@ -38,7 +38,7 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 PLAN PERFORM RackUnloadCompleted($vertex) {
 	ID: "http://www.arbi.com//SendRackUnloadCompleted1001"
 	PRECONDITION:
-		$vertex == 1001;
+		$vertex == "1001";
 		FACT Palletizer2AgentAddress($address);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
@@ -51,42 +51,11 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 	UTILITY: 10; 
 
 }
-PLAN PERFORM RackUnloadCompleted($vertex) {
-	ID: "http://www.arbi.com//SendRackUnloadCompleted1002"
-	PRECONDITION:
-		$vertex == 1002;
-		FACT Palletizer2AgentAddress($address);
-	BODY:
-		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
-		
-		$data = "(RackUnloadCompleted)";		
-		PERFORM inform("logistic", $address, $data);
-		
-		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
-		
-	UTILITY: 10; 
 
-}
-PLAN PERFORM RackUnloadCompleted($vertex) {
-	ID: "http://www.arbi.com//SendRackUnloadCompleted1003"
-	PRECONDITION:
-		$vertex == 1003;
-		FACT Palletizer3AgentAddress($address);
-	BODY:
-		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
-		
-		$data = "(RackUnloadCompleted)";		
-		PERFORM inform("logistic", $address, $data);
-		
-		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
-		
-	UTILITY: 10; 
-
-}
 PLAN PERFORM RackUnloadCompleted($vertex) {
 	ID: "http://www.arbi.com//SendRackUnloadCompleted1004"
 	PRECONDITION:
-		$vertex == 4;
+		$vertex == "1004";
 		FACT Palletizer3AgentAddress($address);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
@@ -97,5 +66,20 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
 		
 	UTILITY: 10; 
+
+}
+
+
+PLAN PERFORM RackUnloadCompleted($vertex) {
+	ID: "http://www.arbi.com//SendRackUnloadCompletedFailed"
+	PRECONDITION:
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted - pass");
+		
+		PERFORM isro:argumentLog("$vertex" , $vertex);
+		
+		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted - pass");
+		
+	UTILITY: 1; 
 
 }

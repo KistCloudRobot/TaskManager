@@ -9,6 +9,7 @@ PLAN PERFORM RequestPalletizerStop() {
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
+		FACT isro:BehaviorAddress($bi);
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestPalletizerStop");

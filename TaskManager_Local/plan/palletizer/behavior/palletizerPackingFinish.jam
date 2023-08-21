@@ -20,3 +20,24 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
 	UTILITY: 50000; 
 }
+
+PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
+	ID: "http://www.arbi.com//palletizerReleasingFinish??"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Palletizer3";
+		FACT  isro:SemanticMapManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
+		
+		$data = "(palletizerReleasingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
+		PERFORM inform("logistic",$address, $data);
+		RETRACT palletizerPackingFinish($robotID, $stationVertex);
+		
+		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
+	UTILITY: 50001; 
+}

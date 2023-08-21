@@ -11,7 +11,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotLoading($robot, $load);
 		$load == "Loading";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to unload");
+		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to unload - ReceiveStation");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
 		PERFORM RequestRackUnloadingPrepared($vertex);
@@ -35,7 +35,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotLoading($robot, $load);
 		$load == "Unloading";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to load");
+		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to load - ReceiveStation");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
 
@@ -62,10 +62,10 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotLoading($robot, $load);
 		$load == "Loading";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to unload");
+		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to unload - ReleaseStation");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
-		//PERFORM RequestRackUnloadingPrepared($vertex);
+		PERFORM RequestRackUnloadingPrepared($vertex);
 		
 		PERFORM isro:QueryMoveType($location, "in", $moveType, $vertex);
 		
@@ -88,7 +88,7 @@ PLAN PERFORM EnterToStation($location, $stationType){
 		FACT robotLoading($robot, $load);
 		$load == "Unloading";
 	BODY:
-		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to load");
+		PERFORM isro:startLog("PERFORM", "EnterToStation at palletizing to load - ReleaseStation ");
 		
 		PERFORM isro:QueryStationVertex($location, $vertex);
 

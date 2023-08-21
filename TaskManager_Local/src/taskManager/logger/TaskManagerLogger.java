@@ -53,8 +53,8 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 		loggerManager.registerAction(retractAction,LogTiming.NonAction);
 		//System.out.println("inited");
 		
-		interpreter.getWorldModelManager().getWorldModel().addChangeListener(this);
-		interpreter.getIntentionStructure().addChangeListener(this);
+//		interpreter.getWorldModelManager().getWorldModel().addChangeListener(this);
+//		interpreter.getIntentionStructure().addChangeListener(this);
 	}
 	
 
@@ -91,7 +91,6 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 		
 		return newArgument;
 	}
-	
 	public GoalArgument generateGoalArgument(APLElement g){
 		GoalAction action = g.getFromGoal().getGoalAction();
 		Binding b = g.getBinding();
@@ -101,7 +100,6 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 		}else {
 			GoalArgument newArgument = new GoalArgument();
 			newArgument.setName(g.getFromGoal().getName());
-
 			Relation goalRelation = g.getFromGoal().getGoalAction().getGoal();
 			for(int i = 0; i < goalRelation.getArity();i++){
 				Expression e = goalRelation.getArg(i);
@@ -131,13 +129,16 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 		}else {
 			GoalArgument newArgument = new GoalArgument();
 			newArgument.setName(goal.getName());
-
 			Relation goalRelation = goal.getGoalAction().getGoal();
 			for(int i = 0; i < goalRelation.getArity();i++){
 				Expression e = goalRelation.getArg(i);
-				newArgument.addExpression(e.toString());	
+				if (e.isVariable()) {
+					newArgument.addExpression(e.getName());
+				} else {
+					newArgument.addExpression(e.toString());					
+				}
+	
 			}
-			
 			return newArgument;
 		}
 		
@@ -150,18 +151,19 @@ public class TaskManagerLogger implements WorldModelChangeListener, IntentionStr
 		if(ga != null)
 			newGoalAction.execute(ga);
 	}
-
 	@Override
-	public void goalRemoved(APLElement goal) {
+	public void goalRemoved(Goal goal) {
 		//System.out.println("notified Goal Removal");
-		GoalArgument ga = generateGoalArgument(goal);
+		GoalArgument ga;
+		if (goal.getIntention() != null) {
+			ga = generateGoalArgument(goal.getIntention());
+		} else {
+			ga = generateNewGoalArgument(goal);
+		}
 		if(ga != null)
 			unpostGoalAction.execute(ga);
 	}
-
 	
-
-
 	@Override
 	public void intended(APLElement goal) {
 		// TODO Auto-generated method stub

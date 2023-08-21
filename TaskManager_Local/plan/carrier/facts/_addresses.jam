@@ -3,7 +3,6 @@ PREFIXES:
 
 
 FACTS:	
-	FACT  isro:ManagerAddress("agent://www.mcarbi.com/Local");
 	FACT  Palletizer1AgentAddress("agent://www.mcarbi.com/Palletizer1");
 	
 	FACT  Palletizer2AgentAddress("agent://www.mcarbi.com/Palletizer2");

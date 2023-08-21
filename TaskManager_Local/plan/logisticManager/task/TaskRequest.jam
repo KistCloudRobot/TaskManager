@@ -8,7 +8,8 @@ PLAN CONCLUDE TaskRequest($request) {
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "TaskRequest");
 		PERFORM isro:argumentLog("$request", $request);
-		$comm.assertToLTM($request);
+		$data = "(context " + $request + ")";
+		$comm.assertToLTM($data);
 		PERFORM isro:endLog("CONCLUDE", "TaskRequest");
 	EFFECTS :
 		RETRACT TaskRequest($request);

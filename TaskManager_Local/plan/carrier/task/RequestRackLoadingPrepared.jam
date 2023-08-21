@@ -12,7 +12,7 @@ PLAN PERFORM RequestRackLoadingPrepared($vertex){
 		FACT isro:robot($robot);
 		FACT GLUtility($glUtility);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared");
+		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared - potenit");
 		
 		$goalID = $helper.getActionID($agent);
 		$goal = "(RackLoadingPrepared \""+$goalID+"\" \"" + $robot + "\" " + $vertex + ")";
@@ -20,97 +20,17 @@ PLAN PERFORM RequestRackLoadingPrepared($vertex){
 		PERFORM WaitGoalResult($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestRackLoadingPrepared");
-	UTILITY : 0;
+	UTILITY : 10;
 }
 
 PLAN PERFORM RequestRackLoadingPrepared($vertex){
-	ID: "http://www.arbi.com//RequestRackLoadingPrepared1001"
+	ID: "http://www.arbi.com//RequestRackLoadingPreparedFailed"
 	PRECONDITION:
-		$vertex == 1001;
-		FACT robotLocation($location);
-		$location == "isaac";
-		FACT Palletizer2AgentAddress($address);
-		FACT ExtraUtility($helper);
-		FACT isro:agent($agent);
-		FACT isro:robot($robot);
-		FACT GLUtility($glUtility);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared");
-		
-		$goalID = $helper.getActionID($agent);
-		$goal = "(RackLoadingPrepared \""+$goalID+"\" \"" + $robot + "\" " + $vertex + ")";
-		PERFORM request("logistic",$address, $goal, $result);
-		PERFORM WaitGoalResult($goalID);
-		
-		PERFORM isro:endLog("PERFORM", "RequestRackLoadingPrepared");
-	UTILITY : 0;
-}
 
-PLAN PERFORM RequestRackLoadingPrepared($vertex){
-	ID: "http://www.arbi.com//RequestRackLoadingPrepared1002"
-	PRECONDITION:
-		$vertex == 1002;
-		FACT robotLocation($location);
-		$location == "isaac";
-		FACT Palletizer2AgentAddress($address);
-		FACT ExtraUtility($helper);
-		FACT isro:agent($agent);
-		FACT isro:robot($robot);
-		FACT GLUtility($glUtility);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared");
+		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared - pass");
 		
-		$goalID = $helper.getActionID($agent);
-		$goal = "(RackLoadingPrepared \""+$goalID+"\" \"" + $robot + "\" " + $vertex + ")";
-		PERFORM request("logistic",$address, $goal, $result);
-		PERFORM WaitGoalResult($goalID);
-		
-		PERFORM isro:endLog("PERFORM", "RequestRackLoadingPrepared");
-	UTILITY : 0;
-}
-
-PLAN PERFORM RequestRackLoadingPrepared($vertex){
-	ID: "http://www.arbi.com//RequestRackLoadingPrepared1003"
-	PRECONDITION:
-		$vertex == 1003;
-		FACT robotLocation($location);
-		$location == "isaac";
-		FACT Palletizer3AgentAddress($address);
-		FACT ExtraUtility($helper);
-		FACT isro:agent($agent);
-		FACT isro:robot($robot);
-		FACT GLUtility($glUtility);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared");
-		
-		$goalID = $helper.getActionID($agent);
-		$goal = "(RackLoadingPrepared \""+$goalID+"\" \"" + $robot + "\" " + $vertex + ")";
-		PERFORM request("logistic",$address, $goal, $result);
-		PERFORM WaitGoalResult($goalID);
-		
-		PERFORM isro:endLog("PERFORM", "RequestRackLoadingPrepared");
-	UTILITY : 0;
-}
-
-PLAN PERFORM RequestRackLoadingPrepared($vertex){
-	ID: "http://www.arbi.com//RequestRackLoadingPrepared1004"
-	PRECONDITION:
-		$vertex == 1004;
-		FACT robotLocation($location);
-		$location == "isaac";
-		FACT Palletizer3AgentAddress($address);
-		FACT ExtraUtility($helper);
-		FACT isro:agent($agent);
-		FACT isro:robot($robot);
-		FACT GLUtility($glUtility);
-	BODY:
-		PERFORM isro:startLog("PERFORM", "RequestRackLoadingPrepared");
-		
-		$goalID = $helper.getActionID($agent);
-		$goal = "(RackLoadingPrepared \""+$goalID+"\" \"" + $robot + "\" " + $vertex + ")";
-		PERFORM request("logistic",$address, $goal, $result);
-		PERFORM WaitGoalResult($goalID);
-		
-		PERFORM isro:endLog("PERFORM", "RequestRackLoadingPrepared");
-	UTILITY : 0;
+		PERFORM isro:argumentLog("$vertex", $vertex);
+		PERFORM isro:endLog("PERFORM", "RequestRackLoadingPrepared - pass");
+	UTILITY : 1;
 }
