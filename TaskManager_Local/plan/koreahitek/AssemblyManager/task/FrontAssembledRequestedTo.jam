@@ -3,7 +3,7 @@ PREFIXES:
 		PREFIX asb: <http://www.arbi.com//Assembly#>;
 		PREFIX inter: <http://www.arbi.com//Interaction#>;
 	
-PLAN ACHIEVE FrontAssembledRequestedTo($goalID, $channelName, $worker) {
+PLAN PERFORM FrontAssembledRequestedTo($goalID, $channelName, $worker) {
 	ID: "http://www.arbi.com//FrontAssembledRequestedTo"
 	PRECONDITION :
 		FACT isro:agent($agent);

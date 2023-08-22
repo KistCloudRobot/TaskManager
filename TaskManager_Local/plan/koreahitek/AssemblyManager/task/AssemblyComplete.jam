@@ -1,0 +1,23 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+	
+PLAN PERFORM AssemblyComplete() {
+	ID: "http://www.arbi.com//AssemblyComplete"
+	PRECONDITION :
+		FACT AssemblyCount($count);
+		FACT isro:SemanticMapManagerAddress($address);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "AssemblyComplete");
+		
+		$newCount = $count + 1;
+		$data = "(UpdateContext (AssembledItemCount $d)  (AssembledItemCount " + $newCount + "))";
+		PERFORM notify("Assembly", $address, $data);
+		
+		UPDATE (AssemblyCount($count)) (AssemblyCount($newCount));
+		
+		PERFORM isro:endLog("PERFORM", "AssemblyComplete");
+	
+}
+

@@ -10,6 +10,7 @@ PLAN PERFORM initialize() {
 		PERFORM createAgentChannel("Assembly", $channel);
 		
 		ASSERT Channel("Assembly", $channel);
+		ASSERT AssemblyCount(0);
 		System.out.println("---end ChannelInit---");
 		
 	UTILITY : 10000;	

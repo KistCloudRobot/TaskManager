@@ -7,12 +7,17 @@ PLAN ACHIEVE HousingPrepared() {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "HousingPrepared");
 		
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","start");
 		PERFORM FindHousingPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","progress");
 		PERFORM HousingGraspped($x, $y);
 		PERFORM MoveToPosition("HousingLabel");
 		
 		PERFORM HousingLabeled();
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","complete");
 		PERFORM isro:endLog("ACHIEVE", "HousingPrepared");
 	FAILURE :
 		FAIL;

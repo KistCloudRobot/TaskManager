@@ -25,10 +25,14 @@ PLAN PERFORM LensAssembled($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "LensAssembled");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensAssembled","start");
 		PERFORM MoveToPosition("LensPut");
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensAssembled","progress");
 		PERFORM Release("Lens");
 		PERFORM MoveToPosition("URPutWait");
 	
+		PERFORM UpdateAgentTaskStatus($goalID, "LensAssembled","complete");
 		PERFORM isro:endLog("ACHIEVE", "LensAssembled");
 	UTILITY: 1; 
 	

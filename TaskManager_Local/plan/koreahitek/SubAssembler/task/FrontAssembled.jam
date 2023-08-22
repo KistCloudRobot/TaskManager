@@ -23,11 +23,16 @@ PLAN PERFORM FrontAssembled($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "FrontAssembled");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontAssembled","start");
 		PERFORM MoveToPosition("FrontPut");
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontAssembled","progress");
 		PERFORM Release("Front");
 		PERFORM MoveToPosition("URPutWait");
 		PERFORM MoveToPosition("URHome");
 	
+	
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontAssembled","complete");
 		PERFORM isro:endLog("ACHIEVE", "FrontAssembled");
 	UTILITY: 1; 
 	

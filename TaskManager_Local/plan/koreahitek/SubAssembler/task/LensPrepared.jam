@@ -9,9 +9,13 @@ PLAN ACHIEVE LensPrepared() {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "LensPrepared");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","start");
 		PERFORM FindLensPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","progress");
 		PERFORM LensGraspped($x, $y);
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","complete");
 		PERFORM isro:endLog("ACHIEVE", "LensPrepared");
 	UTILITY: 1;
 	FAILURE :

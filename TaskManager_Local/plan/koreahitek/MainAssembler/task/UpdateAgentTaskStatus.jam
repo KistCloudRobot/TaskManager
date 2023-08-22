@@ -1,0 +1,16 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM UpdateAgentTaskStatus($goalID, $taskName, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#UpdateAgentTaskStatusMainAssembler"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		FACT isro:robot($robot);
+		FACT isro:SemanticMapManagerAddress($address);
+	BODY:
+		
+		$data = "(UpdateContext (AgentTaskStatus \"" +$robot + "\" $b $c $d)  (AgentTaskStatus \"" + $robot + "\" \"" + $goalID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
+		PERFORM notify("Assembly", $address, $data);
+	
+	UTILITY : 50000;
+}

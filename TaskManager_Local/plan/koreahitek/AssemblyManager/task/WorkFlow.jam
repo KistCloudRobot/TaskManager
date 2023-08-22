@@ -19,26 +19,28 @@ PLAN PERFORM Workflow() {
 	BODY:
 		PERFORM isro:startLog("PERFORM", "Workflow");
 
-		ACHIEVE MainPartsPreparedRequestedTo($g1, "Assembly", $main);	
+		PERFORM MainPartsPreparedRequestedTo($g1, "Assembly", $main);	
 		PERFORM WaitGoalResult($g1);
-		ACHIEVE HousingAssembledRequestedTo($g3, "Assembly", $main);
+		PERFORM HousingAssembledRequestedTo($g3, "Assembly", $main);
 		PERFORM WaitGoalResult($g3);
-		ACHIEVE PCBAssembledRequestedTo($g4, "Assembly", $main);
+		PERFORM PCBAssembledRequestedTo($g4, "Assembly", $main);
 		PERFORM WaitGoalResult($g4);
 			
-		ACHIEVE SubPartsPreparedRequestedTo($g2, "Assembly", $sub);
+		PERFORM SubPartsPreparedRequestedTo($g2, "Assembly", $sub);
 		PERFORM WaitGoalResult($g2);
 		
-		ACHIEVE LensAssembledRequestedTo($g5, "Assembly", $sub);
+		PERFORM LensAssembledRequestedTo($g5, "Assembly", $sub);
 		PERFORM WaitGoalResult($g5);
-		//ACHIEVE GuideJigRisedRequestedTo($g6, "Assembly", $parts);
+		//PERFORM GuideJigRisedRequestedTo($g6, "Assembly", $parts);
 		//PERFORM WaitGoalResult($g6);
 		
-		ACHIEVE FrontAssembledRequestedTo($g7, "Assembly", $sub);
+		PERFORM FrontAssembledRequestedTo($g7, "Assembly", $sub);
 		PERFORM WaitGoalResult($g7);
 		
-		//ACHIEVE ProductInspectedRequestedTo($g8, "Assembly", $parts);
+		//PERFORM ProductInspectedRequestedTo($g8, "Assembly", $parts);
 		//PERFORM WaitGoalResult($g8);
+		
+		PERFORM AssemblyComplete();
 		
 		PERFORM isro:endLog("PERFORM", "Workflow");
 	UTILITY: 100; 

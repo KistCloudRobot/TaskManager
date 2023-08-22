@@ -3,7 +3,7 @@ PREFIXES:
 		PREFIX asb: <http://www.arbi.com//Assembly#>;
 		PREFIX inter: <http://www.arbi.com//Interaction#>;
 	
-PLAN ACHIEVE GuideJigRisedRequestedTo($goalID, $channelName, $worker) {
+PLAN PERFORM GuideJigRisedRequestedTo($goalID, $channelName, $worker) {
 	ID: "http://www.arbi.com//GuideJigRisedRequestedTo"
 	PRECONDITION :
 		FACT isro:agent($agent);

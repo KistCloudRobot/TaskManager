@@ -9,8 +9,13 @@ PLAN ACHIEVE FrontPrepared() {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "FrontPrepared");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","start");
 		PERFORM FindFrontPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","progress");
 		PERFORM FrontGraspped($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","complete");
 		
 		PERFORM isro:endLog("ACHIEVE", "FrontPrepared");
 	UTILITY: 1; 

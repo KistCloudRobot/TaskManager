@@ -14,6 +14,7 @@ PLAN PERFORM initialize() {
 		
 		ASSERT Channel("Assembly", $channel);
 		System.out.println("---end ChannelInit---");
+		ASSERT isro:robot("UR");
 		
 		PERFORM initGripper();
 		

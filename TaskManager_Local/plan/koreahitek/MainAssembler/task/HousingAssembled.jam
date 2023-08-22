@@ -25,11 +25,17 @@ PLAN PERFORM HousingAssembled($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "HousingAssembled");
 		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingAssembled","start");
+		
 		PERFORM MoveToPosition("HousingPut");
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingAssembled","progress");
 		PERFORM Release("Housing");
 		PERFORM MoveToPosition("EpsonPutWait");	
 		
 		PERFORM MoveToPosition("EpsonHome");	
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingAssembled","complete");
 	
 		PERFORM isro:endLog("ACHIEVE", "HousingAssembled");
 	UTILITY: 1; 
