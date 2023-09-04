@@ -29,8 +29,8 @@ PLAN ACHIEVE MainPartsPrepared($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "MainPartsPrepared");
 		
-		ACHIEVE PCBPrepared();
-		ACHIEVE HousingPrepared();
+		ACHIEVE PCBPrepared($goalID);
+		ACHIEVE HousingPrepared($goalID);
 	
 		PERFORM isro:endLog("ACHIEVE", "MainPartsPrepared");
 	UTILITY: 1; 

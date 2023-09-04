@@ -28,13 +28,13 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
-		$agent == "agent://www.mcarbi.com/Palletizer3";
+		$agent == "agent://www.mcarbi.com/Palletizer2";
 		FACT  isro:SemanticMapManagerAddress($address);
 		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
-		$data = "(palletizerReleasingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
+		$data = "(palletizerReleasingFinished \"" + $robotID + "\" 1001)";		
 		PERFORM inform("logistic",$address, $data);
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 		

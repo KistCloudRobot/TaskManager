@@ -1,5 +1,5 @@
 
-PLAN ACHIEVE FrontPrepared() {
+PLAN ACHIEVE FrontPrepared($goalID) {
 	ID: "http://www.arbi.com//FrontPrepared"
 	PRECONDITION:
 		FACT ExtraUtility($helper);

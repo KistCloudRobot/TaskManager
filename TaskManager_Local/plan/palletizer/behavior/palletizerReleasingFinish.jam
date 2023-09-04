@@ -13,7 +13,7 @@ PLAN CONCLUDE palletizerReleasingFinish($robotID, $stationVertex) {
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerReleasingFinish");
 		
-		$data = "(palletizerReleasingFinish \"" + $robotID + "\" "+$stationVertex+ ")";		
+		$data = "(palletizerReleasingFinish \"" + $robotID + "\" 1004)";		
 		PERFORM inform("logistic",$address, $data);
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 		

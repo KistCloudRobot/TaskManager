@@ -1,5 +1,5 @@
 
-PLAN ACHIEVE PCBPrepared() {
+PLAN ACHIEVE PCBPrepared($goalID) {
 	ID: "http://www.arbi.com//PCBPrepared"
 	PRECONDITION:
 		FACT ExtraUtility($helper);

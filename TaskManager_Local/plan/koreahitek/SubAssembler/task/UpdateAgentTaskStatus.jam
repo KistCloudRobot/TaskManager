@@ -10,6 +10,7 @@ PLAN PERFORM UpdateAgentTaskStatus($goalID, $taskName, $status) {
 	BODY:
 		
 		$data = "(UpdateContext (AgentTaskStatus \"" +$robot + "\" $b $c $d)  (AgentTaskStatus \"" + $robot + "\" \"" + $goalID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
+		System.out.println($data);
 		PERFORM notify("Assembly", $address, $data);
 	
 	UTILITY : 50000;

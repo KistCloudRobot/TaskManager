@@ -1,5 +1,5 @@
 
-PLAN ACHIEVE LensPrepared() {
+PLAN ACHIEVE LensPrepared($goalID) {
 	ID: "http://www.arbi.com//LensPrepared"
 	PRECONDITION:
 		FACT ExtraUtility($helper);

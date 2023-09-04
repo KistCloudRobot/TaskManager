@@ -29,8 +29,8 @@ PLAN ACHIEVE SubPartsPrepared($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "SubPartsPrepared");
 		
-		ACHIEVE FrontPrepared();
-		ACHIEVE LensPrepared();
+		ACHIEVE FrontPrepared($goalID);
+		ACHIEVE LensPrepared($goalID);
 		PERFORM MoveToPosition("URPutWait");	
 	
 		PERFORM isro:endLog("ACHIEVE", "SubPartsPrepared");
