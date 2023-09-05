@@ -1,5 +1,5 @@
 PLAN CONCLUDE RackLoadCompleted() {
-	ID: "http://www.arbi.com//RackLoadCompleted"
+	ID: "http://www.arbi.com//ConcludeRackLoadCompleted"
 	PRECONDITION:
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "RackLoadCompleted");
@@ -14,16 +14,42 @@ PLAN CONCLUDE RackLoadCompleted() {
 }
 
 PLAN CONCLUDE RackUnloadCompleted() {
-	ID: "http://www.arbi.com//RackUnloadCompleted"
+	ID: "http://www.arbi.com//ConcludeRackUnloadCompleted"
 	PRECONDITION:
+		FACT ExtraUtility($util);
+		FACT isro:agent($agent);
 	BODY:
 		PERFORM  isro:startLog("CONCLUDE", "RackUnloadCompleted");
 		
-		PERFORM RequestPalletizerStart();
+		$goalID = $util.getGoalID($agent);
+		ASSERT currentGoalID($goalID);
+		PERFORM PackCargo($goalID); 
 		
 		PERFORM isro:endLog("CONCLUDE", "RackUnloadCompleted");
 		
 	UTILITY: 10000; 
+	EFFECTS : 
+		RETRACT RackUnloadCompleted($robotID, $vertex);
+
+}
+
+
+PLAN CONCLUDE RackUnloadCompleted() {
+	ID: "http://www.arbi.com//ConcludeRackUnloadCompletedForPalletizer3"
+	PRECONDITION:
+		FACT ExtraUtility($util);
+		FACT isro:agent($agent);
+		$agent =="agent://www.mcarbi.com/Palletizer3";
+	BODY:
+		PERFORM  isro:startLog("CONCLUDE", "RackUnloadCompleted");
+		
+		$goalID = $util.getGoalID($agent);
+		ASSERT currentGoalID($goalID);
+		PERFORM ReleaseCargo($goalID); 
+		
+		PERFORM isro:endLog("CONCLUDE", "RackUnloadCompleted");
+		
+	UTILITY: 10001; 
 	EFFECTS : 
 		RETRACT RackUnloadCompleted($robotID, $vertex);
 

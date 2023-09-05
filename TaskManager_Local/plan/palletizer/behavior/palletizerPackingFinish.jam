@@ -15,6 +15,10 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		
 		$data = "(palletizerPackingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
 		PERFORM inform("logistic",$address, $data);
+		
+		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
+		RETRACT currentGoalID($goalID);
+		
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 		
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
@@ -36,6 +40,10 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		
 		$data = "(palletizerReleasingFinished \"" + $robotID + "\" 1001)";		
 		PERFORM inform("logistic",$address, $data);
+		
+		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
+		RETRACT currentGoalID($goalID);
+		
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 		
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");

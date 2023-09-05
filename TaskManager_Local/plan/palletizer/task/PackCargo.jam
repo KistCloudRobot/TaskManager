@@ -1,0 +1,14 @@
+PLAN PERFORM PackCargo($goalID) {
+	ID: "http://www.arbi.com//PackCargo"
+	PRECONDITION:
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "PackCargo");
+		
+		PERFORM UpdateAgentTaskStatus("PackCargo", "start");
+		PERFORM RequestPalletizerStart();
+		PERFORM UpdateAgentTaskStatus("PackCargo", "progress");
+		
+		PERFORM isro:endLog("PERFORM", "PackCargo");
+		
+	UTILITY: 10; 
+}

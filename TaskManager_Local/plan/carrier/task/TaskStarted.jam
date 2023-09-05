@@ -1,0 +1,31 @@
+PLAN PERFORM TaskStarted($goalID) {
+	ID: "http://www.arbi.com//TaskCreatedPotenit"
+	PRECONDITION :
+		FACT isro:SemanticMapManagerAddress($address);
+		FACt robotLocation($location);
+		$location == "potenit";
+	BODY :
+		PERFORM isro:startLog("PERFORM", "TaskStarted");
+		
+		$context = "(TaskStarted \"real\" \"" + $goalID + "\")";
+		PERFORM notify("logistic", $address, $context);
+		
+		PERFORM isro:endLog("PERFORM", "TaskStarted");
+	UTILITY : 10;
+}
+
+PLAN PERFORM TaskStarted($goalID) {
+	ID: "http://www.arbi.com//TaskCreatedIsaac"
+	PRECONDITION :
+		FACT isro:SemanticMapManagerAddress($address);
+		FACt robotLocation($location);
+		$location == "isaac";
+	BODY :
+		PERFORM isro:startLog("PERFORM", "TaskStarted");
+		
+		$context = "(TaskStarted \"simulation\" \"" + $goalID + "\")";
+		PERFORM notify("logistic", $address, $context);
+		
+		PERFORM isro:endLog("PERFORM", "TaskStarted");
+	UTILITY : 10;
+}

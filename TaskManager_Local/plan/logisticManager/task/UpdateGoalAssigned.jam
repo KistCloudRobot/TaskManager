@@ -13,8 +13,7 @@ PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 		$data = "(goalAssigned \"" + $goalID + "\" \"" + $worker + "\")";
 		$communicationInstance.assertToLTM($data);
 		
-		$context = "(TaskCreated \"" + $goalID + "\")";
-		PERFORM notify("logistic", $address, $context);
+		PERFORM TaskCreated($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned assert goalAssigned");
 	UTILITY : 10;
@@ -37,8 +36,7 @@ PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 		$communicationInstance.retractFromLTM($data);
 		RETRACT goalAssigned($goal, $worker);
 		
-		$context = "(TaskCompleted \"" + $goalID + "\")";
-		PERFORM notify("logistic", $address, $context);
+		PERFORM TaskCompleted($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
 	UTILITY : 20;
