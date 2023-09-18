@@ -18,6 +18,8 @@ PLAN PERFORM PalletTransportedCreated($command, $goal) {
 		
 		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM AssertStationAssignedBy($goal); 
+		
+		PERFORM TaskCreated($goalID);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated PrepareStoring");
 	UTILITY: 10; 
 	
@@ -43,6 +45,8 @@ PLAN PERFORM PalletTransportedCreated($command, $goal) {
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $startStation + "\" \"" + $location + "\")";
 		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM AssertStationAssignedBy($goal); 
+		
+		PERFORM TaskCreated($goalID);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated PrepareUnstoring");
 	UTILITY: 10; 
 	
@@ -68,6 +72,8 @@ PLAN PERFORM PalletTransportedCreated($command, $goal) {
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
 		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM AssertStationAssignedBy($goal); 
+		
+		PERFORM TaskCreated($goalID);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated Storing");
 	UTILITY: 10; 
 	
@@ -93,6 +99,8 @@ PLAN PERFORM PalletTransportedCreated($command, $goal) {
 		$goal = "(PalletTransported \"" +$goalID +"\" \"" +$rack+ "\" \"" + $location + "\" \"" + $endStation + "\")";
 		PERFORM isro:argumentLog("$goal", $goal);
 		PERFORM AssertStationAssignedBy($goal); 
+		
+		PERFORM TaskCreated($goalID);
 		PERFORM isro:endLog("PERFORM", "PalletTransportedCreated Unstoring");
 	UTILITY: 10; 
 	

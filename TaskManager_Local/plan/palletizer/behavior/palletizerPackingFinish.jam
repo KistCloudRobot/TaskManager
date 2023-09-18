@@ -38,7 +38,7 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
-		$data = "(palletizerReleasingFinished \"" + $robotID + "\" 1001)";		
+		$data = "(palletizerPackingFinished \"" + $robotID + "\" 1001)";		
 		PERFORM inform("logistic",$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");

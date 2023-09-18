@@ -17,8 +17,8 @@ PLAN PERFORM RequestExitPalletizer($robotID, $stationVertex) {
 		
 		PERFORM isro:argumentLog("$robotID", $robotID);
 		PERFORM isro:argumentLog("$stationVertex", $stationVertex);
-		$data = "(ExitPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
-		$communicationInstance.request($bi, $data);
+		$action = "(ExitPalletizer \"" + $actionID + "\" \"" + $robotID + "\" "+ $stationVertex + ")";
+		$communicationInstance.inform($bi, $action);
 		
 		PERFORM isro:endLog("PERFORM", "RequestExitPalletizer");
 	UTILITY: 0; 

@@ -11,6 +11,8 @@ PLAN PERFORM initialize() {
 		
 		System.out.println("---end ChannelInit---");
 		
+		PERFORM initContext();
+		
 	UTILITY : 10000;	
 }
 

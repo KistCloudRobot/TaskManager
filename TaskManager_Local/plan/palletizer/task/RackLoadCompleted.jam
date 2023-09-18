@@ -23,7 +23,7 @@ PLAN CONCLUDE RackUnloadCompleted() {
 		
 		$goalID = $util.getGoalID($agent);
 		ASSERT currentGoalID($goalID);
-		PERFORM PackCargo($goalID); 
+		POST PERFORM PackCargo($goalID); 
 		
 		PERFORM isro:endLog("CONCLUDE", "RackUnloadCompleted");
 		
@@ -45,7 +45,7 @@ PLAN CONCLUDE RackUnloadCompleted() {
 		
 		$goalID = $util.getGoalID($agent);
 		ASSERT currentGoalID($goalID);
-		PERFORM ReleaseCargo($goalID); 
+		POST PERFORM ReleaseCargo($goalID); 
 		
 		PERFORM isro:endLog("CONCLUDE", "RackUnloadCompleted");
 		

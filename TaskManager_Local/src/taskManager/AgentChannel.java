@@ -85,4 +85,10 @@ public class AgentChannel extends Channel{
 		
 	}
 	
+	@Override
+	public void notify(String receiver, String content) {
+//		System.out.println("notify content" + content);
+		super.notify(receiver, content);
+	}
+	
 }

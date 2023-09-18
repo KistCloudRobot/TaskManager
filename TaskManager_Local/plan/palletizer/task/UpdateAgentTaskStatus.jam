@@ -10,7 +10,6 @@ PLAN PERFORM UpdateAgentTaskStatus($taskName, $status) {
 		FACT currentGoalID($goalID);
 	BODY:
 	
-		$goalID = $glUtility.retrieveGLExpression($goal,0);
 		$data = "(UpdateContext (AgentTaskStatus \"" +$robot + "\" $b $c $d)  (AgentTaskStatus \"" + $robot + "\" \"" + $goalID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
 		PERFORM notify("logistic", $address, $data);
 	

@@ -1,0 +1,39 @@
+
+PLAN PERFORM initContext() {
+	ID : "initializeForPalletizer1"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Palletizer1";
+	BODY :
+			
+		ASSERT isro:robot("Palletizer1");
+		
+	UTILITY : 10000;	
+}
+
+PLAN PERFORM initContext() {
+	ID : "initializeForPalletizer2"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Palletizer2";
+	BODY :
+			
+		ASSERT isro:robot("Palletizer2");
+		
+	UTILITY : 10000;	
+}
+
+
+PLAN PERFORM initContext() {
+	ID : "initializeForPalletizer3"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Palletizer3";
+	BODY :
+			
+		ASSERT isro:robot("Palletizer3");
+		
+	UTILITY : 10000;	
+}
+
+
