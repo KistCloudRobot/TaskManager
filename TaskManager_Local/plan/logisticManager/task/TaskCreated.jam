@@ -1,31 +1,15 @@
-PLAN PERFORM TaskCreated($goalID) {
+PLAN PERFORM TaskCreated($goalID, $location, $goal) {
 	ID: "http://www.arbi.com//TaskCreatedLocal1"
 	PRECONDITION :
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT isro:agent($agent);
-		$agent == "agent://www.mcarbi.com/Local1";
 	BODY :
 		PERFORM isro:startLog("PERFORM", "TaskCreated Local1");
 		
-		$context = "(TaskCreated \"real\" \"" + $goalID + "\")";
+		$context = "(TaskCreated \"real\" \"" + $goalID + "\" \"" + $location + "\" " + $goal +")";
 		PERFORM notify("logistic", $address, $context);
 		
 		PERFORM isro:endLog("PERFORM", "TaskCreated Local1");
-	UTILITY : 10;
+	UTILITY : 11;
 }
 
-PLAN PERFORM TaskCreated($goalID) {
-	ID: "http://www.arbi.com//TaskCreatedLocal2"
-	PRECONDITION :
-		FACT isro:SemanticMapManagerAddress($address);
-		FACT isro:agent($agent);
-		$agent == "agent://www.mcarbi.com/Local2";
-	BODY :
-		PERFORM isro:startLog("PERFORM", "TaskCreated Local2");
-		
-		$context = "(TaskCreated \"simulation\" \"" + $goalID + "\")";
-		PERFORM notify("logistic", $address, $context);
-		
-		PERFORM isro:endLog("PERFORM", "TaskCreated Local2");
-	UTILITY : 10;
-}

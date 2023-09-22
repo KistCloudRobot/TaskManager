@@ -25,7 +25,7 @@ PLAN PERFORM CancelMove($requestID, $robotID){
 		$actionID = $helper.getActionID($agent);
 		$data  = "(CancelMove \"" +$actionID + "\")";
 		PERFORM request("logistic", $reciever,$data,$result);
-		PERFORM NotifyRobotPath($robotID, "(path)");
+		//PERFORM NotifyRobotPath($robotID, "(path)");
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

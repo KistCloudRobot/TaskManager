@@ -3,6 +3,7 @@ PLAN PERFORM AssertStationAssignedBy($goal){
 	PRECONDITION :
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
+		FACT  isro:ContextManagerAddress($address);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "AssertStationAssigned");
 		
@@ -11,10 +12,10 @@ PLAN PERFORM AssertStationAssignedBy($goal){
 		$endStation = $glUtility.retrieveGLExpression($goal, 3);
 		
 		$data = "(context (stationAssignedBy \"" + $goalID + "\" \"" + $startStation + "\"))";
-		$communicationInstance.assertToLTM($data);
+		$communicationInstance.inform($address, $data);
 		
 		$data = "(context (stationAssignedBy \"" + $goalID + "\" \"" + $endStation + "\"))";
-		$communicationInstance.assertToLTM($data);
+		$communicationInstance.inform($address, $data);
 		
 		PERFORM isro:endLog("PERFORM", "AssertStationAssigned");
 	UTILITY : 500;

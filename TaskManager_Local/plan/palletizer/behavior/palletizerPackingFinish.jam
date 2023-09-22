@@ -8,8 +8,8 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
-		FACT  isro:SemanticMapManagerAddress($address);
-		
+		FACT isro:SemanticMapManagerAddress($address);
+		FACT currentGoalID($goalID);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
@@ -19,12 +19,31 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
 		RETRACT currentGoalID($goalID);
 		
-		RETRACT palletizerPackingFinish($robotID, $stationVertex);
-		
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
+	EFFECTS : 
+		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 	UTILITY: 50000; 
 }
 
+PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
+	ID: "http://www.arbi.com//palletizerPackingFinishwithoutstart"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:SemanticMapManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish without start");
+		
+		$data = "(palletizerPackingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
+		PERFORM inform("logistic",$address, $data);
+				
+		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
+	EFFECTS : 
+		RETRACT palletizerPackingFinish($robotID, $stationVertex);
+	UTILITY: 5000; 
+}
 PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 	ID: "http://www.arbi.com//palletizerReleasingFinish??"
 	PRECONDITION:
@@ -43,9 +62,10 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
 		RETRACT currentGoalID($goalID);
-		
-		RETRACT palletizerPackingFinish($robotID, $stationVertex);
-		
+				
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
+		
+	EFFECTS : 
+		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 	UTILITY: 50001; 
 }

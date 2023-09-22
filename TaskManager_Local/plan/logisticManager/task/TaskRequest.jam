@@ -5,11 +5,13 @@ PLAN CONCLUDE TaskRequest($request) {
 	ID : "LocalTaskRequestCall"
 	PRECONDITION :
 		FACT Communication($comm);
+		FACT GLUtility($glUtility);
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "TaskRequest");
 		PERFORM isro:argumentLog("$request", $request);
-		$data = "(context " + $request + ")";
-		$comm.assertToLTM($data);
+
+		$glUtility.assertGL($request);
+		POST PERFORM PalletTransportedRequestedTo($goal, "logistic", $worker);
 		PERFORM isro:endLog("CONCLUDE", "TaskRequest");
 	EFFECTS :
 		RETRACT TaskRequest($request);

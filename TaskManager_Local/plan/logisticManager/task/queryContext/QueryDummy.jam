@@ -1,0 +1,32 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM QueryDummyRack($rack){
+	ID: "http://www.arbi.com//BuiltInPlan#QueryDummyRack"
+	PRECONDITION :
+		FACT DummyContextManager;
+	BODY :
+		$rack = "dummyRack";
+		System.out.println("dummy rack ID : " + $rack);
+		
+	utility : 10;
+}
+
+
+PLAN PERFORM QueryDummyLocation($taskType, $station){
+	ID: "http://www.arbi.com//QueryDummyLocation"
+	PRECONDITION:
+		FACT DummyContextManager;
+		FACT Communication($communicationInstance);
+		FACT ExtraUtility($helper);
+		FACT isro:ContextManagerAddress($address);
+		FACT GLUtility($glUtility);
+		
+	BODY:
+		System.out.println("dummy taskType : " + $taskType);
+		$queryResult = $communicationInstance.sendQuery($address, "(DummyLocation \"" +  $taskType + "\")");
+		$station = $glUtility.retrieveGLExpression($queryResult, 0);
+		System.out.println("dummy station : " + $station);
+	UTILITY: 10; 
+}
