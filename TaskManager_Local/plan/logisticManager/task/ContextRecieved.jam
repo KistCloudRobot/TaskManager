@@ -13,7 +13,24 @@ PLAN CONCLUDE context($context){
 		
 	UTILITY : 10;
 }
+/*
 
+		$cargoID = $glUtility.retrieveGLExpression($context, 0);
+		$location = $glUtility.retrieveGLExpression($context, 1);
+		$callID = $glUtility.retrieveGLExpression($context, 2);
+		$command = "(command \"" + $location + "\" \"Unstoring\")";
+		$data = "(context (PersonCall \"" + $callID + "\" (commands " + $command + ")))";
+		System.out.println($data);
+		$communication.assertToLTM($data);
+
+		$cargoID = $glUtility.retrieveGLExpression($context, 0);
+		$location = $glUtility.retrieveGLExpression($context, 1);
+		$callID = $glUtility.retrieveGLExpression($context, 2);
+		$command = "(command \"" + $location + "\" \"Storing\")";
+		$data = "(context (PersonCall \"" + $callID + "\" (commands " + $command + ")))";
+		System.out.println($data);
+		$communication.assertToLTM($data);
+*/
 
 PLAN CONCLUDE context($context){
 	ID: "http://www.arbi.com//BuiltInPlan#contextReleasedCargo"
@@ -23,13 +40,8 @@ PLAN CONCLUDE context($context){
 		$glUtility.retrieveGLName($context) == "releasedCargo";
 	BODY:
 		System.out.println($context);
-		$cargoID = $glUtility.retrieveGLExpression($context, 0);
-		$location = $glUtility.retrieveGLExpression($context, 1);
-		$callID = $glUtility.retrieveGLExpression($context, 2);
-		$command = "(command \"" + $location + "\" \"Unstoring\")";
-		$data = "(context (PersonCall \"" + $callID + "\" (commands " + $command + ")))";
-		System.out.println($data);
-		$communication.assertToLTM($data);
+		PERFORM SendToTaskReasoner($context);
+		
 		RETRACT context($context);
 	UTILITY : 10000;
 }
@@ -42,13 +54,8 @@ PLAN CONCLUDE context($context){
 		$glUtility.retrieveGLName($context) == "receivedCargo";
 	BODY:
 		System.out.println($context);
-		$cargoID = $glUtility.retrieveGLExpression($context, 0);
-		$location = $glUtility.retrieveGLExpression($context, 1);
-		$callID = $glUtility.retrieveGLExpression($context, 2);
-		$command = "(command \"" + $location + "\" \"Storing\")";
-		$data = "(context (PersonCall \"" + $callID + "\" (commands " + $command + ")))";
-		System.out.println($data);
-		$communication.assertToLTM($data);
+		PERFORM SendToTaskReasoner($context);
+
 		RETRACT context($context);
 	UTILITY : 10000;
 }

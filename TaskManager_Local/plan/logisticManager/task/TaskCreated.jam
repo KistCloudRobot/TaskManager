@@ -3,13 +3,15 @@ PLAN PERFORM TaskCreated($goalID, $location, $goal) {
 	PRECONDITION :
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT isro:agent($agent);
+		FACT AssignedLogisticsCenter($location);
 	BODY :
-		PERFORM isro:startLog("PERFORM", "TaskCreated Local1");
+		PERFORM isro:startLog("PERFORM", "TaskCreated");
 		
-		$context = "(TaskCreated \"real\" \"" + $goalID + "\" \"" + $location + "\" " + $goal +")";
+		$context = "(TaskCreated \"" + $location + "\" \"" + $goalID + "\" \"" + $location + "\" " + $goal +")";
 		PERFORM notify("logistic", $address, $context);
+		PERFORM SendToTaskReasoner($context);
 		
-		PERFORM isro:endLog("PERFORM", "TaskCreated Local1");
+		PERFORM isro:endLog("PERFORM", "TaskCreated");
 	UTILITY : 11;
 }
 

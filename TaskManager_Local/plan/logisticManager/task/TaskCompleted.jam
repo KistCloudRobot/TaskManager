@@ -2,30 +2,14 @@ PLAN PERFORM TaskCompleted($goalID) {
 	ID: "http://www.arbi.com//TaskCompletedLocal1"
 	PRECONDITION :
 		FACT isro:SemanticMapManagerAddress($address);
-		FACT isro:agent($agent);
-		$agent == "agent://www.mcarbi.com/Local1";
+		FACT AssignedLogisticsCenter($location);
 	BODY :
-		PERFORM isro:startLog("PERFORM", "TaskCompleted Local1");
+		PERFORM isro:startLog("PERFORM", "TaskCompleted");
 		
-		$context = "(TaskCompleted \"real\" \"" + $goalID + "\")";
+		$context = "(TaskCompleted \"" + $location + "\" \"" + $goalID + "\")";
 		PERFORM notify("logistic", $address, $context);
+		PERFORM SendToTaskReasoner($context);
 		
-		PERFORM isro:endLog("PERFORM", "TaskCompleted Local1");
-	UTILITY : 10;
-}
-
-PLAN PERFORM TaskCompleted($goalID) {
-	ID: "http://www.arbi.com//TaskCompletedLocal2"
-	PRECONDITION :
-		FACT isro:SemanticMapManagerAddress($address);
-		FACT isro:agent($agent);
-		$agent == "agent://www.mcarbi.com/Local2";
-	BODY :
-		PERFORM isro:startLog("PERFORM", "TaskCompleted Local2");
-		
-		$context = "(TaskCompleted \"simulation\" \"" + $goalID + "\")";
-		PERFORM notify("logistic", $address, $context);
-		
-		PERFORM isro:endLog("PERFORM", "TaskCompleted Local2");
+		PERFORM isro:endLog("PERFORM", "TaskCompleted");
 	UTILITY : 10;
 }

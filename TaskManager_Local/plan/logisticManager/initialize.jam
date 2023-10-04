@@ -1,3 +1,4 @@
+/*
 PLAN PERFORM initialize() {
 	ID : "initializeForLocalAgent"
 	PRECONDITION :
@@ -16,6 +17,11 @@ PLAN PERFORM initialize() {
 		
 	UTILITY : 100;	
 }
+		$subscribeRule = "(rule (fact (context (PersonCall $a $b))) --> (notify (context (PersonCall $a $b))))";
+		$result = $communication.subscribeToLTM($subscribeRule);		
+		System.out.println($result);
+		
+*/
 
 PLAN PERFORM initialize() {
 	ID : "initializeForLocalAgent2"
@@ -23,9 +29,6 @@ PLAN PERFORM initialize() {
 		FACT Communication($communication);
 	BODY :
 		System.out.println("---initializeForLocalAgent2---");
-		$subscribeRule = "(rule (fact (context (PersonCall $a $b))) --> (notify (context (PersonCall $a $b))))";
-		$result = $communication.subscribeToLTM($subscribeRule);		
-		System.out.println($result);
 		System.out.println("---start ChannelInit---");
 		
 		PERFORM connectAgentChannel("logistic", $channel);
@@ -33,6 +36,8 @@ PLAN PERFORM initialize() {
 		ASSERT Channel("logistic", $channel);
 		System.out.println("---end ChannelInit---");
 		
+		RETRIEVE isro:agent($agent);
+		PERFORM initializeContext($agent);
 	UTILITY : 10000;	
 }
 

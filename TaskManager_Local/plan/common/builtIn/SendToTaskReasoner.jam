@@ -1,0 +1,13 @@
+
+PLAN PERFORM SendToTaskReasoner($data){
+	ID: "http://www.arbi.com//SendToTaskReasoner"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "SendToTaskReasoner");
+		
+		$communicationInstance.inform($reasoner, $data);
+	 
+		PERFORM isro:endLog("PERFORM", "SendToTaskReasoner");
+}

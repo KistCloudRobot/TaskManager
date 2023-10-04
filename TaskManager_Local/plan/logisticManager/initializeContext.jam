@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForLocal1"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/Local1";
+	BODY :
+		ASSERT AssignedLogisticsCenter("real");
+} 
+
+PLAN PERFORM initializeContext($agentID) {
+	ID : "initializeContextForLocal2"
+	PRECONDITION :
+		$agentID == "agent://www.mcarbi.com/Local2";
+	BODY :
+
+		ASSERT AssignedLogisticsCenter("simulation");
+} 
