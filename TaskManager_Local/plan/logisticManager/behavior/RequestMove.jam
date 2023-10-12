@@ -29,7 +29,6 @@ PLAN PERFORM Move($requestID, $robotID, $path){
 		PERFORM isro:argumentLog("$request", $data);
 		
 		PERFORM request("logistic", $reciever,$data,$result);
-		PERFORM NotifyRobotPath($robotID, $path);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

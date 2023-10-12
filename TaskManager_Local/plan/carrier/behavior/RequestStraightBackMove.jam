@@ -22,12 +22,16 @@ PLAN PERFORM StraightBackMove($goalID,$vertex){
 		FACT isro:agent($agent);
 		FACT robotStatus($robot, $status);
 		$status == "Ready";
+		FACT robotAt($robot, $v1, $v2);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "StraightBackMove");
 		
 		$actionID = $helper.getActionID($agent);
 		$data =  "(StraightBackMove \"" + $actionID + "\" " + $vertex +")";
+		$path = "(path " + $v1 + " " + $vertex + ")";
+		PERFORM NotifyRobotPath($robot, $path);
 		PERFORM isro:RequestBehavior($actionID, $data);
+		PERFORM NotifyRobotPath($robot, "(path)");
 
 		PERFORM isro:endLog("PERFORM", "StraightBackMove");
 	UTILITY: 1; 

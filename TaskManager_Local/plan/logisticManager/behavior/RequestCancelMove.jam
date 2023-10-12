@@ -21,11 +21,10 @@ PLAN PERFORM CancelMove($requestID, $robotID){
 		PERFORM isro:startLog("PERFORM", "CancelMove");
 		
 		PERFORM UnpostMoveGoalWait($requestID);
-		PERFORM FindRobotAgent($robotID, $reciever);
+		PERFORM FindRobotAgent($robotID, $receiver);
 		$actionID = $helper.getActionID($agent);
 		$data  = "(CancelMove \"" +$actionID + "\")";
-		PERFORM request("logistic", $reciever,$data,$result);
-		//PERFORM NotifyRobotPath($robotID, "(path)");
+		PERFORM request("logistic", $receiver, $data, $result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

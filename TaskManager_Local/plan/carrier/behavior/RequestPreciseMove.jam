@@ -23,13 +23,18 @@ PLAN PERFORM PreciseMove($goalID, $vertex){
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 		FACT robotStatus($robot, $status);
+		FACT robotAt($robot, $v1, $v2);
 		$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PreciseMove");
 		
 		$actionID = $helper.getActionID($agent);
 		$data =  "(PreciseMove \"" + $actionID + "\" " + $vertex +")";
+		$path = "(path " + $v1 + " " + $vertex + ")";
+		PERFORM NotifyRobotPath($robot, $path);
 		PERFORM isro:RequestBehavior($actionID, $data);
+		PERFORM NotifyRobotPath($robot, "(path)");
+		
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");
 	UTILITY: 1; 

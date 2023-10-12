@@ -22,6 +22,7 @@ PLAN PERFORM CancelMove($goalID) {
 	PRECONDITION:
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
+		FACT isro:robot($robot);
 		//FACT robotStatus($robot, $status);
 		//$status == "Move";
 		
@@ -31,7 +32,8 @@ PLAN PERFORM CancelMove($goalID) {
 		$actionID = $helper.getActionID($agent);
 		$data = "(CancelMove \"" + $actionID + "\")"; 
 		PERFORM isro:RequestBehavior($actionID, $data);	
-			
+		PERFORM NotifyRobotPath($robot, "(path)");
+
 		PERFORM isro:endLog("PERFORM", "CancelMove");
 	UTILITY: 200; 
 }

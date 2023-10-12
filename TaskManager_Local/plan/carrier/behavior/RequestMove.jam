@@ -30,6 +30,7 @@ PLAN PERFORM Move($goalID, $path) {
 		
 		$actionID = $helper.getActionID($agent);
 		$data = "(Move \"" + $actionID + "\" " + $path + ")";
+		PERFORM NotifyRobotPath($robot, $path);
 		PERFORM isro:RequestBehavior($actionID, $data);
 		PERFORM NotifyRobotPath($robot, "(path)");
 		PERFORM isro:endLog("PERFORM", "Move");
