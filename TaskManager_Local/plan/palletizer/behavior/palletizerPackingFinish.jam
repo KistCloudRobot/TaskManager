@@ -10,6 +10,7 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT ExtraUtility($helper);
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT currentGoalID($goalID);
+		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
@@ -17,6 +18,7 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		PERFORM inform("logistic",$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
+		PERFORM TaskCompleted($goalID, $robotID);
 		RETRACT currentGoalID($goalID);
 		
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
@@ -53,7 +55,7 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT isro:agent($agent);
 		$agent == "agent://www.mcarbi.com/Palletizer2";
 		FACT  isro:SemanticMapManagerAddress($address);
-		
+		FACT currentGoalID($goalID);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
@@ -61,6 +63,7 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		PERFORM inform("logistic",$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
+		PERFORM TaskCompleted($goalID, $robotID);
 		RETRACT currentGoalID($goalID);
 				
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");

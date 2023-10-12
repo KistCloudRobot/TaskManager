@@ -5,6 +5,9 @@ PLAN PERFORM ReleaseCargo($goalID) {
 		PERFORM  isro:startLog("PERFORM", "ReleaseCargo");
 		
 		PERFORM UpdateAgentTaskStatus("ReleaseCargo", "start");
+		$goal = "(ReleaseCargo \"" + $goalID + "\")";
+		PERFORM TaskStarted($goalID, $goal);
+		
 		PERFORM RequestPalletizerStart();
 		PERFORM UpdateAgentTaskStatus("ReleaseCargo", "progress");
 		

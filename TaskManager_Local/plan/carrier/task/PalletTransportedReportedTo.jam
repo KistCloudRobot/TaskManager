@@ -1,18 +1,4 @@
 
-PLAN CONCLUDE PostPalletTransportedReportedTo($goal, $channel, $agent) {
-	ID : "http://www.arbi.com/PostPalletTransportedReportedToReporedtToForLIFT"
-	PRECONDITION :
-		FACT PalletTransportedRequestedFrom($g, $c, $a);
-	BODY :
-		PERFORM isro:startLog("CONCLUDE", "PostPalletTransportedReportedTo");
-		
-		POST PERFORM PalletTransportedReportedTo($g, $c, $a);
-		PERFORM isro:endLog("CONCLUDE", "PostPalletTransportedReportedTo");
-	UTILITY : 50000;
-	EFFECTS :
-		RETRACT PostPalletTransportedReportedTo($goal, $channel, $agent);
-}
-
 PLAN PERFORM PalletTransportedReportedTo($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/PalletTrasnportedReportedToGoalReportToForLIFT"
 	PRECONDITION :
@@ -24,7 +10,6 @@ PLAN PERFORM PalletTransportedReportedTo($goal, $channel, $agent) {
 		$goalID = $glUtility.retrieveGLExpression($goal, 0);
 		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
 		//PERFORM RetractRequestedGoal($goal);
-		//PERFORM isro:SendGoalComplete("PalletTransportedReportedTo"); 
 		
 		PERFORM isro:endLog("PERFORM", "PalletTransportedReportedTo");
 	UTILITY : 10;

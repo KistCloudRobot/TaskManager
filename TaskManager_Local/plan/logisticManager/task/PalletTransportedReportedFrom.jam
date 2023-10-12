@@ -7,7 +7,6 @@ PLAN CONCLUDE PalletTransportedReportedFrom($goalID,$result, $channelName, $work
 				
 		PERFORM UpdateGoalAssigned($goal, $worker);
 		PERFORM AssertStationReleasedFrom($goal);
-		perform isro:SendGoalComplete("PalletTransportedReportedFrom");
 		
 		PERFORM isro:endLog("CONCLUDE", "PalletTransportedReportedFrom");
 	EFFECTS : 

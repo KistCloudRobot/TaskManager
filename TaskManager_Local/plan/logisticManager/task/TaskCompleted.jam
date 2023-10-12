@@ -1,12 +1,12 @@
-PLAN PERFORM TaskCompleted($goalID) {
+PLAN PERFORM TaskCompleted($goalID, $robotID) {
 	ID: "http://www.arbi.com//TaskCompletedLocal1"
 	PRECONDITION :
 		FACT isro:SemanticMapManagerAddress($address);
-		FACT AssignedLogisticsCenter($location);
+		FACT AssignedLogisticsCenter($center);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "TaskCompleted");
 		
-		$context = "(TaskCompleted \"" + $location + "\" \"" + $goalID + "\")";
+		$context = "(TaskCompleted \"" + $center + "\" \"" + $goalID + "\" \"" + $robotID + "\")";
 		PERFORM notify("logistic", $address, $context);
 		PERFORM SendToTaskReasoner($context);
 		

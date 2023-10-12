@@ -39,7 +39,7 @@ PLAN perform ReturnToWait(){
 		RETRIEVE WaitVertex($waitVertex);
 				
 		PERFORM RequestReturn($waitVertex);
-		PERFORM isro:SendGoalComplete("ReturnToWait"); 
+
 		PERFORM isro:endLog("PERFORM", "ReturnToWait");
 	UTILITY: 11; 
 }

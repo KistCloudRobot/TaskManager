@@ -35,7 +35,8 @@ PLAN PERFORM UpdateGoalAssigned($goal, $worker) {
 		$communicationInstance.retractFromLTM($data);
 		RETRACT goalAssigned($goal, $worker);
 		
-		PERFORM TaskCompleted($goalID);
+		PERFORM FindRobot($worker, $robot);
+		PERFORM TaskCompleted($goalID, $robot);
 		
 		PERFORM isro:endLog("PERFORM", "UpdateGoalAssigned retract goalAssigned");
 	UTILITY : 20;

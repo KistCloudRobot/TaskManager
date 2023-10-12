@@ -1,5 +1,5 @@
 PLAN PERFORM TaskStarted($goalID, $goal) {
-	ID: "http://www.arbi.com//TaskCreatedPotenit"
+	ID: "http://www.arbi.com//TaskCreatedPotenitPalletizer"
 	PRECONDITION :
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT isro:robot($robot);
@@ -16,7 +16,7 @@ PLAN PERFORM TaskStarted($goalID, $goal) {
 }
 
 PLAN PERFORM TaskStarted($goalID, $goal) {
-	ID: "http://www.arbi.com//TaskCreatedIsaac"
+	ID: "http://www.arbi.com//TaskCreatedIsaacPalletizer"
 	PRECONDITION :
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT isro:robot($robot);

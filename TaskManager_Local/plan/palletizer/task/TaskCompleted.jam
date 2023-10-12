@@ -1,0 +1,35 @@
+PLAN PERFORM TaskCompleted($goalID, $robotID) {
+	ID: "http://www.arbi.com//TaskCompletedPalletizer1"
+	PRECONDITION :
+		FACT isro:SemanticMapManagerAddress($address);
+		FACT robotLocation($location);
+		$location == "potenit";
+		FACT ExtraUtility($helper);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "TaskCompleted");
+		
+		$helper.sleepAwhile(30000);
+		$context = "(TaskCompleted \"real\" \"" + $goalID + "\" \"" + $robotID + "\")";
+		PERFORM notify("logistic", $address, $context);
+		
+		PERFORM isro:endLog("PERFORM", "TaskCompleted");
+	UTILITY : 10;
+}
+
+PLAN PERFORM TaskCompleted($goalID, $robotID) {
+	ID: "http://www.arbi.com//TaskCompletedPalletizer2"
+	PRECONDITION :
+		FACT isro:SemanticMapManagerAddress($address);
+		FACT robotLocation($location);
+		$location == "isaac";
+		FACT ExtraUtility($helper);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "TaskCompleted");
+		
+		$helper.sleepAwhile(5000);
+		$context = "(TaskCompleted \"simulation\" \"" + $goalID + "\" \"" + $robotID + "\")";
+		PERFORM notify("logistic", $address, $context);
+		
+		PERFORM isro:endLog("PERFORM", "TaskCompleted");
+	UTILITY : 10;
+}

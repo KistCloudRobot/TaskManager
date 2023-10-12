@@ -7,7 +7,7 @@ PLAN PERFORM initContext() {
 	BODY :
 			
 		ASSERT isro:robot("Palletizer1");
-		
+		ASSERT robotLocation("potenit");
 	UTILITY : 10000;	
 }
 
@@ -19,7 +19,7 @@ PLAN PERFORM initContext() {
 	BODY :
 			
 		ASSERT isro:robot("Palletizer2");
-		
+		ASSERT robotLocation("isaac");
 	UTILITY : 10000;	
 }
 
@@ -32,7 +32,7 @@ PLAN PERFORM initContext() {
 	BODY :
 			
 		ASSERT isro:robot("Palletizer3");
-		
+		ASSERT robotLocation("isaac");
 	UTILITY : 10000;	
 }
 

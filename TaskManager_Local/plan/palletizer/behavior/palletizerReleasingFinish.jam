@@ -9,6 +9,7 @@ PLAN CONCLUDE palletizerReleasingFinish($robotID, $stationVertex) {
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT  isro:SemanticMapManagerAddress($address);
+		FACT currentGoalID($goalID);
 		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerReleasingFinish");
@@ -17,8 +18,10 @@ PLAN CONCLUDE palletizerReleasingFinish($robotID, $stationVertex) {
 		PERFORM inform("logistic",$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("ReleaseCargo", "complete");
+		PERFORM TaskCompleted($goalID, $robotID);
 		RETRACT currentGoalID($goalID);
-		RETRACT palletizerPackingFinish($robotID, $stationVertex);
+		
+		RETRACT palletizerReleasingFinish($robotID, $stationVertex);
 		
 		PERFORM isro:endLog("CONCLUDE", "palletizerReleasingFinish");
 	UTILITY: 50000; 

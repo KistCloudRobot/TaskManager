@@ -7,7 +7,7 @@ PLAN PERFORM PalletTransported($goalID, $rackID, $startLocation, $endLocation){
 	BODY :
 		PERFORM isro:startLog("PERFORM", "PalletTransported");
 		
-		PERFORM TaskStarted($goalID);
+		PERFORM TaskStarted($goalID, $goal);
 		
 		PERFORM MoveToLocation($startLocation);
 		PERFORM ObjectGrabbed($rackID,$startLocation);

@@ -10,7 +10,7 @@ GOALS:
 	PERFORM	boot;
 	
 FACTS:
-	FACT DummyContextManager;
+	//FACT DummyContextManager;
 	//FACT PlanTest();
 	FACT LOG();
 	FACT AGENT_ALIAS("TaskManager",	"agent://www.arbi.com/TaskManager");
