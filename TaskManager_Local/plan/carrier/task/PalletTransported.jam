@@ -16,7 +16,9 @@ PLAN PERFORM PalletTransported($goalID, $rackID, $startLocation, $endLocation){
 		
 		PERFORM PalletTransportedReportedTo($goal, $channel, $agent);
 		
-		PERFORM ReturnToWait();
+		PERFORM ReturnToWait($endLocation);
+		
+		PERFORM TaskCompleted($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "PalletTransported");
 	UTILITY : 10;

@@ -1,6 +1,7 @@
 PLAN PERFORM PackCargo($goalID) {
 	ID: "http://www.arbi.com//PackCargo"
 	PRECONDITION:
+		FACT currentGoalID($goalID);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "PackCargo");
 		

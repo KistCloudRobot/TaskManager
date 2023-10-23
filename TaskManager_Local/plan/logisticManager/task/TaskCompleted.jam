@@ -7,7 +7,6 @@ PLAN PERFORM TaskCompleted($goalID, $robotID) {
 		PERFORM isro:startLog("PERFORM", "TaskCompleted");
 		
 		$context = "(TaskCompleted \"" + $center + "\" \"" + $goalID + "\" \"" + $robotID + "\")";
-		PERFORM notify("logistic", $address, $context);
 		PERFORM SendToTaskReasoner($context);
 		
 		PERFORM isro:endLog("PERFORM", "TaskCompleted");

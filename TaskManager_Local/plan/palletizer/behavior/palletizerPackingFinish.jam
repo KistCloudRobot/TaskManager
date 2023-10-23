@@ -47,14 +47,14 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 	UTILITY: 5000; 
 }
 PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
-	ID: "http://www.arbi.com//palletizerReleasingFinish??"
+	ID: "http://www.arbi.com//palletizerPackingFinish1001"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 		$agent == "agent://www.mcarbi.com/Palletizer2";
-		FACT  isro:SemanticMapManagerAddress($address);
+		FACT isro:SemanticMapManagerAddress($address);
 		FACT currentGoalID($goalID);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
@@ -67,6 +67,34 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		RETRACT currentGoalID($goalID);
 				
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
+		
+	EFFECTS : 
+		RETRACT palletizerPackingFinish($robotID, $stationVertex);
+	UTILITY: 50001; 
+}
+
+
+PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
+	ID: "http://www.arbi.com//palletizerReleasingFinish1004"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT  isro:SemanticMapManagerAddress($address);
+		FACT currentGoalID($goalID);
+		$robotID == "Palletizer3";
+		$stationVertex == 1004;
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish - 1004");
+		
+		$data = "(palletizerReleasingFinish \"" + $robotID + "\" 1004)";		
+		PERFORM inform("logistic",$address, $data);
+		
+		PERFORM UpdateAgentTaskStatus("ReleaseCargo", "complete");
+		PERFORM TaskCompleted($goalID, $robotID);
+		RETRACT currentGoalID($goalID);
+				
+		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish - 1004");
 		
 	EFFECTS : 
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);

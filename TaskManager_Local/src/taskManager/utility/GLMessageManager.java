@@ -23,16 +23,41 @@ public class GLMessageManager {
 	public Interpreter interpreter;
 //	private Queue<String> messageQueue;
 
-	
+	public String findAllocation(String gl1, String gl2, int i) {
+		String result = "";
+		
+		try {
+			GeneralizedList glAlloc = GLFactory.newGLFromGLString(gl1);
+			GeneralizedList glRe = GLFactory.newGLFromGLString(gl2);
+			
+			String goalID = glAlloc.getExpression(i).asGeneralizedList().getExpression(0).asValue().stringValue();
+			for (int j =0; j < glRe.getExpressionsSize(); j++) {
+				String id = glRe.getExpression(j).asGeneralizedList().getExpression(0).asValue().stringValue();
+				if (id.equals(goalID)) {
+					result = glRe.getExpression(j).asGeneralizedList().getExpression(1).asValue().stringValue();
+				}
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		return result;
+	}
 	
 	public static void main(String[] ar) {
 		
 		GLMessageManager manager = new GLMessageManager();
-		String str = "\"(goal (metadata &quot;Local1&quot;) &quot;PalletTransported&quot; (argument &quot;http://www.arbi.com/ontologies/arbi.owl#pallet_02&quot; &quot;http://www.arbi.com/ontologies/arbi.owl#station3&quot; &quot;http://www.arbi.com/ontologies/arbi.owl#station48&quot;))\"";
-		str = manager.removeQuotationMarks(str);
-		str = manager.unescapeGL(str);
-		System.out.println(manager.retrieveGLExpression(str, 0));
-		
+//		String str = "\"(goal (metadata &quot;Local1&quot;) &quot;PalletTransported&quot; (argument &quot;http://www.arbi.com/ontologies/arbi.owl#pallet_02&quot; &quot;http://www.arbi.com/ontologies/arbi.owl#station3&quot; &quot;http://www.arbi.com/ontologies/arbi.owl#station48&quot;))\"";
+//		str = manager.removeQuotationMarks(str);
+//		str = manager.unescapeGL(str);
+		String str1 = "(TaskAllocation (PalletTransported \"Local1\" \"http://www.arbi.com/ontologies/arbi.owl#station1001\") (PalletTransported \"Local2\" \"http://www.arbi.com/ontologies/arbi.owl#station1002\") (PalletTransported \"Local3\" \"http://www.arbi.com/ontologies/arbi.owl#station1004\"))";
+		String str2 = "(AgentRecommended (Allocation \"Local3\" \"AMR_LIFT5\") (Allocation \"Local2\" \"AMR_LIFT6\") (Allocation \"Local1\" \"AMR_LIFT7\"))";
+		System.out.println(manager.findAllocation(str1, str2, 0));
+		System.out.println(manager.findAllocation(str1, str2, 1));
+		System.out.println(manager.findAllocation(str1, str2, 2));
+		System.out.println(manager.findAllocation(str1, str2, 3));
 	}
 
 	public int toInteger(String input) {

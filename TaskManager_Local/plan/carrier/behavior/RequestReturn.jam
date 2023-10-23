@@ -2,13 +2,13 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN PERFORM RequestReturn($wait){
+PLAN PERFORM RequestReturn($vertex1, $wait){
 	ID: "http://www.arbi.com//RequestReturn"
 	PRECONDITION:
 		FACT ExtraUtility($helper);
 		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
-		FACT robotAt($robot, $vertex1, $vertex2);
+		//FACT robotAt($robot, $vertex1, $vertex2);
 		FACT isro:agent($agent);
 		FACT isro:robot($robotID);
 		FACT isro:ManagerAddress($address);
