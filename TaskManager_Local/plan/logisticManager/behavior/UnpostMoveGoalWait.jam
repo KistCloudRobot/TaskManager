@@ -50,6 +50,39 @@ PLAN PERFORM UnpostMoveGoalWait($cancelID){
 	UTILITY: 1;
 }
 PLAN PERFORM UnpostMoveGoalWait($cancelID){
+	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT5"
+	PRECONDITION :
+		$cancelID == "AMR_LIFT5+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT5+Move";
+	BODY :
+		RETRACT GoalRequester($moveID, $nc);
+		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
+}
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
+	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT6"
+	PRECONDITION :
+		$cancelID == "AMR_LIFT6+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT6+Move";
+	BODY :
+		RETRACT GoalRequester($moveID, $nc);
+		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
+}
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
+	ID : "http://www.arbi.com//UnpostMoveGoalWaitLIFT7"
+	PRECONDITION :
+		$cancelID == "AMR_LIFT7+Cancel";
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+		$moveID == "AMR_LIFT7+Move";
+	BODY :
+		RETRACT GoalRequester($moveID, $nc);
+		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $moveID);
+	UTILITY: 1;
+}
+PLAN PERFORM UnpostMoveGoalWait($cancelID){
 	ID : "http://www.arbi.com//UnpostMoveGoalWaitUnpostNothing"
 	PRECONDITION :
 	BODY :

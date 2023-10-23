@@ -21,7 +21,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("potenit");
-		
+		ASSERT organization("warehouseManagement1");
 		ASSERT  isro:ManagerAddress("agent://www.mcarbi.com/Local1");
 } 
 
@@ -44,6 +44,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("potenit");
+		ASSERT organization("warehouseManagement1");
 		ASSERT  isro:ManagerAddress("agent://www.mcarbi.com/Local1");
 } 
 
@@ -66,6 +67,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("potenit");
+		ASSERT organization("warehouseManagement1");
 		ASSERT  isro:ManagerAddress("agent://www.mcarbi.com/Local1");
 } 
 
@@ -88,6 +90,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("potenit");
+		ASSERT organization("warehouseManagement1");
 		ASSERT  isro:ManagerAddress("agent://www.mcarbi.com/Local1");
 } 
 
@@ -111,6 +114,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("isaac");
+		ASSERT organization("warehouseManagement2");
 		ASSERT  isro:ManagerAddress("agent://www.mcarbi.com/Local2");
 } 
 
@@ -134,6 +138,7 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("isaac");
+		ASSERT organization("warehouseManagement2");
 		ASSERT isro:ManagerAddress("agent://www.mcarbi.com/Local2");
 } 
 
@@ -157,5 +162,6 @@ PLAN PERFORM initializeContext($agentID) {
 		ASSERT batteryRemain($robotID, 50);
 		ASSERT robotStatus($robotID, "wait");
 		ASSERT robotLocation("isaac");
+		ASSERT organization("warehouseManagement2");
 		ASSERT isro:ManagerAddress("agent://www.mcarbi.com/Local2");
 } 

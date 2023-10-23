@@ -20,6 +20,7 @@ PLAN PERFORM Move($requestID, $robotID, $path){
 		FACT isro:NavigationControllerAddress($nc);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
+		FACT organization($channelName);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "Move");
 		
@@ -28,7 +29,7 @@ PLAN PERFORM Move($requestID, $robotID, $path){
 		$data  = "(Move \"" +$actionID + "\" " + $path + ")";
 		PERFORM isro:argumentLog("$request", $data);
 		
-		PERFORM request("logistic", $reciever,$data,$result);
+		PERFORM request($channelName, $reciever,$data,$result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

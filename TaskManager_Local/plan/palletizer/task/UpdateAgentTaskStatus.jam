@@ -8,10 +8,11 @@ PLAN PERFORM UpdateAgentTaskStatus($taskName, $status) {
 		FACT isro:robot($robot);
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT currentGoalID($goalID);
+		FACT organization($channelName);
 	BODY:
 	
 		$data = "(UpdateContext (AgentTaskStatus \"" +$robot + "\" $b $c $d)  (AgentTaskStatus \"" + $robot + "\" \"" + $goalID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	
 	UTILITY : 50000;
 }

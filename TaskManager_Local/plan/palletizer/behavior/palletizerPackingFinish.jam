@@ -10,12 +10,13 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT ExtraUtility($helper);
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT currentGoalID($goalID);
+		FACT organization($channelName);
 		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
 		$data = "(palletizerPackingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
-		PERFORM inform("logistic",$address, $data);
+		PERFORM inform($channelName,$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
 		PERFORM TaskCompleted($goalID, $robotID);
@@ -34,12 +35,13 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		FACT isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish without start");
 		
 		$data = "(palletizerPackingFinished \"" + $robotID + "\" "+$stationVertex+ ")";		
-		PERFORM inform("logistic",$address, $data);
+		PERFORM inform($channelName,$address, $data);
 				
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
 	EFFECTS : 
@@ -56,11 +58,12 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		$agent == "agent://www.mcarbi.com/Palletizer2";
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT currentGoalID($goalID);
+		FACT organization($channelName);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish");
 		
 		$data = "(palletizerPackingFinished \"" + $robotID + "\" 1001)";		
-		PERFORM inform("logistic",$address, $data);
+		PERFORM inform($channelName,$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("PackCargo", "complete");
 		PERFORM TaskCompleted($goalID, $robotID);
@@ -84,11 +87,12 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		FACT currentGoalID($goalID);
 		$robotID == "Palletizer3";
 		$stationVertex == 1004;
+		FACT organization($channelName);
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerPackingFinish - 1004");
 		
 		$data = "(palletizerReleasingFinish \"" + $robotID + "\" 1004)";		
-		PERFORM inform("logistic",$address, $data);
+		PERFORM inform($channelName,$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("ReleaseCargo", "complete");
 		PERFORM TaskCompleted($goalID, $robotID);

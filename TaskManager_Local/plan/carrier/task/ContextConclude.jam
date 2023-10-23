@@ -5,9 +5,10 @@ PLAN CONCLUDE robotPosition($robot, $x, $y) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotPosition"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 		$data = "(context (robotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	UTILITY : 10001;
 }
 
@@ -15,9 +16,10 @@ PLAN CONCLUDE robotDegree($robot, $Degree) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotDegree"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 		$data = "(context (robotDegree \"" + $robot + "\" " + $Degree + "))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	UTILITY : 10001;
 }
 
@@ -25,10 +27,11 @@ PLAN CONCLUDE robotLoading($robot, $load) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotLoading"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 
 		$data = "(context (robotLoading \"" + $robot + "\" \"" + $load + "\"))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	UTILITY : 10001;
 }
 
@@ -36,18 +39,20 @@ PLAN CONCLUDE batteryRemain($robot, $battery) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionBatteryRemain"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 		$data = "(context (batteryRemain \"" + $robot + "\" " + $battery  + "))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	UTILITY : 10001;
 }
 PLAN CONCLUDE robotVelocity($robot, $velocity) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotVelocity"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 		$data = "(context (robotVelocity \"" + $robot + "\" " + $velocity+ "))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	UTILITY : 10001;
 }
 
@@ -55,9 +60,10 @@ PLAN CONCLUDE robotStatus($robot, $status) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnRobotTaskStatus"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 		$data = "(context (robotStatus \"" + $robot + "\" \"" + $status+ "\"))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	UTILITY : 10001;
 }
 

@@ -18,18 +18,16 @@ PLAN PERFORM Resume($actionID, $robotID){
 	ID: "http://www.arbi.com//RequestResume"
 	PRECONDITION : 
 		FACT Communication($communicationInstance);
-		FACT isro:NavigationControllerAddress($nc);
+		FACT organization($channelName);
 	BODY:
 		//PERFORM isro:startLog("PERFORM", "Resume");
 		
 		PERFORM FindRobotAgent($robotID, $reciever);
 		$data  = "(RequestResume \"" +$actionID + "\")";
 		PERFORM isro:argumentLog("$request", $data);
-		PERFORM request("logistic", $reciever,$data,$result);
+		PERFORM request($channelName, $reciever,$data,$result);
 		
 	//	System.out.println("wait id : " + $actionID);
-		ASSERT RequestedActionFromBaseAgent($nc, $actionID);
-		POST PERFORM WaitActionResult($actionID);
 		
 		//PERFORM isro:endLog("PERFORM", "Resume");
 	UTILITY : 100;

@@ -3,13 +3,14 @@ PLAN PERFORM TaskCompleted($goalID) {
 	PRECONDITION :
 		FACT isro:robot($robotID);
 		FACT isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 		FACT robotLocation($location);
 		$location == "potenit";
 	BODY :
 		PERFORM isro:startLog("PERFORM", "TaskCompleted");
 		
 		$context = "(TaskCompleted \"real\" \"" + $goalID + "\" \"" + $robotID + "\")";
-		PERFORM notify("logistic", $address, $context);
+		PERFORM notify($channelName, $address, $context);
 		
 		PERFORM isro:endLog("PERFORM", "TaskCompleted");
 	UTILITY : 10;
@@ -20,13 +21,14 @@ PLAN PERFORM TaskCompleted($goalID) {
 	PRECONDITION :
 		FACT isro:robot($robotID);
 		FACT isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 		FACT robotLocation($location);
 		$location == "isaac";
 	BODY :
 		PERFORM isro:startLog("PERFORM", "TaskCompleted");
 		
 		$context = "(TaskCompleted \"simulation\" \"" + $goalID + "\" \"" + $robotID + "\")";
-		PERFORM notify("logistic", $address, $context);
+		PERFORM notify($channelName, $address, $context);
 		
 		PERFORM isro:endLog("PERFORM", "TaskCompleted");
 	UTILITY : 10;

@@ -16,6 +16,7 @@ PLAN CONCLUDE RequestPreciseMove($actionID, $robotID, $vertex) {
 PLAN PERFORM PreciseMove($requestID, $robotID, $vertex){
 	ID: "http://www.arbi.com//RequestPreciseMove"
 	PRECONDITION : 
+		FACT organization($channelName);
 		FACT isro:NavigationControllerAddress($nc);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
@@ -26,7 +27,7 @@ PLAN PERFORM PreciseMove($requestID, $robotID, $vertex){
 		$actionID = $helper.getActionID($agent);
 		$data  = "(PreciseMove \"" +$actionID + "\" " + $vertex + ")";
 		PERFORM isro:argumentLog("$request", $data);
-		PERFORM request("logistic", $reciever,$data,$result);
+		PERFORM request($channelName, $reciever,$data,$result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

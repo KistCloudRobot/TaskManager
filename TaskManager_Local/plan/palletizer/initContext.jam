@@ -8,6 +8,7 @@ PLAN PERFORM initContext() {
 			
 		ASSERT isro:robot("Palletizer1");
 		ASSERT robotLocation("potenit");
+		ASSERT organization("warehouseManagement1");
 	UTILITY : 10000;	
 }
 
@@ -20,6 +21,7 @@ PLAN PERFORM initContext() {
 			
 		ASSERT isro:robot("Palletizer2");
 		ASSERT robotLocation("isaac");
+		ASSERT organization("warehouseManagement2");
 	UTILITY : 10000;	
 }
 
@@ -33,6 +35,7 @@ PLAN PERFORM initContext() {
 			
 		ASSERT isro:robot("Palletizer3");
 		ASSERT robotLocation("isaac");
+		ASSERT organization("warehouseManagement2");
 	UTILITY : 10000;	
 }
 

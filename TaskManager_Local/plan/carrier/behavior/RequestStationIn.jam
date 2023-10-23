@@ -9,6 +9,7 @@ PLAN PERFORM RequestStationIn($moveType, $vertex){
 		FACT isro:agent($agent);
 		FACT isro:robot($robotID);
 		FACT isro:ManagerAddress($address);
+		FACT organization($channelName);
 		//FACT robotStatus($robotID, $status);
 		//$status == "Ready";
 		
@@ -17,7 +18,7 @@ PLAN PERFORM RequestStationIn($moveType, $vertex){
 		
 		$actionID = $helper.getActionID($agent);
 		$data =  "(EnterToStation \"" + $actionID + "\" \"" + $robotID + "\" \"" + $moveType+"\" " + $vertex +" \"Forward\")";
-		PERFORM request("logistic", $address, $data, $result);
+		PERFORM request($channelName, $address, $data, $result);
 		
 		PERFORM WaitGoalResult($actionID);
 		

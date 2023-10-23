@@ -12,6 +12,7 @@ PLAN PERFORM isro:RequestNavigate($end){
 		FACT isro:agent($agent);
 		FACT isro:robot($robotID);
 		FACT isro:ManagerAddress($address);
+		FACT organization($channelName);
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:RequestNavigate");
@@ -19,7 +20,7 @@ PLAN PERFORM isro:RequestNavigate($end){
 		$actionID = $helper.getActionID($agent);
 		$data = "(Navigate \"" + $actionID + "\" \"" + $robotID + "\" " + $vertex1 +" " + $end + ")";
 		System.out.println($data);
-		PERFORM request("logistic", $address, $data, $result);
+		PERFORM request($channelName, $address, $data, $result);
 
 		PERFORM WaitGoalResult($actionID);
 		

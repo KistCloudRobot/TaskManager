@@ -24,20 +24,52 @@ PLAN PERFORM initialize() {
 */
 
 PLAN PERFORM initialize() {
-	ID : "initializeForLocalAgent2"
+	ID : "initializeForLocalAgent1"
 	PRECONDITION :
 		FACT Communication($communication);
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Local1";
 	BODY :
-		System.out.println("---initializeForLocalAgent2---");
+		System.out.println("---initializeForLocalAgent1---");
 		System.out.println("---start ChannelInit---");
 		
-		PERFORM connectAgentChannel("logistic", $channel);
+		PERFORM connectAgentChannel("logisticManagement", $channel);
 		
 		ASSERT Channel("logistic", $channel);
+		
+		PERFORM createAgentChannel("warehouseManagement1", $channel2);
+		
+		ASSERT Channel("logistic", $channel2);
+		
 		System.out.println("---end ChannelInit---");
 		
 		RETRIEVE isro:agent($agent);
 		PERFORM initializeContext($agent);
 	UTILITY : 10000;	
 }
+
+PLAN PERFORM initialize() {
+	ID : "initializeForLocalAgent2"
+	PRECONDITION :
+		FACT Communication($communication);
+		FACT isro:agent($agent);
+		$agent == "agent://www.mcarbi.com/Local2";
+	BODY :
+		System.out.println("---initializeForLocalAgent2---");
+		System.out.println("---start ChannelInit---");
+		
+		
+		PERFORM connectAgentChannel("logisticManagement", $channel);
+		
+		ASSERT Channel("logistic", $channel);
+		
+		PERFORM createAgentChannel("warehouseManagement2", $channel2);
+		
+		ASSERT Channel("logistic", $channel2);System.out.println("---end ChannelInit---");
+		
+		RETRIEVE isro:agent($agent);
+		PERFORM initializeContext($agent);
+	UTILITY : 10000;	
+}
+
 

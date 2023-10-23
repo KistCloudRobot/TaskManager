@@ -2,18 +2,20 @@ PREFIXES:
 	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN CONCLUDE TaskRequest($request) {
-	ID : "LocalTaskRequestCall"
+	ID : "LocalTaskRequestCall1"
 	PRECONDITION :
 		FACT Communication($comm);
 		FACT GLUtility($glUtility);
+		FACT organization($channelName);
 	BODY :
 		PERFORM isro:startLog("CONCLUDE", "TaskRequest");
 		PERFORM isro:argumentLog("$request", $request);
 
 		$glUtility.assertGL($request);
-		POST PERFORM PalletTransportedRequestedTo($goal, "logistic", $worker);
+		POST PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker);
 		PERFORM isro:endLog("CONCLUDE", "TaskRequest");
 	EFFECTS :
 		RETRACT TaskRequest($request);
 	UTILITY : 100000;
 }
+

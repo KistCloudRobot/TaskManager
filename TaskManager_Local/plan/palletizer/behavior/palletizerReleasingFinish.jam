@@ -10,12 +10,13 @@ PLAN CONCLUDE palletizerReleasingFinish($robotID, $stationVertex) {
 		FACT ExtraUtility($helper);
 		FACT  isro:SemanticMapManagerAddress($address);
 		FACT currentGoalID($goalID);
+		FACT organization($channelName);
 		
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "palletizerReleasingFinish");
 		
 		$data = "(palletizerReleasingFinish \"" + $robotID + "\" 1004)";		
-		PERFORM inform("logistic",$address, $data);
+		PERFORM inform($channelName,$address, $data);
 		
 		PERFORM UpdateAgentTaskStatus("ReleaseCargo", "complete");
 		PERFORM TaskCompleted($goalID, $robotID);

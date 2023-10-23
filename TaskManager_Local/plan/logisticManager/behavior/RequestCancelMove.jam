@@ -14,6 +14,7 @@ PLAN CONCLUDE RequestCancelMove($actionID, $robotID) {
 PLAN PERFORM CancelMove($requestID, $robotID){
 	ID: "http://www.arbi.com//RequestCancelMove"
 	PRECONDITION : 
+		FACT organization($channelName);
 		FACT isro:NavigationControllerAddress($nc);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
@@ -24,7 +25,7 @@ PLAN PERFORM CancelMove($requestID, $robotID){
 		PERFORM FindRobotAgent($robotID, $receiver);
 		$actionID = $helper.getActionID($agent);
 		$data  = "(CancelMove \"" +$actionID + "\")";
-		PERFORM request("logistic", $receiver, $data, $result);
+		PERFORM request($channelName, $receiver, $data, $result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

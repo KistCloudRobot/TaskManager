@@ -10,6 +10,9 @@ PLAN PERFORM PalletTransported($goalID, $rackID, $startLocation, $endLocation){
 		PERFORM TaskStarted($goalID, $goal);
 		
 		PERFORM MoveToLocation($startLocation);
+		
+		PERFORM MoveCompleted($goalID, $startLocation);
+		
 		PERFORM ObjectGrabbed($rackID,$startLocation);
 		PERFORM MoveToLocation($endLocation);
 		PERFORM ObjectPlaced($rackID,$endLocation);

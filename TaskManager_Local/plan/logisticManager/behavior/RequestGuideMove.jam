@@ -16,6 +16,7 @@ PLAN CONCLUDE RequestGuideMove($actionID, $robotID, $vertex, $direction) {
 PLAN PERFORM GuideMove($requestID, $robotID, $vertex, $direction){
 	ID: "http://www.arbi.com//RequestGuideMove"
 	PRECONDITION : 
+		FACT organization($channelName);
 		FACT isro:NavigationControllerAddress($nc);
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
@@ -26,7 +27,7 @@ PLAN PERFORM GuideMove($requestID, $robotID, $vertex, $direction){
 		$actionID = $helper.getActionID($agent);
 		$data  = "(GuideMove \"" +$actionID + "\" " + $vertex + " \"" + $direction + "\")";
 		PERFORM isro:argumentLog("$request", $data);
-		PERFORM request("logistic", $reciever,$data,$result);
+		PERFORM request($channelName, $reciever,$data,$result);
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);

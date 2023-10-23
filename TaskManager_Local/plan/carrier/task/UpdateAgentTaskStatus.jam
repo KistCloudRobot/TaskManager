@@ -8,11 +8,12 @@ PLAN PERFORM UpdateAgentTaskStatus($taskName, $status) {
 		FACT isro:robot($robot);
 		FACT PalletTransportedRequestedFrom($goal, $channel, $agent);
 		FACT isro:SemanticMapManagerAddress($address);
+		FACT organization($channelName);
 	BODY:
 	
 		$goalID = $glUtility.retrieveGLExpression($goal,0);
 		$data = "(UpdateContext (AgentTaskStatus \"" +$robot + "\" $b $c $d)  (AgentTaskStatus \"" + $robot + "\" \"" + $goalID + "\" \"" + $taskName + "\" \"" + $status + "\"))";
-		PERFORM notify("logistic", $address, $data);
+		PERFORM notify($channelName, $address, $data);
 	
 	UTILITY : 50000;
 }

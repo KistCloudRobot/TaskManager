@@ -6,7 +6,7 @@ PLAN PERFORM initialize() {
 		System.out.println("---initialize---");
 		System.out.println("---start ChannelInit---");
 		
-		PERFORM createAgentChannel("logistic", $channel);
+		PERFORM createAgentChannel("logisticManagement", $channel);
 		
 		ASSERT Channel("logistic", $channel);
 		System.out.println("---end ChannelInit---");

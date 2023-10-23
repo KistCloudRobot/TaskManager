@@ -4,11 +4,12 @@ PLAN PERFORM TaskCreated($goalID, $location, $goal) {
 		FACT isro:SemanticMapManagerAddress($address);
 		FACT isro:agent($agent);
 		FACT AssignedLogisticsCenter($center);
+		FACT organization($channelName);
 	BODY :
 		PERFORM isro:startLog("PERFORM", "TaskCreated");
 		
 		$context = "(TaskCreated \"" + $center + "\" \"" + $goalID + "\" \"" + $location + "\" " + $goal +")";
-		PERFORM notify("logistic", $address, $context);
+		PERFORM notify($channelName, $address, $context);
 		PERFORM SendToTaskReasoner($context);
 		
 		PERFORM isro:endLog("PERFORM", "TaskCreated");
