@@ -1,0 +1,35 @@
+PLAN PERFORM MoveCompleted($goalID, $station) {
+	ID: "http://www.arbi.com//MoveCompletedLIFTPotenit"
+	PRECONDITION :
+		FACT organization($channelName);
+		FACT isro:robot($robotID);
+		FACT isro:SemanticMapManagerAddress($address);
+		FACT robotLocation($location);
+		$location == "potenit";
+	BODY :
+		PERFORM isro:startLog("PERFORM", "MoveCompleted");
+		
+		$context = "(MoveCompleted \"real\" \"" + $goalID + "\" \"" + $robotID + "\" \"" +$station+ "\")";
+		PERFORM notify($channelName, $address, $context);
+		
+		PERFORM isro:endLog("PERFORM", "MoveCompleted");
+	UTILITY : 10;
+}
+
+PLAN PERFORM MoveCompleted($goalID, $station) {
+	ID: "http://www.arbi.com//MoveCompletedLIFTisaac"
+	PRECONDITION :
+		FACT organization($channelName);
+		FACT isro:robot($robotID);
+		FACT isro:SemanticMapManagerAddress($address);
+		FACT robotLocation($location);
+		$location == "isaac";
+	BODY :
+		PERFORM isro:startLog("PERFORM", "MoveCompleted");
+		
+		$context = "(MoveCompleted \"simulation\" \"" + $goalID + "\" \"" + $robotID + "\" \"" +$station+ "\")";
+		PERFORM notify($channelName, $address, $context);
+		
+		PERFORM isro:endLog("PERFORM", "MoveCompleted");
+	UTILITY : 10;
+}
