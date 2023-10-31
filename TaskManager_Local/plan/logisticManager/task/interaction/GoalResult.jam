@@ -1,9 +1,54 @@
+
+PLAN PERFORM ReportGoalResult($requestID) {
+	ID: "ReportGoalResultSuccess_RequestedByAgent"
+	PRECONDITION:
+		FACT GeneratedGoalByRequestedGoal($goalID, $requestID);
+		FACT GoalRequester($requestID, $channel, $address);
+		FACT GoalResult($goalID, $result);
+		$result == "success";
+	BODY:
+		
+		PERFORM isro:startLog("PERFORM", "ReportGoalResult GeneratedByRequestedGoal");
+		
+		PERFORM GoalResultReportTo($requestID, "success", $channel, $address);
+		
+		PERFORM isro:endLog("PERFORM", "ReportGoalResult GeneratedByRequestedGoal");
+	UTILITY: 10001;
+	EFFECTS:
+		RETRACT GeneratedGoalByRequestedGoal($goalID, $requestID);
+		RETRACT GoalRequester($requestID, $channel, $address);
+		RETRACT GoalResult($goalID, $result);
+}
+
+
+PLAN PERFORM ReportGoalResult($requestID) {
+	ID : "ReportGoalResultSuccess_RequestedByBaseAgent"
+	PRECONDITION :
+		FACT GeneratedGoalByBaseAgentRequest($goalID, $requestID);
+		FACT GoalRequester($requestID, $address);
+		FACT GoalResult($goalID, $result);
+		$result == "success";
+	BODY :
+		
+		PERFORM isro:startLog("PERFORM", "ReportGoalResult GeneratedByRequestedGoal");
+		
+		PERFORM GoalResultReportToBaseAgent($requestID, "success", $address);
+		
+		PERFORM isro:endLog("PERFORM", "ReportGoalResult GeneratedByRequestedGoal");
+	UTILITY: 10001;
+	EFFECTS :
+		RETRACT GeneratedGoalByBaseAgentRequest($goalID, $requestID);
+		RETRACT GoalRequester($requestID, $address);
+		RETRACT GoalResult($goalID, $result);
+}
+
+
+/*
 PLAN CONCLUDE GoalResult($goalID, $result) {
 	ID: "GoalResultSuccess_RequestedByAgent"
 	PRECONDITION:
 		FACT GeneratedGoalByRequestedGoal($goalID, $requestID);
 		FACT GoalRequester($requestID, $channel, $address);
-		FACT GoalResult($goalID, $result);
 		$result == "success";
 	BODY:
 		
@@ -24,7 +69,6 @@ PLAN CONCLUDE GoalResult($goalID, $result) {
 	PRECONDITION :
 		FACT GeneratedGoalByBaseAgentRequest($goalID, $requestID);
 		FACT GoalRequester($requestID, $address);
-		FACT GoalResult($goalID, $result);
 		$result == "success";
 	BODY :
 		
@@ -39,4 +83,5 @@ PLAN CONCLUDE GoalResult($goalID, $result) {
 		RETRACT GoalRequester($requestID, $address);
 		RETRACT GoalResult($goalID, $result);
 }
+*/
 

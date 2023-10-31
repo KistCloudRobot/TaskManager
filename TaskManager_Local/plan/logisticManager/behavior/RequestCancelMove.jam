@@ -30,6 +30,8 @@ PLAN PERFORM CancelMove($requestID, $robotID){
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);
 		
+		POST PERFORM ReportGoalResult($requestID);
+		
 		PERFORM isro:endLog("PERFORM", "CancelMove");
 	UTILITY : 100;
 }

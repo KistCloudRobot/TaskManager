@@ -37,9 +37,9 @@ PLAN PERFORM initialize() {
 		
 		ASSERT Channel("logistic", $channel);
 		
-		PERFORM createAgentChannel("warehouseManagement1", $channel2);
-		
-		ASSERT Channel("logistic", $channel2);
+		//PERFORM createAgentChannel("warehouseManagement1", $channel2);
+		PERFORM connectAgentChannel("warehouseManagement1", $channel2);
+		ASSERT Channel("warehouseManagement1", $channel2);
 		
 		System.out.println("---end ChannelInit---");
 		
@@ -63,9 +63,11 @@ PLAN PERFORM initialize() {
 		
 		ASSERT Channel("logistic", $channel);
 		
-		PERFORM createAgentChannel("warehouseManagement2", $channel2);
+		//PERFORM createAgentChannel("warehouseManagement2", $channel2);
+		PERFORM connectAgentChannel("warehouseManagement2", $channel2);
+		ASSERT Channel("warehouseManagement2", $channel2);
 		
-		ASSERT Channel("logistic", $channel2);System.out.println("---end ChannelInit---");
+		System.out.println("---end ChannelInit---");
 		
 		RETRIEVE isro:agent($agent);
 		PERFORM initializeContext($agent);

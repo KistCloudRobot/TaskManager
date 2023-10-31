@@ -8,7 +8,10 @@ PLAN PERFORM initialize() {
 		
 		PERFORM createAgentChannel("logisticManagement", $channel);
 		
-		ASSERT Channel("logistic", $channel);
+		ASSERT Channel("logisticManagement", $channel);
+		
+		PERFORM createAgentChannel("warehouseManagement1", $channel2);
+		PERFORM createAgentChannel("warehouseManagement2", $channel3);
 		System.out.println("---end ChannelInit---");
 		
 	UTILITY : 10000;	

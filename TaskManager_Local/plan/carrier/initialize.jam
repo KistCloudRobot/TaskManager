@@ -19,19 +19,20 @@ PLAN PERFORM initialize() {
 		$subscribeRule = "(rule (fact (batteryRemain $a $b)) --> (notify (context (batteryRemain $a $b))))";
 		$communication.subscribeToLTM($subscribeRule);		
 		
+		RETRIEVE isro:agent($agent);
+		System.out.println($agent);
 		PERFORM initializeContext($agent);
 		
 		System.out.println("---start ChannelInit---");
 		
 		RETRIEVE organization($channelName);
+		System.out.println($channelName);
 		PERFORM connectAgentChannel($channelName,$channel);
 		
 		ASSERT Channel($channelName, $channel);
 		
 		System.out.println("---end ChannelInit---");
 		
-		RETRIEVE isro:agent($agent);
-		System.out.println($agent);
 		
 	UTILITY : 10000;
 }

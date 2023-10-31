@@ -26,6 +26,7 @@ public class AgentChannel extends Channel{
 			gl = GLFactory.newGLFromGLString(data);
 		//	System.out.println(gl.toString());
 			if(gl.getName().equals("GoalResult")) {
+				System.out.println("[CHANNEL ONDATA] "+gl.toString());
 				data = "(GoalResultReportedFrom " + gl.getExpression(0).toString() + " " + gl.getExpression(1).toString()+ " \"" + this.getChannelName() + "\" \"" + sender +"\")";
 			}
 		} catch (ParseException e) {

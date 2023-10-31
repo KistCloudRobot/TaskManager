@@ -33,6 +33,7 @@ PLAN PERFORM CancelMove($goalID) {
 		$data = "(CancelMove \"" + $actionID + "\")"; 
 		PERFORM isro:RequestBehavior($actionID, $data);	
 		PERFORM NotifyRobotPath($robot, "(path)");
+		
 
 		PERFORM isro:endLog("PERFORM", "CancelMove");
 	UTILITY: 200; 

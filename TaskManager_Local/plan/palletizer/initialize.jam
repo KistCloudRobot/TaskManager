@@ -3,15 +3,16 @@ PLAN PERFORM initialize() {
 	PRECONDITION :
 	BODY :
 			
+		PERFORM initContext();
+		
 		System.out.println("---start ChannelInit---");
 		
-		PERFORM connectAgentChannel("logistic",$channel);
+		RETRIEVE organization($channelName);
+		PERFORM connectAgentChannel($channelName,$channel);
 		
-		ASSERT Channel("logistic", $channel);
+		ASSERT Channel($channelName, $channel);
 		
 		System.out.println("---end ChannelInit---");
-		
-		PERFORM initContext();
 		
 	UTILITY : 10000;	
 }

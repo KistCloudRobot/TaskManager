@@ -6,6 +6,7 @@ PLAN PERFORM initializeContext($agentID) {
 	PRECONDITION :
 		$agentID == "agent://www.mcarbi.com/Local1";
 	BODY :
+		ASSERT organization("warehouseManagement1");
 		ASSERT AssignedLogisticsCenter("real");
 } 
 
@@ -14,6 +15,7 @@ PLAN PERFORM initializeContext($agentID) {
 	PRECONDITION :
 		$agentID == "agent://www.mcarbi.com/Local2";
 	BODY :
-
+		ASSERT organization("warehouseManagement2");
 		ASSERT AssignedLogisticsCenter("simulation");
+		
 } 

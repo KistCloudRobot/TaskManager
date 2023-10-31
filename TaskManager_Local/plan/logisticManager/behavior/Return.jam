@@ -37,6 +37,7 @@ PLAN PERFORM Return($goalID, $robotID,$start,$end){
 		PERFORM isro:argumentLog("$request", $data);
 		$communicationInstance.request($nc,$data);
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
+		POST PERFORM ReportGoalResult($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "Return");
 	UTILITY: 0; 

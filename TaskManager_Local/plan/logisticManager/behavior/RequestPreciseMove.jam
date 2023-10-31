@@ -31,6 +31,7 @@ PLAN PERFORM PreciseMove($requestID, $robotID, $vertex){
 		
 		ASSERT GeneratedGoalByBaseAgentRequest($actionID, $requestID);
 		ASSERT GoalRequester($requestID, $nc);
+		POST PERFORM ReportGoalResult($requestID);
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");
 	UTILITY : 100;

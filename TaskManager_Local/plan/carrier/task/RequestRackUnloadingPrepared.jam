@@ -11,12 +11,13 @@ PLAN PERFORM RequestRackUnloadingPrepared($vertex){
 		FACT isro:agent($agent);
 		FACT isro:robot($robot);
 		FACT GLUtility($glUtility);
+		FACT organization($channelName);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestRackUnloadingPrepared");
 		
 		$goalID = $helper.getActionID($agent);
 		$goal = "(RackUnloadingPrepared \""+$goalID+"\" \"" + $robot + "\" " + $vertex + ")";
-		PERFORM request("logistic",$address, $goal, $result);
+		PERFORM request($channelName,$address, $goal, $result);
 		PERFORM WaitGoalResult($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestRackUnloadingPrepared");

@@ -53,7 +53,7 @@ public class JAMUtilityManager {
 		try {
 			actionID += 1;
 			//System.out.println("actionID retrieved");
-			return input + "_" + actionID;
+			return input + "_action" + actionID;
 		} finally {
 			_lock.writeLock().unlock();
 		}
@@ -61,7 +61,7 @@ public class JAMUtilityManager {
 	
 	public String getGoalID(String agent) {
 		goalID += 1;
-		return agent + goalID; 
+		return agent + "_goal" + goalID; 
 	}
 	
 	public float getPolicy(String policyName,String servicePackage) {

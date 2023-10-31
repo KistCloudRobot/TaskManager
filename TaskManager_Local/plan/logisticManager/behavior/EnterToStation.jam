@@ -36,6 +36,7 @@ PLAN PERFORM EnterToStation($goalID, $robotID, $moveType, $vertex, $direction){
 		$communicationInstance.request($nc, $data);
 		
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
+		POST PERFORM ReportGoalResult($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "EnterToStation");
 	UTILITY : 10;

@@ -38,6 +38,8 @@ PLAN PERFORM Navigate($goalID, $robotID,$start,$end){
 		$communicationInstance.request($nc,$data);
 		ASSERT GeneratedGoalByRequestedGoal($actionID, $goalID);
 		
+		POST PERFORM ReportGoalResult($goalID);
+		
 		PERFORM isro:endLog("PERFORM", "Navigate");
 	UTILITY: 0; 
 }

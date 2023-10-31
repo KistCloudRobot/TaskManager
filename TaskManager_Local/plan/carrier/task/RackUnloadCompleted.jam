@@ -7,11 +7,12 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 	PRECONDITION:
 		$vertex == "1";
 		FACT Palletizer1AgentAddress($address);
+		FACT organization($channelName);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
 		
 		$data = "(RackUnloadCompleted)";		
-		PERFORM inform("logistic", $address, $data);
+		PERFORM inform($channelName, $address, $data);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
 		
@@ -23,11 +24,12 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 	PRECONDITION:
 		$vertex == "2";
 		FACT Palletizer1AgentAddress($address);
+		FACT organization($channelName);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
 		
 		$data = "(RackUnloadCompleted)";		
-		PERFORM inform("logistic", $address, $data);
+		PERFORM inform($channelName, $address, $data);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
 		
@@ -40,11 +42,12 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 	PRECONDITION:
 		$vertex == "1001";
 		FACT Palletizer2AgentAddress($address);
+		FACT organization($channelName);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
 		
 		$data = "(RackUnloadCompleted)";		
-		PERFORM inform("logistic", $address, $data);
+		PERFORM inform($channelName, $address, $data);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
 		
@@ -57,11 +60,12 @@ PLAN PERFORM RackUnloadCompleted($vertex) {
 	PRECONDITION:
 		$vertex == "1004";
 		FACT Palletizer3AgentAddress($address);
+		FACT organization($channelName);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
 		
 		$data = "(RackUnloadCompleted)";		
-		PERFORM inform("logistic", $address, $data);
+		PERFORM inform($channelName, $address, $data);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");
 		
