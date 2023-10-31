@@ -1,0 +1,18 @@
+PLAN PERFORM MoveDockingPlateToTheFront($part) {
+	ID: "http://www.arbi.com//MoveDockingPlateToTheFront"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "MoveDockingPlateToTheFront");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(MoveDockingPlateToTheFront \"" + $actionID + "\" \"" +$part+ "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+	
+		PERFORM isro:endLog("PERFORM", "MoveDockingPlateToTheFront");
+	UTILITY: 1; 
+	
+}

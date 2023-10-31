@@ -1,0 +1,21 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+	
+PLAN PERFORM ReplaceHousingTrayRequestedTo($goalID, $channelName, $worker) {
+	ID: "http://www.arbi.com//ReplaceHousingTrayRequestedTo"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		FACT ExtraUtility($helper);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReplaceHousingTrayRequestedTo");
+		
+		$goalID = $helper.getGoalID($agent);
+		$goal = "(ReplaceTray \"" + $goalID + "\" \"Housing\")";
+		PERFORM GoalRequestTo($goal, $channelName, $worker);	
+		
+		PERFORM isro:endLog("PERFORM", "ReplaceHousingTrayRequestedTo");
+	
+}
+

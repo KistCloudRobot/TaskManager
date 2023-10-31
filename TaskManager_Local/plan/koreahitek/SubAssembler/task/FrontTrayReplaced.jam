@@ -1,0 +1,20 @@
+
+PLAN PERFORM FrontTrayReplaced() {
+	ID: "http://www.arbi.com//FrontTrayReplaced"
+	PRECONDITION:
+		FACT EmptyFrontTray();
+		FACT RoleAssigned("PartsManager", $agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FrontTrayReplaced");
+		
+		PERFORM ReplaceFrontTrayRequestedTo($goalID,"Assembly",$agent);
+		
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "FrontTrayReplaced");
+		
+	EFFECTS :
+		RETRACT EmptyFrontTray();
+	UTILITY: 1; 
+
+}

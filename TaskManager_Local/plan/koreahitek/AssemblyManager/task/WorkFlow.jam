@@ -6,8 +6,14 @@ PREFIXES:
 		
 PLAN CONCLUDE StartService() {
 	ID: "http://www.arbi.com//StartService"
+	PRECONDITION :
+		FACT AssemblyCount($count);
 	BODY :
+		PERFORM isro:argumentLog("AssemblyCount",$count);
 		POST PERFORM Workflow();
+	EFFECTS :
+		RETRACT StartService();
+	UTILITY : 10000;
 }
 		
 PLAN PERFORM Workflow() {
@@ -31,18 +37,21 @@ PLAN PERFORM Workflow() {
 		
 		PERFORM LensAssembledRequestedTo($g5, "Assembly", $sub);
 		PERFORM WaitGoalResult($g5);
-		//PERFORM GuideJigRisedRequestedTo($g6, "Assembly", $parts);
-		//PERFORM WaitGoalResult($g6);
+		PERFORM GuideJigRisedRequestedTo($g6, "Assembly", $parts);
+		PERFORM WaitGoalResult($g6);
 		
 		PERFORM FrontAssembledRequestedTo($g7, "Assembly", $sub);
 		PERFORM WaitGoalResult($g7);
 		
-		//PERFORM ProductInspectedRequestedTo($g8, "Assembly", $parts);
-		//PERFORM WaitGoalResult($g8);
+		PERFORM ProductInspectedRequestedTo($g8, "Assembly", $parts);
+		PERFORM WaitGoalResult($g8);
 		
 		PERFORM AssemblyComplete();
 		
 		PERFORM isro:endLog("PERFORM", "Workflow");
+		
+	EFFECTS :
+		ASSERT StartService();
 	UTILITY: 100; 
 	
 }

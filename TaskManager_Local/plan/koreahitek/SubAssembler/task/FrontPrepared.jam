@@ -19,6 +19,30 @@ PLAN ACHIEVE FrontPrepared($goalID) {
 		
 		PERFORM isro:endLog("ACHIEVE", "FrontPrepared");
 	UTILITY: 1; 
-	FAILURE :
-		FAIL;
+}
+
+
+PLAN ACHIEVE FrontPrepared($goalID) {
+	ID: "http://www.arbi.com//FrontPrepared-beforeTrayReplace"
+	PRECONDITION:
+		FACT EmptyFrontTray();
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "FrontPrepared == TrayReplace");
+		
+		PERFORM FrontTrayReplaced();
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","start");
+		PERFORM FindFrontPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","progress");
+		PERFORM FrontGraspped($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","complete");
+		
+		PERFORM isro:endLog("ACHIEVE", "FrontPrepared == TrayReplace");
+	UTILITY: 10; 
 }

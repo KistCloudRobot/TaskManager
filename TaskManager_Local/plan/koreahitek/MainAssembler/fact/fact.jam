@@ -10,4 +10,3 @@ FACTS :
 	FACT RoleAssigned("MainAssembler", "agent://www.mcarbi.com/MainAssembler");
 	FACT RoleAssigned("SubAssembler", "agent://www.mcarbi.com/SubAssembler");
 	FACT RoleAssigned("PartsManager", "agent://www.mcarbi.com/PartsManager");
-	

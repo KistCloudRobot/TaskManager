@@ -1,0 +1,18 @@
+PLAN PERFORM RaiseDockingHoleFixturesInLoadingBay($part) {
+	ID: "http://www.arbi.com//RaiseDockingHoleFixturesInLoadingBay"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RaiseDockingHoleFixturesInLoadingBay");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(RaiseDockingHoleFixturesInLoadingBay \"" + $actionID + "\" \"" +$part+ "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+	
+		PERFORM isro:endLog("PERFORM", "RaiseDockingHoleFixturesInLoadingBay");
+	UTILITY: 1; 
+	
+}

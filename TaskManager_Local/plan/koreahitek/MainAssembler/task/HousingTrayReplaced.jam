@@ -1,0 +1,20 @@
+
+PLAN PERFORM HousingTrayReplaced() {
+	ID: "http://www.arbi.com//HousingTrayReplaced"
+	PRECONDITION:
+		FACT EmptyHousingTray();
+		FACT RoleAssigned("PartsManager", $agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "HousingTrayReplaced");
+		
+		PERFORM ReplaceHousingTrayRequestedTo($goalID,"Assembly",$agent);
+		
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "HousingTrayReplaced");
+				
+	EFFECTS :
+		RETRACT EmptyHousingTray();
+	UTILITY: 1; 
+
+}

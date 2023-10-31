@@ -17,7 +17,7 @@ PLAN PERFORM initialize() {
 		ASSERT isro:robot("UR");
 		
 		PERFORM initGripper();
-		
+
 	UTILITY : 10000;	
 }
 

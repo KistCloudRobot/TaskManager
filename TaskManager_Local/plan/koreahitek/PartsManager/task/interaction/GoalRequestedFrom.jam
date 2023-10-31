@@ -16,6 +16,23 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 }
 
 PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/ReplaceTrayGoalRequestedFromAgent"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "ReplaceTray";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - ReplaceTray");
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM ReplaceTrayRequestedFrom($goal, $channel, $agent);
+
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - ReplaceTray");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	ID : "http://www.arbi.com/ProductInspectedGoalRequestedFromForLIFT"
 	PRECONDITION :
 		FACT GLUtility($glUtility);

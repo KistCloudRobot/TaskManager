@@ -19,6 +19,32 @@ PLAN ACHIEVE PCBPrepared($goalID) {
 		PERFORM UpdateAgentTaskStatus($goalID, "PCBPrepared","complete");
 		PERFORM isro:endLog("ACHIEVE", "PCBPrepared");
 	UTILITY: 1; 
-	FAILURE :
-		FAIL;
+
 }
+
+
+PLAN ACHIEVE PCBPrepared($goalID) {
+	ID: "http://www.arbi.com//PCBPrepared-beforeTrayReplace"
+	PRECONDITION:
+		FACT EmptyPCBTray();
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "PCBPrepared == TrayReplace");
+		
+		PERFORM PCBTrayReplaced();
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "PCBPrepared","start");
+		PERFORM FindPCBPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "PCBPrepared","progress");
+		PERFORM PCBGraspped($x, $y);
+		PERFORM PCBScanned();
+		
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "PCBPrepared","complete");
+		PERFORM isro:endLog("ACHIEVE", "PCBPrepared == TrayReplace");
+	UTILITY: 10; 
+
+}
+

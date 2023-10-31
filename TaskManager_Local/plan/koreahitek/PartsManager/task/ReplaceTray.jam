@@ -1,0 +1,40 @@
+
+PLAN PERFORM ReplaceTrayRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//ReplaceTrayRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "ReplaceTrayRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		$part = $glUtility.retrieveGLExpression($goal,1);
+		
+		PERFORM ReplaceTray($goalID, $part);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "ReplaceTrayRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM ReplaceTray($goalID, $part) {
+	ID: "http://www.arbi.com//ReplaceTray"
+	PRECONDITION:
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReplaceTray");
+		
+		PERFORM CheckDockingPlateStatus($part);
+		PERFORM RaiseDockingPlate($part);
+		PERFORM MoveDockingPlateToDischargeArea($part);
+		PERFORM GraspDockingPlateInLoadingBay($part);
+		PERFORM DetachDockingPlateSideFixturesInLoadingBay($part);
+		PERFORM LowerDockingPlateInLoadingBay($part);
+		PERFORM HoldDockingPlateSideFixturesInLoadingBay($part);
+		PERFORM DetachDockingPlateCenterInLoadingBay($part);
+		PERFORM RaiseDockingHoleFixturesInLoadingBay($part);
+		PERFORM MoveDockingPlateToTheFront($part);
+	
+		PERFORM isro:endLog("PERFORM", "ReplaceTray");
+	UTILITY: 1; 
+	
+}

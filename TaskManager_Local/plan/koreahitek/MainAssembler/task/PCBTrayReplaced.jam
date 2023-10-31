@@ -1,0 +1,20 @@
+
+PLAN PERFORM PCBTrayReplaced() {
+	ID: "http://www.arbi.com//PCBTrayReplaced"
+	PRECONDITION:
+		FACT EmptyPCBTray();
+		FACT RoleAssigned("PartsManager", $agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "PCBTrayReplaced");
+		
+		PERFORM ReplacePCBTrayRequestedTo($goalID,"Assembly",$agent);
+		
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "PCBTrayReplaced");
+		
+	EFFECTS :
+		RETRACT EmptyPCBTray();
+	UTILITY: 1; 
+
+}

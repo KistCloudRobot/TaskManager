@@ -1,0 +1,20 @@
+
+PLAN PERFORM LensTrayReplaced() {
+	ID: "http://www.arbi.com//LensTrayReplaced"
+	PRECONDITION:
+		FACT EmptyLensTray();
+		FACT RoleAssigned("PartsManager", $agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "LensTrayReplaced");
+		
+		PERFORM ReplaceLensTrayRequestedTo($goalID,"Assembly",$agent);
+		
+		PERFORM WaitGoalResult($goalID);
+		
+		PERFORM isro:endLog("PERFORM", "LensTrayReplaced");
+				
+	EFFECTS :
+		RETRACT EmptyLensTray();
+	UTILITY: 1; 
+
+}

@@ -1,0 +1,21 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+	
+PLAN PERFORM ReplaceLensTrayRequestedTo($goalID, $channelName, $worker) {
+	ID: "http://www.arbi.com//ReplaceLensTrayRequestedTo"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		FACT ExtraUtility($helper);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "ReplaceLensTrayRequestedTo");
+		
+		$goalID = $helper.getGoalID($agent);
+		$goal = "(ReplaceTray \"" + $goalID + "\" \"Lens\")";
+		PERFORM GoalRequestTo($goal, $channelName, $worker);	
+		
+		PERFORM isro:endLog("PERFORM", "ReplaceLensTrayRequestedTo");
+	
+}
+

@@ -30,7 +30,7 @@ PLAN PERFORM isro:RequestBehavior($actionID, $action){
 		PERFORM isro:argumentLog("$actionID", $actionID);
 		PERFORM isro:argumentLog("$action", $action);
 
-		$helper.sleepAwhile(1000);
+		$helper.sleepAwhile(100);
 		
 		PERFORM isro:endLog("PERFORM", "RequestBehavior PlanTest");
 	UTILITY : 10;

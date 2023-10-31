@@ -19,6 +19,31 @@ PLAN ACHIEVE HousingPrepared($goalID) {
 		
 		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","complete");
 		PERFORM isro:endLog("ACHIEVE", "HousingPrepared");
-	FAILURE :
-		FAIL;
+
+}
+
+
+PLAN ACHIEVE HousingPrepared($goalID) {
+	ID: "http://www.arbi.com//HousingPrepared-beforeTrayReplace"
+	PRECONDITION:
+		FACT EmptyHousingTray();
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "HousingPrepared  == TrayReplace");
+		
+		PERFORM HousingTrayReplaced();
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","start");
+		PERFORM FindHousingPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","progress");
+		PERFORM HousingGraspped($x, $y);
+		PERFORM MoveToPosition("HousingLabel");
+		
+		PERFORM HousingLabeled();
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "HousingPrepared","complete");
+		PERFORM isro:endLog("ACHIEVE", "HousingPrepared == TrayReplace");
+
 }

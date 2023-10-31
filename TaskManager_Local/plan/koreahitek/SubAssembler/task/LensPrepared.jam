@@ -18,6 +18,29 @@ PLAN ACHIEVE LensPrepared($goalID) {
 		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","complete");
 		PERFORM isro:endLog("ACHIEVE", "LensPrepared");
 	UTILITY: 1;
-	FAILURE :
-		FAIL; 
+}
+
+
+PLAN ACHIEVE LensPrepared($goalID) {
+	ID: "http://www.arbi.com//LensPrepared-beforeTrayReplace"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+		FACT EmptyLensTray();
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+	BODY:
+		PERFORM isro:startLog("ACHIEVE", "LensPrepared == TrayReplace");
+		
+		PERFORM LensTrayReplaced();
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","start");
+		PERFORM FindLensPosition($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","progress");
+		PERFORM LensGraspped($x, $y);
+		
+		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","complete");
+		PERFORM isro:endLog("ACHIEVE", "LensPrepared == TrayReplace");
+	UTILITY: 10;
 }

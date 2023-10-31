@@ -1,0 +1,18 @@
+PLAN PERFORM CheckDockingPlateStatus($part) {
+	ID: "http://www.arbi.com//CheckDockingPlateStatus"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "CheckDockingPlateStatus");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(CheckDockingPlateStatus \"" + $actionID + "\" \"" +$part+ "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+	
+		PERFORM isro:endLog("PERFORM", "CheckDockingPlateStatus");
+	UTILITY: 1; 
+	
+}
