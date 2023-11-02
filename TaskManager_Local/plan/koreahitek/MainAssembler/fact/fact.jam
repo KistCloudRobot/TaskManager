@@ -9,4 +9,4 @@ FACTS :
 	FACT isro:robot("Epson");
 	FACT RoleAssigned("MainAssembler", "agent://www.mcarbi.com/MainAssembler");
 	FACT RoleAssigned("SubAssembler", "agent://www.mcarbi.com/SubAssembler");
-	FACT RoleAssigned("PartsManager", "agent://www.mcarbi.com/PartsManager");
+	FACT RoleAssigned("PartsManager", "agent://www.mcarbi.com/AssemblyManager");
