@@ -49,6 +49,7 @@ Plan PERFORM loadPlanPackage(){
 	BODY:
 		$helper.loadPlanPackage("./plan/common");
 		$helper.loadPlanPackage("./plan/koreahitek/AssemblyManager");
+		$helper.loadPlanPackage("./plan/koreahitek/PartsManager");
 }
 
 Plan PERFORM loadPlanPackage(){

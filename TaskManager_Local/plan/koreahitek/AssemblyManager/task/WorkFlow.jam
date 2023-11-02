@@ -51,8 +51,8 @@ PLAN PERFORM Workflow() {
 		PERFORM isro:endLog("PERFORM", "Workflow");
 		
 	EFFECTS :
-		ASSERT StartService();
-	UTILITY: 100; 
+		//ASSERT StartService();
+	UTILITY: 1; 
 	
 }
 

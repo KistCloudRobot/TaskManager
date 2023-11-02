@@ -9,7 +9,7 @@ PLAN PERFORM FrontGraspped($x, $y) {
 	BODY:
 		PERFORM isro:startLog("PERFORM", "FrontGraspped");
 		
-		PERFORM MoveToTray("Front", $x, $y);
+		PERFORM MoveToTray("FrontGet", $x, $y);
 		PERFORM Perceive("Front");
 		PERFORM Grasp("Front");
 		
