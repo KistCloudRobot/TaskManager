@@ -9,7 +9,7 @@ PLAN PERFORM LiftDown() {
 		PERFORM isro:startLog("PERFORM", "LiftDown");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(StopVacuum \"" + $actionID + "\")";
+		$data = "(LiftDown \"" + $actionID + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
 		PERFORM isro:endLog("PERFORM", "LiftDown");

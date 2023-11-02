@@ -33,6 +33,7 @@ PLAN PERFORM PCBAssembled($goalID) {
 		PERFORM Release("PCB");
 		PERFORM MoveToPosition("EpsonPutWait");
 		PERFORM Rotate("Off");	
+		PERFORM MoveToPosition("EpsonHome");	
 	
 		PERFORM UpdateAgentTaskStatus($goalID, "PCBAssembled","complete");
 		PERFORM isro:endLog("ACHIEVE", "PCBAssembled");

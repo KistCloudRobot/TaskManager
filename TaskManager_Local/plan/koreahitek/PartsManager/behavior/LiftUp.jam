@@ -9,7 +9,7 @@ PLAN PERFORM LiftUp() {
 		PERFORM isro:startLog("PERFORM", "LiftUp");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(StopVacuum \"" + $actionID + "\")";
+		$data = "(LiftUp \"" + $actionID + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
 		PERFORM isro:endLog("PERFORM", "LiftUp");

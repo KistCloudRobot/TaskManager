@@ -9,7 +9,7 @@ PLAN PERFORM RotateToAttachPosition() {
 		PERFORM isro:startLog("PERFORM", "RotateToAttachPosition");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(RotateToLabelPosition \"" + $actionID + "\")";
+		$data = "(RotateToAttachPosition \"" + $actionID + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
 		PERFORM isro:endLog("PERFORM", "RotateToAttachPosition");

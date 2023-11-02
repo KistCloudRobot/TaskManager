@@ -33,7 +33,6 @@ PLAN PERFORM HousingAssembled($goalID) {
 		PERFORM Release("Housing");
 		PERFORM MoveToPosition("EpsonPutWait");	
 		
-		PERFORM MoveToPosition("EpsonHome");	
 		
 		PERFORM UpdateAgentTaskStatus($goalID, "HousingAssembled","complete");
 	
