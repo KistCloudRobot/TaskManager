@@ -15,6 +15,18 @@ PLAN CONCLUDE StartService() {
 		RETRACT StartService();
 	UTILITY : 10000;
 }
+
+PLAN CONCLUDE StartService() {
+	ID: "http://www.arbi.com//StartServiceOverOnePlate"
+	PRECONDITION :
+		FACT AssemblyCount($count);
+		$count == 16;
+	BODY :
+		PERFORM isro:argumentLog("AssemblyCount",$count);
+	EFFECTS :
+		RETRACT StartService();
+	UTILITY : 10001;
+}
 		
 PLAN PERFORM Workflow() {
 	ID: "http://www.arbi.com//AssemblyManagerWorkflow"
@@ -51,7 +63,7 @@ PLAN PERFORM Workflow() {
 		PERFORM isro:endLog("PERFORM", "Workflow");
 		
 	EFFECTS :
-		//ASSERT StartService();
+		ASSERT StartService();
 	UTILITY: 1; 
 	
 }
