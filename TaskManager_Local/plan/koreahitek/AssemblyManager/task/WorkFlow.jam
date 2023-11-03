@@ -3,11 +3,22 @@ PREFIXES:
 		PREFIX asb: <http://www.arbi.com//Assembly#>;
 		PREFIX inter: <http://www.arbi.com//Interaction#>;
 		
+PLAN CONCLUDE AssemblyService() {
+	ID: "http://www.arbi.com//AssemblyService"
+	PRECONDITION :
+		FACT AssemblyCount($count);
+	BODY :
+		ASSERT StartService();
+	EFFECTS :
+		RETRACT AssemblyService();
+	UTILITY : 100;
+}
 		
 PLAN CONCLUDE StartService() {
 	ID: "http://www.arbi.com//StartService"
 	PRECONDITION :
 		FACT AssemblyCount($count);
+		FACT TaskCount($tc);
 	BODY :
 		PERFORM isro:argumentLog("AssemblyCount",$count);
 		POST PERFORM Workflow();
@@ -20,9 +31,11 @@ PLAN CONCLUDE StartService() {
 	ID: "http://www.arbi.com//StartServiceOverOnePlate"
 	PRECONDITION :
 		FACT AssemblyCount($count);
-		$count == 16;
+		FACT TaskCount($tc);
+		$tc == 15;
 	BODY :
-		PERFORM isro:argumentLog("AssemblyCount",$count);
+		PERFORM isro:argumentLog("TaskCount",$tc);
+		UPDATE (TaskCount($tc)) (TaskCount(0));
 	EFFECTS :
 		RETRACT StartService();
 	UTILITY : 10001;

@@ -7,17 +7,18 @@ PLAN PERFORM AssemblyComplete() {
 	ID: "http://www.arbi.com//AssemblyComplete"
 	PRECONDITION :
 		FACT AssemblyCount($count);
+		FACT TaskCount($tc);
 		FACT isro:SemanticMapManagerAddress($address);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "AssemblyComplete");
 		
 		$newCount = $count + 1;
+		$newTC = $tc + 1;
 		$data = "(UpdateContext (AssembledItemCount $d)  (AssembledItemCount " + $newCount + "))";
 		PERFORM notify("Assembly", $address, $data);
 		
 		UPDATE (AssemblyCount($count)) (AssemblyCount($newCount));
+		UPDATE (TaskCount($tc)) (TaskCount($newTC));
 		
 		PERFORM isro:endLog("PERFORM", "AssemblyComplete");
-	
 }
-

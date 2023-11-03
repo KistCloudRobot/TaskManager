@@ -11,6 +11,7 @@ PLAN PERFORM initialize() {
 		
 		ASSERT Channel("Assembly", $channel);
 		ASSERT AssemblyCount(0);
+		ASSERT TaskCount(0);
 		System.out.println("---end ChannelInit---");
 		
 	UTILITY : 10000;	
