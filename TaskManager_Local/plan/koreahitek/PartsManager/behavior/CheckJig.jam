@@ -1,18 +1,18 @@
-PLAN PERFORM CheckLabel() {
-	ID: "http://www.arbi.com//CheckLabel"
+PLAN PERFORM CheckJig() {
+	ID: "http://www.arbi.com//CheckJig"
 	PRECONDITION:
 		//FACT robotStatus($robot, $status);
 		//$status == "Ready";
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 	BODY:
-		PERFORM isro:startLog("PERFORM", "CheckLabel");
+		PERFORM isro:startLog("PERFORM", "CheckJig");
 		
 		$actionID = $helper.getActionID($agent);
-		$data = "(CheckLabel \"" + $actionID + "\")";
+		$data = "(CheckJig \"" + $actionID + "\")";
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
-		PERFORM isro:endLog("PERFORM", "CheckLabel");
+		PERFORM isro:endLog("PERFORM", "CheckJig");
 	UTILITY: 1; 
 	
 }

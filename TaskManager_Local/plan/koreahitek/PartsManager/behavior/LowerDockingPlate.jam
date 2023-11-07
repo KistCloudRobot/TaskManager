@@ -1,0 +1,18 @@
+PLAN PERFORM LowerDockingPlate($part) {
+	ID: "http://www.arbi.com//LowerDockingPlate"
+	PRECONDITION:
+		//FACT robotStatus($robot, $status);
+		//$status == "Ready";
+		FACT ExtraUtility($helper);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "LowerDockingPlate");
+		
+		$actionID = $helper.getActionID($agent);
+		$data = "(LowerDockingPlate \"" + $actionID + "\" \"" +$part+ "\")";
+		PERFORM isro:RequestBehavior($actionID, $data);
+	
+		PERFORM isro:endLog("PERFORM", "LowerDockingPlate");
+	UTILITY: 1; 
+	
+}

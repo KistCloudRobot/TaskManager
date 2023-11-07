@@ -42,7 +42,7 @@ PLAN PERFORM HousingLabeled($goalID) {
 		PERFORM LiftUp();
 		
 		$helper.sleepAwhile(50);
-		//PERFORM CheckLabel();
+		PERFORM CheckJig();
 	
 		PERFORM isro:endLog("PERFORM", "HousingLabeled");
 	UTILITY: 1; 

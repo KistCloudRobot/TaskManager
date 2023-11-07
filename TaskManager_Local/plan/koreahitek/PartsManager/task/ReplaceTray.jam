@@ -26,6 +26,7 @@ PLAN PERFORM ReplaceTray($goalID, $part) {
 		PERFORM CheckDockingPlateStatus($part);
 		PERFORM RaiseDockingPlate($part);
 		PERFORM MoveDockingPlateToDischargeArea($part);
+		PERFORM LowerDockingPlate($part);
 		PERFORM GraspDockingPlateInLoadingBay($part);
 		PERFORM DetachDockingPlateSideFixturesInLoadingBay($part);
 		PERFORM LowerDockingPlateInLoadingBay($part);
