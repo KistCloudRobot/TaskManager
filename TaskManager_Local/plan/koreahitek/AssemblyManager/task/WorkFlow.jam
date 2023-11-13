@@ -3,43 +3,6 @@ PREFIXES:
 		PREFIX asb: <http://www.arbi.com//Assembly#>;
 		PREFIX inter: <http://www.arbi.com//Interaction#>;
 		
-PLAN CONCLUDE AssemblyService() {
-	ID: "http://www.arbi.com//AssemblyService"
-	PRECONDITION :
-		FACT AssemblyCount($count);
-	BODY :
-		ASSERT StartService();
-	EFFECTS :
-		RETRACT AssemblyService();
-	UTILITY : 100;
-}
-		
-PLAN CONCLUDE StartService() {
-	ID: "http://www.arbi.com//StartService"
-	PRECONDITION :
-		FACT AssemblyCount($count);
-		FACT TaskCount($tc);
-	BODY :
-		PERFORM isro:argumentLog("AssemblyCount",$count);
-		POST PERFORM Workflow();
-	EFFECTS :
-		RETRACT StartService();
-	UTILITY : 10000;
-}
-
-PLAN CONCLUDE StartService() {
-	ID: "http://www.arbi.com//StartServiceOverOnePlate"
-	PRECONDITION :
-		FACT AssemblyCount($count);
-		FACT TaskCount($tc);
-		$tc == 15;
-	BODY :
-		PERFORM isro:argumentLog("TaskCount",$tc);
-		UPDATE (TaskCount($tc)) (TaskCount(0));
-	EFFECTS :
-		RETRACT StartService();
-	UTILITY : 10001;
-}
 		
 PLAN PERFORM Workflow() {
 	ID: "http://www.arbi.com//AssemblyManagerWorkflow"
@@ -52,6 +15,8 @@ PLAN PERFORM Workflow() {
 
 		PERFORM MainPartsPreparedRequestedTo($g1, "Assembly", $main);	
 		PERFORM WaitGoalResult($g1);
+		PERFORM AssemblyPreparedRequested($g10, "Assembly", $parts)
+		PERFORM WaitGoalResult($g10);
 		PERFORM HousingAssembledRequestedTo($g3, "Assembly", $main);
 		PERFORM WaitGoalResult($g3);
 		PERFORM PCBAssembledRequestedTo($g4, "Assembly", $main);
