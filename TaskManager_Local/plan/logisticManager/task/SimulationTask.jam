@@ -1,0 +1,21 @@
+PREFIXES:
+	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE SimulationTask() {
+	ID : "SimulationTask"
+	PRECONDITION :
+		FACT Communication($comm);
+		FACT GLUtility($glUtility);
+		FACT organization($channelName);
+		FACT isro:ReasonerAddress($address);
+		FACT AssignedLogisticsCenter($center);
+		$center == "simulation";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "SimulationTask");
+		$comm.inform($address, "(SimulationTask)");
+		PERFORM isro:endLog("CONCLUDE", "SimulationTask");
+	EFFECTS :
+		RETRACT SimulationTask();
+	UTILITY : 10000;
+}
+

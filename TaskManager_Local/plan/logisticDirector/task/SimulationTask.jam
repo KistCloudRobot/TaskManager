@@ -1,0 +1,13 @@
+PREFIXES:
+	PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE SimulationTask() {
+	ID : "SimulationTaskForDirector"
+	PRECONDITION :
+		FACT local2Agent($agent);
+	BODY :
+		PERFORM inform("logisticManagement", $agent, "(SimulationTask)");
+	EFFECTS :
+		RETRACT SimulationTask();
+	UTILITY : 1;
+}
