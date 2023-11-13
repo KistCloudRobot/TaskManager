@@ -36,7 +36,7 @@ PLAN PERFORM PalletTransportedRequestedTo($goal, $channelName, $worker) {
 		PERFORM UpdateGoalAssigned($goal, $worker);
 		
 		PERFORM isro:endLog("ACHIEVE", "PalletTransportedRequestedTo");
-	UTILITY: 100; 
+	UTILITY: 110; 
 	
 	EFFECTS :
 		ASSERT PalletTransportedRequestedTo($goal, $channelName, $worker);
