@@ -5,7 +5,7 @@ PREFIXES:
 		
 
 PLAN CONCLUDE PauseService() {
-	ID: "http://www.arbi.com//StartService"
+	ID: "http://www.arbi.com//PauseService"
 	PRECONDITION :
 		FACT RoleAssigned("MainAssembler", $main);
 		FACT RoleAssigned("SubAssembler", $sub);

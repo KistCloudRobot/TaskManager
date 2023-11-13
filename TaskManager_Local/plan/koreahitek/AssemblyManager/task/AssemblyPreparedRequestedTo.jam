@@ -12,7 +12,7 @@ PLAN PERFORM AssemblyPreparedRequestedTo($goalID, $channelName, $worker) {
 		PERFORM isro:startLog("PERFORM", "AssemblyPreparedRequestedTo");
 		
 		$goalID = $helper.getGoalID($agent);
-		$goal = "(AssemblyPreparedRequestedTo \"" + $goalID + "\")";
+		$goal = "(AssemblyPrepared \"" + $goalID + "\")";
 		PERFORM GoalRequestTo($goal, $channelName, $worker);	
 		
 		PERFORM isro:endLog("PERFORM", "AssemblyPreparedRequestedTo");

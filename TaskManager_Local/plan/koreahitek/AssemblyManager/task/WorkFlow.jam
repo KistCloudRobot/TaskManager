@@ -15,7 +15,7 @@ PLAN PERFORM Workflow() {
 
 		PERFORM MainPartsPreparedRequestedTo($g1, "Assembly", $main);	
 		PERFORM WaitGoalResult($g1);
-		PERFORM AssemblyPreparedRequested($g10, "Assembly", $parts)
+		PERFORM AssemblyPreparedRequestedTo($g10, "Assembly", $parts);
 		PERFORM WaitGoalResult($g10);
 		PERFORM HousingAssembledRequestedTo($g3, "Assembly", $main);
 		PERFORM WaitGoalResult($g3);
