@@ -1,0 +1,15 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+
+		
+PLAN CONCLUDE MoveToURHome() {
+	ID: "http://www.arbi.com//MoveToURHomeForUR"
+	PRECONDITION :
+	BODY :
+		PERFORM MoveToPosition("URHome");	
+	EFFECTS :
+		RETRACT MoveToURHome();
+	UTILITY : 10000;
+}

@@ -1,0 +1,15 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+
+		
+PLAN CONCLUDE ResetEpsonGripper() {
+	ID: "http://www.arbi.com//ResetEpsonGripperForMain"
+	PRECONDITION :
+	BODY :
+		PERFORM initGripper();
+	EFFECTS :
+		RETRACT ResetEpsonGripper();
+	UTILITY : 10000;
+}

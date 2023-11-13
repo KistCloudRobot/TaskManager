@@ -1,8 +1,6 @@
 PLAN PERFORM CheckJig() {
 	ID: "http://www.arbi.com//CheckJig"
 	PRECONDITION:
-		//FACT robotStatus($robot, $status);
-		//$status == "Ready";
 		FACT ExtraUtility($helper);
 		FACT isro:agent($agent);
 	BODY:
@@ -13,6 +11,5 @@ PLAN PERFORM CheckJig() {
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
 		PERFORM isro:endLog("PERFORM", "CheckJig");
-	UTILITY: 1; 
-	
+	UTILITY: 1; 	
 }

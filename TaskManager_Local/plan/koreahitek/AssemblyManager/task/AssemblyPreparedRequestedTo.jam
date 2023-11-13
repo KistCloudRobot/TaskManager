@@ -1,0 +1,21 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+	
+PLAN PERFORM AssemblyPreparedRequestedTo($goalID, $channelName, $worker) {
+	ID: "http://www.arbi.com//AssemblyPreparedRequestedTo"
+	PRECONDITION :
+		FACT isro:agent($agent);
+		FACT ExtraUtility($helper);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "AssemblyPreparedRequestedTo");
+		
+		$goalID = $helper.getGoalID($agent);
+		$goal = "(AssemblyPreparedRequestedTo \"" + $goalID + "\")";
+		PERFORM GoalRequestTo($goal, $channelName, $worker);	
+		
+		PERFORM isro:endLog("PERFORM", "AssemblyPreparedRequestedTo");
+	
+}
+

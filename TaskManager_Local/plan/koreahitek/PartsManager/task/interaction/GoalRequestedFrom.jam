@@ -65,3 +65,21 @@ PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
 	EFFECTS :
 		RETRACT GoalRequestedFrom($goal, $channel, $agent);
 }
+
+
+PLAN conclude GoalRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com/AssemblyPreparedGoalRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+		$glUtility.retrieveGLName($goal) == "AssemblyPrepared";
+	BODY :
+		PERFORM isro:startLog("CONCLUDE", "GoalRequestedFrom - AssemblyPrepared");
+
+		PERFORM isro:argumentLog("$goal", $goal);
+		POST PERFORM AssemblyPreparedRequestedFrom($goal, $channel, $agent);
+
+		PERFORM isro:endLog("CONCLUDE", "GoalRequestedFrom - AssemblyPrepared");
+	UTILITY : 50000;
+	EFFECTS :
+		RETRACT GoalRequestedFrom($goal, $channel, $agent);
+}

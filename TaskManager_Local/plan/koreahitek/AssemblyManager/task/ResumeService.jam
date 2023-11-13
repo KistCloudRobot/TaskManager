@@ -1,0 +1,25 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+		
+
+PLAN PERFORM Resume() {
+	ID: "http://www.arbi.com//StartService"
+	PRECONDITION :
+		FACT RoleAssigned("MainAssembler", $main);
+		FACT RoleAssigned("SubAssembler", $sub);
+		FACT RoleAssigned("PartsManager", $parts);
+		FACT ResumeService();
+	BODY :
+		PERFORM isro:startLog("PERFORM", "Resume");
+		
+		$data = "(ResumeService)";
+		PERFORM inform("Assembly", $main, $data);
+		PERFORM inform("Assembly", $sub, $data);
+		
+		PERFORM isro:endLog("PERFORM", "Resume");
+	EFFECTS :
+		RETRACT ResumeService();
+	UTILITY : 100000;
+}

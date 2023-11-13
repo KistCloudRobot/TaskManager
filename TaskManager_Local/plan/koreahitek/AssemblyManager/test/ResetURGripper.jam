@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+
+		
+PLAN CONCLUDE ResetURGripper() {
+	ID: "http://www.arbi.com//ResetURGripper"
+	PRECONDITION :
+		FACT RoleAssigned("MainAssembler", $main);
+		FACT RoleAssigned("SubAssembler", $sub);
+		FACT RoleAssigned("PartsManager", $parts);
+	BODY :
+		$data = "(ResetURGripper)";
+		PERFORM inform("Assembly", $sub, $data);
+	EFFECTS :
+		RETRACT ResetURGripper();
+	UTILITY : 10000;
+}

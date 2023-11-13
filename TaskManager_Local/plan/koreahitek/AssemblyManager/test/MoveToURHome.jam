@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+
+		
+PLAN CONCLUDE MoveToURHome() {
+	ID: "http://www.arbi.com//MoveToURHome"
+	PRECONDITION :
+		FACT RoleAssigned("MainAssembler", $main);
+		FACT RoleAssigned("SubAssembler", $sub);
+		FACT RoleAssigned("PartsManager", $parts);
+	BODY :
+		$data = "(MoveToURHome)";
+		PERFORM inform("Assembly", $sub, $data);
+	EFFECTS :
+		RETRACT MoveToURHome();
+	UTILITY : 10000;
+}

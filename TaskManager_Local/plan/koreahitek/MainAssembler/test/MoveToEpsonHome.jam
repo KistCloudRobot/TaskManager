@@ -1,0 +1,15 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+
+		
+PLAN CONCLUDE MoveToEpsonHome() {
+	ID: "http://www.arbi.com//MoveToEpsonHomeForEpson"
+	PRECONDITION :
+	BODY :
+		PERFORM MoveToPosition("EpsonHome");	
+	EFFECTS :
+		RETRACT MoveToEpsonHome();
+	UTILITY : 10000;
+}

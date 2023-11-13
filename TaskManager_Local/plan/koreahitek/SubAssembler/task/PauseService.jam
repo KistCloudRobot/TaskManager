@@ -1,0 +1,17 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+		
+
+PLAN CONCLUDE PauseService() {
+	ID: "http://www.arbi.com//PauseServiceForSub"
+	PRECONDITION :
+	BODY :
+		PERFORM isro:startLog("PERFORM", "PauseService");
+		PERFORM Resume();
+		PERFORM isro:endLog("PERFORM", "PauseService");
+	EFFECTS :
+		RETRACT PauseService();
+	UTILITY : 100000;
+}

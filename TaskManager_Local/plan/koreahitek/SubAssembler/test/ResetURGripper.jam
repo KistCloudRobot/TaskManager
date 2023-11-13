@@ -1,0 +1,15 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+
+		
+PLAN CONCLUDE ResetURGripper() {
+	ID: "http://www.arbi.com//ResetURGripperForSub"
+	PRECONDITION :
+	BODY :
+		PERFORM initGripper();
+	EFFECTS :
+		RETRACT ResetURGripper();
+	UTILITY : 10000;
+}

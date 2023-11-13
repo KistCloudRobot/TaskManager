@@ -1,0 +1,19 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		PREFIX asb: <http://www.arbi.com//Assembly#>;
+		PREFIX inter: <http://www.arbi.com//Interaction#>;
+		
+
+PLAN PERFORM Resume() {
+	ID: "http://www.arbi.com//ResumeForMain"
+	PRECONDITION :
+		FACT ResumeService();
+	BODY :
+		PERFORM isro:startLog("PERFORM", "Resume");
+
+		
+		PERFORM isro:endLog("PERFORM", "Resume");
+	EFFECTS :
+		RETRACT ResumeService();
+	UTILITY : 100000;
+}

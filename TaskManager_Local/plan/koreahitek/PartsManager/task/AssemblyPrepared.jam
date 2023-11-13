@@ -1,0 +1,30 @@
+
+PLAN PERFORM AssemblyPreparedRequestedFrom($goal, $channel, $agent) {
+	ID : "http://www.arbi.com//AssemblyPreparedRequestedFrom"
+	PRECONDITION :
+		FACT GLUtility($glUtility);
+	BODY :
+		PERFORM isro:startLog("PERFORM", "AssemblyPreparedRequestedFrom");
+		
+		$goalID = $glUtility.retrieveGLExpression($goal,0);
+		
+		PERFORM AssemblyPrepared($goalID);
+		PERFORM GoalResultReportTo($goalID, "success", $channel, $agent);
+		
+		PERFORM isro:endLog("PERFORM", "AssemblyPreparedRequestedFrom");
+	UTILITY: 100;
+	
+}
+
+PLAN PERFORM AssemblyPrepared($goalID) {
+	ID: "http://www.arbi.com//AssemblyPrepared"
+	PRECONDITION:
+	BODY:
+		PERFORM isro:startLog("PERFORM", "AssemblyPrepared");
+		
+		PERFORM CheckJig();
+	
+		PERFORM isro:endLog("PERFORM", "AssemblyPrepared");
+	UTILITY: 1; 
+	
+}
