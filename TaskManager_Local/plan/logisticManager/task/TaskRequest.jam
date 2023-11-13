@@ -16,6 +16,6 @@ PLAN CONCLUDE TaskRequest($request) {
 		PERFORM isro:endLog("CONCLUDE", "TaskRequest");
 	EFFECTS :
 		RETRACT TaskRequest($request);
-	UTILITY : 100000;
+	UTILITY : 100;
 }
 
