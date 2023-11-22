@@ -12,6 +12,7 @@ PLAN PERFORM isro:RequestBehavior($actionID, $action){
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestBehavior");
+	FAILURE : FAIL;
 }
 
 

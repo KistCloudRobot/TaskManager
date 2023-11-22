@@ -11,5 +11,5 @@ PLAN PERFORM CheckJig() {
 		PERFORM isro:RequestBehavior($actionID, $data);
 	
 		PERFORM isro:endLog("PERFORM", "CheckJig");
-	UTILITY: 1; 	
+	UTILITY: 1;
 }

@@ -20,20 +20,32 @@ PLAN PERFORM ReplaceTrayRequestedFrom($goal, $channel, $agent) {
 PLAN PERFORM ReplaceTray($goalID, $part) {
 	ID: "http://www.arbi.com//ReplaceTray"
 	PRECONDITION:
+		FACT ExtraUtility($helper);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "ReplaceTray");
 		
 		PERFORM CheckDockingPlateStatus($part);
+		$helper.sleepAwhile(5000);
 		PERFORM RaiseDockingPlate($part);
+		$helper.sleepAwhile(5000);
 		PERFORM MoveDockingPlateToDischargeArea($part);
+		$helper.sleepAwhile(5000);
 		PERFORM LowerDockingPlate($part);
+		$helper.sleepAwhile(5000);
 		PERFORM GraspDockingPlateInLoadingBay($part);
+		$helper.sleepAwhile(5000);
 		PERFORM DetachDockingPlateSideFixturesInLoadingBay($part);
+		$helper.sleepAwhile(5000);
 		PERFORM LowerDockingPlateInLoadingBay($part);
+		$helper.sleepAwhile(5000);
 		PERFORM HoldDockingPlateSideFixturesInLoadingBay($part);
+		$helper.sleepAwhile(5000);
 		PERFORM DetachDockingPlateCenterInLoadingBay($part);
+		$helper.sleepAwhile(5000);
 		PERFORM RaiseDockingHoleFixturesInLoadingBay($part);
+		$helper.sleepAwhile(5000);
 		PERFORM MoveDockingPlateToTheFront($part);
+		$helper.sleepAwhile(5000);
 	
 		PERFORM isro:endLog("PERFORM", "ReplaceTray");
 	UTILITY: 1; 

@@ -21,7 +21,7 @@ PLAN CONCLUDE StartService() {
 	PRECONDITION :
 		FACT AssemblyCount($count);
 		FACT TaskCount($tc);
-		$tc == 15;
+		$tc == 1;
 	BODY :
 		PERFORM isro:argumentLog("TaskCount",$tc);
 		UPDATE (TaskCount($tc)) (TaskCount(0));

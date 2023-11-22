@@ -19,7 +19,7 @@ PLAN perform WaitActionResult($actionID){
 PLAN perform WaitActionResult($actionID){
 	ID: "http://www.arbi.com//BuiltInPlan#WaitActionFailed"
 	PRECONDITION:
-		FACT JAMUtility($utility);
+		FACT ExtraUtility($utility);
 		FACT ActionResult($actionID, $result);
 		$result == "fail";
 	BODY:
@@ -28,7 +28,7 @@ PLAN perform WaitActionResult($actionID){
 		PERFORM isro:argumentLog("$actionID", $actionID);
 		RETRACT ActionResult($actionID, $result);
 		//WAIT Restart();
-		$utility.sleepAwhile(10000);
+		$utility.sleepAwhile(1000);
 		FAIL;
 	UTILITY: 9999; 
 }

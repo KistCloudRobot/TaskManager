@@ -8,7 +8,7 @@ public class TaskManager_AssemblyManager {
 		String role = "AssemblyManager";
 		String agentID = "agent://www.mcarbi.com/AssemblyManager";
 		String brokerAddress = "127.0.0.1";
-//		String brokerAddress = "172.16.165.164";
+//		String brokerAddress = "10.201.217.97";
 		
 		int port = 61316;
 		
