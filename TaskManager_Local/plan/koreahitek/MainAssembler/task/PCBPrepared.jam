@@ -32,6 +32,8 @@ PLAN ACHIEVE PCBPrepared($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "PCBPrepared == TrayReplace");
 		
+		PERFORM MoveToPosition("EpsonHome");
+		
 		PERFORM PCBTrayReplaced();
 		
 		PERFORM UpdateAgentTaskStatus($goalID, "PCBPrepared","start");

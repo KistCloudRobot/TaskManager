@@ -33,6 +33,8 @@ PLAN ACHIEVE FrontPrepared($goalID) {
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "FrontPrepared == TrayReplace");
 		
+		PERFORM MoveToPosition("URHome");
+		
 		PERFORM FrontTrayReplaced();
 		
 		PERFORM UpdateAgentTaskStatus($goalID, "FrontPrepared","start");

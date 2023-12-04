@@ -31,7 +31,7 @@ PLAN ACHIEVE LensPrepared($goalID) {
 		//$status == "Ready";
 	BODY:
 		PERFORM isro:startLog("ACHIEVE", "LensPrepared == TrayReplace");
-		
+		PERFORM MoveToPosition("URHome");
 		PERFORM LensTrayReplaced();
 		
 		PERFORM UpdateAgentTaskStatus($goalID, "LensPrepared","start");
